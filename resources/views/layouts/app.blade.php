@@ -580,7 +580,7 @@
         <div>
             <!-- Logo -->
             <div class="sidebar-logo">
-                <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo Prefeitura">
+                <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo LICICON">
             </div>
 
             <!-- Navegação -->
