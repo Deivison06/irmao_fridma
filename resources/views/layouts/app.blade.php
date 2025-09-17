@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Plataforma Cristino Castro Online</title>
+    <title>Licicon</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,189 +17,675 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+    <!-- CKEditor 5 -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary-dark: #1a3c46;
+            --primary: #00888a;
+            --primary-light: #4fb6b8;
+            --primary-extra-light: #e6f4f4;
+            --accent: #ff6b35;
+            --accent-light: #ffe0d4;
+            --text-dark: #1e2a32;
+            --text-light: #64748b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --header-height: 80px;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Figtree', sans-serif;
+            background-color: var(--background);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Layout principal */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar melhorada */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .sidebar-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.85rem 1.2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
+        }
+
+        .nav-item:hover::before {
+            opacity: 1;
+        }
+
+        .nav-item.active {
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-item.active::before {
+            opacity: 1;
+        }
+
+        .nav-icon {
+            width: 1.35rem;
+            height: 1.35rem;
+            margin-right: 0.75rem;
+            opacity: 0.85;
+        }
+
+        .nav-item.active .nav-icon {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1.5rem 1.2rem 0.5rem;
+            margin-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .sidebar-footer {
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            gap: 0.5rem;
+        }
+
+        .btn-logout {
+            background: white;
+            color: var(--primary-dark);
+            border: none;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-logout:hover {
+            background: #f1f1f1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-profile {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-profile:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .soft-logo {
+            display: block;
+            margin: 1.5rem auto 0;
+            width: 100px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .soft-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header melhorado */
+        .main-header {
+            background: var(--card-bg);
+            padding: 0 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .notification-bell:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.4rem;
+            border-radius: 50%;
+            background: var(--primary-extra-light);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .user-menu:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Conteúdo da página */
+        .page-content {
+            padding: 2rem;
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .welcome-icon {
+            font-size: 3.5rem;
+            opacity: 0.8;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Melhorias para o mapa */
         #map {
             height: 400px;
             width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
-        /* Melhorias de responsividade */
-        @media (max-width: 768px) {
-            .flex.h-screen {
-                flex-direction: column;
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--primary-extra-light);
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        /* Botões e elementos de ação */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 148, 150, 0.2);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-extra-light);
+            transform: translateY(-2px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 260px;
             }
 
-            aside {
-                width: 100%;
-                height: auto;
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 1rem;
+            }
+
+            .page-content {
+                padding: 1rem;
             }
 
             #map {
                 height: 300px;
             }
+
+            .header-actions {
+                gap: 1rem;
+            }
+
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .welcome-icon {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.25rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .welcome-text h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animações suaves */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Estado de carregamento */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--border-radius);
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
-
-    <!-- CKEditor 5 -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-
-    @stack('styles')
 </head>
 
-<body class="h-full text-gray-900 bg-gray-100">
-    <div class="flex h-full">
-        <!-- Sidebar -->
-        <aside
-            class="flex flex-col justify-between w-64 p-4 bg-gradient-to-b from-[#145156] to-[#0596A2] text-white shadow-lg flex-shrink-0">
-            <!-- Topo com logo -->
-            <div class="flex flex-col items-center space-y-6">
-                <a href="#"><img src="{{ url('logos/logo.png') }}" alt="Logo Prefeitura"
-                        class="w-40 mb-4" /></a>
-
-                <!-- Navegação -->
-                <nav class="w-full space-y-1" aria-label="Navegação principal">
-                    <!-- Dashboard -->
-                    @can('gerenciar conteudo')
-                        <a href="#"
-                            class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                {{ request()->routeIs('admin.dashboard') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5.121 17.804A4 4 0 018 17h8a4 4 0 012.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span>Dashboard</span>
-                        </a>
-                    @endcan
-
-                    <div class="pt-2 mt-4 border-t border-white/20">
-                        <h3 class="px-4 mb-2 text-xs font-semibold tracking-wider uppercase text-white/70">Conteúdo do
-                            Site</h3>
-
-                        @can('gerenciar conteudo')
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                    {{ request()->routeIs('admin.cards.servicos.*') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Card Serviço ONLINE</span>
-                            </a>
-
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                    {{ request()->routeIs('admin.cards.solicitacoes.*') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
-                                <span>Card Solicitação</span>
-                            </a>
-                        @endcan
-
-                        {{-- @role(['admin', 'master']) --}}
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                    {{ request()->routeIs('admin.solicitacoes.index') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Todas as Solicitações</span>
-                            </a>
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                            {{ request()->routeIs('admin.alvaras.index') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Todos os Alvarás</span>
-                            </a>
-                        {{-- @endrole
-
-                        @role('cidadao') --}}
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                    {{ request()->routeIs('admin.minhas-solicitacoes.index') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Minhas Solicitações</span>
-                            </a>
-                            <a href="#"
-                                class="flex items-center px-4 py-3 space-x-3 rounded-lg transition-all
-                                    {{ request()->routeIs('admin.citizen.alvaras.index') ? 'bg-white text-[#145156] shadow-md' : 'text-white hover:bg-white/20' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Meus Alvarás</span>
-                            </a>
-                        {{-- @endrole --}}
-                    </div>
-                </nav>
+<body>
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div>
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo Prefeitura">
             </div>
 
-            <!-- Rodapé com botão sair e logo -->
-            <div class="flex flex-col items-center w-full max-w-xs mx-auto space-y-4">
-                <!-- Botão Sair -->
-                <form method="POST" action="#">
-                    @csrf
-                    <button type="submit"
-                        class="flex items-center justify-center w-full px-6 py-2 space-x-2 font-bold text-[#145156] bg-white rounded-lg transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#145156]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        <span>Sair</span>
-                    </button>
-                </form>
-
-                <a href="#"
-                    class="flex items-center px-4 py-2 space-x-2 font-bold text-[#145156] bg-white rounded-lg transition-colors hover:bg-[#dadada] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#145156] border border-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <span>Perfil</span>
+            <!-- Navegação -->
+            <nav>
+                <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
                 </a>
 
-                <!-- Logo -->
-                <img src="{{ asset('logos/soft-logo.png') }}" alt="Logo Soft"
-                    class="mt-4 transition-opacity w-28 opacity-90 hover:opacity-100">
-            </div>
-        </aside>
+                <div class="nav-section-title">Conteúdo do Site</div>
 
-        <!-- Main Content -->
-        <main class="flex flex-col flex-1 overflow-y-auto">
-            <!-- Header -->
-            <header class="flex-shrink-0 px-6 py-4 bg-white border-b shadow-sm">
-                <h1 class="text-2xl font-semibold">{{ $header ?? 'Administração' }}</h1>
-            </header>
+                <a href="#" class="nav-item">
+                    <i class="nav-icon fas fa-clipboard-list"></i>
+                    <span>PROCESSOS</span>
+                </a>
 
-            <!-- Page Content -->
-            <div class="flex-1 p-6 overflow-auto">
-                {{ $slot }}
+                <a href="#" class="nav-item">
+                    <i class="nav-icon fas fa-building"></i>
+                    <span>PREFEITURAS</span>
+                </a>
+
+                <a href="{{ route('admin.usuarios.index') }}" class="nav-item {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <span>USUÁRIOS</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Rodapé -->
+        <div class="sidebar-footer">
+            <a href="{{ route('profile.edit') }}" class="sidebar-btn btn-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>Meu Perfil</span>
+            </a>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="sidebar-btn btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </form>
+
+            <img src="{{ asset('logo/soft-logo.png') }}" alt="Logo Soft" class="soft-logo">
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">@yield('title', 'Administração')</h1>
             </div>
-        </main>
+
+            <div class="header-actions">
+
+
+                <div class="user-menu">
+                    <a href="{{ route('profile.edit') }}">
+                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'Admin' }}&background=00888a&color=fff&bold=true"
+                             alt="Usuário" class="user-avatar">
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-content fade-in">
+            <!-- Banner de boas-vindas -->
+            <div class="welcome-banner slide-in">
+                <div class="welcome-text">
+                    <h2>Olá, {{ auth()->user()->name ?? 'Administrador' }}!</h2>
+                    <p>Bem-vindo à plataforma de administração da Licicon Consultoria e Assessoria Administrativa. Aqui você pode gerenciar todos os aspectos do sistema.</p>
+                </div>
+                <div class="welcome-icon">
+                    <i class="fas fa-building-circle-check"></i>
+                </div>
+            </div>
+
+            @yield('content')
+        </div>
     </div>
+</div>
 
-    <!-- Alpine JS for dropdown functionality -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-    @stack('scripts')
+<script>
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('open');
+    });
+
+    // Fechar o menu ao clicar fora dele em dispositivos móveis
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+        if (window.innerWidth <= 1024 &&
+            sidebar.classList.contains('open') &&
+            !sidebar.contains(event.target) &&
+            !mobileMenuBtn.contains(event.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
+
+@stack('scripts')
 </body>
-
 </html>

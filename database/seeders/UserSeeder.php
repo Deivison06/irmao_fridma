@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -13,39 +12,46 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Master Admin',
+                'name' => 'Diretor Licicon',
                 'cpf' => '00000000000',
-                'email' => 'master@cristinocastroonline.com',
-                'password' => Hash::make('U2JxmL31k'),
-                'role' => 'master'
+                'email' => 'diretor@licicon.com',
+                'password' => Hash::make('senha123'),
+                'role' => 'diretor_licicon'
             ],
             [
-                'name' => 'Admin',
+                'name' => 'Gerente Licicon',
                 'cpf' => '11111111111',
-                'email' => 'admin@cristinocastroonline.com',
-                'password' => Hash::make('X9XYPD8cQ'),
-                'role' => 'admin'
+                'email' => 'gerente@licicon.com',
+                'password' => Hash::make('senha123'),
+                'role' => 'gerente_licicon'
             ],
             [
-                'name' => 'cidadao',
+                'name' => 'Colaborador Licicon',
                 'cpf' => '22222222222',
-                'email' => 'cidadao@cristinocastroonline.com',
-                'password' => Hash::make('X9XYPD8cQ'),
-                'role' => 'cidadao'
+                'email' => 'colaborador@licicon.com',
+                'password' => Hash::make('senha123'),
+                'role' => 'colaborador_licicon'
+            ],
+            [
+                'name' => 'Prefeitura',
+                'cpf' => '33333333333',
+                'email' => 'prefeitura@licicon.com',
+                'password' => Hash::make('senha123'),
+                'role' => 'prefeitura'
             ],
         ];
 
         foreach ($users as $userData) {
             $user = User::updateOrCreate(
-                ['email' => $userData['email']], // procura pelo email
+                ['email' => $userData['email']],
                 [
                     'name' => $userData['name'],
-                    'cpf' => $userData['cpf'], 
+                    'cpf' => $userData['cpf'],
                     'password' => $userData['password']
                 ]
             );
 
-            $user->syncRoles([$userData['role']]); // garante que ele terá apenas essa role
+            $user->syncRoles([$userData['role']]);
         }
 
         $this->command->info('Usuários iniciais criados com sucesso!');

@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -13,8 +12,9 @@ class RolePermissionSeeder extends Seeder
     {
         $permissions = [
             'gerenciar usuarios',
-            'gerenciar conteudo',
-            'Solicitacao'
+            'criar processos',
+            'dar seguimento processos',
+            'assinar processos',
         ];
 
         foreach ($permissions as $permission) {
@@ -22,9 +22,10 @@ class RolePermissionSeeder extends Seeder
         }
 
         $roles = [
-            'master' => $permissions, // master pega tudo
-            'admin' => ['gerenciar conteudo', 'Solicitacao'],
-            'cidadao' => ['Solicitacao'],
+            'diretor_licicon' => $permissions, // pode tudo
+            'gerente_licicon' => ['criar processos', 'dar seguimento processos', 'assinar processos'], // tudo menos gerenciar usuários
+            'colaborador_licicon' => ['dar seguimento processos'], // só dar seguimento
+            'prefeitura' => ['assinar processos'], // só assinar
         ];
 
         foreach ($roles as $roleName => $perms) {

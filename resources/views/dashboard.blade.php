@@ -1,113 +1,157 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-800">Painel da Prefeitura</h2>
-                <p class="mt-1 text-sm text-gray-500">Visão geral e ações rápidas do sistema</p>
+@extends('layouts.app')
+
+@section('title', 'Dashboard - Prefeitura')
+
+@section('content')
+<div class="py-6">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <!-- Cabeçalho -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Painel da Prefeitura</h2>
+            <p class="mt-1 text-sm text-gray-500">Visão geral do sistema</p>
+        </div>
+
+        <!-- Cartões de Estatísticas -->
+        <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
+            <!-- Cartão Processos -->
+            <div class="p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-700">Processos</h3>
+                    <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
+                        <i class="text-blue-600 fas fa-file-alt"></i>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-[#0596A2]">1.248</p>
+                    <p class="mt-1 text-sm text-gray-500">Total de processos</p>
+                </div>
+            </div>
+
+            <!-- Cartão Prefeituras -->
+            <div class="p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-700">Prefeituras</h3>
+                    <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-lg">
+                        <i class="text-green-600 fas fa-building"></i>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-[#0596A2]">12</p>
+                    <p class="mt-1 text-sm text-gray-500">Prefeituras cadastradas</p>
+                </div>
             </div>
         </div>
-    </x-slot>
 
-    <div class="py-6">
-        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <!-- Cartões de Estatísticas -->
-            <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
-                <!-- Cartão Notícias -->
-                <div class="overflow-hidden bg-white shadow-sm rounded-xl">
-                    <div class="px-6 py-5 border-b border-gray-100 bg-gray-50">
-                        <h3 class="text-base font-medium text-gray-700">Serviços Onlines</h3>
-                    </div>
-                    <div class="px-6 py-8 text-center">
-                        <p class="text-4xl font-bold text-[#0596A2]"> top </p>
-                        <div class="mt-2">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3" />
-                                </svg>
-                                Ativos
-                            </span>
+        <!-- Lista de Processos Recentes -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-sm">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h3 class="text-lg font-medium text-gray-700">Processos Recentes</h3>
+            </div>
+
+            <div class="divide-y divide-gray-100">
+                <!-- Processo 1 -->
+                <div class="px-6 py-4 transition-colors hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-800">Processo #2023-0001</p>
+                            <p class="text-sm text-gray-500">Licença Ambiental - Prefeitura de Cristino Castro</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="px-2 py-1 text-xs text-yellow-800 bg-yellow-100 rounded-full">Pendente</span>
                         </div>
                     </div>
-                    <div class="px-6 py-3 text-center border-t border-gray-100 bg-gray-50">
-                        <a href="#" class="text-sm font-medium text-[#0596A2] hover:text-[#047a85]">
-                            Ver todas
-                        </a>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <i class="mr-1 text-xs far fa-clock"></i>
+                            Criado em: 15/11/2023
+                        </span>
                     </div>
                 </div>
 
-                <!-- Cartão Acessos Rápidos -->
-                <div class="overflow-hidden bg-white shadow-sm rounded-xl">
-                    <div class="px-6 py-5 border-b border-gray-100 bg-gray-50">
-                        <h3 class="text-base font-medium text-gray-700">Card Solicitações</h3>
-                    </div>
-                    <div class="px-6 py-8 text-center">
-                        <p class="text-4xl font-bold text-[#0596A2]">Card</p>
-                        <div class="mt-2">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3" />
-                                </svg>
-                                Ativos
-                            </span>
+                <!-- Processo 2 -->
+                <div class="px-6 py-4 transition-colors hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-800">Processo #2023-0002</p>
+                            <p class="text-sm text-gray-500">Alvará de Construção - Prefeitura de Cristino Castro</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="px-2 py-1 text-xs text-green-800 bg-green-100 rounded-full">Aprovado</span>
                         </div>
                     </div>
-                    <div class="px-6 py-3 text-center border-t border-gray-100 bg-gray-50">
-                        <a href="#" class="text-sm font-medium text-[#0596A2] hover:text-[#047a85]">
-                            Gerenciar
-                        </a>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <i class="mr-1 text-xs far fa-clock"></i>
+                            Criado em: 14/11/2023
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Processo 3 -->
+                <div class="px-6 py-4 transition-colors hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-800">Processo #2023-0003</p>
+                            <p class="text-sm text-gray-500">IPTU - Prefeitura de Cristino Castro</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full">Em análise</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <i class="mr-1 text-xs far fa-clock"></i>
+                            Criado em: 13/11/2023
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Processo 4 -->
+                <div class="px-6 py-4 transition-colors hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-800">Processo #2023-0004</p>
+                            <p class="text-sm text-gray-500">Alvará de Funcionamento - Prefeitura de Cristino Castro</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="px-2 py-1 text-xs text-red-800 bg-red-100 rounded-full">Rejeitado</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <i class="mr-1 text-xs far fa-clock"></i>
+                            Criado em: 12/11/2023
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Processo 5 -->
+                <div class="px-6 py-4 transition-colors hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-800">Processo #2023-0005</p>
+                            <p class="text-sm text-gray-500">Licença Sanitária - Prefeitura de Cristino Castro</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="px-2 py-1 text-xs text-green-800 bg-green-100 rounded-full">Aprovado</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span class="flex items-center">
+                            <i class="mr-1 text-xs far fa-clock"></i>
+                            Criado em: 10/11/2023
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Ações Rápidas -->
-            <div class="mb-6 overflow-hidden bg-white shadow-sm rounded-xl">
-                <div class="px-6 py-5 border-b border-gray-100 bg-gray-50">
-                    <h3 class="text-lg font-medium text-gray-700">Ações Rápidas</h3>
-                </div>
-                <div class="p-6">
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        <a href="#"
-                           class="flex flex-col items-center p-4 transition-colors border border-gray-200 rounded-lg hover:bg-gray-50 group">
-                            <div class="flex items-center justify-center w-12 h-12 mb-3 text-white bg-[#0596A2] rounded-lg group-hover:bg-[#047a85]">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-center text-gray-700">Novo Serviço Online</span>
-                        </a>
-
-                        <a href="#"
-                           class="flex flex-col items-center p-4 transition-colors border border-gray-200 rounded-lg hover:bg-gray-50 group">
-                            <div class="flex items-center justify-center w-12 h-12 mb-3 text-white bg-[#0596A2] rounded-lg group-hover:bg-[#047a85]">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-center text-gray-700">Gerenciar Serviços Online</span>
-                        </a>
-
-                        <a href="#"
-                           class="flex flex-col items-center p-4 transition-colors border border-gray-200 rounded-lg hover:bg-gray-50 group">
-                            <div class="flex items-center justify-center w-12 h-12 mb-3 text-white bg-[#0596A2] rounded-lg group-hover:bg-[#047a85]">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-center text-gray-700">Nova Solicitação</span>
-                        </a>
-
-                        <a href="#"
-                            class="flex flex-col items-center p-4 transition-colors border border-gray-200 rounded-lg hover:bg-gray-50 group">
-                            <div class="flex items-center justify-center w-12 h-12 mb-3 text-white bg-[#0596A2] rounded-lg group-hover:bg-[#047a85]">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                                </svg>
-                            </div>
-                            <span class="text-sm font-medium text-center text-gray-700">Gerenciar Solicitações</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+                <a href="#" class="text-sm font-medium text-[#0596A2] hover:text-[#047a85] flex items-center justify-center">
+                    Ver todos os processos
+                    <i class="ml-2 text-xs fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection
