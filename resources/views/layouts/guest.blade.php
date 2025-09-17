@@ -58,15 +58,6 @@
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-white border-opacity-20"></div>
                     </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-2 text-xs text-white bg-[#009496]">OU</span>
-                    </div>
-                </div>
-
-                <div class="mt-6 text-sm text-center text-white">
-                    Não tem uma conta? <a href="#"
-                        class="font-semibold text-[#FF9E1F] hover:underline transition-colors duration-300">Solicitar
-                        acesso</a>
                 </div>
             </div>
         </div>
