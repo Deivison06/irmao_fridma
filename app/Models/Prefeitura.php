@@ -25,4 +25,9 @@ class Prefeitura extends Model
     {
         return $this->hasMany(Unidade::class);
     }
+
+    public function processos(): HasMany
+    {
+        return $this->hasMany(Processo::class);
+    }
 }

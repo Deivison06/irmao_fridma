@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\PrefeituraController;
 use App\Http\Controllers\UnidadeController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ProcessoController;
+use App\Http\Controllers\PrefeituraController;
 
 // Rotas de perfil
 Route::middleware('auth')->group(function () {
@@ -45,6 +46,16 @@ Route::prefix('admin')
         Route::get('unidades/{id}', [UnidadeController::class, 'getUnidade'])->name('unidades.get');
         Route::put('unidades/{id}', [UnidadeController::class, 'updateUnidade'])->name('unidades.update');
         Route::delete('unidades/{id}', [UnidadeController::class, 'destroyUnidade'])->name('unidades.destroy');
+
+        Route::resource('processos', ProcessoController::class)->names([
+            'index' => 'processos.index',
+            'create' => 'processos.create',
+            'store' => 'processos.store',
+            'show' => 'processos.show',
+            'edit' => 'processos.edit',
+            'update' => 'processos.update',
+            'destroy' => 'processos.destroy'
+        ]);
     });
 
 require __DIR__ . '/auth.php';

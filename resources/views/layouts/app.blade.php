@@ -593,7 +593,7 @@
 
                 <div class="nav-section-title">Conteúdo do Site</div>
 
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.processos.index') }}" class="nav-item">
                     <i class="nav-icon fas fa-clipboard-list"></i>
                     <span>PROCESSOS</span>
                 </a>
@@ -653,15 +653,15 @@
 
         <div class="page-content fade-in">
             <!-- Banner de boas-vindas -->
-            <div class="welcome-banner slide-in">
-                <div class="welcome-text">
-                    <h2>Olá, {{ auth()->user()->name ?? 'Administrador' }}!</h2>
-                    <p>Bem-vindo à plataforma de administração da Licicon Consultoria e Assessoria Administrativa. Aqui você pode gerenciar todos os aspectos do sistema.</p>
+                <div class="welcome-banner slide-in">
+                    <div class="welcome-text">
+                        <h2>@yield('page-title', 'Olá, ' . (auth()->user()->name ?? 'Administrador') . '!')</h2>
+                        <p>@yield('page-subtitle', 'Bem-vindo à plataforma de administração da Licicon Consultoria e Assessoria Administrativa. Aqui você pode gerenciar todos os aspectos do sistema.')</p>
+                    </div>
+                    <div class="welcome-icon">
+                        <i class="fas fa-building-circle-check"></i>
+                    </div>
                 </div>
-                <div class="welcome-icon">
-                    <i class="fas fa-building-circle-check"></i>
-                </div>
-            </div>
 
             @yield('content')
         </div>
