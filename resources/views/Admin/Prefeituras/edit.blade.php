@@ -379,5 +379,26 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Máscara de CNPJ
+        const cnpjInput = document.getElementById('cnpj');
+        if (cnpjInput) {
+            IMask(cnpjInput, {
+                mask: '00.000.000/0000-00'
+            });
+        }
+
+        // Máscara de Telefone (suporta fixo e celular)
+        const telefoneInput = document.getElementById('telefone');
+        if (telefoneInput) {
+            IMask(telefoneInput, {
+                mask: [
+                    { mask: '(00) 0000-0000' },
+                    { mask: '(00) 00000-0000' }
+                ]
+            });
+        }
+    });
 </script>
 @endsection

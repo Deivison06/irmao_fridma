@@ -7,7 +7,7 @@
             <p class="mt-1 text-sm text-gray-500">Gerencie as prefeituras cadastradas</p>
         </div>
         <a href="{{ route('admin.prefeituras.create') }}"
-           class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#009496] rounded-lg hover:bg-[#244853] transition-colors shadow-sm">
+            class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#009496] rounded-lg hover:bg-[#244853] transition-colors shadow-sm">
             Nova Prefeitura
         </a>
     </div>
@@ -35,18 +35,21 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($prefeituras as $prefeitura)
+                    @foreach ($prefeituras as $prefeitura)
                         <tr>
                             <td class="px-6 py-4">{{ $prefeitura->nome }}</td>
-                            <td class="px-6 py-4">{{ $prefeitura->cnpj }}</td>
+                            <td class="px-6 py-4" data-type="cnpj">{{ $prefeitura->cnpj }}</td>
                             <td class="px-6 py-4">{{ $prefeitura->email }}</td>
-                            <td class="px-6 py-4">{{ $prefeitura->telefone }}</td>
+                            <td class="px-6 py-4" data-type="telefone">{{ $prefeitura->telefone }}</td>
                             <td class="px-6 py-4 text-center">
-                                <a href="{{ route('admin.prefeituras.edit', $prefeitura->id) }}" class="text-yellow-600 hover:underline">Editar</a>
-                                <form action="{{ route('admin.prefeituras.destroy', $prefeitura->id) }}" method="POST" class="inline">
+                                <a href="{{ route('admin.prefeituras.edit', $prefeitura->id) }}"
+                                    class="text-yellow-600 hover:underline">Editar</a>
+                                <form action="{{ route('admin.prefeituras.destroy', $prefeitura->id) }}" method="POST"
+                                    class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('Excluir prefeitura?')" class="text-red-600 hover:underline">Excluir</button>
+                                    <button onclick="return confirm('Excluir prefeitura?')"
+                                        class="text-red-600 hover:underline">Excluir</button>
                                 </form>
                             </td>
                         </tr>
@@ -55,4 +58,35 @@
             </table>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Função para aplicar máscara CNPJ
+                function formatCNPJ(value) {
+                    return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+                }
+
+                // Função para aplicar máscara Telefone
+                function formatTelefone(value) {
+                    return value.replace(/^(\d{2})(\d{4,5})(\d{4})$/, "($1) $2-$3");
+                }
+
+                // CNPJs
+                document.querySelectorAll("td[data-type='cnpj']").forEach(function(el) {
+                    let onlyNumbers = el.innerText.replace(/\D/g, '');
+                    if (onlyNumbers.length === 14) {
+                        el.innerText = formatCNPJ(onlyNumbers);
+                    }
+                });
+
+                // Telefones
+                document.querySelectorAll("td[data-type='telefone']").forEach(function(el) {
+                    let onlyNumbers = el.innerText.replace(/\D/g, '');
+                    if (onlyNumbers.length >= 10) {
+                        el.innerText = formatTelefone(onlyNumbers);
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection
