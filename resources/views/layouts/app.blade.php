@@ -597,7 +597,7 @@
                     <span>PROCESSOS</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.prefeituras.index') }}" class="nav-item">
                     <i class="nav-icon fas fa-building"></i>
                     <span>PREFEITURAS</span>
                 </a>

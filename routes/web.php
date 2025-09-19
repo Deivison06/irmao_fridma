@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuarioController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrefeituraController;
+use App\Http\Controllers\UnidadeController;
 
 // Rotas de perfil
 Route::middleware('auth')->group(function () {
@@ -27,6 +29,22 @@ Route::prefix('admin')
         Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
         Route::put('/usuarios/{user}', [UsuarioController::class, 'update'])->name('usuarios.update');
         Route::delete('/usuarios/{user}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+
+        Route::resource('prefeituras', PrefeituraController::class)->names([
+            'index' => 'prefeituras.index',
+            'create' => 'prefeituras.create',
+            'store' => 'prefeituras.store',
+            'show' => 'prefeituras.show',
+            'edit' => 'prefeituras.edit',
+            'update' => 'prefeituras.update',
+            'destroy' => 'prefeituras.destroy'
+        ]);
+
+        // Rotas para unidades
+        Route::post('prefeituras/{prefeitura}/unidades', [UnidadeController::class, 'storeUnidade'])->name('prefeituras.unidades.store');
+        Route::get('unidades/{id}', [UnidadeController::class, 'getUnidade'])->name('unidades.get');
+        Route::put('unidades/{id}', [UnidadeController::class, 'updateUnidade'])->name('unidades.update');
+        Route::delete('unidades/{id}', [UnidadeController::class, 'destroyUnidade'])->name('unidades.destroy');
     });
 
 require __DIR__ . '/auth.php';
