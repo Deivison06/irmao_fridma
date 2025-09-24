@@ -39,7 +39,7 @@
                             <select name="modalidade" id="modalidade"
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
                                 <option value="">Selecione a modalidade</option>
-                                @foreach(\App\ModalidadeEnum::cases() as $modalidade)
+                                @foreach(\App\Enums\ModalidadeEnum::cases() as $modalidade)
                                     <option value="{{ $modalidade->value }}" {{ $processo->modalidade->value == $modalidade->value ? 'selected' : '' }}>
                                         {{ $modalidade->getDisplayName() }}
                                     </option>

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Processo;
 use App\enums\ModalidadeEnum;
+use App\Models\ProcessoDetalhe;
 
 class ProcessoService
 {
@@ -18,6 +19,11 @@ class ProcessoService
         }
 
         return Processo::create($data);
+    }
+
+    public function createDetalhe(array $data): ProcessoDetalhe
+    {
+        return ProcessoDetalhe::create($data);
     }
 
     /**

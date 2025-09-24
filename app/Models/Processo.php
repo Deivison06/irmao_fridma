@@ -30,4 +30,9 @@ class Processo extends Model
     {
         return $this->belongsTo(Prefeitura::class);
     }
+
+    public function detalhe()
+    {
+        return $this->hasOne(ProcessoDetalhe::class);
+    }
 }
