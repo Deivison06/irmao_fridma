@@ -197,18 +197,16 @@
                                     <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
                                         Unidade / Setor / Departamento
                                     </label>
-                                    <select id="unidade_setor"
-                                            x-model="unidade_setor"
-                                            @change="fetchServidor"
-                                            class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm">
+                                    <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
+                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
                                         <option value="">Selecione uma unidade</option>
                                         @foreach ($processo->prefeitura->unidades as $unidade)
-                                            <option value="{{ $unidade->id }}">
+                                            <option value="{{ $unidade->nome }}"
+                                                {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
                                                 {{ $unidade->nome }}
                                             </option>
                                         @endforeach
                                     </select>
-
                                 </div>
                                 <div class="flex pt-6 space-x-1">
                                     <button type="button" @click="saveField('unidade_setor')" x-show="!confirmed.unidade_setor"
@@ -468,23 +466,6 @@
                     }
                 },
 
-                async fetchServidor(event) {
-                    const unidadeId = event.target.value;
-                    if (!unidadeId) {
-                        this.servidor_responsavel = '';
-                        return;
-                    }
-
-                    try {
-                        const response = await fetch(`/unidades/${unidadeId}/servidor`);
-                        const data = await response.json();
-                        this.servidor_responsavel = data.servidor || '';
-                    } catch (error) {
-                        console.error("Erro ao buscar servidor responsável:", error);
-                        this.servidor_responsavel = '';
-                    }
-                }
-
                 async saveField(field) {
                     const formData = new FormData();
                     const value = this[field];
@@ -536,7 +517,6 @@
                         alert('Erro de rede ao salvar ' + field + '.');
                     }
                 },
-
 
                 submitForm() {
                     // Implementar lógica de submit do formulário completo
