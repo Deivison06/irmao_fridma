@@ -25,10 +25,12 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Documentos
                                     </th>
-                                    <th class="w-40 px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
+                                    <th
+                                        class="w-40 px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
                                         Ações
                                     </th>
                                 </tr>
@@ -38,11 +40,13 @@
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div
+                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                </path>
+                                                    </path>
                                                 </svg>
                                             </div>
                                             <div class="ml-4">
@@ -55,9 +59,9 @@
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
                                             <a href="{{ route('admin.processos.pdf', [
-                                                    'processo' => $processo->id,
-                                                    'documento' => 'capa'
-                                                ]) }}"
+                                                'processo' => $processo->id,
+                                                'documento' => 'capa',
+                                            ]) }}"
                                                 target="_blank"
                                                 class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
                                                 title="Visualizar PDF">
@@ -71,11 +75,13 @@
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div
+                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                </path>
+                                                    </path>
                                                 </svg>
                                             </div>
                                             <div class="ml-4">
@@ -88,9 +94,9 @@
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
                                             <a href="{{ route('admin.processos.pdf', [
-                                                    'processo' => $processo->id,
-                                                    'documento' => 'formalizacao'
-                                                ]) }}"
+                                                'processo' => $processo->id,
+                                                'documento' => 'formalizacao',
+                                            ]) }}"
                                                 target="_blank"
                                                 class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
                                                 title="Visualizar PDF">
@@ -100,15 +106,17 @@
                                     </td>
                                 </tr>
 
-                                 <!-- AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO -->
+                                <!-- AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO -->
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div
+                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                </path>
+                                                    </path>
                                                 </svg>
                                             </div>
                                             <div class="ml-4">
@@ -121,9 +129,9 @@
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
                                             <a href="{{ route('admin.processos.pdf', [
-                                                    'processo' => $processo->id,
-                                                    'documento' => 'autorizacao'
-                                                ]) }}"
+                                                'processo' => $processo->id,
+                                                'documento' => 'autorizacao',
+                                            ]) }}"
                                                 target="_blank"
                                                 class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
                                                 title="Visualizar PDF">
@@ -153,16 +161,20 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Prefeitura
                                     </th>
-                                    <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Modalidade
                                     </th>
-                                    <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Nº Processo
                                     </th>
-                                    <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Nº Procedimento
                                     </th>
                                 </tr>
@@ -171,11 +183,13 @@
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <div
+                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                </path>
+                                                    </path>
                                                 </svg>
                                             </div>
                                             <div class="ml-4">
@@ -186,7 +200,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full
+                                        <span
+                                            class="inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full
                                             @if ($processo->modalidade->value === 'dispensa') bg-purple-100 text-purple-800
                                             @elseif($processo->modalidade->value === 'inexigibilidade') bg-pink-100 text-pink-800
                                             @elseif($processo->modalidade->value === 'pregão') bg-blue-100 text-blue-800
@@ -241,9 +256,11 @@
                                 </select>
                             </div>
                             <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('unidade_setor')" x-show="!confirmed.unidade_setor"
-                                    :disabled="!unidade_setor" class="px-3 py-2 text-white transition rounded-lg"
-                                    :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'">
+                                <button type="button" @click="saveField('unidade_setor')"
+                                    x-show="!confirmed.unidade_setor" :disabled="!unidade_setor"
+                                    class="px-3 py-2 text-white transition rounded-lg"
+                                    :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' :
+                                        'bg-green-500 hover:bg-green-600'">
                                     ✔
                                 </button>
                                 <button type="button" @click="toggleConfirm('unidade_setor')"
@@ -260,11 +277,8 @@
                                 <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
                                     Servidor Responsável
                                 </label>
-                                <input type="text"
-                                    id="servidor_responsavel"
-                                    x-model="servidor_responsavel"
-                                    value="{{ $processo->detalhe->servidor_responsavel ?? '' }}"
-                                    readonly
+                                <input type="text" id="servidor_responsavel" x-model="servidor_responsavel"
+                                    value="{{ $processo->detalhe->servidor_responsavel ?? '' }}" readonly
                                     class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
                             </div>
                         </div>
@@ -273,7 +287,8 @@
                         <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
 
                         <x-form-field name="demanda" label="Demanda" type="textarea" />
-                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação" type="textarea" />
+                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação"
+                            type="textarea" />
 
                         <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
                         <x-form-field name="gestor" label="Gestor Indicado" />
@@ -281,7 +296,8 @@
                         <!-- Contratações Anteriores -->
                         <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
                             <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações anteriores?</span>
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações
+                                    anteriores?</span>
                                 <div class="flex mt-1 space-x-4">
                                     <label class="inline-flex items-center">
                                         <input type="radio" x-model="contratacoes_anteriores" value="sim"
@@ -326,7 +342,8 @@
 
                                     @foreach ($instrumentos as $value => $label)
                                         <div class="flex items-center">
-                                            <input type="checkbox" value="{{ $value }}" x-model="instrumento_vinculativo"
+                                            <input type="checkbox" value="{{ $value }}"
+                                                x-model="instrumento_vinculativo"
                                                 :disabled="confirmed.instrumento_vinculativo"
                                                 :checked="instrumento_vinculativo.includes('{{ $value }}')">
                                             <span class="ml-2 text-sm">{{ $label }}</span>
@@ -357,7 +374,8 @@
                         <!-- Prazo de Vigência -->
                         <div class="flex items-start space-x-2">
                             <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do Objeto</span>
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do
+                                    Objeto</span>
                                 <div class="mt-2 space-y-2">
                                     @php
                                         $prazos = [
@@ -483,6 +501,13 @@
                     objeto_continuado: !!existing?.objeto_continuado,
                 },
 
+                // Método para quando a unidade é alterada
+                onUnidadeChange() {
+                    if (this.unidade_setor) {
+                        this.saveField('unidade_setor');
+                    }
+                },
+
                 // Alterna o estado de confirmação
                 toggleConfirm(field) {
                     if (!this.confirmed[field]) {
@@ -497,7 +522,8 @@
                     const value = this[field];
 
                     formData.append('processo_id', {{ $processo->id }});
-                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                    'content'));
 
                     if (Array.isArray(value)) {
                         if (value.length === 0) {
@@ -528,13 +554,21 @@
                             body: formData
                         });
 
+                        const responseData = await response.json();
+
                         if (response.ok) {
                             this.confirmed[field] = true;
+
+                            // Se for unidade_setor e veio servidor_responsavel na resposta, atualiza o campo
+                            if (field === 'unidade_setor' && responseData.servidor_responsavel) {
+                                this.servidor_responsavel = responseData.servidor_responsavel;
+                                this.confirmed.servidor_responsavel = true;
+                            }
+
                             console.log(field + ' salvo com sucesso!');
                         } else {
                             this.confirmed[field] = false;
-                            const errorData = await response.json();
-                            console.error('Erro ao salvar campo:', field, errorData);
+                            console.error('Erro ao salvar campo:', field, responseData);
                             alert('Erro ao salvar ' + field + '. Verifique o console.');
                         }
                     } catch (error) {

@@ -22,4 +22,10 @@ class Unidade extends Model
     {
         return $this->belongsTo(Prefeitura::class);
     }
+
+    // Método para buscar o servidor responsável pelo nome da unidade
+    public static function getServidorByNome($nomeUnidade)
+    {
+        return static::where('nome', $nomeUnidade)->value('servidor_responsavel');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unidade;
 use App\Models\Processo;
 use App\Models\Prefeitura;
 use Illuminate\Http\Request;
@@ -85,27 +86,26 @@ class ProcessoController extends Controller
         // 1. Pega ou cria o detalhe do processo
         $detalhe = $processo->detalhe ?? new ProcessoDetalhe();
 
-        // 2. Prepara os dados (remover chaves não relacionadas às colunas)
+        // 2. Prepara os dados
         $dataToSave = $request->except(['_token', 'processo_id']);
 
-        // 3. O 'processo_id' é necessário para vincular, principalmente se for um NOVO registro
+        // 3. O 'processo_id' é necessário para vincular
         $detalhe->processo_id = $processo->id;
 
-        // 4. Se for um campo de array (checkboxes), trate-o
-        // O Laravel vai serializar campos de array (instrumento_vinculativo, prazo_vigencia)
-        // para JSON se você usar 'casts' no seu Model ProcessoDetalhe.
+        // 4. Se o campo sendo salvo for 'unidade_setor', buscar automaticamente o servidor_responsavel
+        if ($request->has('unidade_setor') && !empty($request->unidade_setor)) {
+            $servidorResponsavel = Unidade::getServidorByNome($request->unidade_setor);
 
-        // 5. Atualiza APENAS o campo enviado (ex: 'secretaria' ou 'demanda')
-        // Como você só envia 1 campo por vez (além dos arrays), podemos iterar sobre os dados restantes
+            // Atualiza o campo servidor_responsavel no detalhe
+            $detalhe->servidor_responsavel = $servidorResponsavel;
+        }
 
-        // Pega o nome do campo que está sendo salvo (é a chave que resta)
+        // 5. Pega o nome do campo que está sendo salvo
         $field = key($dataToSave);
         $value = reset($dataToSave);
 
-        // Se for um array de chaves (como checkboxes), você deve ter um 'casts' no seu Model
-        // (Ex: protected $casts = ['instrumento_vinculativo' => 'array'];)
+        // 6. Processa os dados conforme o tipo
         if (is_array($value)) {
-            // Se for um array, salve o array.
             $detalhe->{$field} = $value;
 
             // Trata os campos 'outro'
@@ -116,15 +116,20 @@ class ProcessoController extends Controller
                 $detalhe->prazo_vigencia_outro = $request->prazo_vigencia_outro;
             }
         } else {
-            // Se for um campo simples (texto, radio), salve-o.
             $detalhe->{$field} = $value;
         }
 
-
-        // 6. Salva as alterações (fará INSERT se for novo ou UPDATE se for existente)
+        // 7. Salva as alterações
         $detalhe->save();
 
-        return response()->json(['success' => true, 'data' => $detalhe->toArray()]);
+        // 8. Retorna o servidor_responsavel na resposta se for o caso
+        $responseData = ['success' => true, 'data' => $detalhe->toArray()];
+
+        if ($request->has('unidade_setor')) {
+            $responseData['servidor_responsavel'] = $servidorResponsavel ?? null;
+        }
+
+        return response()->json($responseData);
     }
 
     public function gerarPdf(Request $request, Processo $processo)
