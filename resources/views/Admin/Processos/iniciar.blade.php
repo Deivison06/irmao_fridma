@@ -186,78 +186,67 @@
                     x-data="formField({{ json_encode($processo->detalhe ?? null) }})" @submit.prevent="submitForm">
                     @csrf
 
-                    <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
-                        <!-- Coluna 1 -->
-                        <div class="space-y-6">
-                            <x-form-field name="secretaria" label="Secretaria" />
+                    <div class="space-y-6">
+                        <!-- Campos principais em sequência -->
+                        <x-form-field name="secretaria" label="Secretaria" />
 
-                            <!-- Unidade/Setor/Departamento -->
-                            <div class="flex items-start space-x-2">
-                                <div class="flex-1">
-                                    <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
-                                        Unidade / Setor / Departamento
-                                    </label>
-                                    <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
-                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                        <option value="">Selecione uma unidade</option>
-                                        @foreach ($processo->prefeitura->unidades as $unidade)
-                                            <option value="{{ $unidade->nome }}"
-                                                {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
-                                                {{ $unidade->nome }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex pt-6 space-x-1">
-                                    <button type="button" @click="saveField('unidade_setor')" x-show="!confirmed.unidade_setor"
-                                        :disabled="!unidade_setor" class="px-3 py-2 text-white transition rounded-lg"
-                                        :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'">
-                                        ✔
-                                    </button>
-                                    <button type="button" @click="toggleConfirm('unidade_setor')"
-                                        x-show="confirmed.unidade_setor"
-                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                        ✖
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Servidor Responsável -->
-                            <div class="flex items-start mb-4 space-x-2">
-                                <!-- Servidor Responsável -->
-                                <div class="flex items-start mb-4 space-x-2">
-                                    <div class="flex-1">
-                                        <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
-                                            Servidor Responsável
-                                        </label>
-                                        <input type="text"
-                                            id="servidor_responsavel"
-                                            x-model="servidor_responsavel"
-                                            value="{{ $processo->detalhe->servidor_responsavel ?? '' }}"
-                                            readonly
-                                            class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
-                            <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
-                        </div>
-
-                        <!-- Coluna 2 -->
-                        <div class="space-y-6">
-                            <x-form-field name="demanda" label="Demanda" type="textarea" />
-                            <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação" type="textarea" />
-
-                            <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
-                            <x-form-field name="gestor" label="Gestor Indicado" />
-                        </div>
-                    </div>
-
-                    <!-- Campos de Opções (full width) -->
-                    <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
-                        <!-- Contratações Anteriores -->
+                        <!-- Unidade/Setor/Departamento -->
                         <div class="flex items-start space-x-2">
+                            <div class="flex-1">
+                                <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
+                                    Unidade / Setor / Departamento
+                                </label>
+                                <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
+                                    class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                    <option value="">Selecione uma unidade</option>
+                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                        <option value="{{ $unidade->nome }}"
+                                            {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                            {{ $unidade->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="flex pt-6 space-x-1">
+                                <button type="button" @click="saveField('unidade_setor')" x-show="!confirmed.unidade_setor"
+                                    :disabled="!unidade_setor" class="px-3 py-2 text-white transition rounded-lg"
+                                    :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'">
+                                    ✔
+                                </button>
+                                <button type="button" @click="toggleConfirm('unidade_setor')"
+                                    x-show="confirmed.unidade_setor"
+                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                    ✖
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Servidor Responsável -->
+                        <div class="flex items-start space-x-2">
+                            <div class="flex-1">
+                                <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
+                                    Servidor Responsável
+                                </label>
+                                <input type="text"
+                                    id="servidor_responsavel"
+                                    x-model="servidor_responsavel"
+                                    value="{{ $processo->detalhe->servidor_responsavel ?? '' }}"
+                                    readonly
+                                    class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
+                            </div>
+                        </div>
+
+                        <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
+                        <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
+
+                        <x-form-field name="demanda" label="Demanda" type="textarea" />
+                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação" type="textarea" />
+
+                        <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
+                        <x-form-field name="gestor" label="Gestor Indicado" />
+
+                        <!-- Contratações Anteriores -->
+                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
                             <div class="flex-1">
                                 <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações anteriores?</span>
                                 <div class="flex mt-1 space-x-4">
@@ -290,33 +279,35 @@
                         </div>
 
                         <!-- Instrumento Vinculativo -->
-                        <div>
-                            <span class="block mb-1 text-sm font-medium text-gray-700">Instrumento Vinculativo</span>
-                            <div class="mt-2 space-y-2">
-                                @php
-                                    $instrumentos = [
-                                        'contrato' => 'Contrato',
-                                        'ata_registro_precos' => 'Ata de Registro de Preços',
-                                        'outro' => 'Outro',
-                                    ];
-                                @endphp
+                        <div class="flex items-start space-x-2">
+                            <div class="flex-1">
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Instrumento Vinculativo</span>
+                                <div class="mt-2 space-y-2">
+                                    @php
+                                        $instrumentos = [
+                                            'contrato' => 'Contrato',
+                                            'ata_registro_precos' => 'Ata de Registro de Preços',
+                                            'outro' => 'Outro',
+                                        ];
+                                    @endphp
 
-                                @foreach ($instrumentos as $value => $label)
-                                    <div class="flex items-center">
-                                        <input type="checkbox" value="{{ $value }}" x-model="instrumento_vinculativo"
-                                            :disabled="confirmed.instrumento_vinculativo"
-                                            :checked="instrumento_vinculativo.includes('{{ $value }}')">
-                                        <span class="ml-2 text-sm">{{ $label }}</span>
-                                        @if ($value === 'outro')
-                                            <input type="text" x-show="instrumento_vinculativo.includes('outro')"
-                                                x-model="instrumento_vinculativo_outro"
+                                    @foreach ($instrumentos as $value => $label)
+                                        <div class="flex items-center">
+                                            <input type="checkbox" value="{{ $value }}" x-model="instrumento_vinculativo"
                                                 :disabled="confirmed.instrumento_vinculativo"
-                                                class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                        @endif
-                                    </div>
-                                @endforeach
+                                                :checked="instrumento_vinculativo.includes('{{ $value }}')">
+                                            <span class="ml-2 text-sm">{{ $label }}</span>
+                                            @if ($value === 'outro')
+                                                <input type="text" x-show="instrumento_vinculativo.includes('outro')"
+                                                    x-model="instrumento_vinculativo_outro"
+                                                    :disabled="confirmed.instrumento_vinculativo"
+                                                    class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="flex mt-2 space-x-1">
+                            <div class="flex pt-6 space-x-1">
                                 <button type="button" @click="saveField('instrumento_vinculativo')"
                                     x-show="!confirmed.instrumento_vinculativo"
                                     class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
@@ -331,32 +322,34 @@
                         </div>
 
                         <!-- Prazo de Vigência -->
-                        <div>
-                            <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do Objeto</span>
-                            <div class="mt-2 space-y-2">
-                                @php
-                                    $prazos = [
-                                        'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
-                                        '12_meses' => 'Vigência de 12 meses',
-                                        'outro' => 'Outro',
-                                    ];
-                                @endphp
+                        <div class="flex items-start space-x-2">
+                            <div class="flex-1">
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do Objeto</span>
+                                <div class="mt-2 space-y-2">
+                                    @php
+                                        $prazos = [
+                                            'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
+                                            '12_meses' => 'Vigência de 12 meses',
+                                            'outro' => 'Outro',
+                                        ];
+                                    @endphp
 
-                                @foreach ($prazos as $value => $label)
-                                    <div class="flex items-center">
-                                        <input type="checkbox" value="{{ $value }}" x-model="prazo_vigencia"
-                                            :disabled="confirmed.prazo_vigencia"
-                                            :checked="prazo_vigencia.includes('{{ $value }}')">
-                                        <span class="ml-2 text-sm">{{ $label }}</span>
-                                        @if ($value === 'outro')
-                                            <input type="text" x-show="prazo_vigencia.includes('outro')"
-                                                x-model="prazo_vigencia_outro" :disabled="confirmed.prazo_vigencia"
-                                                class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                        @endif
-                                    </div>
-                                @endforeach
+                                    @foreach ($prazos as $value => $label)
+                                        <div class="flex items-center">
+                                            <input type="checkbox" value="{{ $value }}" x-model="prazo_vigencia"
+                                                :disabled="confirmed.prazo_vigencia"
+                                                :checked="prazo_vigencia.includes('{{ $value }}')">
+                                            <span class="ml-2 text-sm">{{ $label }}</span>
+                                            @if ($value === 'outro')
+                                                <input type="text" x-show="prazo_vigencia.includes('outro')"
+                                                    x-model="prazo_vigencia_outro" :disabled="confirmed.prazo_vigencia"
+                                                    class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="flex mt-2 space-x-1">
+                            <div class="flex pt-6 space-x-1">
                                 <button type="button" @click="saveField('prazo_vigencia')"
                                     x-show="!confirmed.prazo_vigencia"
                                     class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
@@ -369,43 +362,43 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Objeto Continuado -->
-                    <div class="flex items-start mb-6 space-x-2">
-                        <div class="flex-1">
-                            <span class="block mb-1 text-sm font-medium text-gray-700">Objeto Continuado?</span>
-                            <div class="flex mt-1 space-x-4">
-                                <label class="inline-flex items-center">
-                                    <input type="radio" x-model="objeto_continuado" value="sim"
-                                        :disabled="confirmed.objeto_continuado"
-                                        :checked="objeto_continuado === 'sim'">
-                                    <span class="ml-2">Sim</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" x-model="objeto_continuado" value="nao"
-                                        :disabled="confirmed.objeto_continuado"
-                                        :checked="objeto_continuado === 'nao'">
-                                    <span class="ml-2">Não</span>
-                                </label>
+                        <!-- Objeto Continuado -->
+                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                            <div class="flex-1">
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Objeto Continuado?</span>
+                                <div class="flex mt-1 space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" x-model="objeto_continuado" value="sim"
+                                            :disabled="confirmed.objeto_continuado"
+                                            :checked="objeto_continuado === 'sim'">
+                                        <span class="ml-2">Sim</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" x-model="objeto_continuado" value="nao"
+                                            :disabled="confirmed.objeto_continuado"
+                                            :checked="objeto_continuado === 'nao'">
+                                        <span class="ml-2">Não</span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex pt-6 space-x-1">
-                            <button type="button" @click="saveField('objeto_continuado')"
-                                x-show="!confirmed.objeto_continuado"
-                                class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                ✔
-                            </button>
-                            <button type="button" @click="toggleConfirm('objeto_continuado')"
-                                x-show="confirmed.objeto_continuado"
-                                class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                ✖
-                            </button>
+                            <div class="flex pt-6 space-x-1">
+                                <button type="button" @click="saveField('objeto_continuado')"
+                                    x-show="!confirmed.objeto_continuado"
+                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                    ✔
+                                </button>
+                                <button type="button" @click="toggleConfirm('objeto_continuado')"
+                                    x-show="confirmed.objeto_continuado"
+                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                    ✖
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Botões de Ação -->
-                    <div class="flex justify-end pt-6 space-x-3 border-t border-gray-200">
+                    <div class="flex justify-end pt-6 mt-6 space-x-3 border-t border-gray-200">
                         <a href="{{ route('admin.processos.index') }}"
                             class="px-6 py-2 text-sm font-medium text-gray-600 transition-colors duration-200 bg-gray-100 rounded-lg hover:bg-gray-200">
                             Cancelar
