@@ -73,7 +73,10 @@ Route::prefix('admin')
 
         // Rota extra para iniciar processo (se não for o mesmo que create)
         Route::get('processos/{processo}/iniciar', [ProcessoController::class, 'iniciar'])->name('processos.iniciar');
-        Route::Post('processos/{processo}/iniciar', [ProcessoController::class, 'storeDetalhe'])->name('processos.detalhes.store');
+        Route::post('processos/{processo}/iniciar', [ProcessoController::class, 'storeDetalhe'])->name('processos.detalhes.store');
+        Route::get('processos/{processo}/pdf', [ProcessoController::class, 'gerarPdf'])->name('processos.pdf');
+        Route::get('/processos/{processo}/visualizar-pdf', [ProcessoController::class, 'visualizarPdf'])
+         ->name('processos.visualizar-pdf');
     });
 
 require __DIR__ . '/auth.php';

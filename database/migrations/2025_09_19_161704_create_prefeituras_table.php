@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('telefone', 20);
             $table->string('email');
             $table->string('autoridade_competente');
+            $table->string('capa')->nullable();
+            $table->string('timbre')->nullable();
             $table->timestamps();
         });
     }

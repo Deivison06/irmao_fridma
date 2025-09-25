@@ -18,7 +18,9 @@ class Prefeitura extends Model
         'endereco',
         'telefone',
         'email',
-        'autoridade_competente'
+        'autoridade_competente',
+        'capa',
+        'timbre'
     ];
 
     public function unidades(): HasMany

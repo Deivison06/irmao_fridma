@@ -593,12 +593,12 @@
 
                 <div class="nav-section-title">Conteúdo do Site</div>
 
-                <a href="{{ route('admin.processos.index') }}" class="nav-item">
+                <a href="{{ route('admin.processos.index') }}" class="nav-item {{ request()->routeIs('admin.processos.*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-clipboard-list"></i>
                     <span>PROCESSOS</span>
                 </a>
 
-                <a href="{{ route('admin.prefeituras.index') }}" class="nav-item">
+                <a href="{{ route('admin.prefeituras.index') }}" class="nav-item {{ request()->routeIs('admin.prefeituras.*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-building"></i>
                     <span>PREFEITURAS</span>
                 </a>

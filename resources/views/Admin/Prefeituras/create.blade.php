@@ -13,8 +13,8 @@
                 <h3 class="text-lg font-medium text-gray-700">Informações da Prefeitura</h3>
             </div>
             <div class="p-6">
-                <form action="{{ route('admin.prefeituras.store') }}" method="POST">
-                    @csrf
+                <form action="{{ route('admin.prefeituras.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div>
@@ -67,6 +67,23 @@
                             <input type="text" name="autoridade_competente" id="autoridade_competente" value="{{ old('autoridade_competente') }}"
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
                             @error('autoridade_competente')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="capa" class="block text-sm font-medium text-gray-700">Capa</label>
+                            <input type="file" name="capa" id="capa"
+                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                            @error('capa')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="timbre" class="block text-sm font-medium text-gray-700">Timbre</label>
+                            <input type="file" name="timbre" id="timbre"
+                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                            @error('timbre')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
