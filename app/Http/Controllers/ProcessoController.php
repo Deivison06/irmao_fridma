@@ -6,6 +6,7 @@ use App\Models\Processo;
 use App\Models\Prefeitura;
 use Illuminate\Http\Request;
 use App\Models\ProcessoDetalhe;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ProcessoService;
 use App\Http\Requests\ProcessoRequest;
 use App\Http\Requests\ProcessoDetalheRequest;
@@ -114,7 +115,6 @@ class ProcessoController extends Controller
             if ($field === 'prazo_vigencia' && $request->has('prazo_vigencia_outro')) {
                 $detalhe->prazo_vigencia_outro = $request->prazo_vigencia_outro;
             }
-
         } else {
             // Se for um campo simples (texto, radio), salve-o.
             $detalhe->{$field} = $value;
@@ -127,30 +127,50 @@ class ProcessoController extends Controller
         return response()->json(['success' => true, 'data' => $detalhe->toArray()]);
     }
 
-    public function gerarPdf(Processo $processo)
+    public function gerarPdf(Request $request, Processo $processo)
     {
+        $documento = $request->query('documento', 'capa'); // default capa
+
+        // Carrega relacionamentos
+        $processo->load(['detalhe', 'prefeitura']);
+
+        $data = [
+            'processo' => $processo,
+            'prefeitura' => $processo->prefeitura,
+            'detalhe' => $processo->detalhe,
+            'dataGeracao' => now()->format('d/m/Y H:i:s'),
+        ];
+
+        // Define a view com base na flag
+        $view = match ($documento) {
+            'capa' => 'Admin.Processos.pdf.capa',
+            'formalizacao' => 'Admin.Processos.pdf.formalizacao',
+            default => 'Admin.Processos.pdf.capa'
+        };
+
         try {
-            $pdf = $this->service->gerarPdf($processo);
-            $nomeArquivo = $this->service->getNomeArquivo($processo);
+            $pdf = Pdf::loadView($view, $data)
+                ->setPaper('a4', 'portrait')
+                ->setOption([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                ]);
 
-            return $pdf->download($nomeArquivo);
+            $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
 
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Erro ao gerar PDF: ' . $e->getMessage());
+            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd_His') . '.pdf';
+
+            if ($request->query('download') == 1) {
+                return $pdf->download($nomeArquivo);
+            }
+
+            return $pdf->stream($nomeArquivo);
+
+
+        }  catch (\Exception $e) {
+            dd($e->getMessage()); // 👈 mostra o erro real no navegador
         }
     }
-    public function visualizarPdf(Processo $processo)
-    {
-        try {
-            $pdf = $this->service->gerarPdf($processo);
-            return $pdf->stream('processo.pdf');
 
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Erro ao visualizar PDF: ' . $e->getMessage());
-        }
-    }
 }
