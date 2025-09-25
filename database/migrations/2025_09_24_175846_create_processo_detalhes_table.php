@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('processo_detalhes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('processo_id')->constrained('processos')->onDelete('cascade');
-
+            // Novos campos adicionados
+            $table->enum('tipo_procedimento', ['compras', 'servicos'])->nullable();
+            $table->enum('tipo_contratacao', ['lote', 'item'])->nullable();
             $table->string('secretaria')->nullable();
             $table->string('unidade_setor')->nullable();
             $table->string('servidor_responsavel')->nullable();

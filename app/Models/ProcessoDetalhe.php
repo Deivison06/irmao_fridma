@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\TipoContratacaoEnum;
+use App\Enums\TipoProcedimentoEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +15,8 @@ class ProcessoDetalhe extends Model
 
     protected $fillable = [
         'processo_id',
+        'tipo_procedimento', // Novo campo
+        'tipo_contratacao',  // Novo campo
         'secretaria',
         'unidade_setor',
         'servidor_responsavel',
@@ -33,6 +37,8 @@ class ProcessoDetalhe extends Model
     protected $casts = [
         'instrumento_vinculativo' => 'array',
         'prazo_vigencia' => 'array',
+        'tipo_procedimento' => TipoProcedimentoEnum::class,
+        'tipo_contratacao' => TipoContratacaoEnum::class,
     ];
 
     /**
