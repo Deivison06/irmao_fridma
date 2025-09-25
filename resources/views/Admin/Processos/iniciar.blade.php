@@ -99,6 +99,39 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                 <!-- AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO -->
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                                </path>
+                                                </svg>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex justify-center">
+                                            <a href="{{ route('admin.processos.pdf', [
+                                                    'processo' => $processo->id,
+                                                    'documento' => 'autorizacao'
+                                                ]) }}"
+                                                target="_blank"
+                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
+                                                title="Visualizar PDF">
+                                                Gerar PDF
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

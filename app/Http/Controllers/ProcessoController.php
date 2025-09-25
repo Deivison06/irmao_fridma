@@ -129,7 +129,7 @@ class ProcessoController extends Controller
 
     public function gerarPdf(Request $request, Processo $processo)
     {
-        $documento = $request->query('documento', 'capa'); // default capa
+        $documento = $request->query('documento', 'capa', 'autorizacao'); // default capa
 
         // Carrega relacionamentos
         $processo->load(['detalhe', 'prefeitura']);
@@ -145,6 +145,7 @@ class ProcessoController extends Controller
         $view = match ($documento) {
             'capa' => 'Admin.Processos.pdf.capa',
             'formalizacao' => 'Admin.Processos.pdf.formalizacao',
+            'autorizacao' => 'Admin.Processos.pdf.autorizacao',
             default => 'Admin.Processos.pdf.capa'
         };
 
