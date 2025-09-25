@@ -53,27 +53,28 @@ class ProcessoService
      * Gera PDF do processo sem salvar no sistema
      */
     public function gerarPdf(Processo $processo)
-{
-    $processo->load(['detalhe', 'prefeitura']);
+    {
+        // Carrega os relacionamentos necessários
+        $processo->load(['detalhe', 'prefeitura']);
 
-    $data = [
-        'processo' => $processo,
-        'prefeitura' => $processo->prefeitura,
-        'detalhe' => $processo->detalhe,
-        'dataGeracao' => now()->format('d/m/Y H:i:s'),
-    ];
+        $data = [
+            'processo' => $processo,
+            'prefeitura' => $processo->prefeitura,
+            'detalhe' => $processo->detalhe,
+            'dataGeracao' => now()->format('d/m/Y H:i:s'),
+        ];
 
-    $pdf = Pdf::loadView('Admin.Processos.pdf.capa', $data)
-        ->setPaper('a4', 'portrait')
-        ->setOption([
-            'defaultFont' => 'Montserrat', // aqui
-            'isHtml5ParserEnabled' => true,
-            'isRemoteEnabled' => true,
-        ]);
+        // Configurações do PDF
+        $pdf = Pdf::loadView('Admin.Processos.pdf.capa', $data)
+            ->setPaper('a4', 'portrait')
+            ->setOption([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+            ]);
 
-    return $pdf->stream('processo.pdf');
-}
-
+        return $pdf;
+    }
 
     /**
      * Obtém o nome do arquivo PDF
