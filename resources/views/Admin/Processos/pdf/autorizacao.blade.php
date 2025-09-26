@@ -119,7 +119,7 @@
     {{-- Bloco de data e assinatura --}}
         <div style="margin-top: 60px; text-align: right; font-size: 12px;">
             {{ $processo->prefeitura->nome }},
-            {{ \Carbon\Carbon::now()->translatedFormat('d \d\e F \d\e Y') }}
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
     <div style="margin-top: 60px; text-align: center; font-size: 12px;">
