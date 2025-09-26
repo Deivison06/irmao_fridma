@@ -134,9 +134,9 @@ class ProcessoController extends Controller
 
     public function gerarPdf(Request $request, Processo $processo)
     {
-        $documento = $request->query('documento', 'capa', 'autorizacao'); // default capa
+        $documento = $request->query('documento', 'capa');
+        $dataSelecionada = $request->query('data'); // 👈 pega a data do input
 
-        // Carrega relacionamentos
         $processo->load(['detalhe', 'prefeitura']);
 
         $data = [
@@ -144,38 +144,31 @@ class ProcessoController extends Controller
             'prefeitura' => $processo->prefeitura,
             'detalhe' => $processo->detalhe,
             'dataGeracao' => now()->format('d/m/Y H:i:s'),
+            'dataSelecionada' => $dataSelecionada, // 👈 envia para a view do PDF
         ];
 
-        // Define a view com base na flag
         $view = match ($documento) {
             'capa' => 'Admin.Processos.pdf.capa',
             'formalizacao' => 'Admin.Processos.pdf.formalizacao',
             'autorizacao' => 'Admin.Processos.pdf.autorizacao',
+            'estudo_tecnico' => 'Admin.Processos.pdf.estudo_tecnico',
             default => 'Admin.Processos.pdf.capa'
         };
 
         try {
             $pdf = Pdf::loadView($view, $data)
-                ->setPaper('a4', 'portrait')
-                ->setOption([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                ]);
+                ->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
 
             $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd_His') . '.pdf';
 
-            if ($request->query('download') == 1) {
-                return $pdf->download($nomeArquivo);
-            }
+            return $request->query('download') == 1
+                ? $pdf->download($nomeArquivo)
+                : $pdf->stream($nomeArquivo);
 
-            return $pdf->stream($nomeArquivo);
-
-
-        }  catch (\Exception $e) {
-            dd($e->getMessage()); // 👈 mostra o erro real no navegador
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
     }
 

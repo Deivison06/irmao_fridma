@@ -15,9 +15,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Rota inicial -> Dashboard
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
+Route::get('/', [PrefeituraController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 // Grupo admin
 Route::prefix('admin')

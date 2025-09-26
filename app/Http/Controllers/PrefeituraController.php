@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prefeitura;
 use App\Models\Unidade;
+use App\Models\Processo;
+use App\Models\Prefeitura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -133,4 +134,13 @@ class PrefeituraController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir prefeitura: ' . $e->getMessage());
         }
     }
+
+    public function dashboard()
+    {
+        $processos = Processo::all();
+        $prefeituras = Prefeitura::all();
+
+        return view('dashboard', compact('processos', 'prefeituras'));
+    }
+
 }

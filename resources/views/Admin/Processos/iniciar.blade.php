@@ -30,113 +30,105 @@
                                         Documentos
                                     </th>
                                     <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
+                                        Data
+                                    </th>
+                                    <th
                                         class="w-40 px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
                                         Ações
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <!-- Capa do documento -->
+                                <!-- CAPA -->
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div
-                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">
-                                                    Capa do documento
-                                                </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                Capa do documento
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="date" class="px-2 py-1 border rounded" id="data_capa">
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
-                                            <a href="{{ route('admin.processos.pdf', [
-                                                'processo' => $processo->id,
-                                                'documento' => 'capa',
-                                            ]) }}"
-                                                target="_blank"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
-                                                title="Visualizar PDF">
+                                            <button type="button"
+                                                onclick="gerarPdf('{{ $processo->id }}', 'capa', document.getElementById('data_capa').value)"
+                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
                                                 Gerar PDF
-                                            </a>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
 
-                                <!-- Documento Formalização de Demanda -->
+                                <!-- FORMALIZAÇÃO -->
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div
-                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">
-                                                    DOCUMENTO FORMALIZAÇÃO DE DEMANDA
-                                                </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                DOCUMENTO FORMALIZAÇÃO DE DEMANDA
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="date" class="px-2 py-1 border rounded" id="data_formalizacao">
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
-                                            <a href="{{ route('admin.processos.pdf', [
-                                                'processo' => $processo->id,
-                                                'documento' => 'formalizacao',
-                                            ]) }}"
-                                                target="_blank"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
-                                                title="Visualizar PDF">
+                                            <button type="button"
+                                                onclick="gerarPdf('{{ $processo->id }}', 'formalizacao', document.getElementById('data_formalizacao').value)"
+                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
                                                 Gerar PDF
-                                            </a>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
 
-                                <!-- AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO -->
+                                <!-- AUTORIZAÇÃO -->
                                 <tr class="transition-colors duration-200 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div
-                                                class="flex-shrink-0 w-8 h-8 rounded-full bg-[#009496]/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-[#009496]" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-6 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">
-                                                    AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO
-                                                </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="date" class="px-2 py-1 border rounded" id="data_autorizacao">
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
-                                            <a href="{{ route('admin.processos.pdf', [
-                                                'processo' => $processo->id,
-                                                'documento' => 'autorizacao',
-                                            ]) }}"
-                                                target="_blank"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700"
-                                                title="Visualizar PDF">
+                                            <button type="button"
+                                                onclick="gerarPdf('{{ $processo->id }}', 'autorizacao', document.getElementById('data_autorizacao').value)"
+                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
                                                 Gerar PDF
-                                            </a>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- ESTUDO TÉCNICO -->
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                ESTUDO TÉCNICO PRELIMINAR E MAPA DE RISCOS, CERTIDÃO PLANO DE CONTRATAÇÃO
+                                                ANUAL
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <input type="date" class="px-2 py-1 border rounded" id="data_estudo_tecnico">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex justify-center">
+                                            <button type="button"
+                                                onclick="gerarPdf('{{ $processo->id }}', 'estudo_tecnico', document.getElementById('data_estudo_tecnico').value)"
+                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
+                                                Gerar PDF
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -533,6 +525,16 @@
     </div>
 
     <script>
+        function gerarPdf(processoId, documento, dataSelecionada) {
+            if (!dataSelecionada) {
+                alert("Por favor, selecione a data antes de gerar o PDF.");
+                return;
+            }
+
+            const url = `/admin/processos/${processoId}/pdf?documento=${documento}&data=${dataSelecionada}`;
+            window.open(url, '_blank');
+        }
+
         function formField(existing = {}) {
             return {
                 // Campos do formulário
