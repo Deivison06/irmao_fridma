@@ -183,7 +183,7 @@
                     <table>
                         <tr>
                             <td class="icon">
-                                <img src="{{ public_path('icons/imagem1.png') }}" width="40">
+                                <img src="{{ public_path('icons/Imagem1.png') }}" width="40">
                             </td>
                             <td class="content">
                                 <div class="label">Unidade Requisitante</div>
@@ -198,7 +198,7 @@
                     <table>
                         <tr>
                             <td class="icon">
-                                <img src="{{ public_path('icons/imagem2.png') }}" width="40">
+                                <img src="{{ public_path('icons/Imagem2.png') }}" width="40">
                             </td>
                             <td class="content">
                                 <div class="label">Alinhamento com o Planejamento Anual</div>
@@ -213,7 +213,7 @@
                     <table>
                         <tr>
                             <td class="icon">
-                                <img src="{{ public_path('icons/imagem3.png') }}" width="40">
+                                <img src="{{ public_path('icons/Imagem3.png') }}" width="40">
                             </td>
                             <td class="content">
                                 <div class="label">Equipe de Planejamento</div>
@@ -228,7 +228,7 @@
                     <table>
                         <tr>
                             <td class="icon">
-                                <img src="{{ public_path('icons/imagem4.png') }}" width="40">
+                                <img src="{{ public_path('icons/Imagem4.png') }}" width="40">
                             </td>
                             <td class="content">
                                 <div class="label">Problema Resumido</div>
