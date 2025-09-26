@@ -163,7 +163,7 @@ class ProcessoController extends Controller
                 ->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
-            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd_His') . '.pdf';
+            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd') . '.pdf';
 
             $diretorio = public_path('uploads/documentos/');
 

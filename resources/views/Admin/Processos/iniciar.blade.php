@@ -52,11 +52,6 @@
                                             'cor' => 'blue',
                                             'data_id' => 'data_formalizacao'
                                         ],
-                                        'autorizacao' => [
-                                            'titulo' => 'AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO',
-                                            'cor' => 'green',
-                                            'data_id' => 'data_autorizacao'
-                                        ],
                                         'estudo_tecnico' => [
                                             'titulo' => 'ESTUDO TÉCNICO PRELIMINAR E MAPA DE RISCOS, CERTIDÃO PLANO DE CONTRATAÇÃO ANUAL',
                                             'cor' => 'purple',
@@ -76,10 +71,10 @@
                                             <div class="text-sm font-semibold text-gray-900">
                                                 {{ $doc['titulo'] }}
                                                 @if($documentoGerado)
-                                                    <span class="ml-2 text-xs font-normal text-green-600">
-                                                        ✓ Gerado em {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
-                                                    </span>
-                                                @endif
+                                                <span class="ml-2 text-xs font-normal text-green-600">
+                                                    ✓ Gerado em {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
+                                                </span>
+                                            @endif
 
                                             </div>
                                         </div>
@@ -101,7 +96,7 @@
                                             @if($documentoGerado)
                                             <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
                                                 class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                                📥 Download
+                                                Download
                                             </a>
                                             @else
                                             <span class="px-4 py-2 text-xs font-medium text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">
