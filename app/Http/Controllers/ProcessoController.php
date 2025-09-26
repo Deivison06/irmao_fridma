@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use ZipArchive;
 use App\Models\Unidade;
 use App\Models\Processo;
+use App\Models\Documento;
 use App\Models\Prefeitura;
 use Illuminate\Http\Request;
 use App\Models\ProcessoDetalhe;
@@ -11,6 +13,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ProcessoService;
 use App\Http\Requests\ProcessoRequest;
 use App\Http\Requests\ProcessoDetalheRequest;
+use setasign\Fpdi\Fpdi;
 
 class ProcessoController extends Controller
 {
@@ -160,16 +163,113 @@ class ProcessoController extends Controller
                 ->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
-
             $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd_His') . '.pdf';
 
+            // Definir o caminho para salvar o arquivo
+            $diretorio = public_path('uploads/documentos/');
+
+            // Verificar se o diretório existe, caso contrário, criá-lo
+            if (!file_exists($diretorio)) {
+                mkdir($diretorio, 0777, true); // Cria o diretório com permissão total
+            }
+
+            // Verificar se o documento já existe
+            $documentoExistente = Documento::where('processo_id', $processo->id)
+                ->where('tipo_documento', $documento)
+                ->first();
+
+            // Se o documento existir, excluir o arquivo antigo
+            if ($documentoExistente) {
+                // Remover o arquivo antigo do sistema de arquivos
+                $caminhoAntigo = public_path($documentoExistente->caminho);
+                if (file_exists($caminhoAntigo)) {
+                    unlink($caminhoAntigo); // Remove o arquivo antigo
+                }
+
+                // Atualizar os dados do documento no banco de dados
+                $documentoExistente->update([
+                    'data_selecionada' => $dataSelecionada,
+                    'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                ]);
+            } else {
+                // Caso o documento não exista, criar um novo registro
+                Documento::create([
+                    'processo_id' => $processo->id,
+                    'tipo_documento' => $documento,
+                    'data_selecionada' => $dataSelecionada,
+                    'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                ]);
+            }
+
+            // Salvar o novo arquivo PDF
+            $caminhoArquivo = $diretorio . $nomeArquivo;
+            $pdf->save($caminhoArquivo);
+
+            // Retornar o PDF para o usuário
             return $request->query('download') == 1
                 ? $pdf->download($nomeArquivo)
                 : $pdf->stream($nomeArquivo);
-
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
     }
 
+
+    public function baixarDocumento(Processo $processo, $tipo)
+    {
+        // Buscar o caminho do documento
+        $documento = Documento::where('processo_id', $processo->id)
+            ->where('tipo_documento', $tipo)
+            ->firstOrFail();
+
+        // Baixar o PDF
+        return response()->download(public_path($documento->caminho));
+    }
+
+    public function baixarTodosDocumentos(Processo $processo)
+    {
+        // Buscar todos os documentos gerados para este processo
+        $documentos = Documento::where('processo_id', $processo->id)->get();
+
+        // Inicializar o FPDI para mesclar os PDFs
+        $pdf = new Fpdi();
+
+        // Loop sobre os documentos e adicionar cada PDF
+        foreach ($documentos as $documento) {
+            $caminhoDocumento = public_path($documento->caminho);
+
+            // Verificar se o arquivo PDF existe
+            if (file_exists($caminhoDocumento)) {
+                // Contar o número de páginas do PDF existente
+                $numPages = $pdf->setSourceFile($caminhoDocumento);
+
+                // Adicionar cada página do PDF ao PDF final
+                for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
+                    // Importa a página e a adiciona ao PDF
+                    $templateId = $pdf->importPage($pageNo);
+                    $pdf->addPage();
+                    $pdf->useTemplate($templateId);
+                }
+            }
+        }
+
+        // Gerar o nome do arquivo final
+        $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
+        $nomeArquivo = "processo_{$numeroProcessoLimpo}_todos_documentos_" . now()->format('Ymd_His') . '.pdf';
+
+        // Definir o caminho para salvar o PDF
+        $diretorio = public_path('uploads/documentos/');
+
+        // Verificar se o diretório existe, caso contrário, criá-lo
+        if (!file_exists($diretorio)) {
+            mkdir($diretorio, 0777, true); // Cria o diretório com permissão total
+        }
+
+        // Salvar o PDF gerado
+        $caminhoArquivo = $diretorio . $nomeArquivo;
+        $pdf->Output('F', $caminhoArquivo); // Salva o arquivo no diretório
+
+        // Retornar o PDF gerado para o usuário
+        return response()->download($caminhoArquivo)->deleteFileAfterSend(true); // Remove após o envio
+    }
 }

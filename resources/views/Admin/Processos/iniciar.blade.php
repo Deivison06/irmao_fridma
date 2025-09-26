@@ -21,120 +21,145 @@
                     </div>
 
                     <!-- Tabela de Documentos -->
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                    <div class="overflow-x-auto rounded-lg shadow-sm">
+                        <table class="min-w-full bg-white divide-y divide-gray-200">
+                            <thead class="bg-gray-100">
                                 <tr>
-                                    <th
-                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    <th class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
                                         Documentos
                                     </th>
-                                    <th
-                                        class="px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
+                                    <th class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Data
                                     </th>
-                                    <th
-                                        class="w-40 px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
+                                    <th class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Ações
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <!-- CAPA -->
-                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                <tr class="transition-colors duration-150 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-2 h-2 mr-3 bg-red-500 rounded-full"></div>
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 Capa do documento
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <input type="date" class="px-2 py-1 border rounded" id="data_capa">
+                                        <input type="date" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="data_capa">
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-center">
+                                        <div class="flex justify-center space-x-2">
                                             <button type="button"
                                                 onclick="gerarPdf('{{ $processo->id }}', 'capa', document.getElementById('data_capa').value)"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
+                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                 Gerar PDF
                                             </button>
+                                            <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => 'capa']) }}"
+                                                class="px-4 py-2 text-xs font-medium text-gray-700 transition-colors duration-200 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                                Download
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
 
                                 <!-- FORMALIZAÇÃO -->
-                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                <tr class="transition-colors duration-150 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-2 h-2 mr-3 bg-blue-500 rounded-full"></div>
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 DOCUMENTO FORMALIZAÇÃO DE DEMANDA
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <input type="date" class="px-2 py-1 border rounded" id="data_formalizacao">
+                                        <input type="date" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="data_formalizacao">
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-center">
+                                        <div class="flex justify-center space-x-2">
                                             <button type="button"
                                                 onclick="gerarPdf('{{ $processo->id }}', 'formalizacao', document.getElementById('data_formalizacao').value)"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
+                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                 Gerar PDF
                                             </button>
+                                            <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => 'formalizacao']) }}"
+                                                class="px-4 py-2 text-xs font-medium text-gray-700 transition-colors duration-200 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                                Download
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
 
                                 <!-- AUTORIZAÇÃO -->
-                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                <tr class="transition-colors duration-150 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-2 h-2 mr-3 bg-green-500 rounded-full"></div>
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <input type="date" class="px-2 py-1 border rounded" id="data_autorizacao">
+                                        <input type="date" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="data_autorizacao">
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-center">
+                                        <div class="flex justify-center space-x-2">
                                             <button type="button"
                                                 onclick="gerarPdf('{{ $processo->id }}', 'autorizacao', document.getElementById('data_autorizacao').value)"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
+                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                 Gerar PDF
                                             </button>
+                                            <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => 'autorizacao']) }}"
+                                                class="px-4 py-2 text-xs font-medium text-gray-700 transition-colors duration-200 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                                Download
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
 
                                 <!-- ESTUDO TÉCNICO -->
-                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                <tr class="transition-colors duration-150 hover:bg-gray-50">
                                     <td class="px-6 py-4">
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">
-                                                ESTUDO TÉCNICO PRELIMINAR E MAPA DE RISCOS, CERTIDÃO PLANO DE CONTRATAÇÃO
-                                                ANUAL
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 w-2 h-2 mr-3 bg-purple-500 rounded-full"></div>
+                                            <div class="text-sm font-semibold text-gray-900">
+                                                ESTUDO TÉCNICO PRELIMINAR E MAPA DE RISCOS, CERTIDÃO PLANO DE CONTRATAÇÃO ANUAL
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <input type="date" class="px-2 py-1 border rounded" id="data_estudo_tecnico">
+                                        <input type="date" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="data_estudo_tecnico">
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-center">
+                                        <div class="flex justify-center space-x-2">
                                             <button type="button"
                                                 onclick="gerarPdf('{{ $processo->id }}', 'estudo_tecnico', document.getElementById('data_estudo_tecnico').value)"
-                                                class="px-4 py-2 text-sm font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700">
+                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                 Gerar PDF
                                             </button>
+                                            <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => 'estudo_tecnico']) }}"
+                                                class="px-4 py-2 text-xs font-medium text-gray-700 transition-colors duration-200 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                                Download
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- Botão para Baixar Todos os PDFs em um único arquivo -->
+                        <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
+                            <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}"
+                                class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                📥 Baixar Todos os PDFs
+                            </a>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -534,6 +559,19 @@
             const url = `/admin/processos/${processoId}/pdf?documento=${documento}&data=${dataSelecionada}`;
             window.open(url, '_blank');
         }
+
+        // Função para baixar um PDF específico
+        function baixarPdf(processoId, tipoDocumento) {
+            const url = `/processo/${processoId}/documento/${tipoDocumento}/baixar`;
+            window.location.href = url; // Redireciona para a rota de download
+        }
+
+        // Função para baixar todos os PDFs
+        function baixarTodosPdfs(processoId) {
+            const url = `/processo/${processoId}/documentos/baixar-todos`;
+            window.location.href = url; // Redireciona para a rota de download dos PDFs juntos
+        }
+
 
         function formField(existing = {}) {
             return {

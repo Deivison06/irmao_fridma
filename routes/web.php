@@ -75,6 +75,9 @@ Route::prefix('admin')
         Route::get('processos/{processo}/pdf', [ProcessoController::class, 'gerarPdf'])->name('processos.pdf');
         Route::get('/processos/{processo}/visualizar-pdf', [ProcessoController::class, 'visualizarPdf'])
          ->name('processos.visualizar-pdf');
+        Route::get('/processo/{processo}/documento/{tipo}/baixar', [ProcessoController::class, 'baixarDocumento'])->name('processo.documento.dowload');
+        Route::get('/processo/{processo}/documentos/baixar-todos', [ProcessoController::class, 'baixarTodosDocumentos'])->name('processo.documento.dowload-all');
+
     });
 
 require __DIR__ . '/auth.php';

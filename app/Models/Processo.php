@@ -35,4 +35,9 @@ class Processo extends Model
     {
         return $this->hasOne(ProcessoDetalhe::class);
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class);
+    }
 }
