@@ -138,7 +138,7 @@ class ProcessoController extends Controller
     public function gerarPdf(Request $request, Processo $processo)
     {
         $documento = $request->query('documento', 'capa');
-        $dataSelecionada = $request->query('data'); // 👈 pega a data do input
+        $dataSelecionada = $request->query('data');
 
         $processo->load(['detalhe', 'prefeitura']);
 
@@ -147,7 +147,7 @@ class ProcessoController extends Controller
             'prefeitura' => $processo->prefeitura,
             'detalhe' => $processo->detalhe,
             'dataGeracao' => now()->format('d/m/Y H:i:s'),
-            'dataSelecionada' => $dataSelecionada, // 👈 envia para a view do PDF
+            'dataSelecionada' => $dataSelecionada,
         ];
 
         $view = match ($documento) {
@@ -165,52 +165,52 @@ class ProcessoController extends Controller
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
             $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd_His') . '.pdf';
 
-            // Definir o caminho para salvar o arquivo
             $diretorio = public_path('uploads/documentos/');
 
-            // Verificar se o diretório existe, caso contrário, criá-lo
             if (!file_exists($diretorio)) {
-                mkdir($diretorio, 0777, true); // Cria o diretório com permissão total
+                mkdir($diretorio, 0777, true);
             }
 
-            // Verificar se o documento já existe
             $documentoExistente = Documento::where('processo_id', $processo->id)
                 ->where('tipo_documento', $documento)
                 ->first();
 
-            // Se o documento existir, excluir o arquivo antigo
             if ($documentoExistente) {
-                // Remover o arquivo antigo do sistema de arquivos
                 $caminhoAntigo = public_path($documentoExistente->caminho);
                 if (file_exists($caminhoAntigo)) {
-                    unlink($caminhoAntigo); // Remove o arquivo antigo
+                    unlink($caminhoAntigo);
                 }
 
-                // Atualizar os dados do documento no banco de dados
                 $documentoExistente->update([
                     'data_selecionada' => $dataSelecionada,
                     'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                    'gerado_em' => now(),
                 ]);
             } else {
-                // Caso o documento não exista, criar um novo registro
                 Documento::create([
                     'processo_id' => $processo->id,
                     'tipo_documento' => $documento,
                     'data_selecionada' => $dataSelecionada,
                     'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                    'gerado_em' => now(),
                 ]);
             }
 
-            // Salvar o novo arquivo PDF
             $caminhoArquivo = $diretorio . $nomeArquivo;
             $pdf->save($caminhoArquivo);
 
-            // Retornar o PDF para o usuário
-            return $request->query('download') == 1
-                ? $pdf->download($nomeArquivo)
-                : $pdf->stream($nomeArquivo);
+            // 👇 MODIFICADO: Retornar JSON com mensagem de sucesso
+            return response()->json([
+                'success' => true,
+                'message' => 'PDF gerado com sucesso! Para baixar, clique no botão Download.',
+                'documento' => $documento
+            ]);
+
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao gerar PDF: ' . $e->getMessage()
+            ], 500);
         }
     }
 
