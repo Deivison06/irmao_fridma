@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: 'DejaVu Sans', sans-serif;
+            font-family: 'montserrat', sans-serif;
             font-size: 12px;
             line-height: 1.4;
             color: #333;
@@ -54,7 +54,7 @@
 
         .cover-title {
             font-size: 20pt;
-            font-weight: bold;
+            font-weight: 900;
             padding: 10px;
             border: 2px solid #000;
             background-color: #fff;

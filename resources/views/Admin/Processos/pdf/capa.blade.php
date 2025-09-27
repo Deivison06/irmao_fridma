@@ -11,7 +11,7 @@
         }
 
         body {
-            font-family: Montserrat, sans-serif;
+            font-family: 'montserrat', sans-serif;
             font-size: 18pt;
             font-weight: 900; /* tudo em negrito */
             text-transform: uppercase;
