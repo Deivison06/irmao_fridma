@@ -988,9 +988,10 @@
                 <tbody>
                     <tr>
                         <td rowspan="5"
-                            style="writing-mode: vertical-rl; transform: rotate(180deg); border: 1px solid black; padding: 10px 5px; text-align: center; font-weight: bold; background-color: #f0f0f0;">
-                            CL IMPACTO
+                            style="writing-mode: vertical-rl; text-orientation: mixed; border: 1px solid black; text-align: center; font-weight: bold; background-color: #f0f0f0;">
+                            CLIMPACTO
                         </td>
+
                         <td
                             style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #ff4500; color: white; width: 80px;">
                             MUITO ALTO - 10
@@ -1100,12 +1101,7 @@
 
             <table style="border-collapse: collapse; width: auto; margin: 0 auto 30px auto; border: 1px solid black;">
                 <thead>
-                    <tr>
-                        <td colspan="5"
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #f0f0f0;">
-                            PROBABILIDADE
-                        </td>
-                    </tr>
+
                 </thead>
                 <tbody>
                     <tr>
@@ -1128,6 +1124,12 @@
                         <td
                             style="border: 1px solid black; padding: 5px 15px; text-align: center; font-weight: bold; background-color: #F44336; color: white;">
                             MUITO ALTA - 10
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"
+                            style="border: none; padding: 5px; text-align: center; font-weight: bold;">
+                            PROBABILIDADE
                         </td>
                     </tr>
                 </tbody>
