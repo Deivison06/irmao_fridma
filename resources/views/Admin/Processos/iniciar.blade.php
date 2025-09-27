@@ -28,13 +28,16 @@
                         <table class="min-w-full bg-white divide-y divide-gray-200">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
                                         Documentos
                                     </th>
-                                    <th class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    <th
+                                        class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Data
                                     </th>
-                                    <th class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    <th
+                                        class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Ações
                                     </th>
                                 </tr>
@@ -45,67 +48,94 @@
                                         'capa' => [
                                             'titulo' => 'Capa do documento',
                                             'cor' => 'red',
-                                            'data_id' => 'data_capa'
+                                            'data_id' => 'data_capa',
                                         ],
                                         'formalizacao' => [
-                                            'titulo' => 'DOCUMENTO FORMALIZAÇÃO DE DEMANDA',
+                                            'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
                                             'cor' => 'blue',
-                                            'data_id' => 'data_formalizacao'
+                                            'data_id' => 'data_formalizacao',
                                         ],
                                         'estudo_tecnico' => [
-                                            'titulo' => 'ESTUDO TÉCNICO PRELIMINAR E MAPA DE RISCOS, CERTIDÃO PLANO DE CONTRATAÇÃO ANUAL',
+                                            'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
                                             'cor' => 'purple',
-                                            'data_id' => 'data_estudo_tecnico'
-                                        ]
+                                            'data_id' => 'data_estudo_tecnico',
+                                        ],
                                     ];
                                 @endphp
 
-                                @foreach($documentos as $tipo => $doc)
-                                @php
-                                    $documentoGerado = $processo->documentos->where('tipo_documento', $tipo)->first();
-                                @endphp
-                                <tr class="transition-colors duration-150 hover:bg-gray-50">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 w-2 h-2 mr-3 bg-{{ $doc['cor'] }}-500 rounded-full"></div>
-                                            <div class="text-sm font-semibold text-gray-900">
-                                                {{ $doc['titulo'] }}
-                                                @if($documentoGerado)
-                                                <span class="ml-2 text-xs font-normal text-green-600">
-                                                    ✓ Gerado em {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
-                                                </span>
-                                            @endif
+                                @foreach ($documentos as $tipo => $doc)
+                                    @php
+                                        $documentoGerado = $processo->documentos
+                                            ->where('tipo_documento', $tipo)
+                                            ->first();
+                                    @endphp
+                                    <tr class="transition-colors duration-150 hover:bg-gray-50">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="flex-shrink-0 w-2 h-2 mr-3 bg-{{ $doc['cor'] }}-500 rounded-full">
+                                                </div>
+                                                <div class="text-sm font-semibold text-gray-900">
+                                                    {{ $doc['titulo'] }}
+                                                    @if ($documentoGerado)
+                                                        <span class="ml-2 text-xs font-normal text-green-600">
+                                                            ✓ Gerado em
+                                                            {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
+                                                        </span>
+                                                    @endif
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <input type="date"
+                                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                id="{{ $doc['data_id'] }}"
+                                                value="{{ $documentoGerado->data_selecionada ?? '' }}">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex justify-center space-x-2">
+                                                <button type="button"
+                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value)"
+                                                    class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                    Gerar PDF
+                                                </button>
+
+                                                @if ($documentoGerado)
+                                                    <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
+                                                        download
+                                                        class="p-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                                        aria-label="Baixar documento">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-hidden="true">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                                            <line x1="12" y1="15" x2="12"
+                                                                y2="3"></line>
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <span
+                                                        class="p-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed"
+                                                        aria-hidden="true" title="Aguardando geração">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-hidden="true">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                                            <line x1="12" y1="15" x2="12"
+                                                                y2="3"></line>
+                                                        </svg>
+                                                    </span>
+                                                @endif
+
 
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-center">
-                                        <input type="date"
-                                            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                                            id="{{ $doc['data_id'] }}"
-                                            value="{{ $documentoGerado->data_selecionada ?? '' }}">
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex justify-center space-x-2">
-                                            <button type="button"
-                                                onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value)"
-                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                                Gerar PDF
-                                            </button>
-
-                                            @if($documentoGerado)
-                                            <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
-                                                class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                                Download
-                                            </a>
-                                            @else
-                                            <span class="px-4 py-2 text-xs font-medium text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">
-                                                Aguardando geração
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -522,31 +552,31 @@
             button.disabled = true;
 
             fetch(`/admin/processos/${processoId}/pdf?documento=${documento}&data=${data}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
 
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showMessage(data.message, 'success');
-                    // Recarregar a página para atualizar os botões de download
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                } else {
-                    showMessage(data.message, 'error');
-                }
-            })
-            .catch(error => {
-                showMessage('Erro ao gerar PDF: ' + error, 'error');
-            })
-            .finally(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(data.message, 'success');
+                        // Recarregar a página para atualizar os botões de download
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        showMessage(data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    showMessage('Erro ao gerar PDF: ' + error, 'error');
+                })
+                .finally(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                });
         }
 
         function showMessage(message, type) {

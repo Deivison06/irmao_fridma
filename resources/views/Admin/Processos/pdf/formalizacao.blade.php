@@ -53,7 +53,7 @@
         }
 
         .cover-title {
-            font-size: 16px;
+            font-size: 20pt;
             font-weight: bold;
             padding: 10px;
             border: 2px solid #000;
