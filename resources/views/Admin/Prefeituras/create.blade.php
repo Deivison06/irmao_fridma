@@ -1,12 +1,10 @@
 @extends('layouts.app')
+@section('page-title', 'Gestão de Prefeituras')
+@section('page-subtitle', 'Preencha os dados da prefeitura')
 
 @section('content')
 <div class="py-6">
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Cadastrar Prefeitura</h2>
-            <p class="mt-1 text-sm text-gray-500">Preencha os dados da prefeitura</p>
-        </div>
 
         <div class="overflow-hidden bg-white shadow-sm rounded-xl">
             <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">

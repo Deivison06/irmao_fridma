@@ -1,12 +1,10 @@
 @extends('layouts.app')
+@section('page-title', 'Gestão de Prefeituras')
+@section('page-subtitle', 'Atualize os dados da prefeitura e gerencie as unidades')
 
 @section('content')
     <div class="py-6">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Editar Prefeitura</h2>
-                <p class="mt-1 text-sm text-gray-500">Atualize os dados da prefeitura e gerencie as unidades</p>
-            </div>
 
             @if (session('success'))
                 <div class="p-4 mb-6 rounded-lg bg-green-50">

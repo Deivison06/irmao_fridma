@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('page-title', 'Gestão de Usuários')
+@section('page-subtitle', 'Atualize as informações do usuário')
 
 @section('title', 'Editar Usuário')
 

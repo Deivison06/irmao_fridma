@@ -1,15 +1,16 @@
 @extends('layouts.app')
+@section('page-title', 'Gestão de Usuários')
+@section('page-subtitle', 'Gerencie os usuários e suas permissões')
 
 @section('content')
-    <div class="flex items-center justify-between mb-6">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-800">Lista de Usuários</h2>
-            <p class="mt-1 text-sm text-gray-500">Gerencie os usuários e suas permissões</p>
-        </div>
-        <a href="{{ route('admin.usuarios.create') }}"
-           class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#009496] rounded-lg hover:bg-[#244853] transition-colors shadow-sm">
-            Novo Usuário
-        </a>
+    <!-- Botão Novo Processo -->
+    <div class="flex justify-end mb-8">
+        <a href="{{ route('admin.processos.create') }}"
+            class="inline-flex items-center gap-3 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 bg-gradient-to-r from-[#009496] to-[#007a7a] rounded-xl hover:from-[#007a7a] hover:to-[#005f5f] hover:shadow-lg hover:scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                </path>
+            </svg> Novo Usuário </a>
     </div>
 
     @if (session('success'))
