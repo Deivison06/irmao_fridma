@@ -32,6 +32,7 @@ class ProcessoDetalhe extends Model
         'prazo_vigencia',
         'prazo_vigencia_outro',
         'objeto_continuado',
+        'itens_e_seus_quantitativos_xml',
     ];
 
     protected $casts = [
@@ -39,6 +40,7 @@ class ProcessoDetalhe extends Model
         'prazo_vigencia' => 'array',
         'tipo_procedimento' => TipoProcedimentoEnum::class,
         'tipo_contratacao' => TipoContratacaoEnum::class,
+        'itens_e_seus_quantitativos_xml' => 'array',
     ];
 
     /**

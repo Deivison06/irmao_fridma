@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use ZipArchive;
 use App\Models\Unidade;
+use setasign\Fpdi\Fpdi;
 use App\Models\Processo;
 use App\Models\Documento;
 use App\Models\Prefeitura;
@@ -12,8 +13,8 @@ use App\Models\ProcessoDetalhe;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ProcessoService;
 use App\Http\Requests\ProcessoRequest;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Requests\ProcessoDetalheRequest;
-use setasign\Fpdi\Fpdi;
 
 class ProcessoController extends Controller
 {
@@ -86,53 +87,45 @@ class ProcessoController extends Controller
 
     public function storeDetalhe(Request $request, Processo $processo)
     {
-        // 1. Pega ou cria o detalhe do processo
         $detalhe = $processo->detalhe ?? new ProcessoDetalhe();
-
-        // 2. Prepara os dados
-        $dataToSave = $request->except(['_token', 'processo_id']);
-
-        // 3. O 'processo_id' é necessário para vincular
         $detalhe->processo_id = $processo->id;
 
-        // 4. Se o campo sendo salvo for 'unidade_setor', buscar automaticamente o servidor_responsavel
-        if ($request->has('unidade_setor') && !empty($request->unidade_setor)) {
-            $servidorResponsavel = Unidade::getServidorByNome($request->unidade_setor);
+        // --- Tratamento do arquivo Excel/CSV/XML ---
+        if ($request->hasFile('itens_e_seus_quantitativos_xml')) {
+            $file = $request->file('itens_e_seus_quantitativos_xml');
 
-            // Atualiza o campo servidor_responsavel no detalhe
-            $detalhe->servidor_responsavel = $servidorResponsavel;
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+
+            $itens = [];
+            foreach ($rows as $index => $row) {
+                if ($index === 0) continue; // pula cabeçalho
+                $itens[] = [
+                    'numero'     => $row[0] ?? null,
+                    'descricao'  => $row[1] ?? null,
+                    'und'        => $row[2] ?? null,
+                    'quantidade' => $row[3] ?? null,
+                ];
+            }
+
+            // Salva JSON sem escapar acentos
+            $detalhe->itens_e_seus_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
         }
 
-        // 5. Pega o nome do campo que está sendo salvo
-        $field = key($dataToSave);
-        $value = reset($dataToSave);
 
-        // 6. Processa os dados conforme o tipo
-        if (is_array($value)) {
-            $detalhe->{$field} = $value;
-
-            // Trata os campos 'outro'
-            if ($field === 'instrumento_vinculativo' && $request->has('instrumento_vinculativo_outro')) {
-                $detalhe->instrumento_vinculativo_outro = $request->instrumento_vinculativo_outro;
-            }
-            if ($field === 'prazo_vigencia' && $request->has('prazo_vigencia_outro')) {
-                $detalhe->prazo_vigencia_outro = $request->prazo_vigencia_outro;
-            }
-        } else {
+        // --- Salva outros campos normais ---
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml']);
+        foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
 
-        // 7. Salva as alterações
         $detalhe->save();
 
-        // 8. Retorna o servidor_responsavel na resposta se for o caso
-        $responseData = ['success' => true, 'data' => $detalhe->toArray()];
-
-        if ($request->has('unidade_setor')) {
-            $responseData['servidor_responsavel'] = $servidorResponsavel ?? null;
-        }
-
-        return response()->json($responseData);
+        return response()->json([
+            'success' => true,
+            'data' => $detalhe->toArray()
+        ]);
     }
 
     public function gerarPdf(Request $request, Processo $processo)
@@ -205,7 +198,6 @@ class ProcessoController extends Controller
                 'message' => 'PDF gerado com sucesso! Para baixar, clique no botão Download.',
                 'documento' => $documento
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

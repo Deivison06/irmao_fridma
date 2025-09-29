@@ -486,24 +486,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @php
+                    $itens = json_decode($detalhe->itens_e_seus_quantitativos_xml, true);
+                @endphp
+
+                @if ($itens && count($itens) > 0)
+                    @foreach ($itens as $item)
+                        <tr>
+                            <td>{{ $item['numero'] ?? '' }}</td>
+                            <td style="text-align: left">{{ $item['descricao'] ?? '' }}</td>
+                            <td>{{ $item['und'] ?? '' }}</td>
+                            <td>{{ $item['quantidade'] ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="4">Nenhum item encontrado</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 
@@ -1127,8 +1127,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5"
-                            style="border: none; padding: 5px; text-align: center; font-weight: bold;">
+                        <td colspan="5" style="border: none; padding: 5px; text-align: center; font-weight: bold;">
                             PROBABILIDADE
                         </td>
                     </tr>
@@ -1282,14 +1281,6 @@
                     <td style="border: 1px solid black; padding: 8px;">8</td>
                     <td style="border: 1px solid black; padding: 8px; background-color: #ffff00; font-weight: bold;">16
                     </td>
-                </tr>
-                <tr style="border: 1px solid black;">
-                    <td style="border: 1px solid black; padding: 8px;">XX</td>
-                    <td style="border: 1px solid black; padding: 8px; text-align: left;">XXXXXXXXXXXXXXXXXXXX</td>
-                    <td style="border: 1px solid black; padding: 8px;">XXXXX</td>
-                    <td style="border: 1px solid black; padding: 8px;">XX</td>
-                    <td style="border: 1px solid black; padding: 8px;">XX</td>
-                    <td style="border: 1px solid black; padding: 8px;">XX</td>
                 </tr>
             </tbody>
         </table>

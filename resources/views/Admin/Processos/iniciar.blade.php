@@ -520,6 +520,34 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- NOVO CAMPO: Importar XML/Excel -->
+                        <div class="flex items-start space-x-2">
+                            <div class="flex-1">
+                                <label for="itens_e_seus_quantitativos_xml"
+                                    class="block mb-1 text-sm font-medium text-gray-700">
+                                    ITENS E SEUS QUANTITATIVOS (XML / Excel)
+                                </label>
+                                <input type="file" id="itens_e_seus_quantitativos_xml"
+                                    name="itens_e_seus_quantitativos_xml" accept=".xml, .xlsx, .xls, .csv"
+                                    class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
+                                <p class="mt-1 text-xs text-gray-500">Selecione um arquivo XML ou Excel contendo os itens
+                                    da tabela.</p>
+                            </div>
+                            <div class="flex pt-6 space-x-1">
+                                <button type="button" @click="saveField('itens_e_seus_quantitativos_xml')"
+                                    x-show="!confirmed.itens_e_seus_quantitativos_xml"
+                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                    ✔
+                                </button>
+                                <button type="button" @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
+                                    x-show="confirmed.itens_e_seus_quantitativos_xml"
+                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                    ✖
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Botões de Ação -->
@@ -610,8 +638,8 @@
                 justificativa: existing?.justificativa ?? '',
                 prazo_entrega: existing?.prazo_entrega ?? '',
                 local_entrega: existing?.local_entrega ?? '',
-                tipo_procedimento: existing?.tipo_procedimento ?? '', // Novo campo
-                tipo_contratacao: existing?.tipo_contratacao ?? '', // Novo campo
+                tipo_procedimento: existing?.tipo_procedimento ?? '',
+                tipo_contratacao: existing?.tipo_contratacao ?? '',
                 contratacoes_anteriores: existing?.contratacoes_anteriores ?? '',
                 fiscais: existing?.fiscais ?? '',
                 gestor: existing?.gestor ?? '',
@@ -620,14 +648,15 @@
                 prazo_vigencia: existing?.prazo_vigencia ?? [],
                 prazo_vigencia_outro: existing?.prazo_vigencia_outro ?? '',
                 objeto_continuado: existing?.objeto_continuado ?? '',
+                itens_e_seus_quantitativos_xml: existing?.itens_e_seus_quantitativos_xml ?? '',
 
-                // Controle de confirmação de cada campo
+                // Controle de confirmação
                 confirmed: {
                     secretaria: !!existing?.secretaria,
                     unidade_setor: !!existing?.unidade_setor,
                     servidor_responsavel: !!existing?.servidor_responsavel,
-                    tipo_procedimento: !!existing?.tipo_procedimento, // Novo
-                    tipo_contratacao: !!existing?.tipo_contratacao, // Novo
+                    tipo_procedimento: !!existing?.tipo_procedimento,
+                    tipo_contratacao: !!existing?.tipo_contratacao,
                     demanda: !!existing?.demanda,
                     justificativa: !!existing?.justificativa,
                     prazo_entrega: !!existing?.prazo_entrega,
@@ -638,9 +667,10 @@
                     instrumento_vinculativo: existing?.instrumento_vinculativo?.length > 0,
                     prazo_vigencia: existing?.prazo_vigencia?.length > 0,
                     objeto_continuado: !!existing?.objeto_continuado,
+                    itens_e_seus_quantitativos_xml: !!existing?.itens_e_seus_quantitativos_xml,
                 },
 
-                // Método para quando a unidade é alterada
+                // Quando a unidade é alterada
                 onUnidadeChange() {
                     if (this.unidade_setor) {
                         this.saveField('unidade_setor');
@@ -656,39 +686,47 @@
                     }
                 },
 
+                // Salva campo individual
                 async saveField(field) {
                     const formData = new FormData();
-                    const value = this[field];
-
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content'));
+                    'content'));
 
-                    if (Array.isArray(value)) {
-                        if (value.length === 0) {
+                    // Tratamento especial para arquivo
+                    if (field === 'itens_e_seus_quantitativos_xml') {
+                        const fileInput = document.getElementById('itens_e_seus_quantitativos_xml');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    }
+                    // Campos do tipo array
+                    else if (Array.isArray(this[field])) {
+                        if (this[field].length === 0) {
                             formData.append(field, '');
                         } else {
-                            value.forEach(v => formData.append(field + '[]', v));
+                            this[field].forEach(v => formData.append(field + '[]', v));
                         }
 
+                        // Campos extras relacionados
                         if (field === 'instrumento_vinculativo' && this.instrumento_vinculativo_outro) {
                             formData.append('instrumento_vinculativo_outro', this.instrumento_vinculativo_outro);
                         }
                         if (field === 'prazo_vigencia' && this.prazo_vigencia_outro) {
                             formData.append('prazo_vigencia_outro', this.prazo_vigencia_outro);
                         }
-                    } else {
-                        formData.append(field, value);
                     }
-
-                    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    // Campos normais
+                    else {
+                        formData.append(field, this[field]);
+                    }
 
                     try {
                         const response = await fetch("{{ route('admin.processos.detalhes.store', $processo) }}", {
                             method: 'POST',
                             headers: {
-                                'X-CSRF-TOKEN': token,
-                                'Accept': 'application/json'
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
                             },
                             body: formData
                         });
@@ -698,7 +736,7 @@
                         if (response.ok) {
                             this.confirmed[field] = true;
 
-                            // Se for unidade_setor e veio servidor_responsavel na resposta, atualiza o campo
+                            // Atualiza servidor_responsavel se unidade_setor mudou
                             if (field === 'unidade_setor' && responseData.servidor_responsavel) {
                                 this.servidor_responsavel = responseData.servidor_responsavel;
                                 this.confirmed.servidor_responsavel = true;
@@ -717,8 +755,8 @@
                     }
                 },
 
+                // Submit do formulário completo
                 submitForm() {
-                    // Implementar lógica de submit do formulário completo
                     this.$el.submit();
                 }
             }
