@@ -149,6 +149,7 @@ class ProcessoController extends Controller
             'autorizacao' => 'Admin.Processos.pdf.autorizacao',
             'estudo_tecnico' => 'Admin.Processos.pdf.estudo_tecnico',
             'analise_mercado' => 'Admin.Processos.pdf.analise_mercado',
+            'disponibilidade_orçamento' => 'Admin.Processos.pdf.disponibilidade_orçamento',
             default => 'Admin.Processos.pdf.capa'
         };
 

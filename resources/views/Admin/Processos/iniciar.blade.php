@@ -65,6 +65,11 @@
                                             'cor' => 'green',
                                             'data_id' => 'data_analise_mercado',
                                         ],
+                                        'disponibilidade_orçamento' => [
+                                            'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
+                                            'cor' => 'yellow',
+                                            'data_id' => 'data_disponibilidade_orçamento',
+                                        ],
                                     ];
                                 @endphp
 

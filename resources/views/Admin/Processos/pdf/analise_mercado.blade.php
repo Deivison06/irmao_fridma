@@ -99,7 +99,7 @@
     <div class="page-break"></div>
 
     {{-- ====================================================================== --}}
-    {{-- BLOCO 1: RESUMO DOS DADOS DO PROCESSO --}}
+    {{-- BLOCO 2: RESUMO DOS DADOS DO PROCESSO --}}
     {{-- ====================================================================== --}}
     <div id="resumo-dados-processo">
         <table style="border-collapse: collapse; width: 100%; font-size: 12px;">
@@ -204,9 +204,9 @@
     <div class="page-break"></div>
 
     {{-- ====================================================================== --}}
-    {{-- BLOCO 1: RESUMO DOS DADOS DO PROCESSO --}}
+    {{-- BLOCO 3: ANEXOS PESQUISA OBTIDAS --}}
     {{-- ====================================================================== --}}
-    <div id="resumo-dados-processo">
+    <div id="anexos-pesquisa-obtidas">
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
