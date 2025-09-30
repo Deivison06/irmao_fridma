@@ -1214,7 +1214,7 @@
             da Contratação:</p>
         {{-- RISCO 01 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1295,7 +1295,7 @@
         <br>
         {{-- RISCO 02 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1413,7 +1413,7 @@
         <br>
         {{-- RISCO 03 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1509,7 +1509,7 @@
         <br>
         {{-- RISCO 04 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1616,7 +1616,7 @@
             Fornecedor:</p>
         {{-- RISCO 05 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1689,7 +1689,7 @@
         <br>
         {{-- RISCO 06 --}}
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
