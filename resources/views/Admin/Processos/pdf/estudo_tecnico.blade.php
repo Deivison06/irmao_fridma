@@ -954,159 +954,84 @@
             consiste em
             um instrumento de apoio para a definição dos critérios de classificação do nível de risco
         </p>
-        <div style="font-family: Arial, sans-serif; margin-bottom: 20px;">
-            <table style="border-collapse: collapse; width: auto; margin-bottom: 30px; border: 1px solid black;">
+        <div style="margin-bottom: 20px; font-size:12px; display: flex; justify-content: flex-end;">
+            <table
+                style="border-collapse: collapse; margin-bottom: 30px; border: 1px solid black; text-align: center;">
                 <thead>
                     <tr>
-                        <td colspan="2" rowspan="2"
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #f0f0f0;">
+                        <td colspan="7"
+                            style="border: 1px solid black; padding: 5px; font-weight: bold; background-color: #f0f0f0;">
                             MATRIZ DE RISCO
                         </td>
-                        <td colspan="5"
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #f0f0f0;">
-                            PROBABILIDADE
-                        </td>
-                    </tr>
-                    <tr>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #8fbc8f;">
-                            MUITO BAIXA - 1</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #90ee90;">
-                            BAIXA - 2</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #ffd700;">
-                            MÉDIA - 5</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #ffa07a;">
-                            ALTA - 8</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold; background-color: #ff4500; color: white;">
-                            MUITO ALTA - 10</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="5"
-                            style="writing-mode: vertical-rl; text-orientation: mixed; border: 1px solid black; text-align: center; font-weight: bold; background-color: #f0f0f0;">
-                            CLIMPACTO
+                        <td rowspan="5" style=" width: 0.5em; padding: 0;">
+                            <div
+                                style=" transform: rotate(-90deg); transform-origin: 0 0; position: relative; top: 10%; left: 30px; width: 100%; text-align: center; font-weight: bold; ">
+                                CLIMPACTO
+                            </div>
                         </td>
-
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #ff4500; color: white; width: 80px;">
-                            MUITO ALTO - 10
-                        </td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffff00;">
-                            10<br>RM<br>8</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffff00;">
-                            20<br>RM<br>16</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            50<br>RA<br>40</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff0000; color: white;">
-                            80<br>RE<br>64</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff0000; color: white;">
-                            100<br>RE<br>80</td>
+                        <td style="border: 1px solid black; font-weight: bold; background-color: #ff0000; width: 20%;">
+                            MUITO ALTO – 10</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">10<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">20<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #cd853f;">50<br><br>RA</td>
+                        <td style="border: 1px solid black; background-color: #ff0000;">80<br><br>RE</td>
+                        <td style="border: 1px solid black; background-color: #ff0000;">100<br><br>RE</td>
                     </tr>
                     <tr>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #ffa07a; width: 80px;">
-                            ALTO - 8
-                        </td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            8<br>RB<br>5</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffff00;">
-                            16<br>RM<br>10</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            40<br>RA<br>25</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff0000; color: white;">
-                            64<br>RE<br>40</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            80<br>RE<br>50</td>
+                        <td style="border: 1px solid black; font-weight: bold; background-color: #cd853f; width: 20%;">
+                            ALTO – 8</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">8<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">16<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #cd853f;">40<br><br>RA</td>
+                        <td style="border: 1px solid black; background-color: #cd853f;">64<br><br>RA</td>
+                        <td style="border: 1px solid black; background-color: #ff0000;">80<br><br>RE</td>
                     </tr>
                     <tr>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #ffd700; width: 80px;">
-                            MÉDIO - 5
+                        <td style="border: 1px solid black; font-weight: bold; background-color: #ffff00;width: 20%;">
+                            MÉDIO – 5
                         </td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            5<br>RB<br>2</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffff00;">
-                            10<br>RM<br>4</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffd700;">
-                            25<br>RM<br>10</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            40<br>RA<br>16</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            50<br>RA<br>20</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">5<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">10<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">25<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #cd853f;">40<br><br>RA</td>
+                        <td style="border: 1px solid black; background-color: #cd853f;">50<br><br>RA</td>
                     </tr>
                     <tr>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #90ee90; width: 80px;">
-                            BAIXO - 2
+                        <td style="border: 1px solid black; font-weight: bold; background-color: #90ee90;width: 20%;">
+                            BAIXO – 2
                         </td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            2<br>RB<br>1</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            4<br>RB<br>2</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffff00;">
-                            10<br>RM<br>5</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ff8c00;">
-                            16<br>RM<br>8</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffd700;">
-                            20<br>RM<br>10</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">2<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">4<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">10<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">16<br><br>RM</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">20<br><br>RM</td>
                     </tr>
                     <tr>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: right; font-weight: bold; background-color: #8fbc8f; width: 80px;">
-                            MUITO BAIXO - 1
-                        </td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            1<br>RB</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            2<br>RB</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            5<br>RB</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #90ee90;">
-                            8<br>RB</td>
-                        <td
-                            style="border: 1px solid black; padding: 5px; text-align: center; background-color: #ffd700;">
-                            10<br>RM</td>
+                        <td style="border: 1px solid black; font-weight: bold; background-color: #00bfff;width: 20%;">
+                            MUITO BAIXO
+                            – 1</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">1<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">2<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">5<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #90ee90;">8<br><br>RB</td>
+                        <td style="border: 1px solid black; background-color: #ffff00;">10<br><br>RM</td>
                     </tr>
                 </tbody>
             </table>
 
-            <table style="border-collapse: collapse; width: auto; margin: 0 auto 30px auto; border: 1px solid black;">
+
+            <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
                 <thead>
 
                 </thead>
                 <tbody>
                     <tr>
                         <td
-                            style="border: 1px solid black; padding: 5px 15px; text-align: center; font-weight: bold; background-color: #4CAF50; color: white;">
+                            style="border: 1px solid black; padding: 5px 15px; text-align: center; font-weight: bold; background-color: #4CAF50; ">
                             MUITO BAIXA - 1
                         </td>
                         <td
@@ -1122,19 +1047,16 @@
                             ALTA - 8
                         </td>
                         <td
-                            style="border: 1px solid black; padding: 5px 15px; text-align: center; font-weight: bold; background-color: #F44336; color: white;">
+                            style="border: 1px solid black; padding: 5px 15px; text-align: center; font-weight: bold; background-color: #F44336; ">
                             MUITO ALTA - 10
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="border: none; padding: 5px; text-align: center; font-weight: bold;">
-                            PROBABILIDADE
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div style="text-align: center; font-weight: bold;  margin-bottom:30px;">PROBABILIDADE</div>
 
-            <table style="border-collapse: collapse; width: auto; margin: 0 auto; border: 1px solid black;">
+            <table
+                style="border-collapse: collapse; width: auto; margin: 0 auto; border: 1px solid black; justify-content: right;">
                 <thead>
                     <tr>
                         <td colspan="2"
@@ -1206,7 +1128,7 @@
             RISCOS</p>
 
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; text-align: center;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-size:12px; text-align: center;">
             <thead>
                 <tr style="background-color: #f2f2f2; border: 1px solid black;">
                     <th style="border: 1px solid black; padding: 8px;">RISCO</th>
@@ -1584,7 +1506,514 @@
                 </tr>
             </tbody>
         </table>
+        <br>
+        {{-- RISCO 04 --}}
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th colspan="3"
+                        style="border: 1px solid black; padding: 8px; text-align: center; background-color: #f2f2f2; font-weight: bold; border-top: none;">
+                        RISCO 04</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Descrição: Aquisição/Contratação
+                        do objeto do Termo e Referência a custos acima da média do mercado</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Probabilidade: Médio</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Impacto: Alto</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Dano (Consequência): Prejuízo ao
+                        erário</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Tratamento: Mitigar </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            Tratamento Preventivas</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Realizar ampla pesquisa de preço obedecendo
+                        a orientação normativa específica para tal fim
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Integrante Administrativo e Equipe de Planejamento
+                        da Contratação
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">02</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Considerar custos com encargos, tributos,
+                        frete e instalação quando for o caso
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Equipe de Planejamento da Contratação</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">03</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Observar os orçamentos recebidos, excluindo
+                        aqueles com indícios de falhas
+
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Equipe de Planejamento da Contratação </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            tratamento de Contingência</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Revisar orçamentos recebidos
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Equipe de Planejamento da Contratação</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Observar preços de outras licitações
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Equipe de Planejamento da Contratação</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Não adjudicação dos bens
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Agente de Contratação/Pregoeiro</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.2. Riscos relacionados à fase de Seleção do
+            Fornecedor:</p>
+        {{-- RISCO 05 --}}
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th colspan="3"
+                        style="border: 1px solid black; padding: 8px; text-align: center; background-color: #f2f2f2; font-weight: bold; border-top: none;">
+                        RISCO 05</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Descrição: Baixa qualificação
+                        técnica da empresa fornecedora (garantia/suporte técnico) </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Probabilidade: Baixo</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Impacto: Alto</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Dano (Consequência):
+                        Inobservância de termos e condições estabelecidos nos documentos do Planejamento
+                        da contratação
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Tratamento: Mitigar </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            Tratamento Preventivas</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Capacitar servidores para que acompanhem a
+                        execução do contrato/Ata
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Equipe de Planejamento da Contratação
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            tratamento de Contingência</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Estabelecer rotinas de controle para o efetivo
+                        cumprimento das obrigações estabelecidas no
+                        Edital e anexos
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Fiscal e Gestor do Contrato</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        {{-- RISCO 06 --}}
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-family: Arial, sans-serif; font-size: 14px;">
+            <thead>
+                <tr>
+                    <th colspan="3"
+                        style="border: 1px solid black; padding: 8px; text-align: center; background-color: #f2f2f2; font-weight: bold; border-top: none;">
+                        RISCO 05</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Descrição: Descumprimento de
+                        condições e obrigações previstas no Edital e anexos pela contratada </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Probabilidade: Baixo</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Impacto: Medio</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Dano (Consequência):
+                        Não entrega dos materiais
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Dano (Consequência):
+                        Atraso na entrega dos materiais
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Dano (Consequência):
+                        Baixa qualidade dos materiais entregues
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border: 1px solid black; padding: 4px;">Tratamento: Mitigar </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            Tratamento Preventivas</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Acompanhar a entrega dos bens aferindo se os
+                        requisitos exigidos no Edital e Anexos estão
+                        sendo cumpridos de acordo com a qualidade
+                        exigida
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Fiscal e Gestor do Contrato
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">02</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Avaliar se os materiais entregues estão
+                        atendendo as expectativas da contratação
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Fiscal e Gestor do Contrato
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">03</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Dimensionamento adequado do corpo de
+                        fiscalização e gestão contratual
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Autoridade competente
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 5%;"></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 55%;"><strong>Ações de
+                            tratamento de Contingência</strong></td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; width: 40%;">
+                        <strong>Responsável</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">01</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Notificar formalmente a Contratada quando
+                        cláusulas do contrato forem descumpridas
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Fiscal e Gestor do Contrato</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">02</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Aplicar multas e penalidades previstas no
+                        instrumento convocatório, de forma a coibir a
+                        reincidência
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Autoridade competente</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">03</td>
+                    <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
+                        Instituir nova equipe de planejamento da
+                        contratação e promover uma nova contratação
+                        para evitar o comprometimento da continuidade
+                        dos serviços da instituição, em caso de
+                        dificuldade de resolução das inconformidades
+                    </td>
+                    <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
+                        Autoridade competente</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <p style="font-size:16px; font-weight: 700; text-indent: 20px;">4 - APROVAÇÃO E ASSINATURA</p>
+        <p style="text-align: center">O XXXXXXXXXXXXXXXXXXXX, nos termos da Portaria nº XXXXXX, de XX de
+            XXXXXXXXXXX de XXXX apresenta o Mapa de Gerenciamento de Risco, certificando que somos
+            responsáveis pela elaboração do presente documento.</p>
+
+        {{-- Bloco de data e assinatura --}}
+        <div class="footer-signature">
+            _____________________,____ de _________ de 20____.
+        </div>
+
+        <div class="signature-block">
+            ___________________________________<br>
+            <p style="color: red;">{{ $processo->prefeitura->autoridade_competente }}</p>
+        </div>
     </div>
+    {{-- QUEBRA DE PÁGINA --}}
+    <div class="page-break"></div>
+
+    {{-- ====================================================================== --}}
+    {{-- BLOCO 7: ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL (PCA) --}}
+    {{-- ====================================================================== --}}
+    <div id="alinhamento-pca">
+        <p style="text-align: center; font-size:16px; font-weight: 700;">ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL
+            (PCA) </p>
+        <p style="text-align: center; font-size:14px; font-weight: 700;">DECLARAÇÃO</p>
+        <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
+        <p>
+            Declaro, para os devidos fins, que a presente demanda referente à <strong>[descrever objeto da
+                contratação]</strong>
+            encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
+                [ano]</strong>,
+            elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
+            outro normativo vigente que disciplina a matéria.
+        </p>
+        <p>
+            A previsão no PAC assegura o adequado planejamento da contratação, alinhado às diretrizes estratégicas
+            da Administração, em conformidade com os princípios da eficiência, economicidade e transparência,
+            garantindo a vinculação desta demanda às metas e prioridades da gestão municipal.
+        </p>
+
+        <p style="font-size:16px; font-weight: 700; color:red; text-align: center;">OU</p>
+        <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
+            motivo(s): </p>
+        <div style="border: 1px solid black; padding: 10px;">
+            <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
+            <p style="text-indent: 30px;">
+                É importante ressaltar que a ausência de um plano de contratações anual no município de
+                XXXXXXXX se deve a uma série de fatores que limitaram a sua implementação até o momento. Embora
+                a legislação (Artigo 12, VII, da Lei nº 14.133) estabeleça a obrigatoriedade de um plano de contratações
+                anual, é necessário considerar as circunstâncias específicas que podem justificar a sua ausência
+                temporária.
+            </p>
+            <p style="text-indent: 30px;">
+                Um dos principais fatores que contribuíram para a falta do plano de contratações anual foi a
+                escassez de técnicos disponíveis para a elaboração do referido plano.
+            </p>
+            <p style="text-indent: 30px;">
+                Entretanto, é importante ressaltar que o município está tomando medidas para resolver essa
+                situação, é válido ressaltar que a elaboração de um plano de contratações anual demanda tempo e
+                esforço, pois é necessário um levantamento minucioso das necessidades da Administração Municipal,
+                bem como a análise de fornecedores e a definição de critérios claros para a contratação.
+            </p>
+            <p style="text-indent: 30px;">
+                A Prefeitura Municipal de XXXXXXXXX, compromete-se a observar as disposições da Lei
+                Federal n° 14.133/21 e a empenhar todos os esforções necessários para a elaboração e atualização
+                periódica do Plano de Contratação Anual, garantindo total transparência e conformidade com as normas
+                estabelecidas.
+            </p>
+
+        </div>
+
+        <p
+            style="text-align: center; font-size:16px; font-weight: 700; border: 1px solid black; padding: 10px; background:#dadada; margin-top:20px;">
+            ENCAMINHAMENTO PARA ÓRGÃO DEMANDANTE
+        </p>
+        <div style="border: 1px solid black; padding: 10px;">
+            <p style="line-height: 1.6">Em conformidade com a legislação aplicável, encaminhamos o Presente Estudo
+                Técnico Preliminar, Mapa
+                de Riscos e Alinhamento com o Plano de Contratação Anual (PCA) ao órgão solicitante para análise de
+                conveniência e oportunidade para a contratação e demais providências cabíveis. </p>
+
+            {{-- Bloco de data e assinatura --}}
+            <div class="footer-signature">
+                _____________________,____ de _________ de 20____.
+            </div>
+
+            <div class="signature-block">
+                ___________________________________<br>
+                <p>{{ $processo->prefeitura->autoridade_competente }}</p>
+            </div>
+        </div>
+
+        <table
+            style="border-collapse: collapse; width: 100%; font-size: 12px; text-align: left; border: 1px solid black; margin-top: 100px;">
+            <thead>
+                <tr>
+                    <td colspan="2"
+                        style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
+                        RESUMO DOS DADOS DO PROCESSO
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold; width: 40%;">
+                        Nº PROCESSO ADMINISTRATIVO:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        XXX/2025
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        Nº PROCESSO DE CONTRATAÇÃO:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        XXX/2025
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        OBJETO
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        XXXXXXXXXX
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        MODALIDADE:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        PREGÃO ELETRÔNICO
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        ÓRGÃO RESPONSÁVEL:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        SECRETARIA MUNICIPAL DE XXXXXXXXXX
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            RECEBO O PRESENTE Estudo Técnico Preliminar e após verificar que demanda se encontra
+            alinhada com os instrumentos de planejamento e que o objeto que não contém classificação
+            direcionada à marca ou empresa e nem possui características de luxo determino:
+        </p>
+        <p> Encaminhe-se à XXXXXXX para a REALIZAÇÃO DE PESQUISA DE PREÇOS. </p>
+        <p>Encaminhe-se à XXXXXXX para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA
+            EXISTENTE.
+        </p>
+        <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
+            <tr>
+                <td style="border: 1px solid black; padding: 6px; font-weight: normal;">
+                    Forma indicada da contratação:
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">
+                    <div style="display: block; margin-bottom: 4px;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
+                        Dispensa de Licitação;
+                    </div>
+                    <div style="display: block; margin-bottom: 4px;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">X</span>
+                        Pregão Eletrônico;
+                    </div>
+                    <div style="display: block;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
+                        Concorrência.
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            Após o cumprimento de todas as etapas acima previstas, retorno o procedimento para esta
+            secretaria para elaboração de Termo de Referência.
+        </p>
+
+
+        {{-- Bloco de data e assinatura --}}
+        <div class="footer-signature">
+            _____________________,____ de _________ de 20____.
+        </div>
+
+        <div class="signature-block">
+            ___________________________________<br>
+            {{ $processo->prefeitura->autoridade_competente }} <br>
+            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
+        </div>
+    </div>
+
+    {{-- QUEBRA DE PÁGINA
+    <div class="page-break"></div> --}}
 
 </body>
 
