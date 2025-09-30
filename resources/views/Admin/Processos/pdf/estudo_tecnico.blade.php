@@ -46,6 +46,7 @@
         }
 
         .cover-title {
+            width: 80%;
             font-family: 'montserrat', sans-serif;
             font-size: 20pt;
             font-weight: 900;

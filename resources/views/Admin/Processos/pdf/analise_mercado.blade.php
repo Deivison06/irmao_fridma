@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Estudo Técnico Preliminar - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>ANÁLISE DE MERCADO (PESQUISA DE PRECOS) - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
         @page {
             margin: 2cm;
@@ -46,6 +46,7 @@
         }
 
         .cover-title {
+            width: 80%;
             font-family: 'montserrat', sans-serif;
             font-size: 20pt;
             font-weight: 900;
