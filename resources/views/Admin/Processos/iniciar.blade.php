@@ -57,7 +57,7 @@
                                         ],
                                         'estudo_tecnico' => [
                                             'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
-                                            'cor' => 'purple',
+                                            'cor' => 'violet',
                                             'data_id' => 'data_estudo_tecnico',
                                         ],
                                         'analise_mercado' => [
