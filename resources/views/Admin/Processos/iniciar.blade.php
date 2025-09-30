@@ -60,6 +60,11 @@
                                             'cor' => 'purple',
                                             'data_id' => 'data_estudo_tecnico',
                                         ],
+                                        'analise_mercado' => [
+                                            'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
+                                            'cor' => 'green',
+                                            'data_id' => 'data_analise_mercado',
+                                        ],
                                     ];
                                 @endphp
 
