@@ -47,43 +47,58 @@
                                     $documentos = [
                                         'capa' => [
                                             'titulo' => 'Capa do documento',
-                                            'cor' => 'red',
+                                            'cor' => 'bg-red-500',
                                             'data_id' => 'data_capa',
                                         ],
                                         'formalizacao' => [
                                             'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
-                                            'cor' => 'blue',
+                                            'cor' => 'bg-blue-500',
                                             'data_id' => 'data_formalizacao',
                                         ],
                                         'estudo_tecnico' => [
                                             'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
-                                            'cor' => 'violet',
+                                            'cor' => 'bg-purple-500', // violet → purple
                                             'data_id' => 'data_estudo_tecnico',
                                         ],
                                         'analise_mercado' => [
                                             'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
-                                            'cor' => 'green',
+                                            'cor' => 'bg-green-500',
                                             'data_id' => 'data_analise_mercado',
                                         ],
                                         'disponibilidade_orçamento' => [
                                             'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
-                                            'cor' => 'yellow',
+                                            'cor' => 'bg-yellow-500',
                                             'data_id' => 'data_disponibilidade_orçamento',
                                         ],
                                         'termo_referencia' => [
                                             'titulo' => 'TERMO DE REFERÊNCIA',
-                                            'cor' => 'orange',
+                                            'cor' => 'bg-orange-500',
                                             'data_id' => 'data_termo_referencia',
                                         ],
                                         'minutas' => [
                                             'titulo' => 'MINUTAS',
-                                            'cor' => 'brown',
+                                            'cor' => 'bg-pink-500', // brown → pink (já que Tailwind não tem brown)
                                             'data_id' => 'data_minutas',
                                         ],
                                         'parecer_juridico' => [
                                             'titulo' => 'PARECER JURÍDICO',
-                                            'cor' => 'brown',
+                                            'cor' => 'bg-emerald-500',
                                             'data_id' => 'data_parecer_juridico',
+                                        ],
+                                        'autorizacao_abertura_procedimento' => [
+                                            'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
+                                            'cor' => 'bg-teal-500',
+                                            'data_id' => 'data_autorizacao_abertura_procedimento',
+                                        ],
+                                        'abertura_fase_externa' => [
+                                            'titulo' => 'ABERTURA FASE EXTERNA',
+                                            'cor' => 'bg-cyan-500',
+                                            'data_id' => 'data_abertura_fase_externa',
+                                        ],
+                                        'publicacoes_avisos_licitacao' => [
+                                            'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
+                                            'cor' => 'bg-indigo-500',
+                                            'data_id' => 'data_publicacoes_avisos_licitacao',
                                         ],
                                     ];
                                 @endphp
@@ -97,9 +112,7 @@
                                     <tr class="transition-colors duration-150 hover:bg-gray-50">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
-                                                <div
-                                                    class="flex-shrink-0 w-2 h-2 mr-3 bg-{{ $doc['cor'] }}-500 rounded-full">
-                                                </div>
+                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full"></div>
                                                 <div class="text-sm font-semibold text-gray-900">
                                                     {{ $doc['titulo'] }}
                                                     @if ($documentoGerado)
@@ -716,7 +729,7 @@
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                    'content'));
+                        'content'));
 
                     // Tratamento especial para arquivo
                     if (field === 'itens_e_seus_quantitativos_xml') {

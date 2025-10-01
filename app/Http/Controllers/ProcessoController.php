@@ -153,6 +153,9 @@ class ProcessoController extends Controller
             'termo_referencia' => 'Admin.Processos.pdf.termo_referencia',
             'minutas' => 'Admin.Processos.pdf.minutas',
             'parecer_juridico' => 'Admin.Processos.pdf.parecer_juridico',
+            'autorizacao_abertura_procedimento' => 'Admin.Processos.pdf.autorizacao_abertura_procedimento',
+            'abertura_fase_externa' => 'Admin.Processos.pdf.abertura_fase_externa',
+            'publicacoes_avisos_licitacao' => 'Admin.Processos.pdf.publicacoes_avisos_licitacao',
             default => 'Admin.Processos.pdf.capa'
         };
 
@@ -236,6 +239,9 @@ class ProcessoController extends Controller
             'termo_referencia',
             'minutas',
             'parecer_juridico',
+            'autorizacao_abertura_procedimento',
+            'abertura_fase_externa',
+            'publicacoes_avisos_licitacao'
         ];
 
         // Buscar os documentos do processo

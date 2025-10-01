@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ANÁLISE DE MERCADO (PESQUISA DE PRECOS) - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>Minutas - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
         @page {
             margin: 2cm;
@@ -50,7 +50,7 @@
             font-family: 'montserrat', sans-serif;
             font-size: 20pt;
             font-weight: 900;
-            padding: 10px;
+            padding: 10 30px;
             border: 2px solid #000;
             background-color: #fff;
             color: #000;
@@ -59,7 +59,8 @@
 
         .footer-signature {
             margin-top: 60px;
-            text-align: right;
+            text-align: center;
+            color: red;
         }
 
         .signature-block {
@@ -95,8 +96,7 @@
     <div id="cover-page">
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
         <div class="cover-title">
-            ANÁLISE DE MERCADO <br>
-            (PESQUISA DE PRECOS)
+            AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO
         </div>
     </div>
 
@@ -104,9 +104,25 @@
     <div class="page-break"></div>
 
     {{-- ====================================================================== --}}
-    {{-- BLOCO 2: RESUMO DOS DADOS DO PROCESSO --}}
+    {{-- BLOCO 2: AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO --}}
     {{-- ====================================================================== --}}
-    <div id="resumo-dados-processo">
+    <div id="autorizacao-abertura-procedimento">
+        <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br> PROCESSO
+            ADMINISTRATIVO N° XXX/2025</p>
+
+        <p>
+            Ao(À) Ilmo(a). Sr(a).
+            <span style="color: red">XXXXXXXXXXXXXXXXXXX</span>
+            <br>
+            Agente de Contratação / Pregoeiro
+            <br>
+            <span style="color: red">
+                Prefeitura de XXXXXXXXXXX - PI
+            </span>
+        </p>
+
+        <p><span style="background-color: yellow">Assunto: Autorização</span> para Abertura de Pregão Eletrônico </p>
+
         <table style="border-collapse: collapse; width: 100%; font-size: 12px;">
             <thead>
                 <tr>
@@ -143,55 +159,53 @@
         </table>
 
         <p style="text-indent: 30px">
-            A Secretaria Municipal de XXXXXXXXX, encaminhou para esta unidade a necessidade
-            de realização de Cotação referente a itens relacionados ao objeto
-            <strong>“XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX”</strong>, ato
-            seguido, foi realizado a cotação junto ao Painel de Preços do TCE-PI, conforme tabela abaixo:
+            Senhor(a) Agente de Contratação / Pregoeiro
+        </p>
+        <p style="text-indent: 30px">
+            Trata-se de demanda da Secretaria Municipal de XXXXXXXXXXXX, para contratação de
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+        </p>
+        <p style="text-indent: 30px">
+            O valor estimado para pretendida contratação é de R$ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            (XXXXXXXXXXXX),
+            conforme Relatório de Pesquisa de Preços.
         </p>
 
-        <table style="border-collapse: collapse; width: 100%; font-size: 12px; text-align: center;">
-            <thead>
-                <tr>
-                    <th colspan="6"
-                        style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        RESUMO
-                    </th>
-                </tr>
-                <tr>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        ITEM
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 1
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 2
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 3
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        FORNECEDOR LOCAL
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        MÉDIA
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">NOME DO ITEM</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR MÉDIO</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Segue em anexo arquivos referentes à cotação realizada.</p>
-        <p>Encaminhe-se à XXXXXXX para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA EXISTENTE.</p>
+        <p style="text-indent: 30px">
+            O Setor de Contabilidade, através da DECLARAÇÃO DE COMPATIBILIDADE DA
+            PREVISÃO DE RECURSOS ORÇAMENTÁRIOS, certifica a existência de dotação orçamentária
+            para suportar a presente despesa, demonstrando a compatibilidade da previsão de recursos
+            orçamentários com o compromisso a ser assumido.
+        </p>
+        <p style="text-indent: 30px">
+            Por todo o exposto, considerando que a instrução do presente processo atende ao disposto
+            na Lei nº 14.133, de 2021, aprovo os atos praticados e autorizo que seja promovida a abertura de
+            Procedimento de Licitação, na modalidade Pregão, em sua forma Eletrônica, nos termos da Lei nº
+            14.133, de 2021.
+        </p>
+        <p style="text-indent: 30px">
+            Por fim, declaro, para os efeitos do art. 16, II da Lei Complementar nº 101, de 04 de maio
+            de 2000 (Lei de Responsabilidade Fiscal), que a despesa da pretendida contratação, possui
+            adequação orçamentária e financeira com a Lei Orçamentária Anual (LOA) e compatibilidade com
+            o Plano Plurianual (PPA) e com a Lei de Diretrizes Orçamentária (LDO).
+        </p>
 
+        <p>
+            CLASSIFICAÇÃO DO OBJETO: COMPRAS
+        </p>
+        <p>
+            JUSTIFICATIVA DA CONTRATAÇÃO:
+            <br><br>
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXX
+        </p>
+        <p>MODALIDADE: PREGÃO ELETRÔNICO</p>
+        <p>MODO DE DISPUTA: ABERTO</p>
+        <p>TRATAMENTO DIFERENCIA A MEs e EPPs</p>
+        <p>
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+        </p>
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
             {{ $processo->prefeitura->nome }},
@@ -200,16 +214,14 @@
 
         <div class="signature-block">
             ___________________________________<br>
-            {{ $processo->prefeitura->autoridade_competente }} <br>
-            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
+            <span style="color: red;">XXXXXXXXXXXXXXXXX</span> <br>
+            Prefeito Municipal
         </div>
     </div>
-
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
-
     {{-- ====================================================================== --}}
-    {{-- BLOCO 3: ANEXOS PESQUISA OBTIDAS --}}
+    {{-- BLOCO 3: PORTARIA DE AGENTE DE CONTRATAÇÃO E EQUIPE DE APOIO --}}
     {{-- ====================================================================== --}}
     <div id="anexos-pesquisa-obtidas">
         <div class="line"></div>
@@ -218,17 +230,13 @@
 
         <div class="content">
             <strong>
-                ANEXOS PESQUISA OBTIDAS EM OUTAS FONTES COMO<br>
-                TCE, PAINEL DE PRECOS, PNCP, BANCO DE DADOS<br>
-                SAÚDE<br>
-                E PORTARIAS
+                PORTARIA DE AGENTE DE CONTRATAÇÃO E <br>
+                EQUIPE DE APOIO
             </strong>
         </div>
 
         <div class="line"></div>
     </div>
-
-
 </body>
 
 </html>
