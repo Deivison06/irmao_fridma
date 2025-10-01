@@ -279,73 +279,7 @@
                     @csrf
 
                     <div class="space-y-6">
-                        <!-- NOVO CAMPO: Tipo de Procedimento -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <label for="tipo_procedimento" class="block mb-1 text-sm font-medium text-gray-700">
-                                    TIPO DE PROCEDIMENTO
-                                </label>
-                                <select id="tipo_procedimento" x-model="tipo_procedimento"
-                                    :disabled="confirmed.tipo_procedimento"
-                                    class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                    <option value="">Selecione o tipo de procedimento</option>
-                                    <option value="compras"
-                                        {{ ($processo->detalhe->tipo_procedimento ?? '') == 'compras' ? 'selected' : '' }}>
-                                        COMPRAS</option>
-                                    <option value="servicos"
-                                        {{ ($processo->detalhe->tipo_procedimento ?? '') == 'servicos' ? 'selected' : '' }}>
-                                        SERVIÇOS</option>
-                                </select>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('tipo_procedimento')"
-                                    x-show="!confirmed.tipo_procedimento" :disabled="!tipo_procedimento"
-                                    class="px-3 py-2 text-white transition rounded-lg"
-                                    :class="!tipo_procedimento ? 'bg-gray-400 cursor-not-allowed' :
-                                        'bg-green-500 hover:bg-green-600'">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('tipo_procedimento')"
-                                    x-show="confirmed.tipo_procedimento"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- NOVO CAMPO: Tipo de Contratação -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <label for="tipo_contratacao" class="block mb-1 text-sm font-medium text-gray-700">
-                                    TIPO DE CONTRATAÇÃO
-                                </label>
-                                <select id="tipo_contratacao" x-model="tipo_contratacao"
-                                    :disabled="confirmed.tipo_contratacao"
-                                    class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                    <option value="">Selecione o tipo de contratação</option>
-                                    <option value="lote"
-                                        {{ ($processo->detalhe->tipo_contratacao ?? '') == 'lote' ? 'selected' : '' }}>LOTE
-                                    </option>
-                                    <option value="item"
-                                        {{ ($processo->detalhe->tipo_contratacao ?? '') == 'item' ? 'selected' : '' }}>ITEM
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('tipo_contratacao')"
-                                    x-show="!confirmed.tipo_contratacao" :disabled="!tipo_contratacao"
-                                    class="px-3 py-2 text-white transition rounded-lg"
-                                    :class="!tipo_contratacao ? 'bg-gray-400 cursor-not-allowed' :
-                                        'bg-green-500 hover:bg-green-600'">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('tipo_contratacao')"
-                                    x-show="confirmed.tipo_contratacao"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
+                        
                         <!-- Campos principais em sequência -->
                         <x-form-field name="secretaria" label="Secretaria" />
 

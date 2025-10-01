@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('processo_detalhes', function (Blueprint $table) {
-             $table->enum('tipo_procedimento', ['compras', 'servicos'])->nullable();
-            $table->enum('tipo_contratacao', ['lote', 'item'])->nullable();
+        Schema::table('processos', function (Blueprint $table) {
+            $table->enum('tipo_procedimento', ['1', '2'])->comment('1-SERVIÇOS, 2-COMPRAS')->nullable();
+            $table->enum('tipo_contratacao', ['1', '2'])->comment('1-LOTE, 2-ITEM')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('processo_detalhes', function (Blueprint $table) {
+        Schema::table('processos', function (Blueprint $table) {
              $table->dropColumn(['tipo_procedimento', 'tipo_contratacao']);
         });
     }

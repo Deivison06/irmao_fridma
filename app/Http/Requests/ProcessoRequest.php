@@ -3,7 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Enums\ModalidadeEnum;
+use App\Enums\TipoContratacaoEnum;
+use App\Enums\TipoProcedimentoEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class ProcessoRequest extends FormRequest
 {
@@ -27,6 +30,8 @@ class ProcessoRequest extends FormRequest
             'numero_processo' => 'required|string|max:10',
             'numero_procedimento' => 'required|string|max:10',
             'objeto' => 'required|string',
+            'tipo_procedimento' => ['nullable', 'int' , new Enum(TipoProcedimentoEnum::class)], // 1 para SERVIÇOS, 2 para COMPRAS
+            'tipo_contratacao' => ['nullable', 'int' , new Enum(TipoContratacaoEnum::class)], // 1 para LOTE, 2 para ITEM
         ];
     }
 
