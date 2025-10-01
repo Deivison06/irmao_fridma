@@ -112,7 +112,8 @@
                                     <tr class="transition-colors duration-150 hover:bg-gray-50">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full"></div>
+                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full">
+                                                </div>
                                                 <div class="text-sm font-semibold text-gray-900">
                                                     {{ $doc['titulo'] }}
                                                     @if ($documentoGerado)
@@ -221,6 +222,14 @@
                                         class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Nº Procedimento
                                     </th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                        Tipo Contratação
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                        Tipo Procedimento
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -260,6 +269,13 @@
                                     <td class="px-6 py-4 font-mono text-sm text-gray-900">
                                         {{ $processo->numero_procedimento }}
                                     </td>
+                                    <td class="px-6 py-4 font-mono text-sm text-gray-900">
+                                        {{ $processo->tipo_contratacao_nome }}
+                                    </td>
+                                    <td class="px-6 py-4 font-mono text-sm text-gray-900">
+                                        {{ $processo->tipo_procedimento_nome }}
+                                    </td>
+
                                 </tr>
                                 <tr class="bg-gray-50">
                                     <td colspan="4" class="px-6 py-4 text-sm text-gray-700">
@@ -279,7 +295,7 @@
                     @csrf
 
                     <div class="space-y-6">
-                        
+
                         <!-- Campos principais em sequência -->
                         <x-form-field name="secretaria" label="Secretaria" />
 

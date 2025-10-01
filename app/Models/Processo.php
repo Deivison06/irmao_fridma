@@ -46,4 +46,13 @@ class Processo extends Model
     {
         return $this->hasMany(Documento::class);
     }
+    public function getTipoContratacaoNomeAttribute(): string
+    {
+        return $this->tipo_contratacao?->getDisplayName() ?? '—';
+    }
+
+    public function getTipoProcedimentoNomeAttribute(): string
+    {
+        return $this->tipo_procedimento?->getDisplayName() ?? '—';
+    }
 }

@@ -41,7 +41,7 @@
 
                 <div id="prefeituras-cards">
                     <h2 class="mb-4 text-xl font-semibold text-gray-800">Selecione uma Prefeitura</h2>
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" >
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         @foreach ($prefeituras as $prefeitura)
                             <a href="{{ route('admin.processos.index') }}?prefeitura_id={{ $prefeitura->id }}"
                                 class="prefeitura-card group relative p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#009496] transition-all duration-300 transform hover:-translate-y-1"
@@ -50,7 +50,8 @@
                                     class="absolute transition-opacity duration-300 opacity-0 top-4 right-4 group-hover:opacity-100">
                                     <svg class="w-5 h-5 text-[#009496]" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7">
                                         </path>
                                     </svg>
                                 </div>
@@ -131,6 +132,12 @@
                                 <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Nº Procedimento
                                 </th>
+                                <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    Tipo Contratação
+                                </th>
+                                <th class="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                    Tipo Procedimento
+                                </th>
                                 <th
                                     class="px-6 py-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase">
                                     Ações
@@ -176,6 +183,14 @@
                                     <td class="px-6 py-4 font-mono text-sm text-gray-900">
                                         {{ $processo->numero_procedimento }}
                                     </td>
+                                    <td class="px-6 py-4 font-mono text-sm text-gray-900">
+                                        {{ $processo->tipo_contratacao_nome }}
+                                    </td>
+                                    <td class="px-6 py-4 font-mono text-sm text-gray-900">
+                                        {{ $processo->tipo_procedimento_nome }}
+                                    </td>
+
+
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-center space-x-2">
                                             <a href="{{ route('admin.processos.edit', $processo->id) }}"
@@ -184,7 +199,7 @@
                                                 ✏️
                                             </a>
                                             <a href="{{ route('admin.processos.iniciar', $processo->id) }}"
-                                                 class="p-2 text-white transition-colors duration-200 bg-[#009496] rounded-lg hover:bg-[#007a7a]"
+                                                class="p-2 text-white transition-colors duration-200 bg-[#009496] rounded-lg hover:bg-[#007a7a]"
                                                 title="Iniciar processo">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
@@ -196,7 +211,8 @@
                                                         d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
                                             </a>
-                                            <form action="{{ route('admin.processos.destroy', $processo->id) }}" method="POST" class="inline">
+                                            <form action="{{ route('admin.processos.destroy', $processo->id) }}"
+                                                method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
@@ -212,7 +228,7 @@
 
                                 <!-- Linha 2: objeto -->
                                 <tr class="bg-gray-50">
-                                    <td colspan="5" class="px-6 py-4 text-sm text-gray-700">
+                                    <td colspan="7" class="px-6 py-4 text-sm text-gray-700">
                                         <strong>Objeto:</strong> {{ $processo->objeto }}
                                     </td>
                                 </tr>
