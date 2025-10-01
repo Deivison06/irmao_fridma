@@ -111,7 +111,7 @@
             ADMINISTRATIVO N° XXX/2025</p>
 
         <p>
-            Ao(À) Ilmo(a). Sr(a).
+            Ao(À) Ilmo(a). Sr(a).<br>
             <span style="color: red">XXXXXXXXXXXXXXXXXXX</span>
             <br>
             Agente de Contratação / Pregoeiro

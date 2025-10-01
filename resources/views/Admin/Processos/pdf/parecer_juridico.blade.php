@@ -301,10 +301,10 @@
             <tr>
                 <td></td>
                 <td>VII - a partir de documentos de formalização
-                    de demandas, <strong> os órgãos responsáveis pelo
+                    de demandas, <span style="font-weight: bold;">os órgãos responsáveis pelo
                         planejamento de cada ente federativo
                         poderão, na forma de regulamento, elaborar
-                        plano de contratações anual</strong>, com o objetivo
+                        plano de contratações anual</span>, com o objetivo
                     de racionalizar as contratações dos órgãos e
                     entidades sob sua competência, garantir o
                     alinhamento com o seu planejamento
@@ -375,7 +375,7 @@
             <strong>PARECER JURÍDICO</strong>
         </div>
 
-        <p style="font: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº XXX/2025 <br>
+        <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº XXX/2025 <br>
             PROCESSO ADMINISTRATIVO Nº XXXX/2025 <br>
             OBJETO: <br>
             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -399,18 +399,18 @@
             <li>Estudos Técnicos Preliminares (ETP);</li>
             <li>Mapa de Riscos;</li>
             <li>Termo de Referência com descrição e quantitativo dos itens;</li>
-            <li>Despacho da Secretaria Demandante questionando a <span style="color: red:">Secretaria Municipal de
+            <li>Despacho da Secretaria Demandante questionando a <span style="color: red;">Secretaria Municipal de
                     Finanças</span> se existe adequação
                 orçamentária e financeira das despesas especificadas no Termo de Referência com a atual lei
                 orçamentária;</li>
-            <li>Despacho da <span style="color: red:">Secretaria Municipal de Finanças</span> à Secretaria Demandante
+            <li>Despacho da <span style="color: red;">Secretaria Municipal de Finanças</span> à Secretaria Demandante
                 atestando a adequação e existência
                 de saldo orçamentário;</li>
-            <li>Despacho ao <span style="color: red:"><span style="color: red:"></span>, solicitando a devida pesquisa
+            <li>Despacho ao <span style="color: red;">Departamento de Compras</span>, solicitando a devida pesquisa
                     de preços, de acordo com a descrição
                     e quantitativo constante dos autos;</li>
             <li>Pesquisa de Preços realizada no Painel de Preços do TCE-PI e com Fornecedor Local;</li>
-            <li>Despacho do <span style="color: red:"><span style="color: red:"></span> ao setor demandante informando
+            <li>Despacho do <span style="color: red;">Departamento de Compras</span> ao setor demandante informando
                     da realização da pesquisa;</li>
             <li>Autuação do procedimento;</li>
             <li>Minuta do Edital de Licitação;</li>
@@ -856,7 +856,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td style="font-weight: bold;">
+                <td >
                     II - demonstração da previsão da contratação
                     no plano de contratações anual, sempre que
                     elaborado, de modo a indicar o seu alinhamento

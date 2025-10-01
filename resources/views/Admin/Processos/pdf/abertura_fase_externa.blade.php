@@ -146,7 +146,7 @@
         </table>
 
         <p>
-            <strong>DECLARO</strong> que recebi o processo de Pregão Eletrônico, e verificadas as condições de
+            <span style="font-weight: bold;">DECLARO</span> que recebi o processo de Pregão Eletrônico, e verificadas as condições de
             regularidade procedo com a devida publicação, nos termos legais.
         </p>
 
@@ -208,7 +208,7 @@
         </table>
 
         <p>
-            <strong>CERTIFICO</strong> O ENCERRAMENTO DA FASE PREPARATÓRIA DO PROCESSO
+           <span style="font-weight: bold;">CERTIFICO</span> O ENCERRAMENTO DA FASE PREPARATÓRIA DO PROCESSO
             LICITATÓRIO, ENCONTRANDO-SE O FEITO DISPONÍVEL PARA A PUBLICAÇÃO DO
             AVISO DE LICITAÇÃO E DEMAIS
         </p>
@@ -234,7 +234,7 @@
     <div id="termo_autuacao">
         <p style="font-weight: bold; text-align: center;">TERMO DE AUTUAÇÃO </p>
         <p style="text-indent: 30px">
-            No uso de minhas atribuições, em <strong>XX de XXXXXXXXXX de 2025</strong>, autuo o
+            No uso de minhas atribuições, em <span style="font-weight: bold;">XX de XXXXXXXXXX de 2025</span>, autuo o
             presente Processo de Contratação na modalidade Pregão Eletrônico, sob o número XXX/,
             originário do Processo Administrativo nº XXX/2025, que tem por finalidade
             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
