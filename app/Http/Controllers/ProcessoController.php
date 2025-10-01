@@ -150,6 +150,9 @@ class ProcessoController extends Controller
             'estudo_tecnico' => 'Admin.Processos.pdf.estudo_tecnico',
             'analise_mercado' => 'Admin.Processos.pdf.analise_mercado',
             'disponibilidade_orçamento' => 'Admin.Processos.pdf.disponibilidade_orçamento',
+            'termo_referencia' => 'Admin.Processos.pdf.termo_referencia',
+            'minutas' => 'Admin.Processos.pdf.minutas',
+            'parecer_juridico' => 'Admin.Processos.pdf.parecer_juridico',
             default => 'Admin.Processos.pdf.capa'
         };
 
@@ -222,24 +225,37 @@ class ProcessoController extends Controller
 
     public function baixarTodosDocumentos(Processo $processo)
     {
-        // Buscar todos os documentos gerados para este processo
-        $documentos = Documento::where('processo_id', $processo->id)->get();
+        // Defina a ordem desejada dos documentos
+        $ordem = [
+            'capa',
+            'formalizacao',
+            'autorizacao',
+            'estudo_tecnico',
+            'analise_mercado',
+            'disponibilidade_orçamento',
+            'termo_referencia',
+            'minutas',
+            'parecer_juridico',
+        ];
+
+        // Buscar os documentos do processo
+        $documentos = Documento::where('processo_id', $processo->id)->get()->keyBy('tipo_documento');
 
         // Inicializar o FPDI para mesclar os PDFs
         $pdf = new Fpdi();
 
-        // Loop sobre os documentos e adicionar cada PDF
-        foreach ($documentos as $documento) {
-            $caminhoDocumento = public_path($documento->caminho);
+        // Seguir a ordem definida
+        foreach ($ordem as $tipo) {
+            if (!isset($documentos[$tipo])) {
+                continue; // pula se o documento não existe
+            }
 
-            // Verificar se o arquivo PDF existe
+            $caminhoDocumento = public_path($documentos[$tipo]->caminho);
+
             if (file_exists($caminhoDocumento)) {
-                // Contar o número de páginas do PDF existente
                 $numPages = $pdf->setSourceFile($caminhoDocumento);
 
-                // Adicionar cada página do PDF ao PDF final
                 for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
-                    // Importa a página e a adiciona ao PDF
                     $templateId = $pdf->importPage($pageNo);
                     $pdf->addPage();
                     $pdf->useTemplate($templateId);
@@ -247,23 +263,19 @@ class ProcessoController extends Controller
             }
         }
 
-        // Gerar o nome do arquivo final
+        // Gerar nome do arquivo final
         $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
         $nomeArquivo = "processo_{$numeroProcessoLimpo}_todos_documentos_" . now()->format('Ymd_His') . '.pdf';
 
-        // Definir o caminho para salvar o PDF
         $diretorio = public_path('uploads/documentos/');
 
-        // Verificar se o diretório existe, caso contrário, criá-lo
         if (!file_exists($diretorio)) {
-            mkdir($diretorio, 0777, true); // Cria o diretório com permissão total
+            mkdir($diretorio, 0777, true);
         }
 
-        // Salvar o PDF gerado
         $caminhoArquivo = $diretorio . $nomeArquivo;
-        $pdf->Output('F', $caminhoArquivo); // Salva o arquivo no diretório
+        $pdf->Output('F', $caminhoArquivo);
 
-        // Retornar o PDF gerado para o usuário
-        return response()->download($caminhoArquivo)->deleteFileAfterSend(true); // Remove após o envio
+        return response()->download($caminhoArquivo)->deleteFileAfterSend(true);
     }
 }

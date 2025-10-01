@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>DISPONIBILIDADE ORÇAMENTÁRIA - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>TERMO DE REFERÊNCIA - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
         @page {
             margin: 2cm;
@@ -98,20 +98,15 @@
     <div id="cover-page">
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
         <div class="cover-title">
-            DISPONIBILIDADE <br>
-            ORÇAMENTÁRIA
+            TERMO DE REFERÊNCIA
         </div>
     </div>
 
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
 
-    {{-- ====================================================================== --}}
-    {{-- BLOCO 2: DECLARAÇÃO DE COMPATIBILIDADE --}}
-    {{-- ====================================================================== --}}
-    <div id="declaracao-compatibilidade">
-        <p style="text-align: center; font-wfont-weight: bold;">DECLARAÇÃO DE COMPATIBILIDADE DA PREVISÃO DE RECURSOS
-            ORÇAMENTÁRIOS</p>
+    <div id="termo_referencia">
+        <p style="color: red; text-align: center;">SECRETARIA MUNICIPAL DE XXXXXX </p>
         <table style="border-collapse: collapse; width: 100%; font-size: 12px;">
             <thead>
                 <tr>
@@ -147,85 +142,55 @@
             </tbody>
         </table>
 
-        <p style="text-indent: 30px;">
-            <strong>DECLARO</strong> para os fins de demonstração da compatibilidade da
-            previsão de recursos orçamentários, com base no
-            art. 72, IV da Lei 14.133/21, que a despesa da respectiva contratação estimada em R$ XXXXXXXXXXXXX
-            (XXXXXXXXXXXXXXXXX)
-            possui previsão de saldo orçamentário e financeiro compatível com a Lei Orçamentária Anual (LOA) e é
-            compatível com o
-            Plano Plurianual (PPA) e com a Lei de Diretrizes Orçamentárias (LDO) vigentes.
+        <p style="text-indent: 30px; margin-top: 20px; text-align: justify;">
+            Esta Secretaria solicitou a elaboração de ETP, Mapa de Riscos, Cotação de Mercado e emissão de Dotação
+            Orçamentária acerca da XXXXXXXXXXXXXXXXXXXXXXXXXXXXX, após sanada as solicitações, foi elaborado o Termo de
+            Referência, encaminha-se para:
         </p>
 
-        <p style="text-indent: 30px;">
-            As despesas para atender a presente solicitação da demanda, encontram-se amparadas pelo seguinte
-            detalhamento:
-        </p>
+        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO.</p>
+        <p style="text-indent: 30px; "> Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE PARECER JURÍDICO</p>.</p>
+        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA AUTORIDADE COMPETENTE </p>
 
-        <table
-            style="border-collapse: collapse; width: 100%; height: 300px; border: 1px solid black; font-family: sans-serif; font-size: 14px;">
+        <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
             <tr>
-                <!-- Coluna da esquerda -->
-                <td style="width: 50%; vertical-align: top; padding: 10px; border-right: 1px solid black;">
-                    <p style="margin-top: 0; margin-bottom: 10px;">
-                        Gestão/Unidade: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Fonte de Recursos: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Programa de Trabalho: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Elemento de Despesa: [...];
-                    </p>
-                    <p style="margin-bottom: 0;">
-                        Plano Interno: [...];
-                    </p>
+                <td style="border: 1px solid black; padding: 6px; font-weight: normal;">
+                    Forma indicada da contratação:
                 </td>
-
-                <!-- Coluna da direita -->
-                <td style="width: 50%; border-left: 1px solid black; vertical-align: top; padding: 10px;">
-                    <!-- pode adicionar conteúdo aqui -->
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">
+                    <div style="display: block; margin-bottom: 4px;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
+                        Dispensa de Licitação;
+                    </div>
+                    <div style="display: block; margin-bottom: 4px;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">X</span>
+                        Pregão Eletrônico;
+                    </div>
+                    <div style="display: block;">
+                        <span
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
+                        Concorrência.
+                    </div>
                 </td>
             </tr>
         </table>
 
-
-        <p>OU</p>
-
-        <p style="color: red">
-            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <strong>Sistema de
-                Registro de Preços (SRP)</strong>,
-            nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
-            Por se tratar de procedimento que visa apenas ao registro formal de preços, <strong>não há necessidade de
-                indicação de dotação
-                orçamentária nesta fase</strong>, ficando a alocação de recursos vinculada e obrigatória somente no
-            momento da contratação
-            efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas das Secretarias/Órgãos
-            requisitantes.<br>
-            Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando os
-            princípios da
-            eficiência, economicidade e responsabilidade fiscal.
-        </p>
-
-        <p>Encaminhe-se ao DEMANDANTE para a elaboração do TERMO DE REFERÊNCIA</p>
-
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ \Carbon\Carbon::parse($dataSelecionada)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+            {{ $processo->prefeitura->nome }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         <div class="signature-block">
             ___________________________________<br>
-            <strong>
-                {{ $processo->prefeitura->autoridade_competente }} <br>
-                {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
-            </strong>
+            {{ $processo->prefeitura->autoridade_competente }} <br>
+            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
         </div>
     </div>
-    {{-- QUEBRA DE PÁGINA --}}
-    <div class="page-break"></div>
 
 </body>
 

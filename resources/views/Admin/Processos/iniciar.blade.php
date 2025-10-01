@@ -70,6 +70,21 @@
                                             'cor' => 'yellow',
                                             'data_id' => 'data_disponibilidade_orçamento',
                                         ],
+                                        'termo_referencia' => [
+                                            'titulo' => 'TERMO DE REFERÊNCIA',
+                                            'cor' => 'orange',
+                                            'data_id' => 'data_termo_referencia',
+                                        ],
+                                        'minutas' => [
+                                            'titulo' => 'MINUTAS',
+                                            'cor' => 'brown',
+                                            'data_id' => 'data_minutas',
+                                        ],
+                                        'parecer_juridico' => [
+                                            'titulo' => 'PARECER JURÍDICO',
+                                            'cor' => 'brown',
+                                            'data_id' => 'data_parecer_juridico',
+                                        ],
                                     ];
                                 @endphp
 
