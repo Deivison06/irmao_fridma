@@ -344,6 +344,8 @@
                             </div>
                         </div>
 
+                        <x-form-field name="nome_equipe_planejamento" label="EQUIPE DE PLANEJAMENTO" />
+                        <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
                         <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
                         <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
 
@@ -637,6 +639,8 @@
                 prazo_vigencia_outro: existing?.prazo_vigencia_outro ?? '',
                 objeto_continuado: existing?.objeto_continuado ?? '',
                 itens_e_seus_quantitativos_xml: existing?.itens_e_seus_quantitativos_xml ?? '',
+                nome_equipe_planejamento: existing?.nome_equipe_planejamento ?? '',
+                responsavel_equipe_planejamento: existing?.responsavel_equipe_planejamento ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -656,6 +660,8 @@
                     prazo_vigencia: existing?.prazo_vigencia?.length > 0,
                     objeto_continuado: !!existing?.objeto_continuado,
                     itens_e_seus_quantitativos_xml: !!existing?.itens_e_seus_quantitativos_xml,
+                    nome_equipe_planejamento: !!existing?.nome_equipe_planejamento,
+                    responsavel_equipe_planejamento: !!existing?.responsavel_equipe_planejamento,
                 },
 
                 // Quando a unidade é alterada

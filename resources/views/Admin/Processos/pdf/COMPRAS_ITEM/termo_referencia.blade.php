@@ -5,17 +5,22 @@
     <meta charset="UTF-8">
     <title>TERMO DE REFERÊNCIA - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
+        @font-face {
+            font-family: 'Aptos';
+            src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
         @page {
             margin: 2cm;
             size: A4;
         }
 
         body {
-            font-family: 'montserrat', sans-serif;
-            color: #000;
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-size: 11pt;
+            font-family: 'Aptos', sans-serif;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */

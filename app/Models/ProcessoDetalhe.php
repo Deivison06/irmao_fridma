@@ -31,6 +31,8 @@ class ProcessoDetalhe extends Model
         'prazo_vigencia_outro',
         'objeto_continuado',
         'itens_e_seus_quantitativos_xml',
+        'nome_equipe_planejamento',
+        'responsavel_equipe_planejamento',
     ];
 
     protected $casts = [

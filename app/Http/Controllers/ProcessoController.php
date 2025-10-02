@@ -113,7 +113,6 @@ class ProcessoController extends Controller
             $detalhe->itens_e_seus_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
         }
 
-
         // --- Salva outros campos normais ---
         $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml']);
         foreach ($dataToSave as $field => $value) {
@@ -122,14 +121,103 @@ class ProcessoController extends Controller
 
         $detalhe->save();
 
-        return response()->json([
-            'success' => true,
-            'data' => $detalhe->toArray()
-        ]);
+        return redirect()
+            ->back()
+            ->with('success', 'Detalhes do processo salvos com sucesso.');
     }
+
+    // public function gerarPdf(Request $request, Processo $processo)
+    // {
+    //     $documento = $request->query('documento', 'capa');
+    //     $dataSelecionada = $request->query('data');
+
+    //     $processo->load(['detalhe', 'prefeitura']);
+
+    //     $data = [
+    //         'processo' => $processo,
+    //         'prefeitura' => $processo->prefeitura,
+    //         'detalhe' => $processo->detalhe,
+    //         'dataGeracao' => now()->format('d/m/Y H:i:s'),
+    //         'dataSelecionada' => $dataSelecionada,
+    //     ];
+
+    //     $view = match ($documento) {
+    //         'capa' => 'Admin.Processos.pdf.capa',
+    //         'formalizacao' => 'Admin.Processos.pdf.formalizacao',
+    //         'autorizacao' => 'Admin.Processos.pdf.autorizacao',
+    //         'estudo_tecnico' => 'Admin.Processos.pdf.estudo_tecnico',
+    //         'analise_mercado' => 'Admin.Processos.pdf.analise_mercado',
+    //         'disponibilidade_orçamento' => 'Admin.Processos.pdf.disponibilidade_orçamento',
+    //         'termo_referencia' => 'Admin.Processos.pdf.termo_referencia',
+    //         'minutas' => 'Admin.Processos.pdf.minutas',
+    //         'parecer_juridico' => 'Admin.Processos.pdf.parecer_juridico',
+    //         'autorizacao_abertura_procedimento' => 'Admin.Processos.pdf.autorizacao_abertura_procedimento',
+    //         'abertura_fase_externa' => 'Admin.Processos.pdf.abertura_fase_externa',
+    //         'publicacoes_avisos_licitacao' => 'Admin.Processos.pdf.publicacoes_avisos_licitacao',
+    //         default => 'Admin.Processos.pdf.capa'
+    //     };
+
+    //     try {
+    //         $pdf = Pdf::loadView($view, $data)
+    //             ->setPaper('a4', 'portrait');
+
+    //         $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
+    //         $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd') . '.pdf';
+
+    //         $diretorio = public_path('uploads/documentos/');
+
+    //         if (!file_exists($diretorio)) {
+    //             mkdir($diretorio, 0777, true);
+    //         }
+
+    //         $documentoExistente = Documento::where('processo_id', $processo->id)
+    //             ->where('tipo_documento', $documento)
+    //             ->first();
+
+    //         if ($documentoExistente) {
+    //             $caminhoAntigo = public_path($documentoExistente->caminho);
+    //             if (file_exists($caminhoAntigo)) {
+    //                 unlink($caminhoAntigo);
+    //             }
+
+    //             $documentoExistente->update([
+    //                 'data_selecionada' => $dataSelecionada,
+    //                 'caminho' => 'uploads/documentos/' . $nomeArquivo,
+    //                 'gerado_em' => now(),
+    //             ]);
+    //         } else {
+    //             Documento::create([
+    //                 'processo_id' => $processo->id,
+    //                 'tipo_documento' => $documento,
+    //                 'data_selecionada' => $dataSelecionada,
+    //                 'caminho' => 'uploads/documentos/' . $nomeArquivo,
+    //                 'gerado_em' => now(),
+    //             ]);
+    //         }
+
+    //         $caminhoArquivo = $diretorio . $nomeArquivo;
+    //         $pdf->save($caminhoArquivo);
+
+    //         // 👇 MODIFICADO: Retornar JSON com mensagem de sucesso
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'PDF gerado com sucesso! Para baixar, clique no botão Download.',
+    //             'documento' => $documento
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Erro ao gerar PDF: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
     public function gerarPdf(Request $request, Processo $processo)
     {
+        // Obtém os nomes dos enums em lowercase
+        $procedimento = strtolower($processo->tipo_procedimento?->name ?? '');
+        $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
+
         $documento = $request->query('documento', 'capa');
         $dataSelecionada = $request->query('data');
 
@@ -143,35 +231,38 @@ class ProcessoController extends Controller
             'dataSelecionada' => $dataSelecionada,
         ];
 
-        $view = match ($documento) {
-            'capa' => 'Admin.Processos.pdf.capa',
-            'formalizacao' => 'Admin.Processos.pdf.formalizacao',
-            'autorizacao' => 'Admin.Processos.pdf.autorizacao',
-            'estudo_tecnico' => 'Admin.Processos.pdf.estudo_tecnico',
-            'analise_mercado' => 'Admin.Processos.pdf.analise_mercado',
-            'disponibilidade_orçamento' => 'Admin.Processos.pdf.disponibilidade_orçamento',
-            'termo_referencia' => 'Admin.Processos.pdf.termo_referencia',
-            'minutas' => 'Admin.Processos.pdf.minutas',
-            'parecer_juridico' => 'Admin.Processos.pdf.parecer_juridico',
-            'autorizacao_abertura_procedimento' => 'Admin.Processos.pdf.autorizacao_abertura_procedimento',
-            'abertura_fase_externa' => 'Admin.Processos.pdf.abertura_fase_externa',
-            'publicacoes_avisos_licitacao' => 'Admin.Processos.pdf.publicacoes_avisos_licitacao',
-            default => 'Admin.Processos.pdf.capa'
-        };
+        // Monta o caminho da view conforme variação do processo
+        $viewBase = "Admin.Processos.pdf";
+        $viewVaria = "{$viewBase}.{$procedimento}_{$contratacao}.{$documento}";
+        $viewPadrao = "{$viewBase}.{$documento}";
+
+        $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
 
         try {
             $pdf = Pdf::loadView($view, $data)
                 ->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
-            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd') . '.pdf';
 
-            $diretorio = public_path('uploads/documentos/');
+            // Diretório baseado na modalidade, procedimento e contratação
+            $modalidade = strtolower(str_replace(' ', '_', $processo->modalidade?->name ?? 'sem_modalidade'));
+            $subpasta = "{$modalidade}/{$procedimento}_{$contratacao}/{$documento}";
+
+            $diretorio = public_path("uploads/documentos/{$subpasta}");
 
             if (!file_exists($diretorio)) {
                 mkdir($diretorio, 0777, true);
             }
 
+            // Nome do arquivo sem procedimento/contratação
+            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_"
+                . now()->format('Ymd')
+                . '.pdf';
+
+            $caminhoRelativo = "uploads/documentos/{$subpasta}/{$nomeArquivo}";
+            $caminhoCompleto = "{$diretorio}/{$nomeArquivo}";
+
+            // Atualiza ou cria registro
             $documentoExistente = Documento::where('processo_id', $processo->id)
                 ->where('tipo_documento', $documento)
                 ->first();
@@ -184,7 +275,7 @@ class ProcessoController extends Controller
 
                 $documentoExistente->update([
                     'data_selecionada' => $dataSelecionada,
-                    'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                    'caminho' => $caminhoRelativo,
                     'gerado_em' => now(),
                 ]);
             } else {
@@ -192,15 +283,14 @@ class ProcessoController extends Controller
                     'processo_id' => $processo->id,
                     'tipo_documento' => $documento,
                     'data_selecionada' => $dataSelecionada,
-                    'caminho' => 'uploads/documentos/' . $nomeArquivo,
+                    'caminho' => $caminhoRelativo,
                     'gerado_em' => now(),
                 ]);
             }
 
-            $caminhoArquivo = $diretorio . $nomeArquivo;
-            $pdf->save($caminhoArquivo);
+            // Salva o PDF no caminho
+            $pdf->save($caminhoCompleto);
 
-            // 👇 MODIFICADO: Retornar JSON com mensagem de sucesso
             return response()->json([
                 'success' => true,
                 'message' => 'PDF gerado com sucesso! Para baixar, clique no botão Download.',
@@ -213,6 +303,7 @@ class ProcessoController extends Controller
             ], 500);
         }
     }
+
 
 
     public function baixarDocumento(Processo $processo, $tipo)

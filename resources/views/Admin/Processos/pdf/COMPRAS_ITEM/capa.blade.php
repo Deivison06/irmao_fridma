@@ -6,8 +6,8 @@
     <title>Capa do Processo - {{ $processo->numero_processo }}</title>
     <style type="text/css">
          @font-face {
-            font-family: 'Montserrat';
-            src: url('{{ public_path('storage/fonts/Montserrat-ExtraBold.ttf') }}') format('truetype');
+            font-family: 'Aptos';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
             font-weight: 900;
             font-style: normal;
         }
@@ -18,7 +18,7 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Aptos', sans-serif;
             font-size: 18pt;
             font-weight: 900;
             text-transform: uppercase;
@@ -75,7 +75,6 @@
 
         .objeto {
             text-align: center;
-            line-height: 1.2;
         }
     </style>
 </head>

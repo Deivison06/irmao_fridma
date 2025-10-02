@@ -3,19 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TERMO DE REFERÊNCIA - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>ANÁLISE DE MERCADO (PESQUISA DE PRECOS) - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
+        @font-face {
+            font-family: 'Aptos';
+            src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
         @page {
             margin: 2cm;
             size: A4;
         }
 
         body {
-            font-family: 'montserrat', sans-serif;
-            color: #000;
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-size: 11pt;
+            font-family: 'Aptos', sans-serif;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
@@ -50,7 +55,7 @@
             font-family: 'montserrat', sans-serif;
             font-size: 20pt;
             font-weight: 900;
-            padding: 10 30px;
+            padding: 10px;
             border: 2px solid #000;
             background-color: #fff;
             color: #000;
@@ -76,16 +81,13 @@
 
         .content {
             text-align: center;
-            /* Centraliza o texto como na imagem */
-            margin: 40px 0;
-            /* Espaçamento acima e abaixo do conteúdo principal */
         }
 
         strong {
+            font-size: 18x;
+            font-weight: bold;
             line-height: 1.5;
-            /* Melhora a leitura do texto em várias linhas */
             display: block;
-            /* Garante que o strong ocupe a largura total */
         }
     </style>
 </head>
@@ -98,15 +100,18 @@
     <div id="cover-page">
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
         <div class="cover-title">
-            TERMO DE REFERÊNCIA
+            ANÁLISE DE MERCADO <br>
+            (PESQUISA DE PRECOS)
         </div>
     </div>
 
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
 
-    <div id="termo_referencia">
-        <p style="color: red; text-align: center;">SECRETARIA MUNICIPAL DE XXXXXX </p>
+    {{-- ====================================================================== --}}
+    {{-- BLOCO 2: RESUMO DOS DADOS DO PROCESSO --}}
+    {{-- ====================================================================== --}}
+    <div id="resumo-dados-processo">
         <table style="border-collapse: collapse; width: 100%; font-size: 12px;">
             <thead>
                 <tr>
@@ -142,43 +147,55 @@
             </tbody>
         </table>
 
-        <p style="text-indent: 30px; margin-top: 20px; text-align: justify;">
-            Esta Secretaria solicitou a elaboração de ETP, Mapa de Riscos, Cotação de Mercado e emissão de Dotação
-            Orçamentária acerca da XXXXXXXXXXXXXXXXXXXXXXXXXXXXX, após sanada as solicitações, foi elaborado o Termo de
-            Referência, encaminha-se para:
+        <p style="text-indent: 30px">
+            A Secretaria Municipal de XXXXXXXXX, encaminhou para esta unidade a necessidade
+            de realização de Cotação referente a itens relacionados ao objeto
+            <strong>“XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX”</strong>, ato
+            seguido, foi realizado a cotação junto ao Painel de Preços do TCE-PI, conforme tabela abaixo:
         </p>
 
-        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO.</p>
-        <p style="text-indent: 30px; "> Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE PARECER JURÍDICO</p>.</p>
-        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA
-            AUTORIDADE COMPETENTE </p>
-
-        <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
-            <tr>
-                <td style="border: 1px solid black; padding: 6px; font-weight: normal;">
-                    Forma indicada da contratação:
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">
-                    <div style="display: block; margin-bottom: 4px;">
-                        <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
-                        Dispensa de Licitação;
-                    </div>
-                    <div style="display: block; margin-bottom: 4px;">
-                        <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">X</span>
-                        Pregão Eletrônico;
-                    </div>
-                    <div style="display: block;">
-                        <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
-                        Concorrência.
-                    </div>
-                </td>
-            </tr>
+        <table style="border-collapse: collapse; width: 100%; font-size: 12px; text-align: center;">
+            <thead>
+                <tr>
+                    <th colspan="6"
+                        style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        RESUMO
+                    </th>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        ITEM
+                    </th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        VALOR TCE 1
+                    </th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        VALOR TCE 2
+                    </th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        VALOR TCE 3
+                    </th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        FORNECEDOR LOCAL
+                    </th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                        MÉDIA
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">NOME DO ITEM</td>
+                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
+                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
+                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
+                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
+                    <td style="border: 1px solid black; padding: 5px;">VALOR MÉDIO</td>
+                </tr>
+            </tbody>
         </table>
+        <p>Segue em anexo arquivos referentes à cotação realizada.</p>
+        <p>Encaminhe-se à XXXXXXX para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA EXISTENTE.</p>
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
@@ -192,6 +209,30 @@
             {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
         </div>
     </div>
+
+    {{-- QUEBRA DE PÁGINA --}}
+    <div class="page-break"></div>
+
+    {{-- ====================================================================== --}}
+    {{-- BLOCO 3: ANEXOS PESQUISA OBTIDAS --}}
+    {{-- ====================================================================== --}}
+    <div id="anexos-pesquisa-obtidas">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+
+        <div class="content">
+            <strong>
+                ANEXOS PESQUISA OBTIDAS EM OUTAS FONTES COMO<br>
+                TCE, PAINEL DE PRECOS, PNCP, BANCO DE DADOS<br>
+                SAÚDE<br>
+                E PORTARIAS
+            </strong>
+        </div>
+
+        <div class="line"></div>
+    </div>
+
 
 </body>
 

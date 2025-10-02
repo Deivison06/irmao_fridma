@@ -10,9 +10,8 @@
         /* ESTILOS GERAIS E QUEBRA DE PÁGINA */
         /* ---------------------------------- */
         @font-face {
-            font-family: 'Montserrat';
-            src: url('{{ public_path('storage/fonts/Montserrat-ExtraBold.ttf') }}') format('truetype');
-            font-weight: 900;
+            font-family: 'Aptos';
+            src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
         }
 
@@ -22,10 +21,10 @@
         }
 
         body {
-            line-height: 1.4;
-            color: #333;
             margin: 0;
             padding: 0;
+            font-size: 11pt;
+            font-family: 'Aptos', sans-serif;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -49,8 +48,8 @@
 
         .cover-image {
             /* Tamanho da imagem */
-            width: 350px;
-            height: 350px;
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -58,15 +57,12 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-size: 20pt;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
-            font-family: 'Montserrat', sans-serif;
+            line-height: 0.9;
+            padding: 10px 50px;
         }
 
         /* ---------------------------------- */
@@ -76,7 +72,6 @@
         .title {
             text-align: center;
             font-weight: bold;
-            font-size: 14px;
             margin-bottom: 20px;
         }
 
@@ -93,28 +88,23 @@
             border: 1px solid #000;
             padding: 0;
             vertical-align: top;
-            font-size: 12px;
         }
 
         .section-header {
-            background-color: #dcdcdc;
+            background-color: #e7e7e7;
             text-align: center;
-            font-weight: bold;
-            font-size: 13px;
-            padding: 8px;
+            padding: 15px;
             border: 1px solid #000;
         }
 
         .field-label {
-            font-weight: bold;
-            font-size: 11px;
             color: #000;
             padding: 5px 8px 0 8px;
             display: block;
         }
 
         .field-value {
-            min-height: 25px;
+            /* min-height: 25px; */
             padding: 0 8px 5px 8px;
             display: block;
             box-sizing: border-box;
@@ -129,13 +119,13 @@
         }
 
         .checkbox-area {
-            padding: 8px;
+            padding: 20px;
         }
 
         .checkbox-label {
             display: inline-block;
+            margin-top: 10px;
             margin-right: 20px;
-            font-size: 12px;
         }
 
         .checkbox-box {
@@ -147,7 +137,6 @@
             vertical-align: middle;
             text-align: center;
             line-height: 10px;
-            font-size: 10px;
             font-weight: bold;
         }
 
@@ -174,16 +163,8 @@
             margin-top: 5px;
             border: 1px solid #000;
             text-align: left;
-            font-size: 12px;
             padding: 8px;
-            background-color: #f9f9f9;
             page-break-inside: avoid;
-        }
-
-        .footer-law .field-label {
-            background-color: transparent;
-            padding: 0 5px 0 0;
-            display: inline;
         }
 
         /* ---------------------------------- */
@@ -211,7 +192,7 @@
 
         .auth-table td {
             border: 1px solid #000;
-            padding: 5px;
+            /* padding: 5px; */
             vertical-align: top;
         }
 
@@ -220,19 +201,17 @@
         }
 
         .table-title {
-            background-color: #ddd;
+            background-color: #ebebeb;
         }
 
         .footer-signature {
             margin-top: 60px;
             text-align: right;
-            font-size: 12px;
         }
 
         .signature-block {
             margin-top: 60px;
             text-align: center;
-            font-size: 12px;
         }
     </style>
 </head>
@@ -246,7 +225,7 @@
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
 
         <div class="cover-title">
-            DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA
+            DOCUMENTO DE FORMALIZAÇÃO DE<br>DEMANDA
         </div>
     </div>
     {{-- QUEBRA DE PÁGINA AQUI --}}
@@ -342,13 +321,10 @@
                 </tr>
             </table>
 
-            <table class="two-columns">
+            <table class="two-columns" style="border: 1px solid #000; ">
                 <tr>
-                    <td>
+                    <td style="border-right: 1px solid #000; padding:20px;">
                         <table class="inner-table">
-                            <tr>
-                                <td class="section-header">Instrumento Vinculativo</td>
-                            </tr>
                             <tr>
                                 <td class="checkbox-area">
                                     @php
@@ -358,7 +334,9 @@
                                         $outro_vinculativo =
                                             $detalhe->instrumento_vinculativo_outro ?? '________________';
                                     @endphp
-                                    <div class="checkbox-label" style="display: block;">
+
+                                    <div>Instrumento Vinculativo</div>
+                                    <div class="checkbox-label" style="display: block; ">
                                         <span
                                             class="checkbox-box">{{ in_array('contrato', $vinculativo) ? 'X' : '' }}</span>
                                         Contrato
@@ -378,10 +356,9 @@
                             </tr>
                         </table>
                     </td>
-                    <td>
+                    <td style="padding:20px;">
                         <table class="inner-table">
                             <tr>
-                                <td class="section-header">Prazo de Vigência do Objeto</td>
                             </tr>
                             <tr>
                                 <td class="checkbox-area">
@@ -392,6 +369,7 @@
                                         $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________';
                                         $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
                                     @endphp
+                                    <div>Prazo de Vigência do Objeto</div>
                                     <div class="checkbox-label" style="display: block;">
                                         <span
                                             class="checkbox-box">{{ in_array('exercicio_financeiro', $vigencia) ? 'X' : '' }}</span>
@@ -408,10 +386,9 @@
                                             style="font-weight: normal; text-decoration: underline;">{{ $outro_vigencia }}</span>
                                     </div>
 
-                                    <div style="border-top: 1px solid #000; margin-top: 10px; padding-top: 10px;">
+                                    <div style="margin-top: 10px; padding-top: 10px;">
                                         <span class="field-label" style="padding: 0; display: block;">Contratação de
-                                            objeto
-                                            continuado:</span>
+                                            objeto continuado:</span>
                                         <div class="checkbox-label">
                                             <span
                                                 class="checkbox-box">{{ $objeto_continuado == 'sim' ? 'X' : '' }}</span>
@@ -431,16 +408,15 @@
             </table>
 
             {{-- USANDO SOMENTE .footer-law para garantir borda, fundo e page-break-inside: avoid --}}
-            <div class="footer-law" style="margin-bottom: 5px;">
-                <span class="field-label">Regime licitatório adotado:</span>
+            <div class="footer-law" style="margin-bottom: 10px; padding-bottom: 20px;">
+                <span>Regime licitatório adotado:</span><br>
                 Lei 14.133/2021 e legislação correlata.
             </div>
 
             {{-- USANDO .footer-law para garantir borda, fundo e page-break-inside: avoid, e alinhamento central --}}
             <div class="footer-law" style="text-align: center; margin-top: 5px;">
                 Despacho a Solicitação à Autoridade Competente, para a devida autorização acerca da elaboração de
-                Estudos
-                Técnicos Preliminares.
+                Estudos Técnicos Preliminares.
             </div>
 
             @php
@@ -449,15 +425,15 @@
 
             {{-- Bloco de data e assinatura --}}
             <div class="footer-signature">
-                {{ $processo->prefeitura->nome }},
+                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
                 {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
             </div>
 
 
             <div class="signature-block">
                 ___________________________________<br>
-                {{ $processo->prefeitura->autoridade_competente }} <br>
-                {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
+                {{ $detalhe->servidor_responsavel }} <br>
+                {{ $detalhe->unidade_setor ?? 'SECRETARIA DE EDUCACAO' }}
             </div>
         @else
             <div style="text-align: center; color: #cc0000; font-style: italic; margin-top: 50px;">
@@ -474,23 +450,25 @@
     {{-- ====================================================================== --}}
     <div id="autorizacao-estudo">
 
-        <div class="center bold" style="margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO</div>
+        <div style=" text-align: center; font-weight:bold; margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO
+            TÉCNICO</div>
 
-        <p>Fica <strong>AUTORIZADO</strong> a equipe de planejamento a dar início aos trabalhos de estudo e planejamento
-            da
-            com vistas evidenciar o problema a ser resolvido e identificar a melhor solução, de modo a permitir a
-            avaliação
-            da viabilidade técnica e econômica da contratação, respeitando-se os critérios mínimos estabelecidos no § 1º
-            do
-            artigo 18 da Lei 14.133/2021, conforme quadro resumo abaixo:</p>
+        <p style="text-indent: 30px">
+            Fica <strong>AUTORIZADO</strong> a equipe de planejamento a dar início aos trabalhos de estudo e
+            planejamento
+            da com vistas evidenciar o problema a ser resolvido e identificar a melhor solução, de modo a permitir a
+            avaliação da viabilidade técnica e econômica da contratação, respeitando-se os critérios mínimos
+            estabelecidos no § 1º
+            do artigo 18 da Lei 14.133/2021, conforme quadro resumo abaixo:
+        </p>
 
         <div class="section">
             <table class="auth-table">
                 <tr>
-                    <td class="bold center table-title">UNIDADE SOLICITANTE</td>
+                    <td class="table-title" style="text-align: center;">UNIDADE SOLICITANTE</td>
                 </tr>
                 <tr>
-                    <td class="center">{{ $detalhe->secretaria ?? 'SECRETARIA MUNICIPAL DE XXXXXXXXXXXXX' }}</td>
+                    <td class="center">{{ $detalhe->unidade_setor}}</td>
                 </tr>
             </table>
         </div>
@@ -499,7 +477,7 @@
             <div class="bold" style="margin-bottom:5px; text-align: center;">NECESSIDADE OBJETO DO ESTUDO:</div>
 
             <p style="text-align: center;">
-                {{ $processo->objeto ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }}
+                {{ $processo->objeto }}
             </p>
 
         </div>
@@ -507,10 +485,10 @@
         <div class="section">
             <table class="auth-table">
                 <tr>
-                    <td class="bold center table-title">EQUIPE DE PLANEJAMENTO</td>
+                    <td class="table-title" style="text-align: center;">EQUIPE DE PLANEJAMENTO</td>
                 </tr>
                 <tr>
-                    <td class="center">{{ $detalhe->servidor_responsavel ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}</td>
+                    <td class="center">{{ $detalhe->nome_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}</td>
                 </tr>
             </table>
         </div>
@@ -528,14 +506,14 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         <div class="signature-block">
             ___________________________________<br>
             {{ $processo->prefeitura->autoridade_competente }} <br>
-            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
+            Prefeito Municipal
         </div>
 
     </div>

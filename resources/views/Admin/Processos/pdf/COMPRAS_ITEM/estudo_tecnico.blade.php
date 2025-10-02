@@ -5,17 +5,22 @@
     <meta charset="UTF-8">
     <title>Estudo Técnico Preliminar - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
+        @font-face {
+            font-family: 'Aptos';
+            src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
         @page {
             margin: 2cm;
             size: A4;
         }
 
         body {
-            font-family: 'montserrat', sans-serif;
-            color: #000;
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-size: 11pt;
+            font-family: 'Aptos', sans-serif;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
@@ -1214,7 +1219,8 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.1- Riscos relacionados à fase de Planejamento
             da Contratação:</p>
         {{-- RISCO 01 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1294,7 +1300,8 @@
         </table>
         <br>
         {{-- RISCO 02 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1411,7 +1418,8 @@
         </table>
         <br>
         {{-- RISCO 03 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1506,7 +1514,8 @@
         </table>
         <br>
         {{-- RISCO 04 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1612,7 +1621,8 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.2. Riscos relacionados à fase de Seleção do
             Fornecedor:</p>
         {{-- RISCO 05 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1684,7 +1694,8 @@
         </table>
         <br>
         {{-- RISCO 06 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table
+            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1898,7 +1909,6 @@
                 <p>{{ $processo->prefeitura->autoridade_competente }}</p>
             </div>
         </div>
-
 
         {{-- QUEBRA DE PÁGINA --}}
         <div class="page-break"></div>
