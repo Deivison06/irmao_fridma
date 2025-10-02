@@ -495,7 +495,7 @@
                     <td class="table-title" style="text-align: center;">EQUIPE DE PLANEJAMENTO</td>
                 </tr>
                 <tr>
-                    <td class="center">{{ $detalhe->nome_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}</td>
+                    <td class="center">{{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}</td>
                 </tr>
             </table>
         </div>

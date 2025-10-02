@@ -81,17 +81,18 @@
         .conteudo-all {
             position: absolute;
             top: 50%;
-            left: 38%;
+            left: 50%;
             width: 100%;
             transform: translate(-50%, -50%);
             text-align: left;
         }
 
-        .conteudo {
+        /* .conteudo {
             margin: 0 90px;
-        }
+        } */
 
         .title {
+            margin-left: -85px;
             font-weight: bold;
             font-size: 20pt;
             background: #bebebe;
@@ -107,8 +108,7 @@
 
         .justify {
             margin-top: 20px;
-            text-indent: 20px;
-
+            text-indent: 30px;
         }
 
         table {
@@ -223,7 +223,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Alinhamento com o
                                     Planejamento Anual</div>
-                                <div style="font-size: 14px">XXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+                                <div style="font-size: 14px">{{ $detalhe->alinhamento_planejamento_anual }}</div>
                             </td>
                         </tr>
                     </table>
@@ -240,7 +240,7 @@
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Equipe de
                                     Planejamento</div>
                                 <div style="">
-                                    {{ $detalhe->servidor_responsavel ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}</div>
+                                    {{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}</div>
                             </td>
                         </tr>
                     </table>
@@ -256,19 +256,20 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style=""">XXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+                                <div style=""">{{ $detalhe->problema_resolvido }}</div>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <!-- Texto final -->
+
+            </div>
+            <!-- Texto final -->
                 <p class="justify">
                     Em atendimento ao inciso I do art. 18 da Lei 14.133/2021, o presente instrumento
                     caracteriza a primeira etapa do planejamento do processo de contratação e busca
                     atender o interesse público envolvido e buscar a melhor solução para atendimento
                     da necessidade aqui descrita.
                 </p>
-            </div>
         </div>
     </div>
 

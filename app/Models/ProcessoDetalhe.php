@@ -34,6 +34,8 @@ class ProcessoDetalhe extends Model
         'nome_equipe_planejamento',
         'responsavel_equipe_planejamento',
         'descricao_necessidade',
+        'alinhamento_planejamento_anual',
+        'problema_resolvido',
     ];
 
     protected $casts = [

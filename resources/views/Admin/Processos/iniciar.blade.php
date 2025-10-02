@@ -349,6 +349,8 @@
                         <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
                         <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
                         <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
+                        <x-form-field name="alinhamento_planejamento_anual" label="Alinhamento com o Planejamento Anual" />
+                        <x-form-field name="problema_resolvido" label="Problema Resumido" />
 
                         <x-form-field name="demanda" label="Demanda" type="textarea" />
                         <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação"
@@ -653,6 +655,8 @@
                 nome_equipe_planejamento: existing?.nome_equipe_planejamento ?? '',
                 responsavel_equipe_planejamento: existing?.responsavel_equipe_planejamento ?? '',
                 descricao_necessidade: existing?.descricao_necessidade ?? '',
+                alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
+                problema_resolvido: existing?.problema_resolvido ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -675,6 +679,8 @@
                     nome_equipe_planejamento: !!existing?.nome_equipe_planejamento,
                     responsavel_equipe_planejamento: !!existing?.responsavel_equipe_planejamento,
                     descricao_necessidade: !!existing?.descricao_necessidade,
+                    alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
+                    problema_resolvido: !!existing?.problema_resolvido,
                 },
 
                 // Quando a unidade é alterada
