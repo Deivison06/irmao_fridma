@@ -288,7 +288,7 @@
 
         <p style=" text-indent: 30px; text-align: justify;">
             A {{ $prefeitura->nome }} enfrenta um problema significativo relacionado à
-            {{ $processo->objeto }} A contínua demanda por {{ $detalhe->descricao_necessidade }}
+            {{ $processo->objeto }} A contínua demanda por {!! strip_tags($detalhe->descricao_necessidade) !!}
             expõe a fragilidade atual dos recursos disponíveis.
         </p>
 
