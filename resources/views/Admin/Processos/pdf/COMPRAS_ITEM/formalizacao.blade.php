@@ -14,6 +14,11 @@
             src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
         }
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
 
         @page {
             margin: 2cm;
@@ -63,6 +68,7 @@
             display: inline-block;
             line-height: 0.9;
             padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         /* ---------------------------------- */
