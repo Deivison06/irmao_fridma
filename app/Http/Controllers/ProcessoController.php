@@ -113,6 +113,7 @@ class ProcessoController extends Controller
             $detalhe->itens_e_seus_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
         }
 
+
         // --- Salva outros campos normais ---
         $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml']);
         foreach ($dataToSave as $field => $value) {
@@ -121,9 +122,10 @@ class ProcessoController extends Controller
 
         $detalhe->save();
 
-        return redirect()
-            ->back()
-            ->with('success', 'Detalhes do processo salvos com sucesso.');
+        return response()->json([
+            'success' => true,
+            'data' => $detalhe->toArray()
+        ]);
     }
 
     // public function gerarPdf(Request $request, Processo $processo)

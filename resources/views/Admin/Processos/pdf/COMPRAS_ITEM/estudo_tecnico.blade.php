@@ -11,6 +11,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
+
         @page {
             margin: 2cm;
             size: A4;
@@ -23,7 +30,7 @@
             font-family: 'Aptos', sans-serif;
         }
 
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -32,6 +39,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -42,8 +50,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -51,15 +60,13 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         /* ---------------------------------- */
@@ -130,7 +137,7 @@
 
         .section-title {
             font-weight: bold;
-            font-size: 16px;
+
             background: #e0e0e0;
             border: 1px solid #7a7a7a;
             padding: 8px 15px;
@@ -173,7 +180,7 @@
     <div id="cover-page">
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
         <div class="cover-title">
-            INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS
+            INSTRUMENTOS DE PLANEJAMENTO <br> ETP E MAPA DE RISCOS
         </div>
     </div>
 
@@ -197,9 +204,9 @@
                                 <img src="{{ public_path('icons/Imagem1.png') }}" width="40">
                             </td>
                             <td class="content">
-                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 3px;">Unidade
+                                <div style=" font-weight: bold; margin-bottom: 3px;">Unidade
                                     Requisitante</div>
-                                <div style="font-size: 16px;">
+                                <div style="">
                                     {{ $detalhe->secretaria ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}</div>
                             </td>
                         </tr>
@@ -214,7 +221,7 @@
                                 <img src="{{ public_path('icons/Imagem2.png') }}" width="40">
                             </td>
                             <td class="content">
-                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 3px;">Alinhamento com o
+                                <div style=" font-weight: bold; margin-bottom: 3px;">Alinhamento com o
                                     Planejamento Anual</div>
                                 <div style="font-size: 14px">XXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
                             </td>
@@ -230,9 +237,9 @@
                                 <img src="{{ public_path('icons/Imagem3.png') }}" width="40">
                             </td>
                             <td class="content">
-                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 3px;">Equipe de
+                                <div style=" font-weight: bold; margin-bottom: 3px;">Equipe de
                                     Planejamento</div>
-                                <div style="font-size: 16px;">
+                                <div style="">
                                     {{ $detalhe->servidor_responsavel ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}</div>
                             </td>
                         </tr>
@@ -247,9 +254,9 @@
                                 <img src="{{ public_path('icons/Imagem4.png') }}" width="40">
                             </td>
                             <td class="content">
-                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 3px;">Problema Resumido
+                                <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style="font-size: 16px;"">XXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+                                <div style=""">XXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
                             </td>
                         </tr>
                     </table>
@@ -273,34 +280,33 @@
     {{-- ====================================================================== --}}
     <div id="descricao-necessidade">
 
-        <div style="font-weight: 600; font-size: 16px; margin-top: 150px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-top: 150px; margin-bottom: 20px;">
             <img src="{{ public_path('icons/descricao-necessidade.png') }}" width="30px"
                 alt="DESCRIÇÃO DA NECESSIDADE">
             DESCRIÇÃO DA NECESSIDADE
         </div>
 
-        <p style=" text-indent: 30px;">
-            A Prefeitura Municipal de XXXXXXX enfrenta um problema significativo relacionado à
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX. A contínua demanda por
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX expõe a fragilidade atual dos recursos disponíveis.
+        <p style=" text-indent: 30px; text-align: justify;">
+            A {{ $prefeitura->nome }} enfrenta um problema significativo relacionado à
+            {{ $processo->objeto }} A contínua demanda por {{ $detalhe->descricao_necessidade }}
+            expõe a fragilidade atual dos recursos disponíveis.
         </p>
 
-        <div style="text-align: center; font-size: 16px; margin-bottom: 20px; color: red;">
-            JUSTIFICAR A IMPORTÂNCIA DA NECESSIDADE DA CONTRATAÇÃO
-        </div>
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
 
-        <p style=" text-indent: 30px;">
+
+        <p style=" text-indent: 30px; text-align: justify;">
             Atender a essa necessidade melhorará a eficiência administrativa. Assim, a formalização
             desta demanda é crucial para assegurar que a Prefeitura possa cumprir seu papel de zelar pelo
             bem-estar da população, reforçando o compromisso com a qualidade e a efetividade dos serviços
             prestados.
         </p>
 
-        <div style="font-weight: bold; font-size: 16px; margin-bottom: 20px; color: red;">
+        <div style="font-weight: bold;  margin-bottom: 20px; color: red;">
             Recomendação sobre a Ordem das Fases da Licitação
         </div>
 
-        <p style="color: red !important; line-height: 1.2; ">
+        <p style="color: red !important; line-height: 1.2; text-align: justify; ">
             Nos termos do art. 17, § 1º, da Lei nº 14.133/2021, a Administração tem a prerrogativa de optar pela
             inversão das fases do processo licitatório, começando com o julgamento das propostas e, posteriormente,
             analisando a habilitação do licitante melhor classificado.<br><br>
@@ -308,7 +314,7 @@
             No entanto, para a presente contratação, recomenda-se <strong>manter a ordem tradicional das fases
                 (habilitação antes do julgamento das propostas)</strong>, com fundamento nos seguintes aspectos<br><br>
 
-            <strong style="font-size: 16px;">Justificativa:</strong>
+            <strong style="">Justificativa:</strong>
         </p>
 
         <ol style="color: red;  ">
@@ -340,13 +346,13 @@
             </li>
         </ol>
 
-        <p style=" color: red;">
+        <p style=" color: red; text-align: justify; ">
             Nos certames conduzidos por esta Administração, tem-se verificado um <strong>alto índice de
                 licitantes que participam da fase de lances/propostas sem, contudo, apresentar ou
                 comprovar adequadamente a documentação de habilitação</strong>.
         </p>
 
-        <span style="font-size: 16px; color: red;">Essa prática ocasiona:</span>
+        <span style=" color: red;">Essa prática ocasiona:</span>
         <ul style="color: red; ">
             <li><strong>Retrabalho</strong> para a equipe de apoio e para o pregoeiro, que precisam inabilitar
                 sucessivamente os licitantes melhor classificados por falta de documentos;</li>
@@ -357,7 +363,7 @@
                 procedimento.</li>
         </ul>
 
-        <p style=" color: red;">
+        <p style=" color: red; text-align: justify; ">
             A habilitação prévia garante que <strong>apenas empresas com documentação válida e condições
                 reais de contratar</strong> participem da fase competitiva, aumentando a segurança do processo e
             reduzindo a possibilidade de lances artificiais ou propostas inexequíveis apresentadas por
@@ -371,7 +377,7 @@
     {{-- ====================================================================== --}}
     <div id="requisito-necessario" style="margin-top: 50px;">
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/rquisitos-contratacao.png') }}" width="30px"
                 alt="REQUISITOS DA CONTRATAÇÃO">
             REQUISITOS DA CONTRATAÇÃO
@@ -431,7 +437,7 @@
             </p>
         </div>
 
-        <div style="font-size: 16px; margin-bottom: 20px; color: red; text-align: center;">
+        <div style=" margin-bottom: 20px; color: red; text-align: center;">
             INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO
         </div>
 
@@ -442,7 +448,7 @@
             14.133/21.
         </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/solucoes-diponivel.png') }}" width="30px"
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
@@ -452,7 +458,7 @@
         <p style="">Solução 1: XXXXXXXXXXXXXXXXX</p>
         <p style="">Solução 2: XXXXXXXXXXXXXXXXX</p>
 
-        <div style=" font-size: 16px; margin-bottom: 20px; color: red; text-align: center;">
+        <div style="  margin-bottom: 20px; color: red; text-align: center;">
             INCLUIR SOLUÇÕES DISPONÍVEIS NO MERCADO, FAZER COMPARATIVO ENTRE AS SOLUÇÕES
         </div>
         <p style=" text-indent: 30px;">
@@ -462,7 +468,7 @@
             para a melhoria dos serviços essenciais.
         </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/carrinho.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             DESCRIÇÃO DA SOLUÇÃO ESCOLHIDA COMO UM TODO
         </div>
@@ -472,11 +478,11 @@
             e operacionais que atendem às necessidades específicas do município.
         </p>
 
-        <div style=" font-size: 16px; margin-bottom: 20px; color: red; text-align: center;">
+        <div style="  margin-bottom: 20px; color: red; text-align: center;">
             INCREMENTAR E ELABORAR JUSTIFICATIVA PARA A SOLUÇÃO ESCOLHIDA
         </div>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             ITENS E SEUS QUANTITATIVOS
         </div>
@@ -541,59 +547,58 @@
             de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da eficiência e
             assegurando o interesse público, nos termos da Lei nº 14.133/2021. </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             PARCELAMENTO OU NÃO DA CONTRATAÇÃO
         </div>
-        <p style="font-size: 16px; text-indent: 30px; color: red; ">
+        <p style=" text-indent: 30px; color: red; ">
             LICITAÇÃO POR ITENS
         </p>
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
             Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
             a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
             de pequeno porte, bem como alcançar melhor resultado para a Administração.
         </p>
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             O objeto da presente licitação abrange diversos produtos/serviços com características
             distintas, que podem ser adquiridos, entregues ou executados de forma independente, sem prejuízo
             à integridade da execução contratual.
         </p>
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário,
             estimula a competitividade, ao permitir que microempresas, empresas locais e fornecedores
             especializados possam concorrer apenas nos itens de sua capacidade técnica e logística.
         </p>
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo
             maior eficiência, economicidade e mitigação de riscos contratuais.
         </p>
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             A adoção do parcelamento por itens está alinhada ao planejamento da Administração
             Pública, favorecendo:
         </p>
 
         <p>
-            <li style=" text-indent: 30px; color: red;">Atendimento adequado às necessidades
+            <li style=" text-indent: 30px;">Atendimento adequado às necessidades
                 específicas de
                 cada unidade administrativa; </li>
         </p>
         <p>
-            <li style=" text-indent: 30px; color: red;">Diversificação de fornecedores e redução do
+            <li style=" text-indent: 30px;">Diversificação de fornecedores e redução do
                 risco
                 de desabastecimento; </li>
         </p>
         <p>
-            <li style=" text-indent: 30px; color: red;">Fortalecimento da economia local/regional;</li>
+            <li style=" text-indent: 30px;">Fortalecimento da economia local/regional;</li>
         </p>
         <p>
-            <li style=" text-indent: 30px; color: red;">Observância ao princípio da isonomia, conforme
+            <li style=" text-indent: 30px;">Observância ao princípio da isonomia, conforme
                 art.
                 5º da Lei nº 14.133/2021.</li>
         </p>
 
-
-        <p style=" text-indent: 30px; color: red;">
+        <p style=" text-indent: 30px;">
             Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
             entre fornecedores, o que pode resultar em custos mais baixos e condições mais vantajosas para a
             Administração Pública. Ao permitir que empresas ofereçam suas propostas para XXXXXXXXXX, a
@@ -603,134 +608,13 @@
             facilitando adaptações ao longo do fornecimento.
         </p>
 
-        <p style="font-size: 16px; text-indent: 30px; color: red; margin-top: 50px; ">
-            LICITAÇÃO POR LOTE
-        </p>
-
-        <p style=" text-indent: 30px; color: red;">
-            O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
-            Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
-            a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
-            de pequeno porte, bem como alcançar melhor resultado para a Administração.</p>
-        <p style=" text-indent: 30px; color: red;">
-            A presente justificativa tem por objetivo demonstrar a vantajosidade da contratação do
-            objeto em LOTES, ao invés da aquisição ou contratação individualizada por itens, conforme os
-            princípios e diretrizes estabelecidos pela Lei nº 14.133/2021, especialmente no art. 5º (princípios da
-            eficiência e planejamento) e no art. 40, §1º, que dispõe:</p>
-        <p style=" text-indent: 30px; color: red;">
-            “A administração pública poderá dividir o objeto da contratação em lotes, sempre que
-            técnica e economicamente viável, visando à ampliação da competitividade e ao desenvolvimento do
-            mercado local, regional ou nacional, conforme o caso.”
-        </p>
-
-        <p style="font-size: 16px; text-indent: 30px; color: red; margin-top: 50px; ">
-            VANTAGENS OPERACIONAIS DA CONTRATAÇÃO POR LOTES
-        </p>
-
-        <p style=" text-indent: 30px; color: red;">
-            A contratação por lotes permite:
-        </p>
-
-        <p>
-            <li style=" margin-left: 30px; color: red;">Melhor organização e gestão contratual, ao
-                reduzir o número de fornecedores e simplificar
-                o acompanhamento das entregas ou da prestação dos serviços;</li>
-        </p>
-
-        <p>
-            <li style=" margin-left: 30px; color: red;">Centralização de responsabilidades, evitando
-                múltiplos prazos, locais de entrega e agentes
-                executores;</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Facilidade logística, pois os lotes são
-                organizados por natureza ou destinação dos itens (ex:
-                lotes por tipo de material, setor usuário ou região de entrega);</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Adoção de cronogramas otimizados, com menos
-                risco de atrasos por fragmentação
-                excessiva de contratos.</li>
-        </p>
-
-        <p style="font-size: 16px; text-indent: 30px; color: red; margin-top: 50px; ">
-            VANTAGENS ECONÔMICAS
-        </p>
-
-        <p>
-            <li style=" margin-left: 30px; color: red;">Redução de custos operacionais, tanto para a
-                Administração quanto para os fornecedores
-                (ex: transporte, emissão de notas, gestão de pedidos);
-            </li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Aproveitamento de economia de escala, com
-                agrupamento racional de itens semelhantes;</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Estimulação da competitividade saudável, uma
-                vez que empresas de médio porte podem
-                participar de lotes especializados, e empresas menores de lotes regionais ou setoriais.</li>
-        </p>
-
-        <p style="font-size: 16px; text-indent: 30px; color: red; margin-top: 50px; ">
-            VANTAGENS NA FISCALIZAÇÃO E CONTROLE
-        </p>
-
-        <p>
-            <li style=" margin-left: 30px; color: red;">Facilidade de fiscalização: menos contratos a
-                serem monitorados e maior coerência entre
-                os itens de cada lote;</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Redução de inconsistências entre entregas:
-                evitando divergências de padrões ou prazos
-                quando múltiplas empresas atuam em paralelo em itens correlatos.
-            </li>
-        </p>
-
-        <p style=" text-indent: 30px; color: red;">A análise técnica e econômica da contratação indica
-            que a divisão do objeto em lotes
-            representa a solução mais vantajosa para a Administração Pública, ao permitir:
-        </p>
-
-        <p>
-            <li style=" margin-left: 30px; color: red;">Racionalização da contratação e execução;</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Maior eficiência administrativa e operacional;
-            </li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Aderência ao planejamento de compras
-                centralizadas;</li>
-        </p>
-        <p>
-            <li style=" margin-left: 30px; color: red;">Observância dos princípios da economicidade,
-                eficiência e interesse público.</li>
-        </p>
-
-        <p style=" text-indent: 30px; color: red;">Assim, justifica-se plenamente a adoção da
-            contratação por lotes, em detrimento da
-            contratação por itens isolados.
-        </p>
-        <p style=" text-indent: 30px; color: red;">Por fim, a adoção deste modelo impacta diretamente
-            no atendimento ao interesse público
-            e na eficiência da contratação. A estrutura em lotes assegura que as necessidades imediatas da
-            população sejam atendidas de maneira mais célere, visto que diferentes tipos de itens poderão estar
-            disponíveis simultaneamente. Isso reduz o tempo de espera para o fornecimento, resultando em
-            melhorias tangíveis na qualidade do fornecimento pretendido. Assim, a estratégia de licitação em
-            lotes representa uma solução prática e eficiente para os desafios enfrentados pela Prefeitura,
-            refletindo um compromisso com a transparência e a máxima utilidade dos recursos públicos.
-        </p>
-
     </div>
 
     {{-- ====================================================================== --}}
     {{-- BLOCO 5: RESULTADOS PRETENDIDOS --}}
     {{-- ====================================================================== --}}
     <div id="resultado-pretendidos">
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             RESULTADOS PRETENDIDOS
         </div>
@@ -740,7 +624,7 @@
             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
         </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             CONTRATAÇÕES CORRELATAS
         </div>
@@ -751,7 +635,7 @@
             de contratações correlatas ou interdependentes que possam interferir na futura contratação.
         </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             CONTRATAÇÕES CORRELATAS
         </div>
@@ -759,7 +643,7 @@
         <p style="color: red; font-size:14px;">PESQUISAR IMPACTOS AMBIENTAIS QUE PODEM SER CAUSADOS PELO FORNECIMENTO
         </p>
 
-        <div style="font-weight: 600; font-size: 16px; margin-bottom: 20px;">
+        <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             DA VIABILIDADE DA CONTRATAÇÃO
         </div>
@@ -1219,8 +1103,7 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.1- Riscos relacionados à fase de Planejamento
             da Contratação:</p>
         {{-- RISCO 01 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1300,8 +1183,7 @@
         </table>
         <br>
         {{-- RISCO 02 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1418,8 +1300,7 @@
         </table>
         <br>
         {{-- RISCO 03 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1514,8 +1395,7 @@
         </table>
         <br>
         {{-- RISCO 04 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1621,8 +1501,7 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.2. Riscos relacionados à fase de Seleção do
             Fornecedor:</p>
         {{-- RISCO 05 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1694,8 +1573,7 @@
         </table>
         <br>
         {{-- RISCO 06 --}}
-        <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
             <thead>
                 <tr>
                     <th colspan="3"

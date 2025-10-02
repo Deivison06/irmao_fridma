@@ -33,6 +33,7 @@ class ProcessoDetalhe extends Model
         'itens_e_seus_quantitativos_xml',
         'nome_equipe_planejamento',
         'responsavel_equipe_planejamento',
+        'descricao_necessidade',
     ];
 
     protected $casts = [

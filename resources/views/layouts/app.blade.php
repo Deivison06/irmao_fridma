@@ -550,13 +550,27 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Estado de carregamento */
@@ -568,91 +582,100 @@
         }
 
         @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div>
-            <!-- Logo -->
-            <div class="sidebar-logo">
-                <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo LICICON">
-            </div>
-
-            <!-- Navegação -->
-            <nav>
-                <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-
-                <div class="nav-section-title">Conteúdo do Site</div>
-
-                <a href="{{ route('admin.processos.index') }}" class="nav-item {{ request()->routeIs('admin.processos.*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-clipboard-list"></i>
-                    <span>PROCESSOS</span>
-                </a>
-
-                <a href="{{ route('admin.prefeituras.index') }}" class="nav-item {{ request()->routeIs('admin.prefeituras.*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-building"></i>
-                    <span>PREFEITURAS</span>
-                </a>
-
-                <a href="{{ route('admin.usuarios.index') }}" class="nav-item {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-users"></i>
-                    <span>USUÁRIOS</span>
-                </a>
-            </nav>
-        </div>
-
-        <!-- Rodapé -->
-        <div class="sidebar-footer">
-            <a href="{{ route('profile.edit') }}" class="sidebar-btn btn-profile">
-                <i class="fas fa-user-circle"></i>
-                <span>Meu Perfil</span>
-            </a>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="sidebar-btn btn-logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Sair</span>
-                </button>
-            </form>
-
-            <img src="{{ asset('logo/soft-logo.png') }}" alt="Logo Soft" class="soft-logo">
-        </div>
-    </aside>
-
-    <!-- Conteúdo Principal -->
-    <div class="main-content">
-        <header class="main-header">
-            <div class="header-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h1 class="page-title">@yield('title', 'Administração')</h1>
-            </div>
-
-            <div class="header-actions">
-
-
-                <div class="user-menu">
-                    <a href="{{ route('profile.edit') }}">
-                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'Admin' }}&background=00888a&color=fff&bold=true"
-                             alt="Usuário" class="user-avatar">
-                    </a>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <!-- Logo -->
+                <div class="sidebar-logo">
+                    <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo LICICON">
                 </div>
-            </div>
-        </header>
 
-        <div class="page-content fade-in">
-            <!-- Banner de boas-vindas -->
+                <!-- Navegação -->
+                <nav>
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <div class="nav-section-title">Conteúdo do Site</div>
+
+                    <a href="{{ route('admin.processos.index') }}"
+                        class="nav-item {{ request()->routeIs('admin.processos.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <span>PROCESSOS</span>
+                    </a>
+
+                    <a href="{{ route('admin.prefeituras.index') }}"
+                        class="nav-item {{ request()->routeIs('admin.prefeituras.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-building"></i>
+                        <span>PREFEITURAS</span>
+                    </a>
+
+                    <a href="{{ route('admin.usuarios.index') }}"
+                        class="nav-item {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <span>USUÁRIOS</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Rodapé -->
+            <div class="sidebar-footer">
+                <a href="{{ route('profile.edit') }}" class="sidebar-btn btn-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Meu Perfil</span>
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="sidebar-btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </button>
+                </form>
+
+                <img src="{{ asset('logo/soft-logo.png') }}" alt="Logo Soft" class="soft-logo">
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <div class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">@yield('title', 'Administração')</h1>
+                </div>
+
+                <div class="header-actions">
+
+
+                    <div class="user-menu">
+                        <a href="{{ route('profile.edit') }}">
+                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'Admin' }}&background=00888a&color=fff&bold=true"
+                                alt="Usuário" class="user-avatar">
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content fade-in">
+                <!-- Banner de boas-vindas -->
                 <div class="welcome-banner slide-in">
                     <div class="welcome-text">
                         <h2>@yield('page-title', 'Olá, ' . (auth()->user()->name ?? 'Administrador') . '!')</h2>
@@ -663,30 +686,32 @@
                     </div>
                 </div>
 
-            @yield('content')
+                @yield('content')
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.toggle('open');
-    });
+    <script>
 
-    // Fechar o menu ao clicar fora dele em dispositivos móveis
-    document.addEventListener('click', function(event) {
-        const sidebar = document.querySelector('.sidebar');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
 
-        if (window.innerWidth <= 1024 &&
-            sidebar.classList.contains('open') &&
-            !sidebar.contains(event.target) &&
-            !mobileMenuBtn.contains(event.target)) {
-            sidebar.classList.remove('open');
-        }
-    });
-</script>
+        // Fechar o menu ao clicar fora dele em dispositivos móveis
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 
-@stack('scripts')
+            if (window.innerWidth <= 1024 &&
+                sidebar.classList.contains('open') &&
+                !sidebar.contains(event.target) &&
+                !mobileMenuBtn.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+
+    @stack('scripts')
 </body>
+
 </html>

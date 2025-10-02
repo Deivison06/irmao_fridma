@@ -4,6 +4,7 @@
 @section('page-subtitle', 'Cadastrar/Editar detalhes do processo')
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
     <div class="py-8">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
@@ -352,6 +353,7 @@
                         <x-form-field name="demanda" label="Demanda" type="textarea" />
                         <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação"
                             type="textarea" />
+                        <x-form-field name="descricao_necessidade" label="DESCRIÇÃO DA NECESSIDADE" type="textarea" />
 
                         <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
                         <x-form-field name="gestor" label="Gestor Indicado" />
@@ -557,6 +559,15 @@
     </div>
 
     <script>
+        tinymce.init({
+            selector: 'textarea', // aplica em todos os <textarea>
+            plugins: 'lists link table code charmap emoticons',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
+            menubar: false,
+            branding: false, // remove "Powered by Tiny"
+            height: 300
+        });
+
         function gerarPdf(processoId, documento, data) {
             if (!data) {
                 showMessage('Por favor, selecione uma data antes de gerar o PDF.', 'error');
@@ -641,6 +652,7 @@
                 itens_e_seus_quantitativos_xml: existing?.itens_e_seus_quantitativos_xml ?? '',
                 nome_equipe_planejamento: existing?.nome_equipe_planejamento ?? '',
                 responsavel_equipe_planejamento: existing?.responsavel_equipe_planejamento ?? '',
+                descricao_necessidade: existing?.descricao_necessidade ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -662,6 +674,7 @@
                     itens_e_seus_quantitativos_xml: !!existing?.itens_e_seus_quantitativos_xml,
                     nome_equipe_planejamento: !!existing?.nome_equipe_planejamento,
                     responsavel_equipe_planejamento: !!existing?.responsavel_equipe_planejamento,
+                    descricao_necessidade: !!existing?.descricao_necessidade,
                 },
 
                 // Quando a unidade é alterada
@@ -685,16 +698,21 @@
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content'));
+                    'content'));
 
-                    // Tratamento especial para arquivo
-                    if (field === 'itens_e_seus_quantitativos_xml') {
+                    // --- Campos do TinyMCE ---
+                    if (['demanda', 'justificativa', 'descricao_necessidade'].includes(field)) {
+                        const content = tinymce.get(field).getContent(); // pega conteúdo do editor
+                        formData.append(field, content);
+                    }
+                    // --- Arquivos ---
+                    else if (field === 'itens_e_seus_quantitativos_xml') {
                         const fileInput = document.getElementById('itens_e_seus_quantitativos_xml');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }
                     }
-                    // Campos do tipo array
+                    // --- Arrays ---
                     else if (Array.isArray(this[field])) {
                         if (this[field].length === 0) {
                             formData.append(field, '');
@@ -702,7 +720,6 @@
                             this[field].forEach(v => formData.append(field + '[]', v));
                         }
 
-                        // Campos extras relacionados
                         if (field === 'instrumento_vinculativo' && this.instrumento_vinculativo_outro) {
                             formData.append('instrumento_vinculativo_outro', this.instrumento_vinculativo_outro);
                         }
@@ -710,7 +727,7 @@
                             formData.append('prazo_vigencia_outro', this.prazo_vigencia_outro);
                         }
                     }
-                    // Campos normais
+                    // --- Campos normais ---
                     else {
                         formData.append(field, this[field]);
                     }
@@ -729,13 +746,6 @@
 
                         if (response.ok) {
                             this.confirmed[field] = true;
-
-                            // Atualiza servidor_responsavel se unidade_setor mudou
-                            if (field === 'unidade_setor' && responseData.servidor_responsavel) {
-                                this.servidor_responsavel = responseData.servidor_responsavel;
-                                this.confirmed.servidor_responsavel = true;
-                            }
-
                             console.log(field + ' salvo com sucesso!');
                         } else {
                             this.confirmed[field] = false;

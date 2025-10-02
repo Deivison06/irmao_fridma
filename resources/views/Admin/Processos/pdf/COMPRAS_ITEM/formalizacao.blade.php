@@ -279,16 +279,17 @@
                     <td>
                         <span class="field-label">Demanda:</span>
                         <div class="large-value-cell">
-                            {{ $detalhe->demanda ?? 'CONTRATAÇÃO DE EMPRESA PARA PRESTAÇÃO DE SERVIÇOS DE COMUNICAÇÃO VISUAL, VISANDO ATENDER ÀS DEMANDAS DA PREFEITURA MUNICIPAL DE CURIMATÁ E SUAS SECRETARIAS.' }}
+                            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->demanda) !!}
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Justificativa da necessidade da contratação:</span>
-                        <div class="large-value-cell">
-                            {{ $detalhe->justificativa ?? 'Prestação de serviços de comunicação visual, visando atender às demandas da Prefeitura Municipal de Curimatá e suas Secretarias. A contratação de serviços de comunicação visual mostra-se essencial para atender às necessidades da Prefeitura Municipal de Curimatá e de suas diversas Secretarias. Tais serviços são fundamentais para garantir a divulgação adequada de ações institucionais, campanhas e equipamentos públicos.' }}
-                        </div>
+                        <span style="display:block; text-align:center; font-weight:bold;">
+                            Justificativa da necessidade da contratação:
+                        </span>
+
+                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; padding: 10px;">', $detalhe->justificativa) !!}
                     </td>
                 </tr>
             </table>
