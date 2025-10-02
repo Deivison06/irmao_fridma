@@ -482,7 +482,7 @@
         <div class="section">
             <div class="bold" style="margin-bottom:5px; text-align: center;">NECESSIDADE OBJETO DO ESTUDO:</div>
 
-            <p style="text-align: center;">
+            <p style="text-indent: 30px; text-align: justify;">
                 {{ $processo->objeto }}
             </p>
 
