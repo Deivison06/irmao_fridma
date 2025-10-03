@@ -277,10 +277,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Demanda:</span>
-                        <div class="large-value-cell">
+                        <span class="field-label">Demanda: {!! strip_tags($detalhe->demanda) !!}</span>
+                        {{-- <div class="large-value-cell">
                             {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->demanda) !!}
-                        </div>
+                        </div> --}}
                     </td>
                 </tr>
                 <tr>
@@ -457,8 +457,7 @@
     {{-- ====================================================================== --}}
     <div id="autorizacao-estudo">
 
-        <div style=" text-align: center; font-weight:bold; margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO
-            TÉCNICO</div>
+        <div style=" text-align: center; font-weight:bold; margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO</div>
 
         <p style="text-indent: 30px">
             Fica <strong>AUTORIZADO</strong> a equipe de planejamento a dar início aos trabalhos de estudo e
@@ -483,9 +482,7 @@
         <div class="section">
             <div class="bold" style="margin-bottom:5px; text-align: center;">NECESSIDADE OBJETO DO ESTUDO:</div>
 
-            <p style="text-indent: 30px; text-align: justify;">
-                {{ $processo->objeto }}
-            </p>
+            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; padding: 10px;">', $detalhe->objeto) !!}
 
         </div>
 

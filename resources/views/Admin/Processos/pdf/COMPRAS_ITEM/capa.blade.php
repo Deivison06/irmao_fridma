@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <!-- Imagem de fundo da capa -->
-        <img src="{{ $prefeitura->capa ? public_path($prefeitura->capa) : public_path('uploads/prefeituras/1758808250_capa.png') }}"
+        <img src="{{ public_path($prefeitura->capa)}}"
             class="capa-background" alt="Capa da Prefeitura">
 
         <!-- Conteúdo centralizado -->

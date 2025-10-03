@@ -112,37 +112,56 @@
 
     <div id="termo_referencia">
         <p style="color: red; text-align: center;">SECRETARIA MUNICIPAL DE XXXXXX </p>
-        <table style="border-collapse: collapse; width: 100%; font-size: 12px;">
+        <table
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
             <thead>
                 <tr>
-                    <th colspan="2"
-                        style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                    <td colspan="2"
+                        style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
                         RESUMO DOS DADOS DO PROCESSO
-                    </th>
+                    </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold; width: 40%;">N° PROCESSO
-                        ADMINISTRATIVO:</td>
-                    <td style="border: 1px solid black; padding: 5px;">XXX/2025</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">N° PROCESSO DE CONTRATAÇÃO:
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold; width: 40%;">
+                        Nº PROCESSO ADMINISTRATIVO:
                     </td>
-                    <td style="border: 1px solid black; padding: 5px;">XXX/2025</td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $processo->numero_processo }}
+                    </td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">OBJETO</td>
-                    <td style="border: 1px solid black; padding: 5px;">XXXXXXXXXX</td>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        Nº PROCESSO DE CONTRATAÇÃO:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $processo->numero_procedimento }}
+                    </td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">MODALIDADE:</td>
-                    <td style="border: 1px solid black; padding: 5px;">PREGÃO ELETRÔNICO</td>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        OBJETO
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $processo->objeto }}
+                    </td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">ÓRGÃO RESPONSÁVEL:</td>
-                    <td style="border: 1px solid black; padding: 5px;">SECRETARIA MUNICIPAL DE XXXXXXXX</td>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        MODALIDADE:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $processo->modalidade?->getDisplayName() }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        ÓRGÃO RESPONSÁVEL:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $detalhe->unidade_setor }}
+                    </td>
                 </tr>
             </tbody>
         </table>

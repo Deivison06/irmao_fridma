@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\ProcessoDetalhe;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ProcessoService;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProcessoRequest;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Requests\ProcessoDetalheRequest;
@@ -223,6 +224,27 @@ class ProcessoController extends Controller
         $documento = $request->query('documento', 'capa');
         $dataSelecionada = $request->query('data');
 
+        // =========================================================
+        // NOVO: LÓGICA PARA RECEBER E DECODIFICAR OS ASSINANTES
+        // =========================================================
+        $assinantesJson = $request->query('assinantes');
+        $assinantes = [];
+
+        if ($assinantesJson) {
+            // 1. Decodifica a URL (reverte o encodeURIComponent do JS)
+            $assinantesDecoded = urldecode($assinantesJson);
+
+            // 2. Converte a string JSON para um array PHP
+            $assinantes = json_decode($assinantesDecoded, true);
+
+            // Verifica se a decodificação falhou
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                Log::error("Erro ao decodificar JSON de assinantes: " . json_last_error_msg());
+                $assinantes = []; // Garante que a variável seja um array vazio em caso de erro
+            }
+        }
+        // =========================================================
+
         $processo->load(['detalhe', 'prefeitura']);
 
         $data = [
@@ -231,6 +253,8 @@ class ProcessoController extends Controller
             'detalhe' => $processo->detalhe,
             'dataGeracao' => now()->format('d/m/Y H:i:s'),
             'dataSelecionada' => $dataSelecionada,
+            // PASSA O ARRAY DE ASSINANTES PARA A VIEW DO PDF
+            'assinantes' => $assinantes,
         ];
 
         // Monta o caminho da view conforme variação do processo
@@ -241,6 +265,7 @@ class ProcessoController extends Controller
         $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
 
         try {
+            // O array $data (incluindo $assinantes) é injetado na view do PDF
             $pdf = Pdf::loadView($view, $data)
                 ->setPaper('a4', 'portrait');
 
@@ -305,8 +330,6 @@ class ProcessoController extends Controller
             ], 500);
         }
     }
-
-
 
     public function baixarDocumento(Processo $processo, $tipo)
     {

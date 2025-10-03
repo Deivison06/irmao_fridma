@@ -5,6 +5,20 @@
 
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
+    {{-- JSON com as unidades para o JS --}}
+    @php
+        $unidadesData = $processo->prefeitura->unidades->map(function ($unidade) {
+            return [
+                'id' => $unidade->id,
+                'nome' => $unidade->nome,
+                'servidor_responsavel' => $unidade->servidor_responsavel,
+            ];
+        });
+    @endphp
+    <script>
+        const unidadesAssinantes = @json($unidadesData);
+    </script>
+    {{-- Fim JSON --}}
     <div class="py-8">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
@@ -109,7 +123,11 @@
                                         $documentoGerado = $processo->documentos
                                             ->where('tipo_documento', $tipo)
                                             ->first();
+                                        // Definindo um ID único para o acordeão
+                                        $accordionId = "accordion-collapse-{$tipo}";
                                     @endphp
+
+                                    {{-- Linha principal do documento --}}
                                     <tr class="transition-colors duration-150 hover:bg-gray-50">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
@@ -123,9 +141,17 @@
                                                             {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
                                                         </span>
                                                     @endif
-
                                                 </div>
                                             </div>
+                                            {{-- Botão para expandir/colapsar o acordeão --}}
+                                            <button type="button"
+                                                class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
+                                                data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
+                                                aria-controls="{{ $accordionId }}" x-data="{ expanded: false }"
+                                                @click="expanded = !expanded">
+                                                <span
+                                                    x-text="expanded ? 'Ocultar Assinantes (OPCIONAL)' : 'Definir Assinantes (OPCIONAL)'"></span>
+                                            </button>
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <input type="date"
@@ -136,11 +162,12 @@
                                         <td class="px-6 py-4">
                                             <div class="flex justify-center space-x-2">
                                                 <button type="button"
-                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value)"
+                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value, event)"
                                                     class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                     Gerar PDF
                                                 </button>
-
+                                                {{-- Código do Download/Aguardando permanece aqui... --}}
+                                                {{-- ... --}}
                                                 @if ($documentoGerado)
                                                     <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
                                                         download
@@ -171,12 +198,102 @@
                                                         </svg>
                                                     </span>
                                                 @endif
+                                            </div>
+                                        </td>
+                                    </tr>
 
+                                    {{-- Linha do Acordeão (Collapse) --}}
+                                    <tr>
+                                        <td colspan="3" class="p-0">
+                                            <div id="{{ $accordionId }}" class="hidden" x-data="{ assinantes: [null], allUnidades: unidadesAssinantes }">
+                                                <div class="p-4 border-t border-gray-200 bg-gray-50"
+                                                    id="accordion-content-{{ $tipo }}">
+                                                    <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
+                                                        Assinantes (Unidade e Responsável)</h4>
 
+                                                    <template x-for="(assinante, index) in assinantes"
+                                                        :key="index">
+                                                        <div class="flex items-center mb-3 space-x-2">
+                                                            {{-- Select da Unidade --}}
+                                                            <div class="flex-1">
+                                                                <label
+                                                                    :for="'unidade_' + '{{ $tipo }}' + '_' + index"
+                                                                    class="sr-only">Unidade</label>
+                                                                <select
+                                                                    :id="'unidade_' + '{{ $tipo }}' + '_' + index"
+                                                                    name="assinante_unidade[]" x-model="assinantes[index]"
+                                                                    class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                                                                    @change="
+                                            const selectedUnidade = allUnidades.find(u => u.id == $el.value);
+                                            const responsavelInput = $el.closest('div.flex').querySelector('input[name=\'assinante_responsavel[]\']');
+                                            if (responsavelInput && selectedUnidade) {
+                                                responsavelInput.value = selectedUnidade.servidor_responsavel;
+                                            } else if (responsavelInput) {
+                                                responsavelInput.value = '';
+                                            }
+                                        ">
+                                                                    <option value="">Selecione a Unidade</option>
+                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                        <option value="{{ $unidade->id }}">
+                                                                            {{ $unidade->nome }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            {{-- Input do Responsável (Exibição) --}}
+                                                            <div class="flex-1">
+                                                                <label
+                                                                    :for="'responsavel_' + '{{ $tipo }}' + '_' +
+                                                                    index"
+                                                                    class="sr-only">Responsável</label>
+                                                                <input type="text"
+                                                                    :id="'responsavel_' + '{{ $tipo }}' + '_' +
+                                                                    index"
+                                                                    name="assinante_responsavel[]"
+                                                                    placeholder="Nome do Responsável" readonly
+                                                                    class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                                            </div>
+
+                                                            {{-- Botão de Remover --}}
+                                                            <button type="button" @click="assinantes.splice(index, 1)"
+                                                                x-show="assinantes.length > 1"
+                                                                class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                                                                🗑
+                                                            </button>
+                                                        </div>
+                                                    </template>
+
+                                                    {{-- Botão de Adicionar --}}
+                                                    <button type="button" @click="assinantes.push(null)"
+                                                        class="px-3 py-1 mt-2 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                                        + Adicionar Assinante
+                                                    </button>
+
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
+
+                                <script>
+                                    // Inicialização da funcionalidade de acordeão (simples toggle com Tailwind)
+                                    document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
+                                        button.addEventListener('click', () => {
+                                            const targetId = button.getAttribute('data-collapse-toggle');
+                                            const targetEl = document.getElementById(targetId);
+                                            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                                            if (isExpanded) {
+                                                targetEl.classList.add('hidden');
+                                                button.setAttribute('aria-expanded', 'false');
+                                            } else {
+                                                targetEl.classList.remove('hidden');
+                                                button.setAttribute('aria-expanded', 'true');
+                                            }
+                                        });
+                                    });
+                                </script>
                             </tbody>
                         </table>
 
@@ -349,7 +466,8 @@
                         <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
                         <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
                         <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
-                        <x-form-field name="alinhamento_planejamento_anual" label="Alinhamento com o Planejamento Anual" />
+                        <x-form-field name="alinhamento_planejamento_anual"
+                            label="Alinhamento com o Planejamento Anual" />
                         <x-form-field name="problema_resolvido" label="Problema Resumido" />
 
                         <x-form-field name="demanda" label="Demanda" type="textarea" />
@@ -569,26 +687,71 @@
             branding: false, // remove "Powered by Tiny"
             height: 300
         });
+        // Função auxiliar para obter os dados dos assinantes
 
-        function gerarPdf(processoId, documento, data) {
+        function getAssinantes(tipoDocumento) {
+            const selects = document.querySelectorAll(
+                `#accordion-content-${tipoDocumento} select[name="assinante_unidade[]"]`);
+            const assinantes = [];
+            selects.forEach(select => {
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption.value) {
+                    // value é o ID da Unidade
+                    const unidade = unidadesAssinantes.find(u => u.id == select.value);
+                    if (unidade) {
+                        assinantes.push({
+                            unidade_id: unidade.id,
+                            unidade_nome: unidade.nome,
+                            responsavel: unidade.servidor_responsavel
+                        });
+                    }
+                }
+            });
+            return assinantes;
+        }
+
+        /**
+         * Gera o PDF via AJAX, incluindo a data e a lista de assinantes.
+         * @param {string} processoId - O ID do processo.
+         * @param {string} documento - O tipo do documento a ser gerado.
+         * @param {string} data - A data selecionada no campo de data.
+         * @param {Event} event - O objeto evento (obrigatório para referenciar o botão).
+         */
+        function gerarPdf(processoId, documento, data, event) {
             if (!data) {
                 showMessage('Por favor, selecione uma data antes de gerar o PDF.', 'error');
                 return;
             }
 
-            // Mostrar loading
-            const button = event.target;
+            // 1. Coletar os Assinantes
+            const assinantes = getAssinantes(documento);
+
+            // 2. Converte o array de objetos 'assinantes' para JSON e Codifica para a URL
+            const assinantesJson = JSON.stringify(assinantes);
+            const assinantesEncoded = encodeURIComponent(assinantesJson);
+
+            // 3. Monta a URL com os novos parâmetros (assinantes incluídos)
+            let url = `/admin/processos/${processoId}/pdf?documento=${documento}&data=${data}`;
+
+            if (assinantes.length > 0) {
+                url += `&assinantes=${assinantesEncoded}`;
+            }
+
+            // 4. Mostrar loading (usando event.currentTarget)
+            // ATENÇÃO: É necessário que o 'event' seja passado na chamada HTML do botão.
+            const button = event.currentTarget;
             const originalText = button.textContent;
+
             button.textContent = 'Gerando...';
             button.disabled = true;
 
-            fetch(`/admin/processos/${processoId}/pdf?documento=${documento}&data=${data}`, {
+            fetch(url, {
+                    // Mantém as configurações originais do usuário
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 })
-
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -605,6 +768,7 @@
                     showMessage('Erro ao gerar PDF: ' + error, 'error');
                 })
                 .finally(() => {
+                    // Volta o texto original do botão e reativa
                     button.textContent = originalText;
                     button.disabled = false;
                 });
@@ -704,7 +868,7 @@
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                    'content'));
+                        'content'));
 
                     // --- Campos do TinyMCE ---
                     if (['demanda', 'justificativa', 'descricao_necessidade'].includes(field)) {

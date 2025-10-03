@@ -3,6 +3,7 @@
 @section('page-subtitle', 'Atualize os dados do processo')
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
     <div class="py-6">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm rounded-xl">
@@ -144,4 +145,14 @@
             </div>
         </div>
     </div>
+    <script>
+        tinymce.init({
+            selector: 'textarea', // aplica em todos os <textarea>
+            plugins: 'lists link table code charmap emoticons',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
+            menubar: false,
+            branding: false, // remove "Powered by Tiny"
+            height: 300
+        });
+    </script>
 @endsection
