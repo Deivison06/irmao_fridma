@@ -14,6 +14,7 @@
             src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
         }
+
         @font-face {
             font-family: 'AptosExtraBold';
             src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
@@ -21,15 +22,20 @@
         }
 
         @page {
-            margin: 2cm;
+            margin: 0;
             size: A4;
         }
 
         body {
             margin: 0;
-            padding: 0;
+            padding: 3cm 2cm;
             font-size: 11pt;
             font-family: 'Aptos', sans-serif;
+            /* Adiciona o timbre como background */
+            background-image: url('{{ public_path($prefeitura->timbre) }}');
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: cover;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -253,20 +259,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Secretaria:</span>
-                        <span class="field-value">{{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}</span>
+                        <span class="field-label">Secretaria:
+                            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Unidade/Setor/Departamento:</span>
-                        <span class="field-value">{{ $detalhe->unidade_setor ?? 'Unidade 1' }}</span>
+                        <span class="field-label">Unidade/Setor/Departamento:
+                            {{ $detalhe->unidade_setor ?? 'Unidade 1' }}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Servidor responsável pela demanda:</span>
-                        <span class="field-value">{{ $detalhe->servidor_responsavel ?? 'Deivison' }}</span>
+                        <span class="field-label">Servidor responsável pela demanda:
+                            {{ $detalhe->servidor_responsavel ?? 'Deivison' }}</span>
                     </td>
                 </tr>
             </table>
@@ -284,135 +290,154 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 10px;">
                         <span style="display:block; text-align:center; font-weight:bold;">
                             Justificativa da necessidade da contratação:
                         </span>
 
-                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; padding: 10px;">', $detalhe->justificativa) !!}
+                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; ">', $detalhe->justificativa) !!}
                     </td>
                 </tr>
             </table>
 
-            <table class="form-table">
+            <table
+                style="width: 100%; border-collapse: collapse; border: 1px solid #000 !important; margin-bottom: 15px; page-break-inside: avoid; font-family: Arial, sans-serif; font-size: 12px;">
                 <tr>
-                    <td colspan="2" class="section-header">3 – OBSERVAÇÕES GERAIS</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">
-                        <span class="field-label">Prazo de entrega/execução:</span>
-                        <span
-                            class="field-value">{{ $detalhe->prazo_entrega ?? '02 (dois) dias, contados da Ordem de Serviço, em remessa parcelada de acordo com a necessidade da Administração.' }}</span>
-                    </td>
-                    <td style="width: 50%;">
-                        <span class="field-label">Local(is) e horário(s) de entrega:</span>
-                        <span
-                            class="field-value">{{ $detalhe->local_entrega ?? 'Os bens deverão ser entregues na sede da Prefeitura Municipal.' }}</span>
+                    <td colspan="2" style="font-weight: bold; text-align: center; background-color: #f2f2f2;">
+                        3 – OBSERVAÇÕES GERAIS
                     </td>
                 </tr>
+
                 <tr>
-                    <td colspan="2">
-                        <span class="field-label" style="padding-bottom: 5px;">Houve contratações anteriores?</span>
-                        <div class="checkbox-area">
-                            @php
-                                $contratacoes = strtolower($detalhe->contratacoes_anteriores ?? 'sim');
-                            @endphp
-                            <div class="checkbox-label">
-                                <span class="checkbox-box">{{ $contratacoes == 'sim' ? 'X' : '' }}</span> Sim
+                    <td style="width: 100%;  padding: 5px 8px; vertical-align: top;">
+                        Prazo de entrega/execução: {{ $detalhe->prazo_entrega ?? '' }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 100%; border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
+                        Local(is) e horário(s) de entrega: {{ $detalhe->local_entrega ?? '' }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
+                        Houve contratações anteriores?
+                        @php
+                            $contratacoes = strtolower($detalhe->contratacoes_anteriores ?? '');
+                            $opcoes = ['sim' => 'Sim', 'nao' => 'Não'];
+                        @endphp
+                        <div style="display: flex; gap: 20px; padding: 5px 0;">
+                            @foreach ($opcoes as $valor => $texto)
+                                <div style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                                    <span
+                                        style="width: 14px; height: 14px; border: 1px solid #000; text-align: center; line-height: 12px; font-weight: bold; display: inline-block; margin: 2px;">
+                                        {{ $contratacoes === $valor ? 'X' : '' }}
+                                    </span>
+                                    {{ $texto }}
+                                </div>
+                            @endforeach
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <table
+                style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 12px;">
+                <tr>
+                    <!-- Coluna esquerda -->
+                    <td style="width: 50%; border-right: 1px solid #000; padding: 20px; vertical-align: top;">
+                        @php
+                            $vinculativo = is_array($detalhe->instrumento_vinculativo ?? null)
+                                ? $detalhe->instrumento_vinculativo
+                                : ['contrato'];
+                            $outro_vinculativo = $detalhe->instrumento_vinculativo_outro ?? '________________.';
+                        @endphp
+
+                        <div style="font-weight: bold; margin-bottom: 5px;">Instrumento Vinculativo</div>
+
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('contrato', $vinculativo) ? 'X' : '' }}
+                            </span>
+                            Contrato
+                        </div>
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('ata_registro_precos', $vinculativo) ? 'X' : '' }}
+                            </span>
+                            Ata de Registro de Preços
+                        </div>
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('outro', $vinculativo) ? 'X' : '' }}
+                            </span>
+                            Outro: <span
+                                style="font-weight: normal; text-decoration: underline;">{{ $outro_vinculativo }}</span>
+                        </div>
+                    </td>
+
+                    <!-- Coluna direita -->
+                    <td style="width: 50%; padding: 20px; vertical-align: top;">
+                        @php
+                            $vigencia = is_array($detalhe->prazo_vigencia ?? null)
+                                ? $detalhe->prazo_vigencia
+                                : ['12_meses'];
+                            $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________.';
+                            $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
+                        @endphp
+
+                        <div style="font-weight: bold; margin-bottom: 5px;">Prazo de Vigência do Objeto</div>
+
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('exercicio_financeiro', $vigencia) ? 'X' : '' }}
+                            </span>
+                            Exercício financeiro da contratação (até 31/12)
+                        </div>
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('12_meses', $vigencia) ? 'X' : '' }}
+                            </span>
+                            Vigência de 12 meses
+                        </div>
+                        <div style="display: block; margin-bottom: 10px;">
+                            <span
+                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ in_array('outro', $vigencia) ? 'X' : '' }}
+                            </span>
+                            Outro: <span
+                                style="font-weight: normal; text-decoration: underline;">{{ $outro_vigencia }}</span>
+                        </div>
+
+                        <div style="margin-top: 10px; padding-top: 5px;">
+                            <div style="padding: 0; display: block; font-weight: bold; margin-bottom: 3px;">
+                                Contratação
+                                de objeto continuado:</div>
+                            <div style="display: block; margin-bottom: 3px;">
+                                <span
+                                    style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                    {{ $objeto_continuado == 'sim' ? 'X' : '' }}
+                                </span>
+                                Sim
                             </div>
-                            <div class="checkbox-label">
-                                <span class="checkbox-box">{{ $contratacoes == 'nao' ? 'X' : '' }}</span> Não
+                            <div style="display: block; margin-bottom: 3px;">
+                                <span
+                                    style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                    {{ $objeto_continuado == 'nao' ? 'X' : '' }}
+                                </span>
+                                Não
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
-            <table class="two-columns" style="border: 1px solid #000; ">
-                <tr>
-                    <td style="border-right: 1px solid #000; padding:20px;">
-                        <table class="inner-table">
-                            <tr>
-                                <td class="checkbox-area">
-                                    @php
-                                        $vinculativo = is_array($detalhe->instrumento_vinculativo ?? null)
-                                            ? $detalhe->instrumento_vinculativo
-                                            : ['contrato'];
-                                        $outro_vinculativo =
-                                            $detalhe->instrumento_vinculativo_outro ?? '________________';
-                                    @endphp
-
-                                    <div>Instrumento Vinculativo</div>
-                                    <div class="checkbox-label" style="display: block; ">
-                                        <span
-                                            class="checkbox-box">{{ in_array('contrato', $vinculativo) ? 'X' : '' }}</span>
-                                        Contrato
-                                    </div>
-                                    <div class="checkbox-label" style="display: block;">
-                                        <span
-                                            class="checkbox-box">{{ in_array('ata_registro_precos', $vinculativo) ? 'X' : '' }}</span>
-                                        Ata de Registro de Preços
-                                    </div>
-                                    <div class="checkbox-label" style="display: block;">
-                                        <span
-                                            class="checkbox-box">{{ in_array('outro', $vinculativo) ? 'X' : '' }}</span>
-                                        Outro: <span
-                                            style="font-weight: normal; text-decoration: underline;">{{ $outro_vinculativo }}</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td style="padding:20px;">
-                        <table class="inner-table">
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td class="checkbox-area">
-                                    @php
-                                        $vigencia = is_array($detalhe->prazo_vigencia ?? null)
-                                            ? $detalhe->prazo_vigencia
-                                            : ['12_meses'];
-                                        $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________';
-                                        $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
-                                    @endphp
-                                    <div>Prazo de Vigência do Objeto</div>
-                                    <div class="checkbox-label" style="display: block;">
-                                        <span
-                                            class="checkbox-box">{{ in_array('exercicio_financeiro', $vigencia) ? 'X' : '' }}</span>
-                                        Exercício financeiro da contratação (até 31/12).
-                                    </div>
-                                    <div class="checkbox-label" style="display: block;">
-                                        <span
-                                            class="checkbox-box">{{ in_array('12_meses', $vigencia) ? 'X' : '' }}</span>
-                                        Vigência de 12 meses.
-                                    </div>
-                                    <div class="checkbox-label" style="display: block;">
-                                        <span class="checkbox-box">{{ in_array('outro', $vigencia) ? 'X' : '' }}</span>
-                                        Outro: <span
-                                            style="font-weight: normal; text-decoration: underline;">{{ $outro_vigencia }}</span>
-                                    </div>
-
-                                    <div style="margin-top: 10px; padding-top: 10px;">
-                                        <span class="field-label" style="padding: 0; display: block;">Contratação de
-                                            objeto continuado:</span>
-                                        <div class="checkbox-label">
-                                            <span
-                                                class="checkbox-box">{{ $objeto_continuado == 'sim' ? 'X' : '' }}</span>
-                                            Sim
-                                        </div>
-                                        <div class="checkbox-label">
-                                            <span
-                                                class="checkbox-box">{{ $objeto_continuado == 'nao' ? 'X' : '' }}</span>
-                                            Não
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
 
             {{-- USANDO SOMENTE .footer-law para garantir borda, fundo e page-break-inside: avoid --}}
             <div class="footer-law" style="margin-bottom: 10px; padding-bottom: 20px;">
@@ -421,7 +446,7 @@
             </div>
 
             {{-- USANDO .footer-law para garantir borda, fundo e page-break-inside: avoid, e alinhamento central --}}
-            <div class="footer-law" style="text-align: center; margin-top: 5px;">
+            <div class="footer-law" style="text-align: justify; margin-top: 5px;">
                 Despacho a Solicitação à Autoridade Competente, para a devida autorização acerca da elaboração de
                 Estudos Técnicos Preliminares.
             </div>
@@ -436,18 +461,42 @@
                 {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
             </div>
 
+            @php
+                // Verifica se a variável $assinantes existe e tem itens
+                $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+            @endphp
 
-            <div class="signature-block">
-                ___________________________________<br>
-                {{ $detalhe->servidor_responsavel }} <br>
-                {{ $detalhe->unidade_setor ?? 'SECRETARIA DE EDUCACAO' }}
-            </div>
-        @else
-            <div style="text-align: center; color: #cc0000; font-style: italic; margin-top: 50px;">
-                Nenhum detalhe de formalização de demanda encontrado para este processo.
-            </div>
-        @endif
+            @if ($hasSelectedAssinantes)
+                {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+                @php
+                    $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
+                @endphp
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                        ___________________________________<br>
+                        <p style="font-size: 10pt; line-height: 1.2;">
+                            {{ $primeiroAssinante['responsavel'] }} <br>
+                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        </p>
+                    </div>
+                </div>
+            @else
+                {{-- Bloco Padrão (Fallback) --}}
+                <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $processo->prefeitura->autoridade_competente }} <br>
+                        <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                    </p>
+                </div>
+            @endif
     </div>
+@else
+    <div style="text-align: center; color: #cc0000; font-style: italic; margin-top: 50px;">
+        Nenhum detalhe de formalização de demanda encontrado para este processo.
+    </div>
+    @endif
 
     {{-- QUEBRA DE PÁGINA AQUI --}}
     <div class="page-break"></div>
@@ -457,9 +506,11 @@
     {{-- ====================================================================== --}}
     <div id="autorizacao-estudo">
 
-        <div style=" text-align: center; font-weight:bold; margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE ESTUDO TÉCNICO</div>
+        <div style=" text-align: center; font-weight:bold; margin-bottom:20px;">AUTORIZAÇÃO PARA ELABORAÇÃO DE
+            ESTUDO
+            TÉCNICO</div>
 
-        <p style="text-indent: 30px">
+        <p style="text-indent: 30px; text-align: justify;">
             Fica <strong>AUTORIZADO</strong> a equipe de planejamento a dar início aos trabalhos de estudo e
             planejamento
             da com vistas evidenciar o problema a ser resolvido e identificar a melhor solução, de modo a permitir a
@@ -474,7 +525,7 @@
                     <td class="table-title" style="text-align: center;">UNIDADE SOLICITANTE</td>
                 </tr>
                 <tr>
-                    <td class="center">{{ $detalhe->unidade_setor}}</td>
+                    <td class="center">{{ $detalhe->unidade_setor }}</td>
                 </tr>
             </table>
         </div>
@@ -492,7 +543,9 @@
                     <td class="table-title" style="text-align: center;">EQUIPE DE PLANEJAMENTO</td>
                 </tr>
                 <tr>
-                    <td class="center">{{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}</td>
+                    <td class="center">
+                        {{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}
+                    </td>
                 </tr>
             </table>
         </div>
@@ -521,7 +574,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>

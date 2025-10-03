@@ -19,15 +19,20 @@
 
 
         @page {
-            margin: 2cm;
+            margin: 0;
             size: A4;
         }
 
         body {
             margin: 0;
-            padding: 0;
+            padding: 3cm 2cm;
             font-size: 11pt;
             font-family: 'Aptos', sans-serif;
+            /* Adiciona o timbre como background */
+            background-image: url('{{ public_path($prefeitura->timbre) }}');
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: cover;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -282,7 +287,7 @@
     {{-- ====================================================================== --}}
     <div id="descricao-necessidade">
 
-        <div style="font-weight: 600;  margin-top: 150px; margin-bottom: 20px;">
+        <div style="font-weight: 600; margin-bottom: 20px;">
             <img src="{{ public_path('icons/descricao-necessidade.png') }}" width="30px"
                 alt="DESCRIÇÃO DA NECESSIDADE">
             DESCRIÇÃO DA NECESSIDADE
@@ -304,73 +309,78 @@
             prestados.
         </p>
 
-        <div style="font-weight: bold;  margin-bottom: 20px; color: red;">
-            Recomendação sobre a Ordem das Fases da Licitação
-        </div>
+        @if ($detalhe->inversao_fase == 'sim')
+            <div style="font-weight: bold; margin-bottom: 20px;">
+                Recomendação sobre a Ordem das Fases da Licitação
+            </div>
 
-        <p style="color: red !important; line-height: 1.2; text-align: justify; ">
-            Nos termos do art. 17, § 1º, da Lei nº 14.133/2021, a Administração tem a prerrogativa de optar pela
-            inversão das fases do processo licitatório, começando com o julgamento das propostas e, posteriormente,
-            analisando a habilitação do licitante melhor classificado.<br><br>
+            <p style="line-height: 1.5; text-align: justify;">
+                Nos termos do art. 17, § 1º, da Lei nº 14.133/2021, a Administração tem a prerrogativa de optar pela
+                inversão das fases do processo licitatório, começando com o julgamento das propostas e, posteriormente,
+                analisando a habilitação do licitante melhor classificado.<br><br>
 
-            No entanto, para a presente contratação, recomenda-se <strong>manter a ordem tradicional das fases
-                (habilitação antes do julgamento das propostas)</strong>, com fundamento nos seguintes aspectos<br><br>
+                No entanto, para a presente contratação, recomenda-se <strong>manter a ordem tradicional das fases
+                    (habilitação antes do julgamento das propostas)</strong>, com fundamento nos seguintes
+                aspectos:<br><br>
 
-            <strong style="">Justificativa:</strong>
-        </p>
+                <strong>Justificativa:</strong>
+            </p>
 
-        <ol style="color: red;  ">
-            <li>
-                <p><strong>Complexidade da habilitação exigida:</strong> Trata-se de contratação que demanda análise
-                    detalhada e criteriosa da documentação de habilitação, especialmente quanto à capacidade
-                    técnica, regularidade fiscal e requisitos de qualificação econômico-financeira. A avaliação
-                    prévia garante maior segurança jurídica e evita que se avance no julgamento de propostas
-                    de licitantes que possam ser inabilitados posteriormente. </p>
-            </li>
-            <li>
-                <p><strong>Mitigação de riscos:</strong> A habilitação prévia reduz o risco de retrabalho e eventual
-                    anulação
-                    do procedimento, assegurando que apenas concorram na etapa de propostas os licitantes
-                    que efetivamente atendam a todos os requisitos legais e técnicos. </p>
-            </li>
-            <li>
-                <p><strong>Transparência e confiabilidade:</strong> A ordem tradicional favorece a credibilidade do
-                    processo,
-                    uma vez que os participantes e órgãos de controle verificam, desde o início, que apenas
-                    empresas habilitadas estarão aptas a disputar.
-                </p>
-            </li>
-            <li>
-                <p><strong>Alinhamento com o interesse público:</strong> A opção contribui para maior lisura do certame,
-                    assegurando que a Administração se dedique exclusivamente à análise das propostas de
-                    licitantes plenamente habilitados, reduzindo riscos de impugnações e contestações
-                    posteriores. </p>
-            </li>
-        </ol>
+            <ol style="text-align: justify; margin-left: 20px;">
+                <li>
+                    <p><strong>Complexidade da habilitação exigida:</strong> Trata-se de contratação que demanda análise
+                        detalhada e criteriosa da documentação de habilitação, especialmente quanto à capacidade
+                        técnica, regularidade fiscal e requisitos de qualificação econômico-financeira. A avaliação
+                        prévia garante maior segurança jurídica e evita que se avance no julgamento de propostas
+                        de licitantes que possam ser inabilitados posteriormente. </p>
+                </li>
+                <li>
+                    <p><strong>Mitigação de riscos:</strong> A habilitação prévia reduz o risco de retrabalho e eventual
+                        anulação do procedimento, assegurando que apenas concorram na etapa de propostas os licitantes
+                        que efetivamente atendam a todos os requisitos legais e técnicos. </p>
+                </li>
+                <li>
+                    <p><strong>Transparência e confiabilidade:</strong> A ordem tradicional favorece a credibilidade do
+                        processo, uma vez que os participantes e órgãos de controle verificam, desde o início, que
+                        apenas
+                        empresas habilitadas estarão aptas a disputar.
+                    </p>
+                </li>
+                <li>
+                    <p><strong>Alinhamento com o interesse público:</strong> A opção contribui para maior lisura do
+                        certame, assegurando que a Administração se dedique exclusivamente à análise das propostas de
+                        licitantes plenamente habilitados, reduzindo riscos de impugnações e contestações posteriores.
+                    </p>
+                </li>
+            </ol>
 
-        <p style=" color: red; text-align: justify; ">
-            Nos certames conduzidos por esta Administração, tem-se verificado um <strong>alto índice de
-                licitantes que participam da fase de lances/propostas sem, contudo, apresentar ou
-                comprovar adequadamente a documentação de habilitação</strong>.
-        </p>
+            <p style="text-align: justify;">
+                Nos certames conduzidos por esta Administração, tem-se verificado um <strong>alto índice de
+                    licitantes que participam da fase de lances/propostas sem, contudo, apresentar ou
+                    comprovar adequadamente a documentação de habilitação</strong>.
+            </p>
 
-        <span style=" color: red;">Essa prática ocasiona:</span>
-        <ul style="color: red; ">
-            <li><strong>Retrabalho</strong> para a equipe de apoio e para o pregoeiro, que precisam inabilitar
-                sucessivamente os licitantes melhor classificados por falta de documentos;</li>
-            <li><strong>Atrasos na conclusão do certame</strong>, em razão da necessidade de convocar repetidamente
-                os classificados subsequentes;</li>
-            <li><strong>Risco de frustração da licitação</strong>, caso não haja concorrentes habilitados ao final
-                do
-                procedimento.</li>
-        </ul>
+            <span style="font-weight: bold; display: block; margin-top: 10px; text-align: justify;">
+                Essa prática ocasiona:
+            </span>
 
-        <p style=" color: red; text-align: justify; ">
-            A habilitação prévia garante que <strong>apenas empresas com documentação válida e condições
-                reais de contratar</strong> participem da fase competitiva, aumentando a segurança do processo e
-            reduzindo a possibilidade de lances artificiais ou propostas inexequíveis apresentadas por
-            licitantes que não têm intenção ou capacidade de assumir o contrato.
-        </p>
+            <ul style="text-align: justify; margin-left: 20px;">
+                <li><strong>Retrabalho</strong> para a equipe de apoio e para o pregoeiro, que precisam inabilitar
+                    sucessivamente os licitantes melhor classificados por falta de documentos;</li>
+                <li><strong>Atrasos na conclusão do certame</strong>, em razão da necessidade de convocar repetidamente
+                    os classificados subsequentes;</li>
+                <li><strong>Risco de frustração da licitação</strong>, caso não haja concorrentes habilitados ao final
+                    do procedimento.</li>
+            </ul>
+
+            <p style="text-align: justify;">
+                A habilitação prévia garante que <strong>apenas empresas com documentação válida e condições
+                    reais de contratar</strong> participem da fase competitiva, aumentando a segurança do processo e
+                reduzindo a possibilidade de lances artificiais ou propostas inexequíveis apresentadas por
+                licitantes que não têm intenção ou capacidade de assumir o contrato.
+            </p>
+        @endif
+
 
     </div>
 

@@ -633,6 +633,39 @@
                             </div>
                         </div>
 
+                        <!-- Documento contém inversão de fase -->
+                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                            <div class="flex-1">
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de fase?</span>
+                                <div class="flex mt-1 space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" x-model="inversao_fase" value="sim"
+                                            :disabled="confirmed.inversao_fase"
+                                            :checked="inversao_fase === 'sim'">
+                                        <span class="ml-2">Sim</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" x-model="inversao_fase" value="nao"
+                                            :disabled="confirmed.inversao_fase"
+                                            :checked="inversao_fase === 'nao'">
+                                        <span class="ml-2">Não</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex pt-6 space-x-1">
+                                <button type="button" @click="saveField('inversao_fase')"
+                                    x-show="!confirmed.inversao_fase"
+                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                    ✔
+                                </button>
+                                <button type="button" @click="toggleConfirm('inversao_fase')"
+                                    x-show="confirmed.inversao_fase"
+                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                    ✖
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- NOVO CAMPO: Importar XML/Excel -->
                         <div class="flex items-start space-x-2">
                             <div class="flex-1">
@@ -821,6 +854,7 @@
                 descricao_necessidade: existing?.descricao_necessidade ?? '',
                 alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
                 problema_resolvido: existing?.problema_resolvido ?? '',
+                inversao_fase: existing?.inversao_fase ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -845,6 +879,7 @@
                     descricao_necessidade: !!existing?.descricao_necessidade,
                     alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
                     problema_resolvido: !!existing?.problema_resolvido,
+                    inversao_fase: !!existing?.inversao_fase
                 },
 
                 // Quando a unidade é alterada

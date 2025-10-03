@@ -12,15 +12,20 @@
         }
 
         @page {
-            margin: 2cm;
+            margin: 0;
             size: A4;
         }
 
         body {
             margin: 0;
-            padding: 0;
+            padding: 3cm 2cm;
             font-size: 11pt;
             font-family: 'Aptos', sans-serif;
+            /* Adiciona o timbre como background */
+            background-image: url('{{ public_path($prefeitura->timbre) }}');
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: cover;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
