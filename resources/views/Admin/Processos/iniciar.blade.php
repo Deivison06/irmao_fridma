@@ -21,294 +21,6 @@
     {{-- Fim JSON --}}
     <div class="py-8">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-
-            <!-- Seção de Documentos -->
-            <div class="mb-8">
-                <div class="overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl">
-                    <!-- Header -->
-                    <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
-                        <div class="flex flex-col items-start justify-between lg:flex-row lg:items-center">
-                            <h3 class="text-xl font-semibold text-gray-800">Gerar Documentos</h3>
-                            <span class="mt-2 text-sm text-gray-500 lg:mt-0">
-                                {{ $processo->modalidade->getDisplayName() }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Tabela de Documentos -->
-                    <div class="overflow-x-auto rounded-lg shadow-sm">
-                        <!-- Área de Mensagens -->
-                        <div id="message-container" class="p-4"></div>
-
-                        <table class="min-w-full bg-white divide-y divide-gray-200">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th
-                                        class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
-                                        Documentos
-                                    </th>
-                                    <th
-                                        class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
-                                        Data
-                                    </th>
-                                    <th
-                                        class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
-                                        Ações
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @php
-                                    $documentos = [
-                                        'capa' => [
-                                            'titulo' => 'Capa do documento',
-                                            'cor' => 'bg-red-500',
-                                            'data_id' => 'data_capa',
-                                        ],
-                                        'formalizacao' => [
-                                            'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
-                                            'cor' => 'bg-blue-500',
-                                            'data_id' => 'data_formalizacao',
-                                        ],
-                                        'estudo_tecnico' => [
-                                            'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
-                                            'cor' => 'bg-purple-500', // violet → purple
-                                            'data_id' => 'data_estudo_tecnico',
-                                        ],
-                                        'analise_mercado' => [
-                                            'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
-                                            'cor' => 'bg-green-500',
-                                            'data_id' => 'data_analise_mercado',
-                                        ],
-                                        'disponibilidade_orçamento' => [
-                                            'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
-                                            'cor' => 'bg-yellow-500',
-                                            'data_id' => 'data_disponibilidade_orçamento',
-                                        ],
-                                        'termo_referencia' => [
-                                            'titulo' => 'TERMO DE REFERÊNCIA',
-                                            'cor' => 'bg-orange-500',
-                                            'data_id' => 'data_termo_referencia',
-                                        ],
-                                        'minutas' => [
-                                            'titulo' => 'MINUTAS',
-                                            'cor' => 'bg-pink-500', // brown → pink (já que Tailwind não tem brown)
-                                            'data_id' => 'data_minutas',
-                                        ],
-                                        'parecer_juridico' => [
-                                            'titulo' => 'PARECER JURÍDICO',
-                                            'cor' => 'bg-emerald-500',
-                                            'data_id' => 'data_parecer_juridico',
-                                        ],
-                                        'autorizacao_abertura_procedimento' => [
-                                            'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
-                                            'cor' => 'bg-teal-500',
-                                            'data_id' => 'data_autorizacao_abertura_procedimento',
-                                        ],
-                                        'abertura_fase_externa' => [
-                                            'titulo' => 'ABERTURA FASE EXTERNA',
-                                            'cor' => 'bg-cyan-500',
-                                            'data_id' => 'data_abertura_fase_externa',
-                                        ],
-                                        'publicacoes_avisos_licitacao' => [
-                                            'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
-                                            'cor' => 'bg-indigo-500',
-                                            'data_id' => 'data_publicacoes_avisos_licitacao',
-                                        ],
-                                    ];
-                                @endphp
-
-                                @foreach ($documentos as $tipo => $doc)
-                                    @php
-                                        $documentoGerado = $processo->documentos
-                                            ->where('tipo_documento', $tipo)
-                                            ->first();
-                                        // Definindo um ID único para o acordeão
-                                        $accordionId = "accordion-collapse-{$tipo}";
-                                    @endphp
-
-                                    {{-- Linha principal do documento --}}
-                                    <tr class="transition-colors duration-150 hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full">
-                                                </div>
-                                                <div class="text-sm font-semibold text-gray-900">
-                                                    {{ $doc['titulo'] }}
-                                                    @if ($documentoGerado)
-                                                        <span class="ml-2 text-xs font-normal text-green-600">
-                                                            ✓ Gerado em
-                                                            {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            {{-- Botão para expandir/colapsar o acordeão --}}
-                                            <button type="button"
-                                                class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
-                                                data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
-                                                aria-controls="{{ $accordionId }}" x-data="{ expanded: false }"
-                                                @click="expanded = !expanded">
-                                                <span
-                                                    x-text="expanded ? 'Ocultar Assinantes (OPCIONAL)' : 'Definir Assinantes (OPCIONAL)'"></span>
-                                            </button>
-                                        </td>
-                                        <td class="px-6 py-4 text-center">
-                                            <input type="date"
-                                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                                                id="{{ $doc['data_id'] }}"
-                                                value="{{ $documentoGerado->data_selecionada ?? '' }}">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex justify-center space-x-2">
-                                                <button type="button"
-                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value, event)"
-                                                    class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                                    Gerar PDF
-                                                </button>
-                                                {{-- Código do Download/Aguardando permanece aqui... --}}
-                                                {{-- ... --}}
-                                                @if ($documentoGerado)
-                                                    <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
-                                                        download
-                                                        class="p-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                                                        aria-label="Baixar documento">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            aria-hidden="true">
-                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                                            <line x1="12" y1="15" x2="12"
-                                                                y2="3"></line>
-                                                        </svg>
-                                                    </a>
-                                                @else
-                                                    <span
-                                                        class="p-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed"
-                                                        aria-hidden="true" title="Aguardando geração">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            aria-hidden="true">
-                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                                            <line x1="12" y1="15" x2="12"
-                                                                y2="3"></line>
-                                                        </svg>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    {{-- Linha do Acordeão (Collapse) --}}
-                                    <tr>
-                                        <td colspan="3" class="p-0">
-                                            <div id="{{ $accordionId }}" class="hidden" x-data="{ assinantes: [null], allUnidades: unidadesAssinantes }">
-                                                <div class="p-4 border-t border-gray-200 bg-gray-50"
-                                                    id="accordion-content-{{ $tipo }}">
-                                                    <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
-                                                        Assinantes (Unidade e Responsável)</h4>
-
-                                                    <template x-for="(assinante, index) in assinantes"
-                                                        :key="index">
-                                                        <div class="flex items-center mb-3 space-x-2">
-                                                            {{-- Select da Unidade --}}
-                                                            <div class="flex-1">
-                                                                <label
-                                                                    :for="'unidade_' + '{{ $tipo }}' + '_' + index"
-                                                                    class="sr-only">Unidade</label>
-                                                                <select
-                                                                    :id="'unidade_' + '{{ $tipo }}' + '_' + index"
-                                                                    name="assinante_unidade[]" x-model="assinantes[index]"
-                                                                    class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                                                                    @change="
-                                            const selectedUnidade = allUnidades.find(u => u.id == $el.value);
-                                            const responsavelInput = $el.closest('div.flex').querySelector('input[name=\'assinante_responsavel[]\']');
-                                            if (responsavelInput && selectedUnidade) {
-                                                responsavelInput.value = selectedUnidade.servidor_responsavel;
-                                            } else if (responsavelInput) {
-                                                responsavelInput.value = '';
-                                            }
-                                        ">
-                                                                    <option value="">Selecione a Unidade</option>
-                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                        <option value="{{ $unidade->id }}">
-                                                                            {{ $unidade->nome }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            {{-- Input do Responsável (Exibição) --}}
-                                                            <div class="flex-1">
-                                                                <label
-                                                                    :for="'responsavel_' + '{{ $tipo }}' + '_' +
-                                                                    index"
-                                                                    class="sr-only">Responsável</label>
-                                                                <input type="text"
-                                                                    :id="'responsavel_' + '{{ $tipo }}' + '_' +
-                                                                    index"
-                                                                    name="assinante_responsavel[]"
-                                                                    placeholder="Nome do Responsável" readonly
-                                                                    class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm">
-                                                            </div>
-
-                                                            {{-- Botão de Remover --}}
-                                                            <button type="button" @click="assinantes.splice(index, 1)"
-                                                                x-show="assinantes.length > 1"
-                                                                class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
-                                                                🗑
-                                                            </button>
-                                                        </div>
-                                                    </template>
-
-                                                    {{-- Botão de Adicionar --}}
-                                                    <button type="button" @click="assinantes.push(null)"
-                                                        class="px-3 py-1 mt-2 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                                                        + Adicionar Assinante
-                                                    </button>
-
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                                <script>
-                                    // Inicialização da funcionalidade de acordeão (simples toggle com Tailwind)
-                                    document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
-                                        button.addEventListener('click', () => {
-                                            const targetId = button.getAttribute('data-collapse-toggle');
-                                            const targetEl = document.getElementById(targetId);
-                                            const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-                                            if (isExpanded) {
-                                                targetEl.classList.add('hidden');
-                                                button.setAttribute('aria-expanded', 'false');
-                                            } else {
-                                                targetEl.classList.remove('hidden');
-                                                button.setAttribute('aria-expanded', 'true');
-                                            }
-                                        });
-                                    });
-                                </script>
-                            </tbody>
-                        </table>
-
-                        <!-- Botão para Baixar Todos os PDFs em um único arquivo -->
-                        <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
-                            <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}"
-                                class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                📥 Baixar Todos os PDFs
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
             <!-- Seção de Informações do Processo -->
             <div class="mb-8">
                 <div class="overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl">
@@ -406,309 +118,681 @@
                 </div>
             </div>
 
-            <!-- Formulário de Detalhes -->
-            <div class="p-6 bg-white shadow rounded-2xl">
-                <form action="{{ route('admin.processos.detalhes.store', $processo) }}" method="POST"
-                    x-data="formField({{ json_encode($processo->detalhe ?? null) }})" @submit.prevent="submitForm">
-                    @csrf
-
-                    <div class="space-y-6">
-
-                        <!-- Campos principais em sequência -->
-                        <x-form-field name="secretaria" label="Secretaria" />
-
-                        <!-- Unidade/Setor/Departamento -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
-                                    Unidade / Setor / Departamento
-                                </label>
-                                <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
-                                    class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                    <option value="">Selecione uma unidade</option>
-                                    @foreach ($processo->prefeitura->unidades as $unidade)
-                                        <option value="{{ $unidade->nome }}"
-                                            {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
-                                            {{ $unidade->nome }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('unidade_setor')"
-                                    x-show="!confirmed.unidade_setor" :disabled="!unidade_setor"
-                                    class="px-3 py-2 text-white transition rounded-lg"
-                                    :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' :
-                                        'bg-green-500 hover:bg-green-600'">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('unidade_setor')"
-                                    x-show="confirmed.unidade_setor"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
+            <!-- Seção de Documentos -->
+            <div class="mb-8">
+                <div class="overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl">
+                    <!-- Header -->
+                    <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+                        <div class="flex flex-col items-start justify-between lg:flex-row lg:items-center">
+                            <h3 class="text-xl font-semibold text-gray-800">Gerar Documentos</h3>
+                            <span class="mt-2 text-sm text-gray-500 lg:mt-0">
+                                {{ $processo->modalidade->getDisplayName() }}
+                            </span>
                         </div>
-
-                        <!-- Servidor Responsável -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
-                                    Servidor Responsável
-                                </label>
-                                <input type="text" id="servidor_responsavel" x-model="servidor_responsavel"
-                                    value="{{ $processo->detalhe->servidor_responsavel ?? '' }}" readonly
-                                    class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
-                            </div>
-                        </div>
-
-                        <x-form-field name="nome_equipe_planejamento" label="EQUIPE DE PLANEJAMENTO" />
-                        <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
-                        <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
-                        <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
-                        <x-form-field name="alinhamento_planejamento_anual"
-                            label="Alinhamento com o Planejamento Anual" />
-                        <x-form-field name="problema_resolvido" label="Problema Resumido" />
-
-                        <x-form-field name="demanda" label="Demanda" type="textarea" />
-                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação"
-                            type="textarea" />
-                        <x-form-field name="descricao_necessidade_autorizacao"
-                            label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO" type="textarea" />
-                        <x-form-field name="descricao_necessidade" label="DESCRIÇÃO DA NECESSIDADE" type="textarea" />
-
-                        <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
-                        <x-form-field name="gestor" label="Gestor Indicado" />
-
-                        <!-- Restante do formulário permanece igual -->
-                        <!-- Contratações Anteriores -->
-                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                            <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações
-                                    anteriores?</span>
-                                <div class="flex mt-1 space-x-4">
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="contratacoes_anteriores" value="sim"
-                                            :disabled="confirmed.contratacoes_anteriores"
-                                            :checked="contratacoes_anteriores === 'sim'">
-                                        <span class="ml-2">Sim</span>
-                                    </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="contratacoes_anteriores" value="nao"
-                                            :disabled="confirmed.contratacoes_anteriores"
-                                            :checked="contratacoes_anteriores === 'nao'">
-                                        <span class="ml-2">Não</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('contratacoes_anteriores')"
-                                    x-show="!confirmed.contratacoes_anteriores"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('contratacoes_anteriores')"
-                                    x-show="confirmed.contratacoes_anteriores"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Instrumento Vinculativo -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Instrumento Vinculativo</span>
-                                <div class="mt-2 space-y-2">
-                                    @php
-                                        $instrumentos = [
-                                            'contrato' => 'Contrato',
-                                            'ata_registro_precos' => 'Ata de Registro de Preços',
-                                            'outro' => 'Outro',
-                                        ];
-                                    @endphp
-
-                                    @foreach ($instrumentos as $value => $label)
-                                        <div class="flex items-center">
-                                            <input type="checkbox" value="{{ $value }}"
-                                                x-model="instrumento_vinculativo"
-                                                :disabled="confirmed.instrumento_vinculativo"
-                                                :checked="instrumento_vinculativo.includes('{{ $value }}')">
-                                            <span class="ml-2 text-sm">{{ $label }}</span>
-                                            @if ($value === 'outro')
-                                                <input type="text" x-show="instrumento_vinculativo.includes('outro')"
-                                                    x-model="instrumento_vinculativo_outro"
-                                                    :disabled="confirmed.instrumento_vinculativo"
-                                                    class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('instrumento_vinculativo')"
-                                    x-show="!confirmed.instrumento_vinculativo"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('instrumento_vinculativo')"
-                                    x-show="confirmed.instrumento_vinculativo"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Prazo de Vigência -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do
-                                    Objeto</span>
-                                <div class="mt-2 space-y-2">
-                                    @php
-                                        $prazos = [
-                                            'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
-                                            '12_meses' => 'Vigência de 12 meses',
-                                            'outro' => 'Outro',
-                                        ];
-                                    @endphp
-
-                                    @foreach ($prazos as $value => $label)
-                                        <div class="flex items-center">
-                                            <input type="checkbox" value="{{ $value }}" x-model="prazo_vigencia"
-                                                :disabled="confirmed.prazo_vigencia"
-                                                :checked="prazo_vigencia.includes('{{ $value }}')">
-                                            <span class="ml-2 text-sm">{{ $label }}</span>
-                                            @if ($value === 'outro')
-                                                <input type="text" x-show="prazo_vigencia.includes('outro')"
-                                                    x-model="prazo_vigencia_outro" :disabled="confirmed.prazo_vigencia"
-                                                    class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('prazo_vigencia')"
-                                    x-show="!confirmed.prazo_vigencia"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('prazo_vigencia')"
-                                    x-show="confirmed.prazo_vigencia"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Objeto Continuado -->
-                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                            <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Objeto Continuado?</span>
-                                <div class="flex mt-1 space-x-4">
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="objeto_continuado" value="sim"
-                                            :disabled="confirmed.objeto_continuado"
-                                            :checked="objeto_continuado === 'sim'">
-                                        <span class="ml-2">Sim</span>
-                                    </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="objeto_continuado" value="nao"
-                                            :disabled="confirmed.objeto_continuado"
-                                            :checked="objeto_continuado === 'nao'">
-                                        <span class="ml-2">Não</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('objeto_continuado')"
-                                    x-show="!confirmed.objeto_continuado"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('objeto_continuado')"
-                                    x-show="confirmed.objeto_continuado"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Documento contém inversão de fase -->
-                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                            <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de
-                                    fase?</span>
-                                <div class="flex mt-1 space-x-4">
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="inversao_fase" value="sim"
-                                            :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'sim'">
-                                        <span class="ml-2">Sim</span>
-                                    </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" x-model="inversao_fase" value="nao"
-                                            :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'nao'">
-                                        <span class="ml-2">Não</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('inversao_fase')"
-                                    x-show="!confirmed.inversao_fase"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('inversao_fase')"
-                                    x-show="confirmed.inversao_fase"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- NOVO CAMPO: Importar XML/Excel -->
-                        <div class="flex items-start space-x-2">
-                            <div class="flex-1">
-                                <label for="itens_e_seus_quantitativos_xml"
-                                    class="block mb-1 text-sm font-medium text-gray-700">
-                                    ITENS E SEUS QUANTITATIVOS (XML / Excel)
-                                </label>
-                                <input type="file" id="itens_e_seus_quantitativos_xml"
-                                    name="itens_e_seus_quantitativos_xml" accept=".xml, .xlsx, .xls, .csv"
-                                    class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
-                                <p class="mt-1 text-xs text-gray-500">Selecione um arquivo XML ou Excel contendo os itens
-                                    da tabela.</p>
-                            </div>
-                            <div class="flex pt-6 space-x-1">
-                                <button type="button" @click="saveField('itens_e_seus_quantitativos_xml')"
-                                    x-show="!confirmed.itens_e_seus_quantitativos_xml"
-                                    class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                    ✔
-                                </button>
-                                <button type="button" @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
-                                    x-show="confirmed.itens_e_seus_quantitativos_xml"
-                                    class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                    ✖
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <!-- Botões de Ação -->
-                    <div class="flex justify-end pt-6 mt-6 space-x-3 border-t border-gray-200">
-                        <a href="{{ route('admin.processos.index') }}"
-                            class="px-6 py-2 text-sm font-medium text-gray-600 transition-colors duration-200 bg-gray-100 rounded-lg hover:bg-gray-200">
-                            Cancelar
-                        </a>
-                        <button type="submit"
-                            class="px-6 py-2 text-sm font-medium text-white bg-[#009496] rounded-lg hover:bg-[#007a7a] transition-colors duration-200">
-                            Salvar tudo
-                        </button>
+                    <!-- Tabela de Documentos -->
+                    <div class="overflow-x-auto rounded-lg shadow-sm">
+                        <!-- Área de Mensagens -->
+                        <div id="message-container" class="p-4"></div>
+
+                        <table class="min-w-full bg-white divide-y divide-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
+                                        Documentos
+                                    </th>
+                                    <th class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                        Data
+                                    </th>
+                                    <th class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                        Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @php
+                                    $documentos = [
+                                        'capa' => [
+                                            'titulo' => 'Capa do documento',
+                                            'cor' => 'bg-red-500',
+                                            'data_id' => 'data_capa',
+                                            'campos' => [],
+                                        ],
+                                        'formalizacao' => [
+                                            'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
+                                            'cor' => 'bg-blue-500',
+                                            'data_id' => 'data_formalizacao',
+                                            'campos' => [
+                                                'secretaria',
+                                                'unidade_setor',
+                                                'servidor_responsavel',
+                                                'demanda',
+                                                'justificativa',
+                                                'prazo_entrega',
+                                                'local_entrega',
+                                                'contratacoes_anteriores',
+                                                'instrumento_vinculativo',
+                                                'instrumento_vinculativo_outro',
+                                                'prazo_vigencia',
+                                                'prazo_vigencia_outro',
+                                                'objeto_continuado',
+                                                'descricao_necessidade_autorizacao',
+                                                'responsavel_equipe_planejamento',
+                                            ],
+                                        ],
+                                        'estudo_tecnico' => [
+                                            'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
+                                            'cor' => 'bg-purple-500',
+                                            'data_id' => 'data_estudo_tecnico',
+                                            'campos' => [
+                                                'secretaria',
+                                                'alinhamento_planejamento_anual',
+                                                'responsavel_equipe_planejamento',
+                                                'problema_resolvido',
+                                                'justificativa',
+                                                'descricao_necessidade',
+                                                'inversao_fase',
+                                                'solucoes_disponivel_mercado',
+                                                'incluir_requisito_cada_caso_concreto',
+                                                'itens_e_seus_quantitativos_xml',
+                                            ],
+                                        ],
+                                        'analise_mercado' => [
+                                            'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
+                                            'cor' => 'bg-green-500',
+                                            'data_id' => 'data_analise_mercado',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'disponibilidade_orçamento' => [
+                                            'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
+                                            'cor' => 'bg-yellow-500',
+                                            'data_id' => 'data_disponibilidade_orçamento',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'termo_referencia' => [
+                                            'titulo' => 'TERMO DE REFERÊNCIA',
+                                            'cor' => 'bg-orange-500',
+                                            'data_id' => 'data_termo_referencia',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'minutas' => [
+                                            'titulo' => 'MINUTAS',
+                                            'cor' => 'bg-pink-500',
+                                            'data_id' => 'data_minutas',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'parecer_juridico' => [
+                                            'titulo' => 'PARECER JURÍDICO',
+                                            'cor' => 'bg-emerald-500',
+                                            'data_id' => 'data_parecer_juridico',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'autorizacao_abertura_procedimento' => [
+                                            'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
+                                            'cor' => 'bg-teal-500',
+                                            'data_id' => 'data_autorizacao_abertura_procedimento',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'abertura_fase_externa' => [
+                                            'titulo' => 'ABERTURA FASE EXTERNA',
+                                            'cor' => 'bg-cyan-500',
+                                            'data_id' => 'data_abertura_fase_externa',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                        'publicacoes_avisos_licitacao' => [
+                                            'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
+                                            'cor' => 'bg-indigo-500',
+                                            'data_id' => 'data_publicacoes_avisos_licitacao',
+                                            'campos' => ['secretaria'],
+                                        ],
+                                    ];
+                                @endphp
+
+                                @foreach ($documentos as $tipo => $doc)
+                                    @php
+                                        $documentoGerado = $processo->documentos
+                                            ->where('tipo_documento', $tipo)
+                                            ->first();
+                                        // Definindo um ID único para o acordeão
+                                        $accordionId = "accordion-collapse-{$tipo}";
+                                    @endphp
+
+                                    {{-- Linha principal do documento --}}
+                                    <tr class="transition-colors duration-150 hover:bg-gray-50">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full">
+                                                </div>
+                                                <div class="text-sm font-semibold text-gray-900">
+                                                    {{ $doc['titulo'] }}
+                                                    @if ($documentoGerado)
+                                                        <span class="ml-2 text-xs font-normal text-green-600">
+                                                            ✓ Gerado em
+                                                            {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            {{-- Botão para expandir/colapsar o acordeão --}}
+                                            @if(!empty($doc['campos']))
+                                            <button type="button"
+                                                class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
+                                                data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
+                                                aria-controls="{{ $accordionId }}">
+                                                <span class="collapse-text">Definir Campos e Assinantes</span>
+                                            </button>
+                                            @endif
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <input type="date"
+                                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                id="{{ $doc['data_id'] }}"
+                                                value="{{ $documentoGerado->data_selecionada ?? '' }}">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex justify-center space-x-2">
+                                                <button type="button"
+                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value, event)"
+                                                    class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                    Gerar PDF
+                                                </button>
+                                                @if ($documentoGerado)
+                                                    <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
+                                                        download
+                                                        class="p-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                                        aria-label="Baixar documento">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-hidden="true">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                                            <line x1="12" y1="15" x2="12"
+                                                                y2="3"></line>
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <span
+                                                        class="p-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed"
+                                                        aria-hidden="true" title="Aguardando geração">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-hidden="true">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                                            <line x1="12" y1="15" x2="12"
+                                                                y2="3"></line>
+                                                        </svg>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    {{-- Linha do Acordeão (Collapse) - Apenas se tiver campos --}}
+                                    @if(!empty($doc['campos']))
+                                    <tr>
+                                        <td colspan="3" class="p-0">
+                                            <div id="{{ $accordionId }}" class="hidden">
+                                                <div class="p-4 border-t border-gray-200 bg-gray-50"
+                                                    id="accordion-content-{{ $tipo }}">
+
+                                                    <!-- Seção de Assinantes -->
+                                                    <div class="pb-4 mb-6 border-b border-gray-200">
+                                                        <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de Assinantes (Unidade e Responsável)</h4>
+
+                                                        <div id="assinantes-container-{{ $tipo }}">
+                                                            <div class="flex items-center mb-3 space-x-2">
+                                                                {{-- Select da Unidade --}}
+                                                                <div class="flex-1">
+                                                                    <label class="sr-only">Unidade</label>
+                                                                    <select name="assinante_unidade[]"
+                                                                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
+                                                                            onchange="updateResponsavel(this, '{{ $tipo }}')">
+                                                                        <option value="">Selecione a Unidade</option>
+                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                            <option value="{{ $unidade->id }}">
+                                                                                {{ $unidade->nome }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                {{-- Input do Responsável (Exibição) --}}
+                                                                <div class="flex-1">
+                                                                    <label class="sr-only">Responsável</label>
+                                                                    <input type="text" name="assinante_responsavel[]"
+                                                                           placeholder="Nome do Responsável" readonly
+                                                                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- Botão de Adicionar --}}
+                                                        <button type="button" onclick="adicionarAssinante('{{ $tipo }}')"
+                                                                class="px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                                            + Adicionar Assinante
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Seção de Campos do Formulário -->
+                                                    <div>
+                                                        <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do Documento</h4>
+                                                        <form action="{{ route('admin.processos.detalhes.store', $processo) }}" method="POST"
+                                                              x-data="formField({{ json_encode($processo->detalhe ?? null) }})"
+                                                              @submit.prevent="submitForm">
+                                                            @csrf
+                                                            <input type="hidden" name="processo_id" value="{{ $processo->id }}">
+
+                                                            @foreach($doc['campos'] as $campo)
+                                                                <div class="p-3 bg-white border border-gray-200 rounded-lg">
+                                                                    @if($campo === 'secretaria')
+                                                                        <x-form-field name="secretaria" label="Secretaria" />
+
+                                                                    @elseif($campo === 'unidade_setor')
+                                                                        <div class="flex items-start space-x-2">
+                                                                            <div class="flex-1">
+                                                                                <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                    Unidade / Setor / Departamento
+                                                                                </label>
+                                                                                <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                    <option value="">Selecione uma unidade</option>
+                                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                        <option value="{{ $unidade->nome }}"
+                                                                                            {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                            {{ $unidade->nome }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('unidade_setor')"
+                                                                                        x-show="!confirmed.unidade_setor" :disabled="!unidade_setor"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('unidade_setor')"
+                                                                                        x-show="confirmed.unidade_setor"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'servidor_responsavel')
+                                                                        <div class="flex items-start space-x-2">
+                                                                            <div class="flex-1">
+                                                                                <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
+                                                                                    Servidor Responsável
+                                                                                </label>
+                                                                                <input type="text" id="servidor_responsavel" x-model="servidor_responsavel"
+                                                                                       readonly
+                                                                                       class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'demanda')
+                                                                        <x-form-field name="demanda" label="Demanda" type="textarea" />
+
+                                                                    @elseif($campo === 'justificativa')
+                                                                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação" type="textarea" />
+
+                                                                    @elseif($campo === 'descricao_necessidade')
+                                                                        <x-form-field name="descricao_necessidade" label="DESCRIÇÃO DA NECESSIDADE" type="textarea" />
+
+                                                                    @elseif($campo === 'descricao_necessidade_autorizacao')
+                                                                        <x-form-field name="descricao_necessidade_autorizacao" label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO" type="textarea" />
+                                                                    @elseif($campo === 'solucoes_disponivel_mercado')
+                                                                        <x-form-field name="solucoes_disponivel_mercado" label="SOLUÇÕES DISPONÍVEIS NO MERCADO" type="textarea" />
+
+                                                                    @elseif($campo === 'incluir_requisito_cada_caso_concreto')
+                                                                        <x-form-field name="incluir_requisito_cada_caso_concreto" label="INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO" type="textarea" />
+
+                                                                    @elseif($campo === 'problema_resolvido')
+                                                                        <x-form-field name="problema_resolvido" label="Problema Resumido" />
+
+                                                                    @elseif($campo === 'alinhamento_planejamento_anual')
+                                                                        <x-form-field name="alinhamento_planejamento_anual" label="Alinhamento com o Planejamento Anual" />
+
+                                                                    @elseif($campo === 'nome_equipe_planejamento')
+                                                                        <x-form-field name="nome_equipe_planejamento" label="EQUIPE DE PLANEJAMENTO" />
+
+                                                                    @elseif($campo === 'responsavel_equipe_planejamento')
+                                                                        <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
+
+                                                                    @elseif($campo === 'prazo_entrega')
+                                                                        <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
+
+                                                                    @elseif($campo === 'local_entrega')
+                                                                        <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
+
+                                                                    @elseif($campo === 'fiscais')
+                                                                        <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
+
+                                                                    @elseif($campo === 'gestor')
+                                                                        <x-form-field name="gestor" label="Gestor Indicado" />
+
+                                                                    @elseif($campo === 'contratacoes_anteriores')
+                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                            <div class="flex-1">
+                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações anteriores?</span>
+                                                                                <div class="flex mt-1 space-x-4">
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="contratacoes_anteriores" value="sim"
+                                                                                               :disabled="confirmed.contratacoes_anteriores"
+                                                                                               :checked="contratacoes_anteriores === 'sim'">
+                                                                                        <span class="ml-2">Sim</span>
+                                                                                    </label>
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="contratacoes_anteriores" value="nao"
+                                                                                               :disabled="confirmed.contratacoes_anteriores"
+                                                                                               :checked="contratacoes_anteriores === 'nao'">
+                                                                                        <span class="ml-2">Não</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('contratacoes_anteriores')"
+                                                                                        x-show="!confirmed.contratacoes_anteriores"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('contratacoes_anteriores')"
+                                                                                        x-show="confirmed.contratacoes_anteriores"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'objeto_continuado')
+                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                            <div class="flex-1">
+                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Objeto Continuado?</span>
+                                                                                <div class="flex mt-1 space-x-4">
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="objeto_continuado" value="sim"
+                                                                                               :disabled="confirmed.objeto_continuado"
+                                                                                               :checked="objeto_continuado === 'sim'">
+                                                                                        <span class="ml-2">Sim</span>
+                                                                                    </label>
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="objeto_continuado" value="nao"
+                                                                                               :disabled="confirmed.objeto_continuado"
+                                                                                               :checked="objeto_continuado === 'nao'">
+                                                                                        <span class="ml-2">Não</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('objeto_continuado')"
+                                                                                        x-show="!confirmed.objeto_continuado"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('objeto_continuado')"
+                                                                                        x-show="confirmed.objeto_continuado"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'inversao_fase')
+                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                            <div class="flex-1">
+                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de fase?</span>
+                                                                                <div class="flex mt-1 space-x-4">
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="inversao_fase" value="sim"
+                                                                                               :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'sim'">
+                                                                                        <span class="ml-2">Sim</span>
+                                                                                    </label>
+                                                                                    <label class="inline-flex items-center">
+                                                                                        <input type="radio" x-model="inversao_fase" value="nao"
+                                                                                               :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'nao'">
+                                                                                        <span class="ml-2">Não</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('inversao_fase')"
+                                                                                        x-show="!confirmed.inversao_fase"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('inversao_fase')"
+                                                                                        x-show="confirmed.inversao_fase"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'instrumento_vinculativo')
+                                                                        <div class="flex items-start space-x-2">
+                                                                            <div class="flex-1">
+                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Instrumento Vinculativo</span>
+                                                                                <div class="mt-2 space-y-2">
+                                                                                    @php
+                                                                                        $instrumentos = [
+                                                                                            'contrato' => 'Contrato',
+                                                                                            'ata_registro_precos' => 'Ata de Registro de Preços',
+                                                                                            'outro' => 'Outro',
+                                                                                        ];
+                                                                                    @endphp
+
+                                                                                    @foreach ($instrumentos as $value => $label)
+                                                                                        <div class="flex items-center">
+                                                                                            <input type="checkbox" value="{{ $value }}"
+                                                                                                   x-model="instrumento_vinculativo"
+                                                                                                   :disabled="confirmed.instrumento_vinculativo"
+                                                                                                   :checked="instrumento_vinculativo.includes('{{ $value }}')">
+                                                                                            <span class="ml-2 text-sm">{{ $label }}</span>
+                                                                                            @if ($value === 'outro')
+                                                                                                <input type="text" x-show="instrumento_vinculativo.includes('outro')"
+                                                                                                       x-model="instrumento_vinculativo_outro"
+                                                                                                       :disabled="confirmed.instrumento_vinculativo"
+                                                                                                       class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                                                                            @endif
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('instrumento_vinculativo')"
+                                                                                        x-show="!confirmed.instrumento_vinculativo"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('instrumento_vinculativo')"
+                                                                                        x-show="confirmed.instrumento_vinculativo"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'prazo_vigencia')
+                                                                        <div class="flex items-start space-x-2">
+                                                                            <div class="flex-1">
+                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do Objeto</span>
+                                                                                <div class="mt-2 space-y-2">
+                                                                                    @php
+                                                                                        $prazos = [
+                                                                                            'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
+                                                                                            '12_meses' => 'Vigência de 12 meses',
+                                                                                            'outro' => 'Outro',
+                                                                                        ];
+                                                                                    @endphp
+
+                                                                                    @foreach ($prazos as $value => $label)
+                                                                                        <div class="flex items-center">
+                                                                                            <input type="checkbox" value="{{ $value }}" x-model="prazo_vigencia"
+                                                                                                   :disabled="confirmed.prazo_vigencia"
+                                                                                                   :checked="prazo_vigencia.includes('{{ $value }}')">
+                                                                                            <span class="ml-2 text-sm">{{ $label }}</span>
+                                                                                            @if ($value === 'outro')
+                                                                                                <input type="text" x-show="prazo_vigencia.includes('outro')"
+                                                                                                       x-model="prazo_vigencia_outro" :disabled="confirmed.prazo_vigencia"
+                                                                                                       class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                                                                            @endif
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('prazo_vigencia')"
+                                                                                        x-show="!confirmed.prazo_vigencia"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('prazo_vigencia')"
+                                                                                        x-show="confirmed.prazo_vigencia"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @elseif($campo === 'itens_e_seus_quantitativos_xml')
+                                                                        <div class="flex items-start space-x-2">
+                                                                            <div class="flex-1">
+                                                                                <label for="itens_e_seus_quantitativos_xml"
+                                                                                    class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                    ITENS E SEUS QUANTITATIVOS (XML / Excel)
+                                                                                </label>
+                                                                                <input type="file" id="itens_e_seus_quantitativos_xml"
+                                                                                    name="itens_e_seus_quantitativos_xml" accept=".xml, .xlsx, .xls, .csv"
+                                                                                    class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
+                                                                                <p class="mt-1 text-xs text-gray-500">Selecione um arquivo XML ou Excel contendo os itens
+                                                                                    da tabela.</p>
+                                                                            </div>
+                                                                            <div class="flex pt-6 space-x-1">
+                                                                                <button type="button" @click="saveField('itens_e_seus_quantitativos_xml')"
+                                                                                        x-show="!confirmed.itens_e_seus_quantitativos_xml"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                    ✔
+                                                                                </button>
+                                                                                <button type="button" @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
+                                                                                        x-show="confirmed.itens_e_seus_quantitativos_xml"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                    ✖
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+
+                                                            <!-- Botões de Ação -->
+                                                            <div class="flex justify-end pt-6 mt-6 space-x-3 border-t border-gray-200">
+                                                                <button type="submit"
+                                                                    class="px-6 py-2 text-sm font-medium text-white bg-[#009496] rounded-lg hover:bg-[#007a7a] transition-colors duration-200">
+                                                                    Salvar Campos deste Documento
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+
+                                <script>
+                                    // Inicialização da funcionalidade de acordeão
+                                    document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
+                                        button.addEventListener('click', () => {
+                                            const targetId = button.getAttribute('data-collapse-toggle');
+                                            const targetEl = document.getElementById(targetId);
+                                            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                                            const span = button.querySelector('.collapse-text');
+
+                                            if (isExpanded) {
+                                                targetEl.classList.add('hidden');
+                                                button.setAttribute('aria-expanded', 'false');
+                                                span.textContent = 'Definir Campos e Assinantes';
+                                            } else {
+                                                targetEl.classList.remove('hidden');
+                                                button.setAttribute('aria-expanded', 'true');
+                                                span.textContent = 'Ocultar Campos e Assinantes';
+                                            }
+                                        });
+                                    });
+
+                                    // Funções para gerenciar assinantes
+                                    function adicionarAssinante(tipoDocumento) {
+                                        const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
+                                        const novoAssinante = document.createElement('div');
+                                        novoAssinante.className = 'flex items-center mb-3 space-x-2';
+                                        novoAssinante.innerHTML = `
+                                            <div class="flex-1">
+                                                <label class="sr-only">Unidade</label>
+                                                <select name="assinante_unidade[]"
+                                                        class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
+                                                        onchange="updateResponsavel(this, '${tipoDocumento}')">
+                                                    <option value="">Selecione a Unidade</option>
+                                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                                        <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="flex-1">
+                                                <label class="sr-only">Responsável</label>
+                                                <input type="text" name="assinante_responsavel[]"
+                                                       placeholder="Nome do Responsável" readonly
+                                                       class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                                            </div>
+                                            <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
+                                                    class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                                                🗑
+                                            </button>
+                                        `;
+                                        container.appendChild(novoAssinante);
+                                    }
+
+                                    function removerAssinante(botao, tipoDocumento) {
+                                        const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
+                                        const assinantes = container.querySelectorAll('.flex.items-center');
+                                        if (assinantes.length > 1) {
+                                            botao.closest('.flex.items-center').remove();
+                                        }
+                                    }
+
+                                    function updateResponsavel(select, tipoDocumento) {
+                                        const selectedUnidadeId = select.value;
+                                        const selectedUnidade = unidadesAssinantes.find(u => u.id == selectedUnidadeId);
+                                        const responsavelInput = select.closest('.flex.items-center').querySelector('.responsavel-input');
+
+                                        if (responsavelInput && selectedUnidade) {
+                                            responsavelInput.value = selectedUnidade.servidor_responsavel;
+                                        } else if (responsavelInput) {
+                                            responsavelInput.value = '';
+                                        }
+                                    }
+                                </script>
+                            </tbody>
+                        </table>
+
+                        <!-- Botão para Baixar Todos os PDFs em um único arquivo -->
+                        <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
+                            <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}"
+                                class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                📥 Baixar Todos os PDFs
+                            </a>
+                        </div>
                     </div>
-                </form>
+
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -853,6 +937,8 @@
                 nome_equipe_planejamento: existing?.nome_equipe_planejamento ?? '',
                 responsavel_equipe_planejamento: existing?.responsavel_equipe_planejamento ?? '',
                 descricao_necessidade_autorizacao: existing?.descricao_necessidade_autorizacao ?? '',
+                solucoes_disponivel_mercado: existing?.solucoes_disponivel_mercado ?? '',
+                incluir_requisito_cada_caso_concreto: existing?.incluir_requisito_cada_caso_concreto ?? '',
                 descricao_necessidade: existing?.descricao_necessidade ?? '',
                 alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
                 problema_resolvido: existing?.problema_resolvido ?? '',
@@ -879,6 +965,8 @@
                     nome_equipe_planejamento: !!existing?.nome_equipe_planejamento,
                     responsavel_equipe_planejamento: !!existing?.responsavel_equipe_planejamento,
                     descricao_necessidade_autorizacao: !!existing?.descricao_necessidade_autorizacao,
+                    solucoes_disponivel_mercado: !!existing?.solucoes_disponivel_mercado,
+                    incluir_requisito_cada_caso_concreto: !!existing?.incluir_requisito_cada_caso_concreto,
                     descricao_necessidade: !!existing?.descricao_necessidade,
                     alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
                     problema_resolvido: !!existing?.problema_resolvido,
@@ -909,7 +997,7 @@
                         'content'));
 
                     // --- Campos do TinyMCE ---
-                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao']
+                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao', 'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto' ]
                         .includes(field)) {
                         const content = tinymce.get(field).getContent(); // pega conteúdo do editor
                         formData.append(field, content);

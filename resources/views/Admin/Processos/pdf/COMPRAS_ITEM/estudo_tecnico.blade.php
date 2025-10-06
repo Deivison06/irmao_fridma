@@ -550,8 +550,7 @@
         </ul>
 
         <p style="">O quantitativo estimado encontra-se devidamente justificado com base em dados
-            oficiais, históricos
-            de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da eficiência e
+            oficiais, históricos de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da eficiência e
             assegurando o interesse público, nos termos da Lei nº 14.133/2021. </p>
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
@@ -1740,14 +1739,14 @@
                 ->translatedFormat('d \d\e F \d\e Y');
         @endphp
 
-        <p style="text-align:center;">
+        <p style="text-align: justify; text-indent: 30px;">
             O {{ $primeiroAssinante['responsavel'] ?? '____________________' }},
             nos termos da Portaria nº XXXXXX, de XX de XXXXXXXXXXX de XXXX, apresenta o Mapa de Gerenciamento de Risco,
             certificando que somos responsáveis pela elaboração do presente documento.
         </p>
 
         {{-- Bloco de data e assinatura --}}
-        <div class="footer-signature" style="text-align:center; margin-top:30px;">
+        <div class="footer-signature">
             {{ $municipio }}, {{ $dataFormatada }}
         </div>
 

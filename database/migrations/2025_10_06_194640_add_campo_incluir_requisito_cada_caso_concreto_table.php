@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('processo_detalhes', function (Blueprint $table) {
-            $table->text('descricao_necessidade_autorizacao')->nullable()->after('descricao_necessidade');
+             $table->text('incluir_requisito_cada_caso_concreto')->nullable()->after('solucoes_disponivel_mercado');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('processo_detalhes', function (Blueprint $table) {
-            $table->dropColumn(['descricao_necessidade_autorizacao']);
+            $table->dropColumn(['incluir_requisito_cada_caso_concreto']);
         });
     }
 };
