@@ -473,6 +473,8 @@
                         <x-form-field name="demanda" label="Demanda" type="textarea" />
                         <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação"
                             type="textarea" />
+                        <x-form-field name="descricao_necessidade_autorizacao"
+                            label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO" type="textarea" />
                         <x-form-field name="descricao_necessidade" label="DESCRIÇÃO DA NECESSIDADE" type="textarea" />
 
                         <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
@@ -636,18 +638,17 @@
                         <!-- Documento contém inversão de fase -->
                         <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
                             <div class="flex-1">
-                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de fase?</span>
+                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de
+                                    fase?</span>
                                 <div class="flex mt-1 space-x-4">
                                     <label class="inline-flex items-center">
                                         <input type="radio" x-model="inversao_fase" value="sim"
-                                            :disabled="confirmed.inversao_fase"
-                                            :checked="inversao_fase === 'sim'">
+                                            :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'sim'">
                                         <span class="ml-2">Sim</span>
                                     </label>
                                     <label class="inline-flex items-center">
                                         <input type="radio" x-model="inversao_fase" value="nao"
-                                            :disabled="confirmed.inversao_fase"
-                                            :checked="inversao_fase === 'nao'">
+                                            :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'nao'">
                                         <span class="ml-2">Não</span>
                                     </label>
                                 </div>
@@ -851,6 +852,7 @@
                 itens_e_seus_quantitativos_xml: existing?.itens_e_seus_quantitativos_xml ?? '',
                 nome_equipe_planejamento: existing?.nome_equipe_planejamento ?? '',
                 responsavel_equipe_planejamento: existing?.responsavel_equipe_planejamento ?? '',
+                descricao_necessidade_autorizacao: existing?.descricao_necessidade_autorizacao ?? '',
                 descricao_necessidade: existing?.descricao_necessidade ?? '',
                 alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
                 problema_resolvido: existing?.problema_resolvido ?? '',
@@ -876,10 +878,11 @@
                     itens_e_seus_quantitativos_xml: !!existing?.itens_e_seus_quantitativos_xml,
                     nome_equipe_planejamento: !!existing?.nome_equipe_planejamento,
                     responsavel_equipe_planejamento: !!existing?.responsavel_equipe_planejamento,
+                    descricao_necessidade_autorizacao: !!existing?.descricao_necessidade_autorizacao,
                     descricao_necessidade: !!existing?.descricao_necessidade,
                     alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
                     problema_resolvido: !!existing?.problema_resolvido,
-                    inversao_fase: !!existing?.inversao_fase
+                    inversao_fase: !!existing?.inversao_fase,
                 },
 
                 // Quando a unidade é alterada
@@ -906,7 +909,8 @@
                         'content'));
 
                     // --- Campos do TinyMCE ---
-                    if (['demanda', 'justificativa', 'descricao_necessidade'].includes(field)) {
+                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao']
+                        .includes(field)) {
                         const content = tinymce.get(field).getContent(); // pega conteúdo do editor
                         formData.append(field, content);
                     }

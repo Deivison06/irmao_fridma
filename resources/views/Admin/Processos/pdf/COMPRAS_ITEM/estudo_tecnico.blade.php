@@ -262,7 +262,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style=""">{{ $detalhe->problema_resolvido }}</div>
+                                <div style="text-align: justify;">{{ $detalhe->problema_resolvido }}</div>
                             </td>
                         </tr>
                     </table>
@@ -401,50 +401,46 @@
                 seguintes exigências mínimas:
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Os Produtos deverão ser executados de forma parcelada, de acordo com as solicitações da CONTRATANTE, por
                 meio de suas respectivas OF.’s;
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Os Produtos deverão ser entregues em até 48 (quarenta e oito) horas contadas do envio do Pedido de
                 Fornecimento/serviço Empenho, devendo a contratada manter estoques compatíveis com as quantidades
                 solicitadas durante o prazo de vigência do contrato, evitando atrasos nas entregas/fornecimentos, sem a
                 exigência de valor ou quantitativo mínimo e sem custos adicionais.
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Os produtos deverão ser executados/entregues nas respectivas Unidades e locais de indicação do
-                CONTRATANTE,
-                em horários e datas previamente estabelecidas na respectiva Ordem de Serviço;
+                CONTRATANTE, em horários e datas previamente estabelecidas na respectiva Ordem de Serviço;
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 A nota fiscal deverá ser apresentada no ato da entrega informado o número do Contrato correspondente no
                 campo “Dados Adicionais” e a ordem de fornecimento.
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 A Contratada deverá arcar com as despesas referentes a entrega dos produtos.
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Serão exigidas comprovações de localização da sede da empresa, com apresentação de fotos da
-                infraestrutura
-                interna, com objetivo precípuo de averiguar a veracidade sobre a real existência da empresa, evitando a
+                infraestrutura interna, com objetivo precípuo de averiguar a veracidade sobre a real existência da empresa, evitando a
                 contratação de empresas fantasmas ou de caráter inidôneo.
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Serão exigidas composições de custos que reflitam a realidade econômica da empresa licitante, a ser
-                definido
-                no próprio edital, que estabelecem critérios de custos com despesas diretas e indiretas;
+                definido no próprio edital, que estabelecem critérios de custos com despesas diretas e indiretas;
             </p>
 
-            <p style="">
+            <p style="text-align: justify; text-indent: 30px;">
                 Também será exigido garantia de proposta, nos termos do art. 96 e seguintes, visando estabelecer a
-                segurança
-                do preço ofertado pelo licitante, garantindo assim, o seguro do custeio realizado pela Administração no
+                segurança do preço ofertado pelo licitante, garantindo assim, o seguro do custeio realizado pela Administração no
                 momento da abertura do certame;
             </p>
         </div>
@@ -453,10 +449,10 @@
             INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO
         </div>
 
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             Os requisitos acima foram elaborados buscando a equidade no processo licitatório,
-            assegurando que apenas propostas que atendam plenamente às necessidades da Prefeitura
-            Municipal de XXXXXXXXXXX sejam consideradas, respeitando assim os princípios da Lei
+            assegurando que apenas propostas que atendam plenamente às necessidades da
+            {{ $processo->prefeitura->nome }} sejam consideradas, respeitando assim os princípios da Lei
             14.133/21.
         </p>
 
@@ -465,8 +461,7 @@
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
         </div>
-        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de XXXXXX da Prefeitura
-            Municipal de XXXXXXXXX: </p>
+        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {{ $processo->objeto }} da {{ $processo->prefeitura->nome }}: </p>
         <p style="">Solução 1: XXXXXXXXXXXXXXXXX</p>
         <p style="">Solução 2: XXXXXXXXXXXXXXXXX</p>
 
@@ -563,54 +558,47 @@
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             PARCELAMENTO OU NÃO DA CONTRATAÇÃO
         </div>
-        <p style=" text-indent: 30px; color: red; ">
-            LICITAÇÃO POR ITENS
-        </p>
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
             Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
             a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
             de pequeno porte, bem como alcançar melhor resultado para a Administração.
         </p>
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             O objeto da presente licitação abrange diversos produtos/serviços com características
             distintas, que podem ser adquiridos, entregues ou executados de forma independente, sem prejuízo
             à integridade da execução contratual.
         </p>
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário,
             estimula a competitividade, ao permitir que microempresas, empresas locais e fornecedores
             especializados possam concorrer apenas nos itens de sua capacidade técnica e logística.
         </p>
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo
             maior eficiência, economicidade e mitigação de riscos contratuais.
         </p>
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             A adoção do parcelamento por itens está alinhada ao planejamento da Administração
             Pública, favorecendo:
         </p>
 
-        <p>
+        <ul>
             <li style=" text-indent: 30px;">Atendimento adequado às necessidades
-                específicas de
-                cada unidade administrativa; </li>
-        </p>
-        <p>
+                específicas de cada unidade administrativa; </li>
+
             <li style=" text-indent: 30px;">Diversificação de fornecedores e redução do
                 risco
                 de desabastecimento; </li>
-        </p>
-        <p>
+
             <li style=" text-indent: 30px;">Fortalecimento da economia local/regional;</li>
-        </p>
-        <p>
+
             <li style=" text-indent: 30px;">Observância ao princípio da isonomia, conforme
                 art.
                 5º da Lei nº 14.133/2021.</li>
-        </p>
+        </ul>
 
-        <p style=" text-indent: 30px;">
+        <p style=" text-indent: 30px; text-align: justify;">
             Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
             entre fornecedores, o que pode resultar em custos mais baixos e condições mais vantajosas para a
             Administração Pública. Ao permitir que empresas ofereçam suas propostas para XXXXXXXXXX, a
@@ -707,7 +695,8 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            _____________________,____ de _________ de 20____.
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         @php
@@ -750,18 +739,18 @@
     {{-- ====================================================================== --}}
     <div id="mapa-gerenciamento-risco">
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
-        <p style="text-indent: 30px">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE RISCOS para a
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXX, de forma a melhor atender
+        <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
+            RISCOS para a
+            {{ $processo->objeto }}, de forma a melhor atender
             as necessidades do município de XXXXX/PI.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
-        <div style="text-indent: 30px">
+        <div style="text-indent: 30px; text-align: justify;">
             O gerenciamento de riscos permite ações contínuas de planejamento, organização e
             controle dos recursos relacionados aos riscos que possam comprometer o sucesso da contratação,
             da execução do objeto e da gestão contratual.
         </div>
-        <div style="text-indent: 30px">
+        <div style="text-indent: 30px; text-align: justify;">
             O Mapa de Gerenciamento de Riscos deve conter a identificação e a análise dos principais
             riscos, consistindo na compreensão da natureza e determinação do nível de risco, que corresponde
             à combinação do impacto e de suas probabilidades que possam comprometer a efetividade da
@@ -772,7 +761,7 @@
             de tratamento dos riscos. Os riscos identificados no projeto devem ser registrados, avaliados e
             tratados:
         </div>
-        <div style="text-indent: 30px">
+        <div style="text-indent: 30px; text-align: justify;">
             Durante a fase de planejamento, a equipe de Planejamento da Contratação deve proceder
             às ações de gerenciamento de riscos e produzir o Mapa de Gerenciamento de Riscos; Durante a
             fase de Seleção do Fornecedor, o Integrante Administrativo com apoio dos Integrantes Técnico e
@@ -783,7 +772,7 @@
             anteriores com a atualização de suas respectivas ações de tratamento, e à identificação, análise,
             avaliação e tratamento de novos riscos.
         </div>
-        <div style="text-indent: 30px">
+        <div style="text-indent: 30px; text-align: justify;">
             A seguir são definidos os parâmetros escalares que representam, para o processo de
             contratação em análise, os níveis de probabilidade e impacto, que resultarão nos níveis de risco,
             após a multiplicação. Esses resultados irão nortear as ações relacionadas aos riscos durantes as
@@ -1735,42 +1724,51 @@
         </table>
         <br>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">4 - APROVAÇÃO E ASSINATURA</p>
-        <p style="text-align: center">O XXXXXXXXXXXXXXXXXXXX, nos termos da Portaria nº XXXXXX, de XX de
-            XXXXXXXXXXX de XXXX apresenta o Mapa de Gerenciamento de Risco, certificando que somos
-            responsáveis pela elaboração do presente documento.</p>
-
-        {{-- Bloco de data e assinatura --}}
-        <div class="footer-signature">
-            _____________________,____ de _________ de 20____.
-        </div>
-
         @php
             // Verifica se a variável $assinantes existe e tem itens
             $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+
+            // Define o primeiro assinante, se existir
+            $primeiroAssinante = $hasSelectedAssinantes ? $assinantes[0] : null;
+
+            // Extrai o nome do município removendo "Prefeitura Municipal de" ou "Prefeitura de"
+            $municipio = preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome);
+
+            // Define a data formatada em português
+            $dataFormatada = \Carbon\Carbon::parse($dataSelecionada)
+                ->locale('pt_BR')
+                ->translatedFormat('d \d\e F \d\e Y');
         @endphp
 
-        @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
-                $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
-            @endphp
+        <p style="text-align:center;">
+            O {{ $primeiroAssinante['responsavel'] ?? '____________________' }},
+            nos termos da Portaria nº XXXXXX, de XX de XXXXXXXXXXX de XXXX, apresenta o Mapa de Gerenciamento de Risco,
+            certificando que somos responsáveis pela elaboração do presente documento.
+        </p>
 
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+        {{-- Bloco de data e assinatura --}}
+        <div class="footer-signature" style="text-align:center; margin-top:30px;">
+            {{ $municipio }}, {{ $dataFormatada }}
+        </div>
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza apenas o primeiro assinante --}}
+            <div style="margin-top:40px; text-align:center;">
+                <div class="signature-block" style="display:inline-block; margin:0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    <p style="font-size:10pt; line-height:1.2; margin:0;">
+                        {{ $primeiroAssinante['responsavel'] }}<br>
+                        <span style="color:#4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
         @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            {{-- Fallback (sem assinantes selecionados) --}}
+            <div class="signature-block" style="margin-top:40px; text-align:center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                <p style="font-size:10pt; line-height:1.2; margin:0;">
+                    {{ $processo->prefeitura->autoridade_competente ?? '____________________' }}<br>
+                    <span style="color:red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>
             </div>
         @endif
@@ -1787,8 +1785,7 @@
         <p style="text-align: center; font-size:14px; font-weight: 700;">DECLARAÇÃO</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
         <p>
-            Declaro, para os devidos fins, que a presente demanda referente à <strong>[descrever objeto da
-                contratação]</strong>
+            Declaro, para os devidos fins, que a presente demanda referente à <strong>{{ $processo->objeto }}</strong>
             encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
                 [ano]</strong>,
             elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
@@ -1807,7 +1804,8 @@
             <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
             <p style="text-indent: 30px;">
                 É importante ressaltar que a ausência de um plano de contratações anual no município de
-                XXXXXXXX se deve a uma série de fatores que limitaram a sua implementação até o momento. Embora
+                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} se deve a uma
+                série de fatores que limitaram a sua implementação até o momento. Embora
                 a legislação (Artigo 12, VII, da Lei nº 14.133) estabeleça a obrigatoriedade de um plano de contratações
                 anual, é necessário considerar as circunstâncias específicas que podem justificar a sua ausência
                 temporária.
@@ -1823,7 +1821,7 @@
                 bem como a análise de fornecedores e a definição de critérios claros para a contratação.
             </p>
             <p style="text-indent: 30px;">
-                A Prefeitura Municipal de XXXXXXXXX, compromete-se a observar as disposições da Lei
+                A {{ $processo->prefeitura->nome }}, compromete-se a observar as disposições da Lei
                 Federal n° 14.133/21 e a empenhar todos os esforções necessários para a elaboração e atualização
                 periódica do Plano de Contratação Anual, garantindo total transparência e conformidade com as normas
                 estabelecidas.
@@ -1843,7 +1841,8 @@
 
             {{-- Bloco de data e assinatura --}}
             <div class="footer-signature">
-                _____________________,____ de _________ de 20____.
+                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+                {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
             </div>
 
             @php
@@ -1954,22 +1953,35 @@
                 <td style="border: 1px solid black; padding: 8px;">
                     <div style="display: block; margin-bottom: 4px;">
                         <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">
+                            @if ($processo->modalidade === \App\Enums\ModalidadeEnum::DISPENSA)
+                                X
+                            @endif
+                        </span>
                         Dispensa de Licitação;
                     </div>
                     <div style="display: block; margin-bottom: 4px;">
                         <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">X</span>
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">
+                            @if ($processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
+                                X
+                            @endif
+                        </span>
                         Pregão Eletrônico;
                     </div>
-                    <div style="display: block;">
+                    <div style="display: block; margin-bottom: 4px;">
                         <span
-                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;"></span>
-                        Concorrência.
+                            style="display:inline-block; width:12px; height:12px; border:1px solid #000; margin-right:5px; vertical-align:middle; text-align:center; line-height:10px; font-size:10px; font-weight:bold;">
+                            @if ($processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA)
+                                X
+                            @endif
+                        </span>
+                        Concorrência;
                     </div>
                 </td>
             </tr>
         </table>
+
 
         <p>
             Após o cumprimento de todas as etapas acima previstas, retorno o procedimento para esta
@@ -1979,7 +1991,8 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            _____________________,____ de _________ de 20____.
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         @php

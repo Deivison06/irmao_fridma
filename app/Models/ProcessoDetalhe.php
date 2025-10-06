@@ -36,7 +36,8 @@ class ProcessoDetalhe extends Model
         'descricao_necessidade',
         'alinhamento_planejamento_anual',
         'problema_resolvido',
-        'inversao_fase'
+        'inversao_fase',
+        'descricao_necessidade_autorizacao'
     ];
 
     protected $casts = [

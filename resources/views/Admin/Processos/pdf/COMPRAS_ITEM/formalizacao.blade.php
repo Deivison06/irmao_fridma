@@ -533,7 +533,7 @@
         <div class="section">
             <div class="bold" style="margin-bottom:5px; text-align: center;">NECESSIDADE OBJETO DO ESTUDO:</div>
 
-            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; padding: 10px;">', $detalhe->objeto) !!}
+            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->descricao_necessidade_autorizacao) !!}
 
         </div>
 
