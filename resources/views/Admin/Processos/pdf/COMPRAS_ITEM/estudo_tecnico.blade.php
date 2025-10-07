@@ -429,7 +429,8 @@
 
             <p style="text-align: justify; text-indent: 30px;">
                 Serão exigidas comprovações de localização da sede da empresa, com apresentação de fotos da
-                infraestrutura interna, com objetivo precípuo de averiguar a veracidade sobre a real existência da empresa, evitando a
+                infraestrutura interna, com objetivo precípuo de averiguar a veracidade sobre a real existência da
+                empresa, evitando a
                 contratação de empresas fantasmas ou de caráter inidôneo.
             </p>
 
@@ -440,14 +441,17 @@
 
             <p style="text-align: justify; text-indent: 30px;">
                 Também será exigido garantia de proposta, nos termos do art. 96 e seguintes, visando estabelecer a
-                segurança do preço ofertado pelo licitante, garantindo assim, o seguro do custeio realizado pela Administração no
+                segurança do preço ofertado pelo licitante, garantindo assim, o seguro do custeio realizado pela
+                Administração no
                 momento da abertura do certame;
             </p>
         </div>
 
-        <div style=" margin-bottom: 20px; color: red; text-align: center;">
-            INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO
-        </div>
+        {!! str_replace(
+            '<p>',
+            '<p style="text-indent:30px; text-align: justify;">',
+            $detalhe->incluir_requisito_cada_caso_concreto,
+        ) !!}
 
         <p style=" text-indent: 30px; text-align: justify;">
             Os requisitos acima foram elaborados buscando a equidade no processo licitatório,
@@ -461,17 +465,19 @@
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
         </div>
-        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {{ $processo->objeto }} da {{ $processo->prefeitura->nome }}: </p>
-        <p style="">Solução 1: XXXXXXXXXXXXXXXXX</p>
-        <p style="">Solução 2: XXXXXXXXXXXXXXXXX</p>
+        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {{ $processo->objeto }} da
+            {{ $processo->prefeitura->nome }}: </p>
 
-        <div style="  margin-bottom: 20px; color: red; text-align: center;">
-            INCLUIR SOLUÇÕES DISPONÍVEIS NO MERCADO, FAZER COMPARATIVO ENTRE AS SOLUÇÕES
-        </div>
+        {!! str_replace(
+            '<p>',
+            '<p style="text-indent:30px; text-align: justify;">',
+            $detalhe->solucoes_disponivel_mercado,
+        ) !!}
+
         <p style=" text-indent: 30px;">
             Cada solução apresenta características diferentes em relação a custo, eficiência e
-            adaptabilidade, e a escolha deve ser fundamentada nas necessidades específicas da Prefeitura
-            Municipal de XXXXXXXXXXX, bem como na capacidade de cumprimento das metas estabelecidas
+            adaptabilidade, e a escolha deve ser fundamentada nas necessidades específicas da
+            {{ $processo->prefeitura->nome }}, bem como na capacidade de cumprimento das metas estabelecidas
             para a melhoria dos serviços essenciais.
         </p>
 
@@ -485,9 +491,7 @@
             e operacionais que atendem às necessidades específicas do município.
         </p>
 
-        <div style="  margin-bottom: 20px; color: red; text-align: center;">
-            INCREMENTAR E ELABORAR JUSTIFICATIVA PARA A SOLUÇÃO ESCOLHIDA
-        </div>
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
@@ -550,7 +554,8 @@
         </ul>
 
         <p style="">O quantitativo estimado encontra-se devidamente justificado com base em dados
-            oficiais, históricos de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da eficiência e
+            oficiais, históricos de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da
+            eficiência e
             assegurando o interesse público, nos termos da Lei nº 14.133/2021. </p>
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
@@ -740,8 +745,7 @@
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
         <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
-            {{ $processo->objeto }}, de forma a melhor atender
-            as necessidades do município de XXXXX/PI.</p>
+            {{ $processo->objeto }}, de forma a melhor atender as necessidades do município de {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
         <div style="text-indent: 30px; text-align: justify;">

@@ -11,6 +11,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
+
         @page {
             margin: 0;
             size: A4;
@@ -28,7 +35,7 @@
             background-size: cover;
         }
 
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -37,6 +44,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -47,8 +55,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -56,15 +65,14 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            width: 60%;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         .footer-signature {
@@ -172,10 +180,10 @@
         </table>
 
         <p style="text-indent: 30px">
-            A Secretaria Municipal de XXXXXXXXX, encaminhou para esta unidade a necessidade
+            A {{ $detalhe->unidade_setor }}, encaminhou para esta unidade a necessidade
             de realização de Cotação referente a itens relacionados ao objeto
-            <strong>“XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX”</strong>, ato
-            seguido, foi realizado a cotação junto ao Painel de Preços do TCE-PI, conforme tabela abaixo:
+            <span style="font-weight: bold;">“{{ $processo->objeto }}”</span>, ato seguido, foi realizado a cotação junto ao Painel de Preços
+            do TCE-PI, conforme tabela abaixo:
         </p>
 
         <table style="border-collapse: collapse; width: 100%; font-size: 12px; text-align: center;">
@@ -223,7 +231,7 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 

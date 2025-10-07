@@ -139,13 +139,16 @@
                         <table class="min-w-full bg-white divide-y divide-gray-200">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
                                         Documentos
                                     </th>
-                                    <th class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    <th
+                                        class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Data
                                     </th>
-                                    <th class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    <th
+                                        class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
                                         Ações
                                     </th>
                                 </tr>
@@ -275,13 +278,13 @@
                                                 </div>
                                             </div>
                                             {{-- Botão para expandir/colapsar o acordeão --}}
-                                            @if(!empty($doc['campos']))
-                                            <button type="button"
-                                                class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
-                                                data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
-                                                aria-controls="{{ $accordionId }}">
-                                                <span class="collapse-text">Definir Campos e Assinantes</span>
-                                            </button>
+                                            @if (!empty($doc['campos']))
+                                                <button type="button"
+                                                    class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
+                                                    data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
+                                                    aria-controls="{{ $accordionId }}">
+                                                    <span class="collapse-text">Definir Campos e Assinantes</span>
+                                                </button>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 text-center">
@@ -318,8 +321,8 @@
                                                         aria-hidden="true" title="Aguardando geração">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            aria-hidden="true">
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" aria-hidden="true">
                                                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                                             <polyline points="7 10 12 15 17 10"></polyline>
                                                             <line x1="12" y1="15" x2="12"
@@ -332,377 +335,482 @@
                                     </tr>
 
                                     {{-- Linha do Acordeão (Collapse) - Apenas se tiver campos --}}
-                                    @if(!empty($doc['campos']))
-                                    <tr>
-                                        <td colspan="3" class="p-0">
-                                            <div id="{{ $accordionId }}" class="hidden">
-                                                <div class="p-4 border-t border-gray-200 bg-gray-50"
-                                                    id="accordion-content-{{ $tipo }}">
+                                    @if (!empty($doc['campos']))
+                                        <tr>
+                                            <td colspan="3" class="p-0">
+                                                <div id="{{ $accordionId }}" class="hidden">
+                                                    <div class="p-4 border-t border-gray-200 bg-gray-50"
+                                                        id="accordion-content-{{ $tipo }}">
 
-                                                    <!-- Seção de Assinantes -->
-                                                    <div class="pb-4 mb-6 border-b border-gray-200">
-                                                        <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de Assinantes (Unidade e Responsável)</h4>
+                                                        <!-- Seção de Assinantes -->
+                                                        <div class="pb-4 mb-6 border-b border-gray-200">
+                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
+                                                                Assinantes (Unidade e Responsável)</h4>
 
-                                                        <div id="assinantes-container-{{ $tipo }}">
-                                                            <div class="flex items-center mb-3 space-x-2">
-                                                                {{-- Select da Unidade --}}
-                                                                <div class="flex-1">
-                                                                    <label class="sr-only">Unidade</label>
-                                                                    <select name="assinante_unidade[]"
+                                                            <div id="assinantes-container-{{ $tipo }}">
+                                                                <div class="flex items-center mb-3 space-x-2">
+                                                                    {{-- Select da Unidade --}}
+                                                                    <div class="flex-1">
+                                                                        <label class="sr-only">Unidade</label>
+                                                                        <select name="assinante_unidade[]"
                                                                             class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
                                                                             onchange="updateResponsavel(this, '{{ $tipo }}')">
-                                                                        <option value="">Selecione a Unidade</option>
-                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                            <option value="{{ $unidade->id }}">
-                                                                                {{ $unidade->nome }}
+                                                                            <option value="">Selecione a Unidade
                                                                             </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                                            @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                <option value="{{ $unidade->id }}">
+                                                                                    {{ $unidade->nome }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                {{-- Input do Responsável (Exibição) --}}
-                                                                <div class="flex-1">
-                                                                    <label class="sr-only">Responsável</label>
-                                                                    <input type="text" name="assinante_responsavel[]"
-                                                                           placeholder="Nome do Responsável" readonly
-                                                                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                                                                    {{-- Input do Responsável (Exibição) --}}
+                                                                    <div class="flex-1">
+                                                                        <label class="sr-only">Responsável</label>
+                                                                        <input type="text"
+                                                                            name="assinante_responsavel[]"
+                                                                            placeholder="Nome do Responsável" readonly
+                                                                            class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
+                                                            {{-- Botão de Adicionar --}}
+                                                            <button type="button"
+                                                                onclick="adicionarAssinante('{{ $tipo }}')"
+                                                                class="px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                                                + Adicionar Assinante
+                                                            </button>
                                                         </div>
 
-                                                        {{-- Botão de Adicionar --}}
-                                                        <button type="button" onclick="adicionarAssinante('{{ $tipo }}')"
-                                                                class="px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                                                            + Adicionar Assinante
-                                                        </button>
-                                                    </div>
+                                                        <!-- Seção de Campos do Formulário -->
+                                                        <div>
+                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do
+                                                                Documento</h4>
+                                                            <form
+                                                                action="{{ route('admin.processos.detalhes.store', $processo) }}"
+                                                                method="POST" x-data="formField({{ json_encode($processo->detalhe ?? null) }})"
+                                                                @submit.prevent="submitForm">
+                                                                @csrf
+                                                                <input type="hidden" name="processo_id"
+                                                                    value="{{ $processo->id }}">
 
-                                                    <!-- Seção de Campos do Formulário -->
-                                                    <div>
-                                                        <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do Documento</h4>
-                                                        <form action="{{ route('admin.processos.detalhes.store', $processo) }}" method="POST"
-                                                              x-data="formField({{ json_encode($processo->detalhe ?? null) }})"
-                                                              @submit.prevent="submitForm">
-                                                            @csrf
-                                                            <input type="hidden" name="processo_id" value="{{ $processo->id }}">
-
-                                                            @foreach($doc['campos'] as $campo)
-                                                                <div class="p-3 bg-white border border-gray-200 rounded-lg">
-                                                                    @if($campo === 'secretaria')
-                                                                        <x-form-field name="secretaria" label="Secretaria" />
-
-                                                                    @elseif($campo === 'unidade_setor')
-                                                                        <div class="flex items-start space-x-2">
-                                                                            <div class="flex-1">
-                                                                                <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                    Unidade / Setor / Departamento
-                                                                                </label>
-                                                                                <select id="unidade_setor" x-model="unidade_setor" :disabled="confirmed.unidade_setor"
+                                                                @foreach ($doc['campos'] as $campo)
+                                                                    <div
+                                                                        class="p-3 bg-white border border-gray-200 rounded-lg">
+                                                                        @if ($campo === 'secretaria')
+                                                                            <x-form-field name="secretaria"
+                                                                                label="Secretaria" />
+                                                                        @elseif($campo === 'unidade_setor')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label for="unidade_setor"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Unidade / Setor / Departamento
+                                                                                    </label>
+                                                                                    <select id="unidade_setor"
+                                                                                        x-model="unidade_setor"
+                                                                                        @change="onUnidadeChange"
+                                                                                        :disabled="confirmed.unidade_setor"
                                                                                         class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                                                                    <option value="">Selecione uma unidade</option>
-                                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                        <option value="{{ $unidade->nome }}"
-                                                                                            {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
-                                                                                            {{ $unidade->nome }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('unidade_setor')"
-                                                                                        x-show="!confirmed.unidade_setor" :disabled="!unidade_setor"
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('unidade_setor')"
+                                                                                        x-show="!confirmed.unidade_setor"
+                                                                                        :disabled="!unidade_setor"
                                                                                         class="px-3 py-2 text-white transition rounded-lg"
-                                                                                        :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' :
+                                                                                        :class="!unidade_setor ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
                                                                                             'bg-green-500 hover:bg-green-600'">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('unidade_setor')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('unidade_setor')"
                                                                                         x-show="confirmed.unidade_setor"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'servidor_responsavel')
-                                                                        <div class="flex items-start space-x-2">
-                                                                            <div class="flex-1">
-                                                                                <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
-                                                                                    Servidor Responsável
-                                                                                </label>
-                                                                                <input type="text" id="servidor_responsavel" x-model="servidor_responsavel"
-                                                                                       readonly
-                                                                                       class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'demanda')
-                                                                        <x-form-field name="demanda" label="Demanda" type="textarea" />
-
-                                                                    @elseif($campo === 'justificativa')
-                                                                        <x-form-field name="justificativa" label="Justificativa da Necessidade da Contratação" type="textarea" />
-
-                                                                    @elseif($campo === 'descricao_necessidade')
-                                                                        <x-form-field name="descricao_necessidade" label="DESCRIÇÃO DA NECESSIDADE" type="textarea" />
-
-                                                                    @elseif($campo === 'descricao_necessidade_autorizacao')
-                                                                        <x-form-field name="descricao_necessidade_autorizacao" label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO" type="textarea" />
-                                                                    @elseif($campo === 'solucoes_disponivel_mercado')
-                                                                        <x-form-field name="solucoes_disponivel_mercado" label="SOLUÇÕES DISPONÍVEIS NO MERCADO" type="textarea" />
-
-                                                                    @elseif($campo === 'incluir_requisito_cada_caso_concreto')
-                                                                        <x-form-field name="incluir_requisito_cada_caso_concreto" label="INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO" type="textarea" />
-
-                                                                    @elseif($campo === 'problema_resolvido')
-                                                                        <x-form-field name="problema_resolvido" label="Problema Resumido" />
-
-                                                                    @elseif($campo === 'alinhamento_planejamento_anual')
-                                                                        <x-form-field name="alinhamento_planejamento_anual" label="Alinhamento com o Planejamento Anual" />
-
-                                                                    @elseif($campo === 'nome_equipe_planejamento')
-                                                                        <x-form-field name="nome_equipe_planejamento" label="EQUIPE DE PLANEJAMENTO" />
-
-                                                                    @elseif($campo === 'responsavel_equipe_planejamento')
-                                                                        <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
-
-                                                                    @elseif($campo === 'prazo_entrega')
-                                                                        <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
-
-                                                                    @elseif($campo === 'local_entrega')
-                                                                        <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
-
-                                                                    @elseif($campo === 'fiscais')
-                                                                        <x-form-field name="fiscais" label="Fiscal(is) Indicado(s)" />
-
-                                                                    @elseif($campo === 'gestor')
-                                                                        <x-form-field name="gestor" label="Gestor Indicado" />
-
-                                                                    @elseif($campo === 'contratacoes_anteriores')
-                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                                                                            <div class="flex-1">
-                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Houve contratações anteriores?</span>
-                                                                                <div class="flex mt-1 space-x-4">
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="contratacoes_anteriores" value="sim"
-                                                                                               :disabled="confirmed.contratacoes_anteriores"
-                                                                                               :checked="contratacoes_anteriores === 'sim'">
-                                                                                        <span class="ml-2">Sim</span>
-                                                                                    </label>
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="contratacoes_anteriores" value="nao"
-                                                                                               :disabled="confirmed.contratacoes_anteriores"
-                                                                                               :checked="contratacoes_anteriores === 'nao'">
-                                                                                        <span class="ml-2">Não</span>
-                                                                                    </label>
+                                                                                        ✖
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('contratacoes_anteriores')"
+                                                                        @elseif($campo === 'servidor_responsavel')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label for="servidor_responsavel"
+                                                                                        class="block text-sm font-medium text-gray-700">
+                                                                                        Servidor Responsável
+                                                                                    </label>
+                                                                                    <input type="text"
+                                                                                        id="servidor_responsavel"
+                                                                                        x-model="servidor_responsavel"
+                                                                                        value="{{ $processo->detalhe->servidor_responsavel ?? '' }}"
+                                                                                        readonly
+                                                                                        class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'demanda')
+                                                                            <x-form-field name="demanda" label="Demanda"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'justificativa')
+                                                                            <x-form-field name="justificativa"
+                                                                                label="Justificativa da Necessidade da Contratação"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'descricao_necessidade')
+                                                                            <x-form-field name="descricao_necessidade"
+                                                                                label="DESCRIÇÃO DA NECESSIDADE"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'descricao_necessidade_autorizacao')
+                                                                            <x-form-field
+                                                                                name="descricao_necessidade_autorizacao"
+                                                                                label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'solucoes_disponivel_mercado')
+                                                                            <x-form-field
+                                                                                name="solucoes_disponivel_mercado"
+                                                                                label="SOLUÇÕES DISPONÍVEIS NO MERCADO"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'incluir_requisito_cada_caso_concreto')
+                                                                            <x-form-field
+                                                                                name="incluir_requisito_cada_caso_concreto"
+                                                                                label="INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'problema_resolvido')
+                                                                            <x-form-field name="problema_resolvido"
+                                                                                label="Problema Resumido" />
+                                                                        @elseif($campo === 'alinhamento_planejamento_anual')
+                                                                            <x-form-field
+                                                                                name="alinhamento_planejamento_anual"
+                                                                                label="Alinhamento com o Planejamento Anual" />
+                                                                        @elseif($campo === 'nome_equipe_planejamento')
+                                                                            <x-form-field name="nome_equipe_planejamento"
+                                                                                label="EQUIPE DE PLANEJAMENTO" />
+                                                                        @elseif($campo === 'responsavel_equipe_planejamento')
+                                                                            <x-form-field
+                                                                                name="responsavel_equipe_planejamento"
+                                                                                label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
+                                                                        @elseif($campo === 'prazo_entrega')
+                                                                            <x-form-field name="prazo_entrega"
+                                                                                label="Prazo de Entrega / Execução" />
+                                                                        @elseif($campo === 'local_entrega')
+                                                                            <x-form-field name="local_entrega"
+                                                                                label="Local(is) e Horário(s) de Entrega" />
+                                                                        @elseif($campo === 'fiscais')
+                                                                            <x-form-field name="fiscais"
+                                                                                label="Fiscal(is) Indicado(s)" />
+                                                                        @elseif($campo === 'gestor')
+                                                                            <x-form-field name="gestor"
+                                                                                label="Gestor Indicado" />
+                                                                        @elseif($campo === 'contratacoes_anteriores')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Houve
+                                                                                        contratações anteriores?</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="contratacoes_anteriores"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed
+                                                                                                    .contratacoes_anteriores"
+                                                                                                :checked="contratacoes_anteriores === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="contratacoes_anteriores"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed
+                                                                                                    .contratacoes_anteriores"
+                                                                                                :checked="contratacoes_anteriores === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('contratacoes_anteriores')"
                                                                                         x-show="!confirmed.contratacoes_anteriores"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('contratacoes_anteriores')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('contratacoes_anteriores')"
                                                                                         x-show="confirmed.contratacoes_anteriores"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'objeto_continuado')
-                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                                                                            <div class="flex-1">
-                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Objeto Continuado?</span>
-                                                                                <div class="flex mt-1 space-x-4">
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="objeto_continuado" value="sim"
-                                                                                               :disabled="confirmed.objeto_continuado"
-                                                                                               :checked="objeto_continuado === 'sim'">
-                                                                                        <span class="ml-2">Sim</span>
-                                                                                    </label>
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="objeto_continuado" value="nao"
-                                                                                               :disabled="confirmed.objeto_continuado"
-                                                                                               :checked="objeto_continuado === 'nao'">
-                                                                                        <span class="ml-2">Não</span>
-                                                                                    </label>
+                                                                                        ✖
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('objeto_continuado')"
+                                                                        @elseif($campo === 'objeto_continuado')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Objeto
+                                                                                        Continuado?</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="objeto_continuado"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed
+                                                                                                    .objeto_continuado"
+                                                                                                :checked="objeto_continuado === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="objeto_continuado"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed
+                                                                                                    .objeto_continuado"
+                                                                                                :checked="objeto_continuado === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('objeto_continuado')"
                                                                                         x-show="!confirmed.objeto_continuado"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('objeto_continuado')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('objeto_continuado')"
                                                                                         x-show="confirmed.objeto_continuado"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'inversao_fase')
-                                                                        <div class="flex items-start pt-4 space-x-2 border-t border-gray-200">
-                                                                            <div class="flex-1">
-                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Documento contém inversão de fase?</span>
-                                                                                <div class="flex mt-1 space-x-4">
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="inversao_fase" value="sim"
-                                                                                               :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'sim'">
-                                                                                        <span class="ml-2">Sim</span>
-                                                                                    </label>
-                                                                                    <label class="inline-flex items-center">
-                                                                                        <input type="radio" x-model="inversao_fase" value="nao"
-                                                                                               :disabled="confirmed.inversao_fase" :checked="inversao_fase === 'nao'">
-                                                                                        <span class="ml-2">Não</span>
-                                                                                    </label>
+                                                                                        ✖
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('inversao_fase')"
+                                                                        @elseif($campo === 'inversao_fase')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Documento
+                                                                                        contém inversão de fase?</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="inversao_fase"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.inversao_fase"
+                                                                                                :checked="inversao_fase === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="inversao_fase"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.inversao_fase"
+                                                                                                :checked="inversao_fase === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('inversao_fase')"
                                                                                         x-show="!confirmed.inversao_fase"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('inversao_fase')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('inversao_fase')"
                                                                                         x-show="confirmed.inversao_fase"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'instrumento_vinculativo')
-                                                                        <div class="flex items-start space-x-2">
-                                                                            <div class="flex-1">
-                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Instrumento Vinculativo</span>
-                                                                                <div class="mt-2 space-y-2">
-                                                                                    @php
-                                                                                        $instrumentos = [
-                                                                                            'contrato' => 'Contrato',
-                                                                                            'ata_registro_precos' => 'Ata de Registro de Preços',
-                                                                                            'outro' => 'Outro',
-                                                                                        ];
-                                                                                    @endphp
-
-                                                                                    @foreach ($instrumentos as $value => $label)
-                                                                                        <div class="flex items-center">
-                                                                                            <input type="checkbox" value="{{ $value }}"
-                                                                                                   x-model="instrumento_vinculativo"
-                                                                                                   :disabled="confirmed.instrumento_vinculativo"
-                                                                                                   :checked="instrumento_vinculativo.includes('{{ $value }}')">
-                                                                                            <span class="ml-2 text-sm">{{ $label }}</span>
-                                                                                            @if ($value === 'outro')
-                                                                                                <input type="text" x-show="instrumento_vinculativo.includes('outro')"
-                                                                                                       x-model="instrumento_vinculativo_outro"
-                                                                                                       :disabled="confirmed.instrumento_vinculativo"
-                                                                                                       class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                                                                            @endif
-                                                                                        </div>
-                                                                                    @endforeach
+                                                                                        ✖
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('instrumento_vinculativo')"
+                                                                        @elseif($campo === 'instrumento_vinculativo')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Instrumento
+                                                                                        Vinculativo</span>
+                                                                                    <div class="mt-2 space-y-2">
+                                                                                        @php
+                                                                                            $instrumentos = [
+                                                                                                'contrato' =>
+                                                                                                    'Contrato',
+                                                                                                'ata_registro_precos' =>
+                                                                                                    'Ata de Registro de Preços',
+                                                                                                'outro' => 'Outro',
+                                                                                            ];
+                                                                                        @endphp
+
+                                                                                        @foreach ($instrumentos as $value => $label)
+                                                                                            <div class="flex items-center">
+                                                                                                <input type="checkbox"
+                                                                                                    value="{{ $value }}"
+                                                                                                    x-model="instrumento_vinculativo"
+                                                                                                    :disabled="confirmed
+                                                                                                        .instrumento_vinculativo"
+                                                                                                    :checked="instrumento_vinculativo
+                                                                                                        .includes(
+                                                                                                            '{{ $value }}'
+                                                                                                        )">
+                                                                                                <span
+                                                                                                    class="ml-2 text-sm">{{ $label }}</span>
+                                                                                                @if ($value === 'outro')
+                                                                                                    <input type="text"
+                                                                                                        x-show="instrumento_vinculativo.includes('outro')"
+                                                                                                        x-model="instrumento_vinculativo_outro"
+                                                                                                        :disabled="confirmed
+                                                                                                            .instrumento_vinculativo"
+                                                                                                        class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('instrumento_vinculativo')"
                                                                                         x-show="!confirmed.instrumento_vinculativo"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('instrumento_vinculativo')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('instrumento_vinculativo')"
                                                                                         x-show="confirmed.instrumento_vinculativo"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'prazo_vigencia')
-                                                                        <div class="flex items-start space-x-2">
-                                                                            <div class="flex-1">
-                                                                                <span class="block mb-1 text-sm font-medium text-gray-700">Prazo de Vigência do Objeto</span>
-                                                                                <div class="mt-2 space-y-2">
-                                                                                    @php
-                                                                                        $prazos = [
-                                                                                            'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
-                                                                                            '12_meses' => 'Vigência de 12 meses',
-                                                                                            'outro' => 'Outro',
-                                                                                        ];
-                                                                                    @endphp
-
-                                                                                    @foreach ($prazos as $value => $label)
-                                                                                        <div class="flex items-center">
-                                                                                            <input type="checkbox" value="{{ $value }}" x-model="prazo_vigencia"
-                                                                                                   :disabled="confirmed.prazo_vigencia"
-                                                                                                   :checked="prazo_vigencia.includes('{{ $value }}')">
-                                                                                            <span class="ml-2 text-sm">{{ $label }}</span>
-                                                                                            @if ($value === 'outro')
-                                                                                                <input type="text" x-show="prazo_vigencia.includes('outro')"
-                                                                                                       x-model="prazo_vigencia_outro" :disabled="confirmed.prazo_vigencia"
-                                                                                                       class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
-                                                                                            @endif
-                                                                                        </div>
-                                                                                    @endforeach
+                                                                                        ✖
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('prazo_vigencia')"
+                                                                        @elseif($campo === 'prazo_vigencia')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Prazo
+                                                                                        de Vigência do Objeto</span>
+                                                                                    <div class="mt-2 space-y-2">
+                                                                                        @php
+                                                                                            $prazos = [
+                                                                                                'exercicio_financeiro' =>
+                                                                                                    'Exercício financeiro da contratação (até 31/12)',
+                                                                                                '12_meses' =>
+                                                                                                    'Vigência de 12 meses',
+                                                                                                'outro' => 'Outro',
+                                                                                            ];
+                                                                                        @endphp
+
+                                                                                        @foreach ($prazos as $value => $label)
+                                                                                            <div class="flex items-center">
+                                                                                                <input type="checkbox"
+                                                                                                    value="{{ $value }}"
+                                                                                                    x-model="prazo_vigencia"
+                                                                                                    :disabled="confirmed
+                                                                                                        .prazo_vigencia"
+                                                                                                    :checked="prazo_vigencia
+                                                                                                        .includes(
+                                                                                                            '{{ $value }}'
+                                                                                                        )">
+                                                                                                <span
+                                                                                                    class="ml-2 text-sm">{{ $label }}</span>
+                                                                                                @if ($value === 'outro')
+                                                                                                    <input type="text"
+                                                                                                        x-show="prazo_vigencia.includes('outro')"
+                                                                                                        x-model="prazo_vigencia_outro"
+                                                                                                        :disabled="confirmed
+                                                                                                            .prazo_vigencia"
+                                                                                                        class="w-32 px-2 py-1 ml-2 text-sm border-gray-300 rounded-lg shadow-sm">
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('prazo_vigencia')"
                                                                                         x-show="!confirmed.prazo_vigencia"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('prazo_vigencia')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('prazo_vigencia')"
                                                                                         x-show="confirmed.prazo_vigencia"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-
-                                                                    @elseif($campo === 'itens_e_seus_quantitativos_xml')
-                                                                        <div class="flex items-start space-x-2">
-                                                                            <div class="flex-1">
-                                                                                <label for="itens_e_seus_quantitativos_xml"
-                                                                                    class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                    ITENS E SEUS QUANTITATIVOS (XML / Excel)
-                                                                                </label>
-                                                                                <input type="file" id="itens_e_seus_quantitativos_xml"
-                                                                                    name="itens_e_seus_quantitativos_xml" accept=".xml, .xlsx, .xls, .csv"
-                                                                                    class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
-                                                                                <p class="mt-1 text-xs text-gray-500">Selecione um arquivo XML ou Excel contendo os itens
-                                                                                    da tabela.</p>
-                                                                            </div>
-                                                                            <div class="flex pt-6 space-x-1">
-                                                                                <button type="button" @click="saveField('itens_e_seus_quantitativos_xml')"
+                                                                        @elseif($campo === 'itens_e_seus_quantitativos_xml')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="itens_e_seus_quantitativos_xml"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        ITENS E SEUS QUANTITATIVOS (XML /
+                                                                                        Excel)
+                                                                                    </label>
+                                                                                    <input type="file"
+                                                                                        id="itens_e_seus_quantitativos_xml"
+                                                                                        name="itens_e_seus_quantitativos_xml"
+                                                                                        accept=".xml, .xlsx, .xls, .csv"
+                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
+                                                                                    <p class="mt-1 text-xs text-gray-500">
+                                                                                        Selecione um arquivo XML ou Excel
+                                                                                        contendo os itens
+                                                                                        da tabela.</p>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('itens_e_seus_quantitativos_xml')"
                                                                                         x-show="!confirmed.itens_e_seus_quantitativos_xml"
                                                                                         class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                    ✔
-                                                                                </button>
-                                                                                <button type="button" @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
                                                                                         x-show="confirmed.itens_e_seus_quantitativos_xml"
                                                                                         class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                    ✖
-                                                                                </button>
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    @endif
-                                                                </div>
-                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
+                                                                @endforeach
 
-                                                            <!-- Botões de Ação -->
-                                                            <div class="flex justify-end pt-6 mt-6 space-x-3 border-t border-gray-200">
-                                                                <button type="submit"
-                                                                    class="px-6 py-2 text-sm font-medium text-white bg-[#009496] rounded-lg hover:bg-[#007a7a] transition-colors duration-200">
-                                                                    Salvar Campos deste Documento
-                                                                </button>
-                                                            </div>
-                                                        </form>
+                                                                <!-- Botões de Ação -->
+                                                                <div
+                                                                    class="flex justify-end pt-6 mt-6 space-x-3 border-t border-gray-200">
+                                                                    <button type="submit"
+                                                                        class="px-6 py-2 text-sm font-medium text-white bg-[#009496] rounded-lg hover:bg-[#007a7a] transition-colors duration-200">
+                                                                        Salvar Campos deste Documento
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     @endif
                                 @endforeach
 
@@ -973,10 +1081,19 @@
                     inversao_fase: !!existing?.inversao_fase,
                 },
 
-                // Quando a unidade é alterada
                 onUnidadeChange() {
-                    if (this.unidade_setor) {
-                        this.saveField('unidade_setor');
+                    const selectElement = document.getElementById('unidade_setor');
+                    const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                    if (selectedOption && selectedOption.value) {
+                        // Busca o servidor responsável do atributo data-responsavel
+                        const servidorResponsavel = selectedOption.getAttribute('data-responsavel');
+                        this.servidor_responsavel = servidorResponsavel || '';
+
+                        // Se você quiser salvar automaticamente quando selecionar a unidade:
+                        // this.saveField('unidade_setor');
+                    } else {
+                        this.servidor_responsavel = '';
                     }
                 },
 
@@ -996,8 +1113,15 @@
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
                         'content'));
 
+                    // Quando salvar unidade_setor, também salva o servidor_responsavel
+                    if (field === 'unidade_setor' && this.servidor_responsavel) {
+                        formData.append('servidor_responsavel', this.servidor_responsavel);
+                    }
+
                     // --- Campos do TinyMCE ---
-                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao', 'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto' ]
+                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
+                            'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto'
+                        ]
                         .includes(field)) {
                         const content = tinymce.get(field).getContent(); // pega conteúdo do editor
                         formData.append(field, content);
@@ -1043,6 +1167,10 @@
 
                         if (response.ok) {
                             this.confirmed[field] = true;
+                            // Se for unidade_setor, também marca servidor_responsavel como confirmado
+                            if (field === 'unidade_setor' && this.servidor_responsavel) {
+                                this.confirmed.servidor_responsavel = true;
+                            }
                             console.log(field + ' salvo com sucesso!');
                         } else {
                             this.confirmed[field] = false;

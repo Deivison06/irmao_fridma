@@ -11,6 +11,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
+
         @page {
             margin: 0;
             size: A4;
@@ -28,7 +35,7 @@
             background-size: cover;
         }
 
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -37,6 +44,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -47,8 +55,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -56,15 +65,14 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            width: 60%;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10 30px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         .footer-signature {
@@ -245,16 +253,37 @@
             {{ \Carbon\Carbon::parse($dataSelecionada)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-            <strong>
-                {{ $processo->prefeitura->autoridade_competente }} <br>
-                {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
-            </strong>
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
+        @endif
     </div>
-    {{-- QUEBRA DE PÁGINA --}}
-    <div class="page-break"></div>
 
 </body>
 
