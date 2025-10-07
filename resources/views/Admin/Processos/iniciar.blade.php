@@ -5,6 +5,7 @@
 
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
+
     {{-- JSON com as unidades para o JS --}}
     @php
         $unidadesData = $processo->prefeitura->unidades->map(function ($unidade) {
@@ -19,8 +20,10 @@
         const unidadesAssinantes = @json($unidadesData);
     </script>
     {{-- Fim JSON --}}
+
     <div class="py-8">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+
             <!-- Seção de Informações do Processo -->
             <div class="mb-8">
                 <div class="overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl">
@@ -105,7 +108,6 @@
                                     <td class="px-6 py-4 font-mono text-sm text-gray-900">
                                         {{ $processo->tipo_procedimento_nome }}
                                     </td>
-
                                 </tr>
                                 <tr class="bg-gray-50">
                                     <td colspan="6" class="px-6 py-4 text-sm text-gray-700">
@@ -198,6 +200,14 @@
                                                 'inversao_fase',
                                                 'solucoes_disponivel_mercado',
                                                 'incluir_requisito_cada_caso_concreto',
+                                                'solucao_escolhida',
+                                                'justificativa_solucao_escolhida',
+                                                'resultado_pretendidos',
+                                                'impacto_ambiental',
+                                                'tipo_srp',
+                                                'prevista_plano_anual',
+                                                'encaminhamento_pesquisa_preco',
+                                                'encaminhamento_doacao_orcamentaria',
                                                 'itens_e_seus_quantitativos_xml',
                                             ],
                                         ],
@@ -257,7 +267,6 @@
                                         $documentoGerado = $processo->documentos
                                             ->where('tipo_documento', $tipo)
                                             ->first();
-                                        // Definindo um ID único para o acordeão
                                         $accordionId = "accordion-collapse-{$tipo}";
                                     @endphp
 
@@ -307,8 +316,7 @@
                                                         aria-label="Baixar documento">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            aria-hidden="true">
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                                             <polyline points="7 10 12 15 17 10"></polyline>
                                                             <line x1="12" y1="15" x2="12"
@@ -322,7 +330,7 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round" aria-hidden="true">
+                                                            stroke-linejoin="round">
                                                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                                             <polyline points="7 10 12 15 17 10"></polyline>
                                                             <line x1="12" y1="15" x2="12"
@@ -345,7 +353,7 @@
                                                         <!-- Seção de Assinantes -->
                                                         <div class="pb-4 mb-6 border-b border-gray-200">
                                                             <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
-                                                                Assinantes (Unidade e Responsável)</h4>
+                                                                Assinantes</h4>
 
                                                             <div id="assinantes-container-{{ $tipo }}">
                                                                 <div class="flex items-center mb-3 space-x-2">
@@ -365,7 +373,7 @@
                                                                         </select>
                                                                     </div>
 
-                                                                    {{-- Input do Responsável (Exibição) --}}
+                                                                    {{-- Input do Responsável --}}
                                                                     <div class="flex-1">
                                                                         <label class="sr-only">Responsável</label>
                                                                         <input type="text"
@@ -376,7 +384,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            {{-- Botão de Adicionar --}}
                                                             <button type="button"
                                                                 onclick="adicionarAssinante('{{ $tipo }}')"
                                                                 class="px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
@@ -398,7 +405,7 @@
 
                                                                 @foreach ($doc['campos'] as $campo)
                                                                     <div
-                                                                        class="p-3 bg-white border border-gray-200 rounded-lg">
+                                                                        class="p-3 mb-3 bg-white border border-gray-200 rounded-lg">
                                                                         @if ($campo === 'secretaria')
                                                                             <x-form-field name="secretaria"
                                                                                 label="Secretaria" />
@@ -476,16 +483,217 @@
                                                                                 name="descricao_necessidade_autorizacao"
                                                                                 label="DESCRIÇÃO DA NECESSIDADE DE AUTORIZAÇÃO"
                                                                                 type="textarea" />
+                                                                        @elseif($campo === 'incluir_requisito_cada_caso_concreto')
+                                                                            <x-form-field
+                                                                                name="incluir_requisito_cada_caso_concreto"
+                                                                                label="REQUISITOS REFERENTES A CADA CASO CONCRETO"
+                                                                                type="textarea" />
                                                                         @elseif($campo === 'solucoes_disponivel_mercado')
                                                                             <x-form-field
                                                                                 name="solucoes_disponivel_mercado"
                                                                                 label="SOLUÇÕES DISPONÍVEIS NO MERCADO"
                                                                                 type="textarea" />
-                                                                        @elseif($campo === 'incluir_requisito_cada_caso_concreto')
+                                                                        @elseif($campo === 'solucao_escolhida')
+                                                                            <x-form-field name="solucao_escolhida"
+                                                                                label="SOLUÇÃO ESCOLHIDA" />
+                                                                        @elseif($campo === 'justificativa_solucao_escolhida')
                                                                             <x-form-field
-                                                                                name="incluir_requisito_cada_caso_concreto"
-                                                                                label="INCLUIR REQUISITOS REFERENTES A CADA CASO CONCRETO"
+                                                                                name="justificativa_solucao_escolhida"
+                                                                                label="JUSTIFICATIVA DA SOLUÇÃO ESCOLHIDA"
                                                                                 type="textarea" />
+                                                                        @elseif($campo === 'resultado_pretendidos')
+                                                                            <x-form-field name="resultado_pretendidos"
+                                                                                label="RESULTADOS PRETENDIDOS"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'impacto_ambiental')
+                                                                            <x-form-field name="impacto_ambiental"
+                                                                                label="IMPACTOS AMBIENTAIS"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'tipo_srp')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Esse
+                                                                                        Processo é do tipo SRP?</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="tipo_srp"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.tipo_srp"
+                                                                                                :checked="tipo_srp === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="tipo_srp"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.tipo_srp"
+                                                                                                :checked="tipo_srp === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('tipo_srp')"
+                                                                                        x-show="!confirmed.tipo_srp"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('tipo_srp')"
+                                                                                        x-show="confirmed.tipo_srp"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'prevista_plano_anual')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        A CONTRATAÇÃO ESTÁ PREVISTA NO PLANO
+                                                                                        DE CONTRATAÇÃO ANUAL?
+                                                                                    </span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="prevista_plano_anual"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed
+                                                                                                    .prevista_plano_anual"
+                                                                                                :checked="prevista_plano_anual === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="prevista_plano_anual"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed
+                                                                                                    .prevista_plano_anual"
+                                                                                                :checked="prevista_plano_anual === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('prevista_plano_anual')"
+                                                                                        x-show="!confirmed.prevista_plano_anual"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('prevista_plano_anual')"
+                                                                                        x-show="confirmed.prevista_plano_anual"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'encaminhamento_pesquisa_preco')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="encaminhamento_pesquisa_preco"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Encaminhamento para pesquisa de
+                                                                                        Preços
+                                                                                    </label>
+                                                                                    <select
+                                                                                        id="encaminhamento_pesquisa_preco"
+                                                                                        x-model="encaminhamento_pesquisa_preco"
+                                                                                        @change="onUnidadeChange"
+                                                                                        :disabled="confirmed
+                                                                                            .encaminhamento_pesquisa_preco"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                {{ ($processo->detalhe->encaminhamento_pesquisa_preco ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('encaminhamento_pesquisa_preco')"
+                                                                                        x-show="!confirmed.encaminhamento_pesquisa_preco"
+                                                                                        :disabled="!encaminhamento_pesquisa_preco"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!encaminhamento_pesquisa_preco ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('encaminhamento_pesquisa_preco')"
+                                                                                        x-show="confirmed.encaminhamento_pesquisa_preco"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'encaminhamento_doacao_orcamentaria')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="encaminhamento_doacao_orcamentaria"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Encaminhamento para doação
+                                                                                        orçamentária
+                                                                                    </label>
+                                                                                    <select
+                                                                                        id="encaminhamento_doacao_orcamentaria"
+                                                                                        x-model="encaminhamento_doacao_orcamentaria"
+                                                                                        :disabled="confirmed
+                                                                                            .encaminhamento_doacao_orcamentaria"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                {{ ($processo->detalhe->encaminhamento_doacao_orcamentaria ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('encaminhamento_doacao_orcamentaria')"
+                                                                                        x-show="!confirmed.encaminhamento_doacao_orcamentaria"
+                                                                                        :disabled="!
+                                                                                        encaminhamento_doacao_orcamentaria"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!
+                                                                                        encaminhamento_doacao_orcamentaria
+                                                                                            ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('encaminhamento_doacao_orcamentaria')"
+                                                                                        x-show="confirmed.encaminhamento_doacao_orcamentaria"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
                                                                         @elseif($campo === 'problema_resolvido')
                                                                             <x-form-field name="problema_resolvido"
                                                                                 label="Problema Resumido" />
@@ -672,7 +880,7 @@
                                                                                                     :checked="instrumento_vinculativo
                                                                                                         .includes(
                                                                                                             '{{ $value }}'
-                                                                                                        )">
+                                                                                                            )">
                                                                                                 <span
                                                                                                     class="ml-2 text-sm">{{ $label }}</span>
                                                                                                 @if ($value === 'outro')
@@ -729,7 +937,7 @@
                                                                                                     :checked="prazo_vigencia
                                                                                                         .includes(
                                                                                                             '{{ $value }}'
-                                                                                                        )">
+                                                                                                            )">
                                                                                                 <span
                                                                                                     class="ml-2 text-sm">{{ $label }}</span>
                                                                                                 @if ($value === 'outro')
@@ -775,8 +983,8 @@
                                                                                         class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
                                                                                     <p class="mt-1 text-xs text-gray-500">
                                                                                         Selecione um arquivo XML ou Excel
-                                                                                        contendo os itens
-                                                                                        da tabela.</p>
+                                                                                        contendo os itens da tabela.
+                                                                                    </p>
                                                                                 </div>
                                                                                 <div class="flex pt-6 space-x-1">
                                                                                     <button type="button"
@@ -813,83 +1021,10 @@
                                         </tr>
                                     @endif
                                 @endforeach
-
-                                <script>
-                                    // Inicialização da funcionalidade de acordeão
-                                    document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
-                                        button.addEventListener('click', () => {
-                                            const targetId = button.getAttribute('data-collapse-toggle');
-                                            const targetEl = document.getElementById(targetId);
-                                            const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                                            const span = button.querySelector('.collapse-text');
-
-                                            if (isExpanded) {
-                                                targetEl.classList.add('hidden');
-                                                button.setAttribute('aria-expanded', 'false');
-                                                span.textContent = 'Definir Campos e Assinantes';
-                                            } else {
-                                                targetEl.classList.remove('hidden');
-                                                button.setAttribute('aria-expanded', 'true');
-                                                span.textContent = 'Ocultar Campos e Assinantes';
-                                            }
-                                        });
-                                    });
-
-                                    // Funções para gerenciar assinantes
-                                    function adicionarAssinante(tipoDocumento) {
-                                        const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
-                                        const novoAssinante = document.createElement('div');
-                                        novoAssinante.className = 'flex items-center mb-3 space-x-2';
-                                        novoAssinante.innerHTML = `
-                                            <div class="flex-1">
-                                                <label class="sr-only">Unidade</label>
-                                                <select name="assinante_unidade[]"
-                                                        class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
-                                                        onchange="updateResponsavel(this, '${tipoDocumento}')">
-                                                    <option value="">Selecione a Unidade</option>
-                                                    @foreach ($processo->prefeitura->unidades as $unidade)
-                                                        <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="flex-1">
-                                                <label class="sr-only">Responsável</label>
-                                                <input type="text" name="assinante_responsavel[]"
-                                                       placeholder="Nome do Responsável" readonly
-                                                       class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
-                                            </div>
-                                            <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
-                                                    class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
-                                                🗑
-                                            </button>
-                                        `;
-                                        container.appendChild(novoAssinante);
-                                    }
-
-                                    function removerAssinante(botao, tipoDocumento) {
-                                        const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
-                                        const assinantes = container.querySelectorAll('.flex.items-center');
-                                        if (assinantes.length > 1) {
-                                            botao.closest('.flex.items-center').remove();
-                                        }
-                                    }
-
-                                    function updateResponsavel(select, tipoDocumento) {
-                                        const selectedUnidadeId = select.value;
-                                        const selectedUnidade = unidadesAssinantes.find(u => u.id == selectedUnidadeId);
-                                        const responsavelInput = select.closest('.flex.items-center').querySelector('.responsavel-input');
-
-                                        if (responsavelInput && selectedUnidade) {
-                                            responsavelInput.value = selectedUnidade.servidor_responsavel;
-                                        } else if (responsavelInput) {
-                                            responsavelInput.value = '';
-                                        }
-                                    }
-                                </script>
                             </tbody>
                         </table>
 
-                        <!-- Botão para Baixar Todos os PDFs em um único arquivo -->
+                        <!-- Botão para Baixar Todos os PDFs -->
                         <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
                             <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}"
                                 class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
@@ -897,24 +1032,94 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
+        // Inicialização do TinyMCE
         tinymce.init({
-            selector: 'textarea', // aplica em todos os <textarea>
+            selector: 'textarea',
             plugins: 'lists link table code charmap emoticons',
             toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
             menubar: false,
-            branding: false, // remove "Powered by Tiny"
+            branding: false,
             height: 300
         });
-        // Função auxiliar para obter os dados dos assinantes
 
+        // Inicialização da funcionalidade de acordeão
+        document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-collapse-toggle');
+                const targetEl = document.getElementById(targetId);
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                const span = button.querySelector('.collapse-text');
+
+                if (isExpanded) {
+                    targetEl.classList.add('hidden');
+                    button.setAttribute('aria-expanded', 'false');
+                    span.textContent = 'Definir Campos e Assinantes';
+                } else {
+                    targetEl.classList.remove('hidden');
+                    button.setAttribute('aria-expanded', 'true');
+                    span.textContent = 'Ocultar Campos e Assinantes';
+                }
+            });
+        });
+
+        // Funções para gerenciar assinantes
+        function adicionarAssinante(tipoDocumento) {
+            const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
+            const novoAssinante = document.createElement('div');
+            novoAssinante.className = 'flex items-center mb-3 space-x-2';
+            novoAssinante.innerHTML = `
+                <div class="flex-1">
+                    <label class="sr-only">Unidade</label>
+                    <select name="assinante_unidade[]"
+                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
+                            onchange="updateResponsavel(this, '${tipoDocumento}')">
+                        <option value="">Selecione a Unidade</option>
+                        @foreach ($processo->prefeitura->unidades as $unidade)
+                            <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex-1">
+                    <label class="sr-only">Responsável</label>
+                    <input type="text" name="assinante_responsavel[]"
+                           placeholder="Nome do Responsável" readonly
+                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                </div>
+                <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
+                        class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    🗑
+                </button>
+            `;
+            container.appendChild(novoAssinante);
+        }
+
+        function removerAssinante(botao, tipoDocumento) {
+            const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
+            const assinantes = container.querySelectorAll('.flex.items-center');
+            if (assinantes.length > 1) {
+                botao.closest('.flex.items-center').remove();
+            }
+        }
+
+        function updateResponsavel(select, tipoDocumento) {
+            const selectedUnidadeId = select.value;
+            const selectedUnidade = unidadesAssinantes.find(u => u.id == selectedUnidadeId);
+            const responsavelInput = select.closest('.flex.items-center').querySelector('.responsavel-input');
+
+            if (responsavelInput && selectedUnidade) {
+                responsavelInput.value = selectedUnidade.servidor_responsavel;
+            } else if (responsavelInput) {
+                responsavelInput.value = '';
+            }
+        }
+
+        // Função auxiliar para obter os dados dos assinantes
         function getAssinantes(tipoDocumento) {
             const selects = document.querySelectorAll(
                 `#accordion-content-${tipoDocumento} select[name="assinante_unidade[]"]`);
@@ -922,7 +1127,6 @@
             selects.forEach(select => {
                 const selectedOption = select.options[select.selectedIndex];
                 if (selectedOption.value) {
-                    // value é o ID da Unidade
                     const unidade = unidadesAssinantes.find(u => u.id == select.value);
                     if (unidade) {
                         assinantes.push({
@@ -937,11 +1141,7 @@
         }
 
         /**
-         * Gera o PDF via AJAX, incluindo a data e a lista de assinantes.
-         * @param {string} processoId - O ID do processo.
-         * @param {string} documento - O tipo do documento a ser gerado.
-         * @param {string} data - A data selecionada no campo de data.
-         * @param {Event} event - O objeto evento (obrigatório para referenciar o botão).
+         * Gera o PDF via AJAX
          */
         function gerarPdf(processoId, documento, data, event) {
             if (!data) {
@@ -949,22 +1149,16 @@
                 return;
             }
 
-            // 1. Coletar os Assinantes
             const assinantes = getAssinantes(documento);
-
-            // 2. Converte o array de objetos 'assinantes' para JSON e Codifica para a URL
             const assinantesJson = JSON.stringify(assinantes);
             const assinantesEncoded = encodeURIComponent(assinantesJson);
 
-            // 3. Monta a URL com os novos parâmetros (assinantes incluídos)
             let url = `/admin/processos/${processoId}/pdf?documento=${documento}&data=${data}`;
 
             if (assinantes.length > 0) {
                 url += `&assinantes=${assinantesEncoded}`;
             }
 
-            // 4. Mostrar loading (usando event.currentTarget)
-            // ATENÇÃO: É necessário que o 'event' seja passado na chamada HTML do botão.
             const button = event.currentTarget;
             const originalText = button.textContent;
 
@@ -972,7 +1166,6 @@
             button.disabled = true;
 
             fetch(url, {
-                    // Mantém as configurações originais do usuário
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -982,7 +1175,6 @@
                 .then(data => {
                     if (data.success) {
                         showMessage(data.message, 'success');
-                        // Recarregar a página para atualizar os botões de download
                         setTimeout(() => {
                             window.location.reload();
                         }, 2000);
@@ -994,7 +1186,6 @@
                     showMessage('Erro ao gerar PDF: ' + error, 'error');
                 })
                 .finally(() => {
-                    // Volta o texto original do botão e reativa
                     button.textContent = originalText;
                     button.disabled = false;
                 });
@@ -1014,13 +1205,12 @@
                 </div>
             `;
 
-            // Auto-remover após 5 segundos
             setTimeout(() => {
                 container.innerHTML = '';
             }, 5000);
         }
 
-
+        // Alpine.js Component
         function formField(existing = {}) {
             return {
                 // Campos do formulário
@@ -1051,6 +1241,14 @@
                 alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
                 problema_resolvido: existing?.problema_resolvido ?? '',
                 inversao_fase: existing?.inversao_fase ?? '',
+                solucao_escolhida: existing?.solucao_escolhida ?? '',
+                justificativa_solucao_escolhida: existing?.justificativa_solucao_escolhida ?? '',
+                impacto_ambiental: existing?.impacto_ambiental ?? '',
+                resultado_pretendidos: existing?.resultado_pretendidos ?? '',
+                tipo_srp: existing?.tipo_srp ?? '',
+                encaminhamento_pesquisa_preco: existing?.encaminhamento_pesquisa_preco ?? '',
+                encaminhamento_doacao_orcamentaria: existing?.encaminhamento_doacao_orcamentaria ?? '',
+                prevista_plano_anual: existing?.prevista_plano_anual ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -1079,6 +1277,14 @@
                     alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
                     problema_resolvido: !!existing?.problema_resolvido,
                     inversao_fase: !!existing?.inversao_fase,
+                    solucao_escolhida: !!existing?.solucao_escolhida,
+                    justificativa_solucao_escolhida: !!existing?.justificativa_solucao_escolhida,
+                    impacto_ambiental: !!existing?.impacto_ambiental,
+                    resultado_pretendidos: !!existing?.resultado_pretendidos,
+                    tipo_srp: !!existing?.tipo_srp,
+                    encaminhamento_pesquisa_preco: !!existing?.encaminhamento_pesquisa_preco,
+                    encaminhamento_doacao_orcamentaria: !!existing?.encaminhamento_doacao_orcamentaria,
+                    prevista_plano_anual: !!existing?.prevista_plano_anual,
                 },
 
                 onUnidadeChange() {
@@ -1086,12 +1292,8 @@
                     const selectedOption = selectElement.options[selectElement.selectedIndex];
 
                     if (selectedOption && selectedOption.value) {
-                        // Busca o servidor responsável do atributo data-responsavel
                         const servidorResponsavel = selectedOption.getAttribute('data-responsavel');
                         this.servidor_responsavel = servidorResponsavel || '';
-
-                        // Se você quiser salvar automaticamente quando selecionar a unidade:
-                        // this.saveField('unidade_setor');
                     } else {
                         this.servidor_responsavel = '';
                     }
@@ -1111,29 +1313,33 @@
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content'));
+                    'content'));
 
                     // Quando salvar unidade_setor, também salva o servidor_responsavel
                     if (field === 'unidade_setor' && this.servidor_responsavel) {
                         formData.append('servidor_responsavel', this.servidor_responsavel);
                     }
 
-                    // --- Campos do TinyMCE ---
-                    if (['demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
-                            'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto'
-                        ]
-                        .includes(field)) {
-                        const content = tinymce.get(field).getContent(); // pega conteúdo do editor
+                    // Campos do TinyMCE
+                    const tinyMceFields = [
+                        'demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
+                        'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
+                        'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos'
+                    ];
+
+                    if (tinyMceFields.includes(field)) {
+                        const editor = tinymce.get(field);
+                        const content = editor ? editor.getContent() : this[field];
                         formData.append(field, content);
                     }
-                    // --- Arquivos ---
+                    // Arquivos
                     else if (field === 'itens_e_seus_quantitativos_xml') {
                         const fileInput = document.getElementById('itens_e_seus_quantitativos_xml');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }
                     }
-                    // --- Arrays ---
+                    // Arrays
                     else if (Array.isArray(this[field])) {
                         if (this[field].length === 0) {
                             formData.append(field, '');
@@ -1148,7 +1354,7 @@
                             formData.append('prazo_vigencia_outro', this.prazo_vigencia_outro);
                         }
                     }
-                    // --- Campos normais ---
+                    // Campos normais
                     else {
                         formData.append(field, this[field]);
                     }
@@ -1167,7 +1373,6 @@
 
                         if (response.ok) {
                             this.confirmed[field] = true;
-                            // Se for unidade_setor, também marca servidor_responsavel como confirmado
                             if (field === 'unidade_setor' && this.servidor_responsavel) {
                                 this.confirmed.servidor_responsavel = true;
                             }
