@@ -40,6 +40,13 @@ class ProcessoDetalhe extends Model
         'descricao_necessidade_autorizacao',
         'solucoes_disponivel_mercado',
         'incluir_requisito_cada_caso_concreto',
+        'solucao_escolhida',
+        'justificativa_solucao_escolhida',
+        'impacto_ambiental',
+        'tipo_srp',
+        'prevista_plano_anual',
+        'encaminhamento_pesquisa_preco',
+        'encaminhamento_doacao_orcamentaria',
     ];
 
     protected $casts = [

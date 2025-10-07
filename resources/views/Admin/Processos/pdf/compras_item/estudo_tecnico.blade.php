@@ -468,11 +468,12 @@
         <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {{ $processo->objeto }} da
             {{ $processo->prefeitura->nome }}: </p>
 
-        {!! str_replace(
-            '<p>',
-            '<p style="text-indent:30px; text-align: justify;">',
+        {!! preg_replace(
+            '/<p([^>]*)>/i',
+            '<p$1 style="text-indent:30px; text-align: justify;">',
             $detalhe->solucoes_disponivel_mercado,
         ) !!}
+
 
         <p style=" text-indent: 30px;">
             Cada solução apresenta características diferentes em relação a custo, eficiência e
@@ -487,11 +488,16 @@
         </div>
 
         <p style=" text-indent: 30px;">
-            A escolha pela XXXXXXXXXXXXXXXXXXX é fundamentada em diversos aspectos técnicos
+            A escolha pela <strong>{{ $detalhe->solucao_escolhida }}</strong> é fundamentada em diversos aspectos
+            técnicos
             e operacionais que atendem às necessidades específicas do município.
         </p>
 
-        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
+        {!! str_replace(
+            '<p>',
+            '<p style="text-indent:30px; text-align: justify;">',
+            $detalhe->justificativa_solucao_escolhida,
+        ) !!}
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
@@ -623,10 +629,11 @@
             RESULTADOS PRETENDIDOS
         </div>
 
-        <p style="font-size: 12; text-indent: 30px;">Com a futura contratação o resultado esperado é que
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
-        </p>
+        {!! preg_replace(
+            '/<p([^>]*)>/i',
+            '<p$1 style="text-indent:30px; text-align: justify;">',
+            $detalhe->resultado_pretendidos,
+        ) !!}
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
@@ -641,11 +648,14 @@
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
-            CONTRATAÇÕES CORRELATAS
+            IMPACTOS AMBIENTAIS
         </div>
 
-        <p style="color: red; font-size:14px;">PESQUISAR IMPACTOS AMBIENTAIS QUE PODEM SER CAUSADOS PELO FORNECIMENTO
-        </p>
+        {!! preg_replace(
+            '/<p([^>]*)>/i',
+            '<p$1 style="text-indent:30px; text-align: justify;">',
+            $detalhe->impacto_ambiental,
+        ) !!}
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
@@ -658,80 +668,86 @@
             que a contratação em questão é PLENAMENTE VIÁVEL.
         </p>
 
-        <p style="color: red; ">Recomendamos a adoção do <strong>Registro de Preços</strong> é a solução mais vantajosa
-            para a Administração,
-            assegurando eficiência, economicidade e transparência, em conformidade com a legislação vigente
-            e com as necessidades do Município.</p>
-        <p style="color: red; ">A opção pelo Sistema de Registro de Preços (SRP), previsto no art. 82 e seguintes da
-            Lei nº
-            14.133/2021, revela-se a mais adequada para o presente objeto, considerando os seguintes
-            aspectos:
-        </p>
+        @if ($detalhe->tipo_srp == 'sim')
+            <p >Recomendamos a adoção do <strong>Registro de Preços</strong> é a solução mais
+                vantajosa
+                para a Administração,
+                assegurando eficiência, economicidade e transparência, em conformidade com a legislação vigente
+                e com as necessidades do Município.</p>
+            <p >A opção pelo Sistema de Registro de Preços (SRP), previsto no art. 82 e seguintes
+                da
+                Lei nº
+                14.133/2021, revela-se a mais adequada para o presente objeto, considerando os seguintes
+                aspectos:
+            </p>
 
-        <ol style="margin-left: 30px;">
-            <li style="color: red;">
-                <strong>Natureza da demanda: </strong>Trata-se de contratação cujo consumo é frequente e necessário
-                em diversas unidades da Administração, mas com <strong>quantidade e periodicidade incertas</strong>,
-                o que inviabiliza uma contratação de fornecimento único e imediato.
-            </li>
-            <li style="color: red;">
-                <strong>Racionalização administrativa: </strong>O SRP possibilita que a Administração registre preços
-                previamente, garantindo maior <strong>agilidade e eficiência</strong> nas contratações futuras,
-                eliminando
-                a necessidade de instaurar múltiplos processos licitatórios para atender demandas de
-                mesmo objeto.
-            </li>
-            <li style="color: red;">
-                <strong>Economicidade e vantajosidade: </strong>A sistemática permite maior competitividade e obtenção
-                de preços mais vantajosos, além de possibilitar adesões futuras e ganhos de escala, em
-                conformidade com os princípios da economicidade e eficiência.
-            </li>
-            <li style="color: red;">
-                <strong>Atendimento descentralizado: </strong>O SRP assegura o atendimento de diversas secretarias e
-                órgãos do Município, de forma planejada e organizada, garantindo padronização do objeto
-                e segurança na contratação.
-            </li>
-            <li style="color: red;">
-                <strong>Interesse público: </strong>A medida evita desabastecimento, permite atender prontamente
-                situações de necessidade e contribui para a boa continuidade dos serviços públicos.
-            </li>
-        </ol>
+            <ol style="margin-left: 30px;">
+                <li >
+                    <strong>Natureza da demanda: </strong>Trata-se de contratação cujo consumo é frequente e necessário
+                    em diversas unidades da Administração, mas com <strong>quantidade e periodicidade incertas</strong>,
+                    o que inviabiliza uma contratação de fornecimento único e imediato.
+                </li>
+                <li >
+                    <strong>Racionalização administrativa: </strong>O SRP possibilita que a Administração registre
+                    preços
+                    previamente, garantindo maior <strong>agilidade e eficiência</strong> nas contratações futuras,
+                    eliminando
+                    a necessidade de instaurar múltiplos processos licitatórios para atender demandas de
+                    mesmo objeto.
+                </li>
+                <li >
+                    <strong>Economicidade e vantajosidade: </strong>A sistemática permite maior competitividade e
+                    obtenção
+                    de preços mais vantajosos, além de possibilitar adesões futuras e ganhos de escala, em
+                    conformidade com os princípios da economicidade e eficiência.
+                </li>
+                <li >
+                    <strong>Atendimento descentralizado: </strong>O SRP assegura o atendimento de diversas secretarias e
+                    órgãos do Município, de forma planejada e organizada, garantindo padronização do objeto
+                    e segurança na contratação.
+                </li>
+                <li >
+                    <strong>Interesse público: </strong>A medida evita desabastecimento, permite atender prontamente
+                    situações de necessidade e contribui para a boa continuidade dos serviços públicos.
+                </li>
+            </ol>
 
-        {{-- Bloco de data e assinatura --}}
-        <div class="footer-signature">
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
-            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-        </div>
+            {{-- Bloco de data e assinatura --}}
+            <div class="footer-signature">
+                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+                {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+            </div>
 
-        @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-        @endphp
-
-        @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
             @php
-                $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
+                // Verifica se a variável $assinantes existe e tem itens
+                $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
             @endphp
 
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+            @if ($hasSelectedAssinantes)
+                {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+                @php
+                    $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
+                @endphp
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                        ___________________________________<br>
+                        <p style="font-size: 10pt; line-height: 1.2;">
+                            {{ $primeiroAssinante['responsavel'] }} <br>
+                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        </p>
+                    </div>
+                </div>
+            @else
+                {{-- Bloco Padrão (Fallback) --}}
+                <div class="signature-block" style="margin-top: 40px; text-align: center;">
                     ___________________________________<br>
                     <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        {{ $processo->prefeitura->autoridade_competente }} <br>
+                        <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                     </p>
                 </div>
-            </div>
-        @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
-                ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
-                </p>
-            </div>
+            @endif
         @endif
     </div>
 
@@ -745,7 +761,8 @@
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
         <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
-            {{ $processo->objeto }}, de forma a melhor atender as necessidades do município de {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
+            {{ $processo->objeto }}, de forma a melhor atender as necessidades do município de
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
         <div style="text-indent: 30px; text-align: justify;">
@@ -1783,55 +1800,58 @@
     {{-- BLOCO 7: ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL (PCA) --}}
     {{-- ====================================================================== --}}
     <div id="alinhamento-pca">
-        <p style="text-align: center; font-size:16px; font-weight: 700;">ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL
-            (PCA) </p>
+        <p style="text-align: center; font-size:16px; font-weight: 700;">ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL (PCA) </p>
         <p style="text-align: center; font-size:14px; font-weight: 700;">DECLARAÇÃO</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
-        <p>
-            Declaro, para os devidos fins, que a presente demanda referente à <strong>{{ $processo->objeto }}</strong>
-            encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
-                [ano]</strong>,
-            elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
-            outro normativo vigente que disciplina a matéria.
-        </p>
-        <p>
-            A previsão no PAC assegura o adequado planejamento da contratação, alinhado às diretrizes estratégicas
-            da Administração, em conformidade com os princípios da eficiência, economicidade e transparência,
-            garantindo a vinculação desta demanda às metas e prioridades da gestão municipal.
-        </p>
-
-        <p style="font-size:16px; font-weight: 700; color:red; text-align: center;">OU</p>
-        <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
-            motivo(s): </p>
-        <div style="border: 1px solid black; padding: 10px;">
-            <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
-            <p style="text-indent: 30px;">
-                É importante ressaltar que a ausência de um plano de contratações anual no município de
-                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} se deve a uma
-                série de fatores que limitaram a sua implementação até o momento. Embora
-                a legislação (Artigo 12, VII, da Lei nº 14.133) estabeleça a obrigatoriedade de um plano de contratações
-                anual, é necessário considerar as circunstâncias específicas que podem justificar a sua ausência
-                temporária.
+        @if ($detalhe->prevista_plano_anual == 'sim')
+            <p>
+                Declaro, para os devidos fins, que a presente demanda referente à
+                <strong>{{ $processo->objeto }}</strong>
+                encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
+                    [ano]</strong>,
+                elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
+                outro normativo vigente que disciplina a matéria.
             </p>
-            <p style="text-indent: 30px;">
-                Um dos principais fatores que contribuíram para a falta do plano de contratações anual foi a
-                escassez de técnicos disponíveis para a elaboração do referido plano.
-            </p>
-            <p style="text-indent: 30px;">
-                Entretanto, é importante ressaltar que o município está tomando medidas para resolver essa
-                situação, é válido ressaltar que a elaboração de um plano de contratações anual demanda tempo e
-                esforço, pois é necessário um levantamento minucioso das necessidades da Administração Municipal,
-                bem como a análise de fornecedores e a definição de critérios claros para a contratação.
-            </p>
-            <p style="text-indent: 30px;">
-                A {{ $processo->prefeitura->nome }}, compromete-se a observar as disposições da Lei
-                Federal n° 14.133/21 e a empenhar todos os esforções necessários para a elaboração e atualização
-                periódica do Plano de Contratação Anual, garantindo total transparência e conformidade com as normas
-                estabelecidas.
+            <p>
+                A previsão no PAC assegura o adequado planejamento da contratação, alinhado às diretrizes estratégicas
+                da Administração, em conformidade com os princípios da eficiência, economicidade e transparência,
+                garantindo a vinculação desta demanda às metas e prioridades da gestão municipal.
             </p>
 
-        </div>
+            <p style="font-size:16px; font-weight: 700; color:red; text-align: center;">OU</p>
+        @else
+            <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
+                motivo(s): </p>
+            <div style="border: 1px solid black; padding: 10px;">
+                <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
+                <p style="text-indent: 30px;">
+                    É importante ressaltar que a ausência de um plano de contratações anual no município de
+                    {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} se deve a uma
+                    série de fatores que limitaram a sua implementação até o momento. Embora
+                    a legislação (Artigo 12, VII, da Lei nº 14.133) estabeleça a obrigatoriedade de um plano de
+                    contratações
+                    anual, é necessário considerar as circunstâncias específicas que podem justificar a sua ausência
+                    temporária.
+                </p>
+                <p style="text-indent: 30px;">
+                    Um dos principais fatores que contribuíram para a falta do plano de contratações anual foi a
+                    escassez de técnicos disponíveis para a elaboração do referido plano.
+                </p>
+                <p style="text-indent: 30px;">
+                    Entretanto, é importante ressaltar que o município está tomando medidas para resolver essa
+                    situação, é válido ressaltar que a elaboração de um plano de contratações anual demanda tempo e
+                    esforço, pois é necessário um levantamento minucioso das necessidades da Administração Municipal,
+                    bem como a análise de fornecedores e a definição de critérios claros para a contratação.
+                </p>
+                <p style="text-indent: 30px;">
+                    A {{ $processo->prefeitura->nome }}, compromete-se a observar as disposições da Lei
+                    Federal n° 14.133/21 e a empenhar todos os esforções necessários para a elaboração e atualização
+                    periódica do Plano de Contratação Anual, garantindo total transparência e conformidade com as normas
+                    estabelecidas.
+                </p>
 
+            </div>
+        @endif
         <p
             style="text-align: center; font-size:16px; font-weight: 700; border: 1px solid black; padding: 10px; background:#dadada; margin-top:20px;">
             ENCAMINHAMENTO PARA ÓRGÃO DEMANDANTE
@@ -1884,7 +1904,7 @@
         <div class="page-break"></div>
 
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -1942,8 +1962,8 @@
             alinhada com os instrumentos de planejamento e que o objeto que não contém classificação
             direcionada à marca ou empresa e nem possui características de luxo determino:
         </p>
-        <p> Encaminhe-se à XXXXXXX para a REALIZAÇÃO DE PESQUISA DE PREÇOS. </p>
-        <p>Encaminhe-se à XXXXXXX para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA
+        <p> Encaminhe-se à {{ $detalhe->encaminhamento_pesquisa_preco }} para a REALIZAÇÃO DE PESQUISA DE PREÇOS. </p>
+        <p>Encaminhe-se à {{ $detalhe->encaminhamento_doacao_orcamentaria }} para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA
             EXISTENTE.
         </p>
         <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
