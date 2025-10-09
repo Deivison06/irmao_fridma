@@ -49,6 +49,12 @@ class ProcessoDetalhe extends Model
         'encaminhamento_doacao_orcamentaria',
         'painel_preco_tce',
         'anexo_pdf_analise_mercado',
+
+        'encaminhamento_elaborar_editais',
+        'encaminhamento_parecer_juridico',
+        'encaminhamento_autorizacao_abertura',
+        'valor_estimado',
+        'portaria_agente_equipe_pdf',
     ];
 
     protected $casts = [

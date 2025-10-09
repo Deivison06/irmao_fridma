@@ -75,6 +75,31 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            {{-- Nº PORTARIA --}}
+                            <div>
+                                <label for="numero_portaria" class="block text-sm font-medium text-gray-700">Nº da
+                                    Portaria</label>
+                                <input type="text" name="numero_portaria" id="numero_portaria"
+                                    value="{{ old('numero_portaria') }}"
+                                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                                @error('numero_portaria')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- DATA DA PORTARIA --}}
+                            <div>
+                                <label for="data_portaria" class="block text-sm font-medium text-gray-700">Data da
+                                    Portaria</label>
+                                <input type="date" name="data_portaria" id="data_portaria"
+                                    value="{{ old('data_portaria') }}"
+                                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                                @error('data_portaria')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             {{-- TIPO DE PROCEDIMENTO --}}
                             <div>
                                 <label for="tipo_procedimento" class="block mb-1 text-sm font-medium text-gray-700">

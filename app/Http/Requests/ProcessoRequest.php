@@ -28,6 +28,8 @@ class ProcessoRequest extends FormRequest
             'prefeitura_id' => 'required|exists:prefeituras,id',
             'modalidade' => 'required|integer|in:' . implode(',', ModalidadeEnum::values()),
             'numero_processo' => 'required|string|max:10',
+            'numero_portaria' => 'required|string|max:20',
+            'data_portaria' => 'required|date',
             'numero_procedimento' => 'required|string|max:10',
             'objeto' => 'required|string',
             'tipo_procedimento' => ['nullable', 'int' , new Enum(TipoProcedimentoEnum::class)], // 1 para SERVIÇOS, 2 para COMPRAS

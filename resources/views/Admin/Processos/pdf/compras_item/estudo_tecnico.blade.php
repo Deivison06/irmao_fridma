@@ -212,7 +212,7 @@
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Unidade
                                     Requisitante</div>
                                 <div style="">
-                                    {{ $detalhe->secretaria ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}</div>
+                                    {{ $detalhe->secretaria }}</div>
                             </td>
                         </tr>
                     </table>
@@ -245,7 +245,7 @@
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Equipe de
                                     Planejamento</div>
                                 <div style="">
-                                    {{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXXXXX' }}
+                                    {{ $detalhe->responsavel_equipe_planejamento }}
                                 </div>
                             </td>
                         </tr>
@@ -1762,7 +1762,7 @@
 
         <p style="text-align: justify; text-indent: 30px;">
             O {{ $primeiroAssinante['responsavel'] ?? '____________________' }},
-            nos termos da Portaria nº XXXXXX, de XX de XXXXXXXXXXX de XXXX, apresenta o Mapa de Gerenciamento de Risco,
+            nos termos da Portaria nº{{ $processo->numero_portaria }}, de {{ $processo->data_portaria?->translatedFormat('d \d\e F \d\e Y') }}, apresenta o Mapa de Gerenciamento de Risco,
             certificando que somos responsáveis pela elaboração do presente documento.
         </p>
 
