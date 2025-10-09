@@ -544,7 +544,7 @@
                 </tr>
                 <tr>
                     <td class="center">
-                        {{ $detalhe->responsavel_equipe_planejamento ?? 'XXXXXXXXXXXXXXXXXXXXXXXX' }}
+                        {{ $detalhe->responsavel_equipe_planejamento }}
                     </td>
                 </tr>
             </table>

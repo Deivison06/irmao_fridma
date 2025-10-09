@@ -184,9 +184,9 @@
             Referência, encaminha-se para:
         </p>
 
-        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO.</p>
-        <p style="text-indent: 30px; "> Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE PARECER JURÍDICO.</p>
-        <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA
+        <p style="text-indent: 30px; ">Encaminhe-se à {{ $detalhe->encaminhamento_elaborar_editais }} para a ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO.</p>
+        <p style="text-indent: 30px; "> Encaminhe-se à {{ $detalhe->encaminhamento_parecer_juridico }} para a ELABORAÇÃO DE PARECER JURÍDICO.</p>
+        <p style="text-indent: 30px; ">Encaminhe-se à {{ $detalhe->encaminhamento_autorizacao_abertura }} para a AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA
             AUTORIDADE COMPETENTE.</p>
 
         <table style="border-collapse: collapse; width: auto; border: 1px solid black;">

@@ -227,7 +227,13 @@
                                             'titulo' => 'TERMO DE REFERÊNCIA',
                                             'cor' => 'bg-orange-500',
                                             'data_id' => 'data_termo_referencia',
-                                            'campos' => ['secretaria'],
+                                            'campos' => [
+                                                'secretaria',
+                                                'encaminhamento_elaborar_editais',
+                                                'encaminhamento_parecer_juridico',
+                                                'encaminhamento_autorizacao_abertura',
+                                                'valor_estimado',
+                                            ],
                                         ],
                                         'minutas' => [
                                             'titulo' => 'MINUTAS',
@@ -245,7 +251,7 @@
                                             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
                                             'cor' => 'bg-teal-500',
                                             'data_id' => 'data_autorizacao_abertura_procedimento',
-                                            'campos' => ['secretaria'],
+                                            'campos' => ['secretaria', 'portaria_agente_equipe_pdf'],
                                         ],
                                         'abertura_fase_externa' => [
                                             'titulo' => 'ABERTURA FASE EXTERNA',
@@ -1240,6 +1246,155 @@
                                                                                     document.getElementById(`${fieldId}_nome`).textContent = fileName;
                                                                                 }
                                                                             </script>
+                                                                        @elseif($campo === 'encaminhamento_elaborar_editais')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="encaminhamento_elaborar_editais"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Encaminhamento para pesquisa de
+                                                                                        Preços
+                                                                                    </label>
+                                                                                    <select
+                                                                                        id="encaminhamento_elaborar_editais"
+                                                                                        x-model="encaminhamento_elaborar_editais"
+                                                                                        @change="onUnidadeChange"
+                                                                                        :disabled="confirmed
+                                                                                            .encaminhamento_elaborar_editais"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                {{ ($processo->detalhe->encaminhamento_elaborar_editais ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('encaminhamento_elaborar_editais')"
+                                                                                        x-show="!confirmed.encaminhamento_elaborar_editais"
+                                                                                        :disabled="!encaminhamento_elaborar_editais"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!encaminhamento_elaborar_editais
+                                                                                            ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('encaminhamento_elaborar_editais')"
+                                                                                        x-show="confirmed.encaminhamento_elaborar_editais"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'encaminhamento_parecer_juridico')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="encaminhamento_parecer_juridico"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Encaminhamento para pesquisa de
+                                                                                        Preços
+                                                                                    </label>
+                                                                                    <select
+                                                                                        id="encaminhamento_parecer_juridico"
+                                                                                        x-model="encaminhamento_parecer_juridico"
+                                                                                        @change="onUnidadeChange"
+                                                                                        :disabled="confirmed
+                                                                                            .encaminhamento_parecer_juridico"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                {{ ($processo->detalhe->encaminhamento_parecer_juridico ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('encaminhamento_parecer_juridico')"
+                                                                                        x-show="!confirmed.encaminhamento_parecer_juridico"
+                                                                                        :disabled="!encaminhamento_parecer_juridico"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!encaminhamento_parecer_juridico
+                                                                                            ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('encaminhamento_parecer_juridico')"
+                                                                                        x-show="confirmed.encaminhamento_parecer_juridico"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'encaminhamento_autorizacao_abertura')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label
+                                                                                        for="encaminhamento_autorizacao_abertura"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Encaminhamento para pesquisa de
+                                                                                        Preços
+                                                                                    </label>
+                                                                                    <select
+                                                                                        id="encaminhamento_autorizacao_abertura"
+                                                                                        x-model="encaminhamento_autorizacao_abertura"
+                                                                                        @change="onUnidadeChange"
+                                                                                        :disabled="confirmed
+                                                                                            .encaminhamento_autorizacao_abertura"
+                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                        <option value="">Selecione
+                                                                                            uma unidade</option>
+                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                            <option
+                                                                                                value="{{ $unidade->nome }}"
+                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                {{ ($processo->detalhe->encaminhamento_autorizacao_abertura ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                {{ $unidade->nome }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('encaminhamento_autorizacao_abertura')"
+                                                                                        x-show="!confirmed.encaminhamento_autorizacao_abertura"
+                                                                                        :disabled="!
+                                                                                        encaminhamento_autorizacao_abertura"
+                                                                                        class="px-3 py-2 text-white transition rounded-lg"
+                                                                                        :class="!
+                                                                                        encaminhamento_autorizacao_abertura
+                                                                                            ?
+                                                                                            'bg-gray-400 cursor-not-allowed' :
+                                                                                            'bg-green-500 hover:bg-green-600'">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('encaminhamento_autorizacao_abertura')"
+                                                                                        x-show="confirmed.encaminhamento_autorizacao_abertura"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'valor_estimado')
+                                                                            <x-form-field name="valor_estimado"
+                                                                                label="valor_estimado" />
                                                                         @elseif($campo === 'anexo_pdf_analise_mercado')
                                                                             {{-- Campo de anexo PDF - Versão Melhorada --}}
                                                                             <div
@@ -1359,6 +1514,129 @@
                                                                                 {{-- Indicador de status --}}
                                                                                 <div class="absolute top-3 right-3">
                                                                                     <div x-show="confirmed.anexo_pdf_analise_mercado"
+                                                                                        class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'portaria_agente_equipe_pdf')
+                                                                            {{-- Campo de anexo PDF - Versão Melhorada --}}
+                                                                            <div
+                                                                                class="relative p-6 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-emerald-300 hover:border-emerald-400 hover:shadow-md">
+                                                                                <div class="flex items-start space-x-4">
+                                                                                    {{-- Ícone --}}
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div
+                                                                                            class="p-3 transition-colors duration-300 rounded-lg bg-emerald-50 group-hover:bg-emerald-100">
+                                                                                            <svg class="w-6 h-6 text-emerald-600"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <label
+                                                                                            for="portaria_agente_equipe_pdf"
+                                                                                            class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
+                                                                                            📎 Anexar PDF à PORTARIA DE AGENTE DE CONTRATAÇÃO E EQUIPE DE APOIO
+
+                                                                                        </label>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="portaria_agente_equipe_pdf"
+                                                                                                name="portaria_agente_equipe_pdf"
+                                                                                                accept="application/pdf"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="document.getElementById('anexo_pdf_portaria').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado'">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span id="anexo_pdf_portaria"
+                                                                                                    class="text-sm font-medium text-gray-500">Clique
+                                                                                                    para selecionar um
+                                                                                                    arquivo</span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-gray-400">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-medium">PDF</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-emerald-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            O arquivo será anexado
+                                                                                            automaticamente ao documento
+                                                                                            gerado
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col items-center pt-1 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('portaria_agente_equipe_pdf')"
+                                                                                            x-show="!confirmed.portaria_agente_equipe_pdf"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-emerald-500 hover:bg-emerald-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('portaria_agente_equipe_pdf')"
+                                                                                            x-show="confirmed.portaria_agente_equipe_pdf"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.portaria_agente_equipe_pdf"
                                                                                         class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
                                                                                     </div>
                                                                                 </div>
@@ -1625,6 +1903,12 @@
                 painel_preco_tce: existing?.painel_preco_tce ?? '',
                 anexo_pdf_analise_mercado: existing?.anexo_pdf_analise_mercado ?? '',
 
+                encaminhamento_elaborar_editais: existing?.encaminhamento_elaborar_editais ?? '',
+                encaminhamento_parecer_juridico: existing?.encaminhamento_parecer_juridico ?? '',
+                encaminhamento_autorizacao_abertura: existing?.encaminhamento_autorizacao_abertura ?? '',
+                valor_estimado: existing?.valor_estimado ?? '',
+                portaria_agente_equipe_pdf: existing?.portaria_agente_equipe_pdf ?? '',
+
                 // Controle de confirmação
                 confirmed: {
                     secretaria: !!existing?.secretaria,
@@ -1662,6 +1946,12 @@
                     prevista_plano_anual: !!existing?.prevista_plano_anual,
                     painel_preco_tce: !!existing?.painel_preco_tce,
                     anexo_pdf_analise_mercado: !!existing?.anexo_pdf_analise_mercado,
+
+                    encaminhamento_elaborar_editais: !!existing?.encaminhamento_elaborar_editais,
+                    encaminhamento_parecer_juridico: !!existing?.encaminhamento_parecer_juridico,
+                    encaminhamento_autorizacao_abertura: !!existing?.encaminhamento_autorizacao_abertura,
+                    valor_estimado: !!existing?.valor_estimado,
+                    portaria_agente_equipe_pdf: !!existing?.portaria_agente_equipe_pdf,
                 },
 
                 onUnidadeChange() {
@@ -1722,6 +2012,11 @@
                         }
                     } else if (field === 'anexo_pdf_analise_mercado') {
                         const fileInput = document.getElementById('anexo_pdf_analise_mercado');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    } else if (field === 'portaria_agente_equipe_pdf') {
+                        const fileInput = document.getElementById('portaria_agente_equipe_pdf');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }

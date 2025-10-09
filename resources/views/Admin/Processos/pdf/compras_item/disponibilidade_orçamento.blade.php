@@ -188,7 +188,7 @@
                 <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da
                 previsão de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da
                 respectiva
-                contratação estimada em R$ XXXXXXXXXXXXX (XXXXXXXXXXXXXXXXX) possui previsão de saldo orçamentário e
+                contratação estimada em R$ {{ $detalhe->valor_estimado }} possui previsão de saldo orçamentário e
                 financeiro
                 compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
                 Diretrizes Orçamentárias (LDO) vigentes.

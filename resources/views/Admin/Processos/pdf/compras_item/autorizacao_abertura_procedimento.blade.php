@@ -202,8 +202,7 @@
             {{ $processo->objeto }}.
         </p>
         <p style="text-indent: 30px">
-            O valor estimado para pretendida contratação é de R$ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            (XXXXXXXXXXXX),
+            O valor estimado para pretendida contratação é de R$ {{ $detalhe->valor_estimado }},
             conforme Relatório de Pesquisa de Preços.
         </p>
 
@@ -279,25 +278,6 @@
                 </p>
             </div>
         @endif
-    </div>
-    {{-- QUEBRA DE PÁGINA --}}
-    <div class="page-break"></div>
-    {{-- ====================================================================== --}}
-    {{-- BLOCO 3: PORTARIA DE AGENTE DE CONTRATAÇÃO E EQUIPE DE APOIO --}}
-    {{-- ====================================================================== --}}
-    <div id="anexos-pesquisa-obtidas">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-
-        <div class="content">
-            <strong>
-                PORTARIA DE AGENTE DE CONTRATAÇÃO E <br>
-                EQUIPE DE APOIO
-            </strong>
-        </div>
-
-        <div class="line"></div>
     </div>
 </body>
 

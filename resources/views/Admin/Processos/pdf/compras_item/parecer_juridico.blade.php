@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>PARECER JURÍDICO - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
-         @font-face {
+        @font-face {
             font-family: 'Aptos';
             src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
@@ -1272,7 +1272,7 @@
             pretendidos, com fundamento na praxe e regras vigentes.
         </p>
 
-                {{-- Bloco de data e assinatura --}}
+        {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
             {{ $processo->prefeitura->nome }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
@@ -1633,7 +1633,7 @@
             São os termos do parecer, reitera-se, meramente opinativo e orientador, que submetemos à
             decisão superior hierárquica.
         </p>
-                {{-- Bloco de data e assinatura --}}
+        {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
             {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
@@ -1669,6 +1669,8 @@
                 </p>
             </div>
         @endif
+        {{-- QUEBRA DE PÁGINA --}}
+        <div class="page-break"></div>
 
         <p style="font-weight: bold;">
             PARECER JURÍDICO Nº XXX/2025 <br>

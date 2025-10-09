@@ -22,6 +22,8 @@ class Processo extends Model
         'objeto',
         'tipo_procedimento', // Novo campo
         'tipo_contratacao',  // Novo campo
+        'numero_portaria',  // Novo campo
+        'data_portaria',  // Novo campo
     ];
 
     // Cast para trabalhar com enum diretamente
@@ -29,6 +31,7 @@ class Processo extends Model
         'modalidade' => ModalidadeEnum::class,
         'tipo_procedimento' => TipoProcedimentoEnum::class,
         'tipo_contratacao' => TipoContratacaoEnum::class,
+        'data_portaria' => 'date'
     ];
 
     // Relacionamento com Prefeitura

@@ -147,9 +147,21 @@ class ProcessoController extends Controller
             // Salva o caminho relativo para uso posterior
             $detalhe->anexo_pdf_analise_mercado = 'uploads/anexos/' . $filename;
         }
+        // Anexo PDF usando move
+        if ($request->hasFile('portaria_agente_equipe_pdf')) {
+            $file = $request->file('portaria_agente_equipe_pdf');
+            $filename = 'portaria_agente_equipe_' . time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/anexos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $filename);
+            // Salva o caminho relativo para uso posterior
+            $detalhe->portaria_agente_equipe_pdf = 'uploads/anexos/' . $filename;
+        }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
@@ -346,6 +358,33 @@ class ProcessoController extends Controller
             // Junta o PDF anexado se existir (apenas para analise_mercado)
             if ($documento === 'analise_mercado' && !empty($processo->detalhe->anexo_pdf_analise_mercado)) {
                 $anexoPath = public_path($processo->detalhe->anexo_pdf_analise_mercado);
+
+                if (file_exists($anexoPath)) {
+                    $fpdi = new Fpdi();
+
+                    // Adiciona páginas do PDF principal
+                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
+                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Adiciona páginas do anexo
+                    $numPagesAnexo = $fpdi->setSourceFile($anexoPath);
+                    for ($pageNo = 1; $pageNo <= $numPagesAnexo; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Salva o PDF final (sobrescreve o principal)
+                    $fpdi->Output('F', $caminhoCompleto);
+                }
+            }
+            // Junta o PDF anexado se existir (apenas para analise_mercado)
+            if ($documento === 'autorizacao_abertura_procedimento' && !empty($processo->detalhe->portaria_agente_equipe_pdf)) {
+                $anexoPath = public_path($processo->detalhe->portaria_agente_equipe_pdf);
 
                 if (file_exists($anexoPath)) {
                     $fpdi = new Fpdi();
