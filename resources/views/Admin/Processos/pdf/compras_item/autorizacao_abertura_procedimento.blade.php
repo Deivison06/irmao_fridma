@@ -129,11 +129,11 @@
 
         <p>
             Ao(À) Ilmo(a). Sr(a).<br>
-            <span style="color: red">{{ $detalhe->servidor_responsavel }}</span>
+            <span>{{ $processo->prefeitura->autoridade_competente }}</span>
             <br>
             Agente de Contratação / Pregoeiro
             <br>
-            <span style="color: red">
+            <span>
                 {{ $processo->prefeitura->nome }}
             </span>
         </p>
@@ -227,7 +227,7 @@
         </p>
 
         <p>
-            CLASSIFICAÇÃO DO OBJETO: {{ $processo->tipo_procedimento->->getDisplayName() }}
+            CLASSIFICAÇÃO DO OBJETO: {{ $processo->tipo_procedimento->getDisplayName() }}
         </p>
         <p>
             JUSTIFICATIVA DA CONTRATAÇÃO:
