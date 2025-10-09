@@ -11,6 +11,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
+
         @page {
             margin: 0;
             size: A4;
@@ -27,7 +34,8 @@
             background-position: top left;
             background-size: cover;
         }
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -36,6 +44,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -46,8 +55,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -55,21 +65,19 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            width: 60%;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10 30px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         .footer-signature {
             margin-top: 60px;
-            text-align: center;
-            color: red;
+            text-align: right;
         }
 
         .signature-block {
@@ -116,17 +124,17 @@
     {{-- BLOCO 2: AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO --}}
     {{-- ====================================================================== --}}
     <div id="autorizacao-abertura-procedimento">
-        <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br> PROCESSO
-            ADMINISTRATIVO N° XXX/2025</p>
+        <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br>
+            PROCESSO ADMINISTRATIVO N° {{ $processo->numero_processo }}</p>
 
         <p>
             Ao(À) Ilmo(a). Sr(a).<br>
-            <span style="color: red">XXXXXXXXXXXXXXXXXXX</span>
+            <span style="color: red">{{ $detalhe->servidor_responsavel }}</span>
             <br>
             Agente de Contratação / Pregoeiro
             <br>
             <span style="color: red">
-                Prefeitura de XXXXXXXXXXX - PI
+                {{ $processo->prefeitura->nome }}
             </span>
         </p>
 
@@ -190,8 +198,8 @@
             Senhor(a) Agente de Contratação / Pregoeiro
         </p>
         <p style="text-indent: 30px">
-            Trata-se de demanda da Secretaria Municipal de XXXXXXXXXXXX, para contratação de
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+            Trata-se de demanda da {{ $detalhe->unidade_setor }}, para contratação de
+            {{ $processo->objeto }}.
         </p>
         <p style="text-indent: 30px">
             O valor estimado para pretendida contratação é de R$ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -219,32 +227,58 @@
         </p>
 
         <p>
-            CLASSIFICAÇÃO DO OBJETO: COMPRAS
+            CLASSIFICAÇÃO DO OBJETO: {{ $processo->tipo_procedimento->->getDisplayName() }}
         </p>
         <p>
             JUSTIFICATIVA DA CONTRATAÇÃO:
-            <br><br>
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXX
+            <br>
+            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
         </p>
-        <p>MODALIDADE: PREGÃO ELETRÔNICO</p>
+
+        <p>MODALIDADE: {{ $processo->modalidade->getDisplayName() }}</p>
         <p>MODO DE DISPUTA: ABERTO</p>
         <p>TRATAMENTO DIFERENCIA A MEs e EPPs</p>
         <p>
             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
         </p>
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
 
-        <div class="signature-block">
-            ___________________________________<br>
-            <span style="color: red;">XXXXXXXXXXXXXXXXX</span> <br>
-            Prefeito Municipal
-        </div>
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[1]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
+        @endif
     </div>
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>

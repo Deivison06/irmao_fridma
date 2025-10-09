@@ -229,7 +229,7 @@
             </tbody>
         </table>
         <p>Segue em anexo arquivos referentes à cotação realizada.</p>
-        <p>Encaminhe-se à XXXXXXX para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA EXISTENTE.</p>
+        <p>Encaminhe-se à {{ $detalhe->encaminhamento_doacao_orcamentaria }} para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA EXISTENTE.</p>
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
