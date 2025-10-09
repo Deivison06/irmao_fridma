@@ -128,10 +128,10 @@
     {{-- BLOCO 2: DECLARAÇÃO DE COMPATIBILIDADE --}}
     {{-- ====================================================================== --}}
     <div id="declaracao-compatibilidade">
-        <p style="text-align: center; font-wfont-weight: bold;">DECLARAÇÃO DE COMPATIBILIDADE DA PREVISÃO DE RECURSOS
+        <p style="text-align: center; font-weight: bold;">DECLARAÇÃO DE COMPATIBILIDADE DA PREVISÃO DE RECURSOS
             ORÇAMENTÁRIOS</p>
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 20px;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -185,13 +185,11 @@
         </table>
 
         <p style="text-indent: 30px;">
-            <strong>DECLARO</strong> para os fins de demonstração da compatibilidade da
-            previsão de recursos orçamentários, com base no
-            art. 72, IV da Lei 14.133/21, que a despesa da respectiva contratação estimada em R$ XXXXXXXXXXXXX
-            (XXXXXXXXXXXXXXXXX)
-            possui previsão de saldo orçamentário e financeiro compatível com a Lei Orçamentária Anual (LOA) e é
-            compatível com o
-            Plano Plurianual (PPA) e com a Lei de Diretrizes Orçamentárias (LDO) vigentes.
+            <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da previsão
+            de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da respectiva contratação
+            estimada em R$ XXXXXXXXXXXXX (XXXXXXXXXXXXXXXXX) possui previsão de saldo orçamentário e financeiro
+            compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
+            Diretrizes Orçamentárias (LDO) vigentes.
         </p>
 
         <p style="text-indent: 30px;">
@@ -199,8 +197,7 @@
             detalhamento:
         </p>
 
-        <table
-            style="border-collapse: collapse; width: 100%; height: 300px; border: 1px solid black; font-family: sans-serif; font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
             <tr>
                 <!-- Coluna da esquerda -->
                 <td style="width: 50%; vertical-align: top; padding: 10px; border-right: 1px solid black;">
@@ -228,22 +225,20 @@
             </tr>
         </table>
 
-
         <p>OU</p>
 
         <p style="color: red">
-            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <strong>Sistema de
-                Registro de Preços (SRP)</strong>,
-            nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
-            Por se tratar de procedimento que visa apenas ao registro formal de preços, <strong>não há necessidade de
-                indicação de dotação
-                orçamentária nesta fase</strong>, ficando a alocação de recursos vinculada e obrigatória somente no
-            momento da contratação
-            efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas das Secretarias/Órgãos
-            requisitantes.<br>
+            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span
+                style="font-weight: bold;">Sistema de
+                Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
+            Por se tratar de procedimento que visa apenas ao registro formal de preços, <span
+                style="font-weight: bold;">não há necessidade de
+                indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
+            obrigatória somente no
+            momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas das
+            Secretarias/Órgãos requisitantes.<br>
             Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando os
-            princípios da
-            eficiência, economicidade e responsabilidade fiscal.
+            princípios da eficiência, economicidade e responsabilidade fiscal.
         </p>
 
         <p>Encaminhe-se ao DEMANDANTE para a elaboração do TERMO DE REFERÊNCIA</p>
