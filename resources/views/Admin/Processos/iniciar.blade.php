@@ -968,103 +968,399 @@
                                                                                 </div>
                                                                             </div>
                                                                         @elseif($campo === 'itens_e_seus_quantitativos_xml')
-                                                                            <div class="flex items-start space-x-2">
-                                                                                <div class="flex-1">
-                                                                                    <label
-                                                                                        for="itens_e_seus_quantitativos_xml"
-                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        ITENS E SEUS QUANTITATIVOS (XML /
-                                                                                        Excel)
-                                                                                    </label>
-                                                                                    <input type="file"
-                                                                                        id="itens_e_seus_quantitativos_xml"
-                                                                                        name="itens_e_seus_quantitativos_xml"
-                                                                                        accept=".xml, .xlsx, .xls, .csv"
-                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
-                                                                                    <p class="mt-1 text-xs text-gray-500">
-                                                                                        Selecione um arquivo XML ou Excel
-                                                                                        contendo os itens da tabela.
-                                                                                    </p>
+                                                                            <div
+                                                                                class="relative p-5 mb-4 transition-all duration-300 bg-white border-2 border-purple-200 border-dashed shadow-sm group rounded-xl hover:border-purple-300 hover:shadow-md">
+                                                                                <div
+                                                                                    class="flex items-start justify-between">
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <div
+                                                                                            class="flex items-center mb-2">
+                                                                                            <div
+                                                                                                class="p-2 mr-3 transition-colors duration-300 rounded-lg bg-purple-50 group-hover:bg-purple-100">
+                                                                                                <svg class="w-5 h-5 text-purple-600"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    stroke-width="2"
+                                                                                                    viewBox="0 0 24 24">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                                                                                </svg>
+                                                                                            </div>
+                                                                                            <label
+                                                                                                for="itens_e_seus_quantitativos_xml"
+                                                                                                class="block text-sm font-semibold text-purple-700 cursor-pointer">
+                                                                                                📦 Itens e Seus
+                                                                                                Quantitativos
+                                                                                            </label>
+                                                                                        </div>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="itens_e_seus_quantitativos_xml"
+                                                                                                name="itens_e_seus_quantitativos_xml"
+                                                                                                accept=".xml, .xlsx, .xls, .csv"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="updateFileName('itens_e_seus_quantitativos_xml', this)">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span
+                                                                                                    id="itens_e_seus_quantitativos_xml_nome"
+                                                                                                    class="text-sm font-medium text-gray-500">
+                                                                                                    Clique para selecionar
+                                                                                                    arquivo (XML/Excel)
+                                                                                                </span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2">
+                                                                                                    <div
+                                                                                                        class="flex items-center space-x-1 text-purple-600">
+                                                                                                        <svg class="w-4 h-4"
+                                                                                                            fill="none"
+                                                                                                            stroke="currentColor"
+                                                                                                            viewBox="0 0 24 24">
+                                                                                                            <path
+                                                                                                                stroke-linecap="round"
+                                                                                                                stroke-linejoin="round"
+                                                                                                                stroke-width="2"
+                                                                                                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                                                                                        </svg>
+                                                                                                        <span
+                                                                                                            class="text-xs font-semibold">XML</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="w-px h-4 bg-gray-300">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="flex items-center space-x-1 text-cyan-600">
+                                                                                                        <svg class="w-4 h-4"
+                                                                                                            fill="none"
+                                                                                                            stroke="currentColor"
+                                                                                                            viewBox="0 0 24 24">
+                                                                                                            <path
+                                                                                                                stroke-linecap="round"
+                                                                                                                stroke-linejoin="round"
+                                                                                                                stroke-width="2"
+                                                                                                                d="M9 17v-2a4 4 0 00-4-4H3m12 2a4 4 0 014 4v2m-8-6h6m-6-4h6m2 5h4m-4-3h4M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2m0 0h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V7z" />
+                                                                                                        </svg>
+                                                                                                        <span
+                                                                                                            class="text-xs font-semibold">XLSX/CSV</span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-purple-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            Arquivo XML ou Excel contendo os
+                                                                                            itens da tabela e seus
+                                                                                            quantitativos
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col pt-6 pl-4 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('itens_e_seus_quantitativos_xml')"
+                                                                                            x-show="!confirmed.itens_e_seus_quantitativos_xml"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-purple-500 rounded-lg shadow-sm hover:bg-purple-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
+                                                                                            x-show="confirmed.itens_e_seus_quantitativos_xml"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="flex pt-6 space-x-1">
-                                                                                    <button type="button"
-                                                                                        @click="saveField('itens_e_seus_quantitativos_xml')"
-                                                                                        x-show="!confirmed.itens_e_seus_quantitativos_xml"
-                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                        ✔
-                                                                                    </button>
-                                                                                    <button type="button"
-                                                                                        @click="toggleConfirm('itens_e_seus_quantitativos_xml')"
-                                                                                        x-show="confirmed.itens_e_seus_quantitativos_xml"
-                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                        ✖
-                                                                                    </button>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.itens_e_seus_quantitativos_xml"
+                                                                                        class="w-2 h-2 bg-purple-500 rounded-full animate-pulse">
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         @elseif($campo === 'painel_preco_tce')
-                                                                            <div class="flex items-start space-x-2">
-                                                                                <div class="flex-1">
-                                                                                    <label for="painel_preco_tce"
-                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Painel de Preço TCE (Excel/CSV)
-                                                                                    </label>
-                                                                                    <input type="file"
-                                                                                        id="painel_preco_tce"
-                                                                                        name="painel_preco_tce"
-                                                                                        accept=".xlsx, .xls, .csv"
-                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
-                                                                                    <p class="mt-1 text-xs text-gray-500">
-                                                                                        Selecione um arquivo Excel ou CSV
-                                                                                        contendo os dados do painel de
-                                                                                        preços TCE.
-                                                                                    </p>
+                                                                            <div
+                                                                                class="relative p-5 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-cyan-200 hover:border-cyan-300 hover:shadow-md">
+                                                                                <div
+                                                                                    class="flex items-start justify-between">
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <div
+                                                                                            class="flex items-center mb-2">
+                                                                                            <div
+                                                                                                class="p-2 mr-3 transition-colors duration-300 rounded-lg bg-cyan-50 group-hover:bg-cyan-100">
+                                                                                                <svg class="w-5 h-5 text-cyan-600"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    stroke-width="2"
+                                                                                                    viewBox="0 0 24 24">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M9 17v-2a4 4 0 00-4-4H3m12 2a4 4 0 014 4v2m-8-6h6m-6-4h6m2 5h4m-4-3h4M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2m0 0h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V7z" />
+                                                                                                </svg>
+                                                                                            </div>
+                                                                                            <label for="painel_preco_tce"
+                                                                                                class="block text-sm font-semibold cursor-pointer text-cyan-700">
+                                                                                                📊 Painel de Preço TCE
+                                                                                            </label>
+                                                                                        </div>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="painel_preco_tce"
+                                                                                                name="painel_preco_tce"
+                                                                                                accept=".xlsx, .xls, .csv"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="updateFileName('painel_preco_tce', this)">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span
+                                                                                                    id="painel_preco_tce_nome"
+                                                                                                    class="text-sm font-medium text-gray-500">
+                                                                                                    Clique para selecionar
+                                                                                                    arquivo (Excel/CSV)
+                                                                                                </span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-cyan-600">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-semibold">XLSX/CSV</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-cyan-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            Arquivo Excel ou CSV contendo os
+                                                                                            dados do painel de preços TCE
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col pt-6 pl-4 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('painel_preco_tce')"
+                                                                                            x-show="!confirmed.painel_preco_tce"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-cyan-500 hover:bg-cyan-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('painel_preco_tce')"
+                                                                                            x-show="confirmed.painel_preco_tce"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="flex pt-6 space-x-1">
-                                                                                    <button type="button"
-                                                                                        @click="saveField('painel_preco_tce')"
-                                                                                        x-show="!confirmed.painel_preco_tce"
-                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                        ✔
-                                                                                    </button>
-                                                                                    <button type="button"
-                                                                                        @click="toggleConfirm('painel_preco_tce')"
-                                                                                        x-show="confirmed.painel_preco_tce"
-                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                        ✖
-                                                                                    </button>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.painel_preco_tce"
+                                                                                        class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse">
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
+
+                                                                            <script>
+                                                                                function updateFileName(fieldId, input) {
+                                                                                    const fileName = input.files[0]?.name || 'Nenhum arquivo selecionado';
+                                                                                    document.getElementById(`${fieldId}_nome`).textContent = fileName;
+                                                                                }
+                                                                            </script>
                                                                         @elseif($campo === 'anexo_pdf_analise_mercado')
-                                                                            <div class="flex items-start space-x-2">
-                                                                                <div class="flex-1">
-                                                                                    <label for="anexo_pdf_analise_mercado"
-                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Anexo PDF para juntar à Análise de
-                                                                                        Mercado
-                                                                                    </label>
-                                                                                    <input type="file"
-                                                                                        id="anexo_pdf_analise_mercado"
-                                                                                        name="anexo_pdf_analise_mercado"
-                                                                                        accept="application/pdf"
-                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
-                                                                                    <p class="mt-1 text-xs text-gray-500">
-                                                                                        Selecione um arquivo PDF para ser
-                                                                                        anexado ao documento gerado.
-                                                                                    </p>
+                                                                            {{-- Campo de anexo PDF - Versão Melhorada --}}
+                                                                            <div
+                                                                                class="relative p-6 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-emerald-300 hover:border-emerald-400 hover:shadow-md">
+                                                                                <div class="flex items-start space-x-4">
+                                                                                    {{-- Ícone --}}
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div
+                                                                                            class="p-3 transition-colors duration-300 rounded-lg bg-emerald-50 group-hover:bg-emerald-100">
+                                                                                            <svg class="w-6 h-6 text-emerald-600"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <label
+                                                                                            for="anexo_pdf_analise_mercado"
+                                                                                            class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
+                                                                                            📎 Anexar PDF à Análise de
+                                                                                            Mercado
+                                                                                        </label>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="anexo_pdf_analise_mercado"
+                                                                                                name="anexo_pdf_analise_mercado"
+                                                                                                accept="application/pdf"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="document.getElementById('anexo_nome').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado'">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span id="anexo_nome"
+                                                                                                    class="text-sm font-medium text-gray-500">Clique
+                                                                                                    para selecionar um
+                                                                                                    arquivo</span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-gray-400">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-medium">PDF</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-emerald-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            O arquivo será anexado
+                                                                                            automaticamente ao documento
+                                                                                            gerado
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col items-center pt-1 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('anexo_pdf_analise_mercado')"
+                                                                                            x-show="!confirmed.anexo_pdf_analise_mercado"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-emerald-500 hover:bg-emerald-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('anexo_pdf_analise_mercado')"
+                                                                                            x-show="confirmed.anexo_pdf_analise_mercado"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="flex pt-6 space-x-1">
-                                                                                    <button type="button"
-                                                                                        @click="saveField('anexo_pdf_analise_mercado')"
-                                                                                        x-show="!confirmed.anexo_pdf_analise_mercado"
-                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                                                                                        ✔
-                                                                                    </button>
-                                                                                    <button type="button"
-                                                                                        @click="toggleConfirm('anexo_pdf_analise_mercado')"
-                                                                                        x-show="confirmed.anexo_pdf_analise_mercado"
-                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                        ✖
-                                                                                    </button>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.anexo_pdf_analise_mercado"
+                                                                                        class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         @endif
