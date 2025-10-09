@@ -227,7 +227,7 @@
                 </tr>
             </table>
         @else
-            <p style="color: red; text-align: justify;">
+            <p style="text-indent: 30px; text-align: justify;">
                 Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span
                     style="font-weight: bold;">Sistema de
                     Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
