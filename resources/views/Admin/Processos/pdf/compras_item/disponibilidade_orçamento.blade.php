@@ -183,63 +183,66 @@
                 </tr>
             </tbody>
         </table>
+        @if ($detalhe->tipo_srp == 'sim')
+            <p style="text-indent: 30px; text-align: justify;">
+                <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da
+                previsão de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da
+                respectiva
+                contratação estimada em R$ XXXXXXXXXXXXX (XXXXXXXXXXXXXXXXX) possui previsão de saldo orçamentário e
+                financeiro
+                compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
+                Diretrizes Orçamentárias (LDO) vigentes.
+            </p>
 
-        <p style="text-indent: 30px;">
-            <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da previsão
-            de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da respectiva contratação
-            estimada em R$ XXXXXXXXXXXXX (XXXXXXXXXXXXXXXXX) possui previsão de saldo orçamentário e financeiro
-            compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
-            Diretrizes Orçamentárias (LDO) vigentes.
-        </p>
+            <p style="text-indent: 30px; text-align: justify;">
+                As despesas para atender a presente solicitação da demanda, encontram-se amparadas pelo seguinte
+                detalhamento:
+            </p>
 
-        <p style="text-indent: 30px;">
-            As despesas para atender a presente solicitação da demanda, encontram-se amparadas pelo seguinte
-            detalhamento:
-        </p>
+            <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+                <tr>
+                    <!-- Coluna da esquerda -->
+                    <td style="width: 50%; vertical-align: top; padding: 10px; border-right: 1px solid black;">
+                        <p style="margin-top: 0; margin-bottom: 10px;">
+                            Gestão/Unidade: [...];
+                        </p>
+                        <p style="margin-bottom: 10px;">
+                            Fonte de Recursos: [...];
+                        </p>
+                        <p style="margin-bottom: 10px;">
+                            Programa de Trabalho: [...];
+                        </p>
+                        <p style="margin-bottom: 10px;">
+                            Elemento de Despesa: [...];
+                        </p>
+                        <p style="margin-bottom: 0;">
+                            Plano Interno: [...];
+                        </p>
+                    </td>
 
-        <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
-            <tr>
-                <!-- Coluna da esquerda -->
-                <td style="width: 50%; vertical-align: top; padding: 10px; border-right: 1px solid black;">
-                    <p style="margin-top: 0; margin-bottom: 10px;">
-                        Gestão/Unidade: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Fonte de Recursos: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Programa de Trabalho: [...];
-                    </p>
-                    <p style="margin-bottom: 10px;">
-                        Elemento de Despesa: [...];
-                    </p>
-                    <p style="margin-bottom: 0;">
-                        Plano Interno: [...];
-                    </p>
-                </td>
-
-                <!-- Coluna da direita -->
-                <td style="width: 50%; border-left: 1px solid black; vertical-align: top; padding: 10px;">
-                    <!-- pode adicionar conteúdo aqui -->
-                </td>
-            </tr>
-        </table>
-
-        <p>OU</p>
-
-        <p style="color: red">
-            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span
-                style="font-weight: bold;">Sistema de
-                Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
-            Por se tratar de procedimento que visa apenas ao registro formal de preços, <span
-                style="font-weight: bold;">não há necessidade de
-                indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
-            obrigatória somente no
-            momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas das
-            Secretarias/Órgãos requisitantes.<br>
-            Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando os
-            princípios da eficiência, economicidade e responsabilidade fiscal.
-        </p>
+                    <!-- Coluna da direita -->
+                    <td style="width: 50%; border-left: 1px solid black; vertical-align: top; padding: 10px;">
+                        <!-- pode adicionar conteúdo aqui -->
+                    </td>
+                </tr>
+            </table>
+        @else
+            <p style="color: red; text-align: justify;">
+                Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span
+                    style="font-weight: bold;">Sistema de
+                    Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
+                Por se tratar de procedimento que visa apenas ao registro formal de preços, <span
+                    style="font-weight: bold;">não há necessidade de
+                    indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
+                obrigatória somente no
+                momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas
+                das
+                Secretarias/Órgãos requisitantes.<br>
+                Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando
+                os
+                princípios da eficiência, economicidade e responsabilidade fiscal.
+            </p>
+        @endif
 
         <p>Encaminhe-se ao DEMANDANTE para a elaboração do TERMO DE REFERÊNCIA</p>
 

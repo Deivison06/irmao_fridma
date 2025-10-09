@@ -11,6 +11,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
+
         @page {
             margin: 0;
             size: A4;
@@ -28,7 +35,7 @@
             background-size: cover;
         }
 
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -37,6 +44,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -47,8 +55,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -56,15 +65,14 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            width: 60%;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10 30px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         .footer-signature {
@@ -117,8 +125,7 @@
 
     <div id="termo_referencia">
         <p style="text-align: center; font-weight: bold;">{{ $detalhe->secretaria }} </p>
-        <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -178,9 +185,9 @@
         </p>
 
         <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO.</p>
-        <p style="text-indent: 30px; "> Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE PARECER JURÍDICO</p>.</p>
+        <p style="text-indent: 30px; "> Encaminhe-se à XXXXXXX para a ELABORAÇÃO DE PARECER JURÍDICO.</p>
         <p style="text-indent: 30px; ">Encaminhe-se à XXXXXXX para a AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA
-            AUTORIDADE COMPETENTE </p>
+            AUTORIDADE COMPETENTE.</p>
 
         <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
             <tr>

@@ -5,11 +5,18 @@
     <meta charset="UTF-8">
     <title>PARECER JURÍDICO - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
-        @font-face {
+         @font-face {
             font-family: 'Aptos';
             src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
         }
+
+        @font-face {
+            font-family: 'AptosExtraBold';
+            src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
+            font-style: normal;
+        }
+
 
         @page {
             margin: 0;
@@ -28,7 +35,7 @@
             background-size: cover;
         }
 
-        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA */
+        /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
         .page-break {
             page-break-after: always;
         }
@@ -37,6 +44,7 @@
         /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
         /* ---------------------------------- */
         #cover-page {
+            /* Define a área de referência como a página inteira */
             height: 100vh;
             width: 100%;
             position: absolute;
@@ -47,8 +55,9 @@
         }
 
         .cover-image {
-            width: 350px;
-            height: 350px;
+            /* Tamanho da imagem */
+            width: 300px;
+            height: 300px;
             margin-bottom: 30px;
             display: block;
             margin-left: auto;
@@ -56,15 +65,14 @@
         }
 
         .cover-title {
-            width: 80%;
-            font-family: 'montserrat', sans-serif;
-            font-size: 20pt;
+            width: 60%;
+            font-size: 18pt;
             font-weight: 900;
-            padding: 10 30px;
             border: 2px solid #000;
-            background-color: #fff;
-            color: #000;
             display: inline-block;
+            line-height: 0.9;
+            padding: 10px 50px;
+            font-family: 'AptosExtraBold', sans-serif;
         }
 
         .footer-signature {
@@ -126,14 +134,14 @@
                 <td style="width: 50%;"></td>
 
                 <!-- Coluna do texto ocupa 30% (lado direito) -->
-                <td style="width: 50%; text-align: justify; vertical-align: top; padding-top: 20px; line-height: 1.5;">
-                    EMENTA: DIREITO ADMINISTRATIVO.<br>
-                    PARECER INICIAL. PROCESSO<br>
-                    ADMINISTRATIVO Nº XXX/2025.<br>
-                    PREGÃO ELETRÔNICO Nº XXX/2025.<br>
-                    PREFEITURA MUNICIPAL.<br>
-                    OBSERVÂNCIA DA LEI 14.133/2021.<br>
-                    OPINATIVO PELA APROVAÇÃO DA<br>
+                <td style="width: 50%; text-align: justify; vertical-align: top; padding-top: 20px;">
+                    EMENTA: DIREITO ADMINISTRATIVO.
+                    PARECER INICIAL. PROCESSO
+                    ADMINISTRATIVO Nº {{ $processo->numero_processo }}.
+                    PREGÃO ELETRÔNICO Nº {{ $processo->numero_procedimento }}.
+                    PREFEITURA MUNICIPAL.
+                    OBSERVÂNCIA DA LEI 14.133/2021.
+                    OPINATIVO PELA APROVAÇÃO DA
                     FASE INTERNA.
                 </td>
             </tr>
@@ -143,8 +151,9 @@
 
         <p style="text-indent: 30px; text-align: justify;">
             Submeteu-se ao crivo dessa assessoria a análise dos aspectos jurídicos relativos à abertura do PROCESSO
-            ADMINISTRATIVO N° XXX/2025, PREGÃO ELETRÔNICO N° XXX/2025 cujo objeto é a:
-            “XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX”
+            ADMINISTRATIVO N° {{ $processo->numero_processo }}, PREGÃO ELETRÔNICO N°
+            {{ $processo->numero_procedimento }} cujo objeto é a:
+            “{{ $processo->objeto }}”
         </p>
         <p style="text-indent: 30px; text-align: justify;">
             Seguindo a liturgia de praxe, os autos foram submetidos à análise desta assessoria jurídica,
@@ -385,12 +394,9 @@
             <strong>PARECER JURÍDICO</strong>
         </div>
 
-        <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº XXX/2025 <br>
-            PROCESSO ADMINISTRATIVO Nº XXXX/2025 <br>
-            OBJETO: <br>
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX. </p>
+        <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº {{ $processo->numero_procedimento }} <br>
+            PROCESSO ADMINISTRATIVO Nº {{ $processo->numero_processo }} <br>
+            OBJETO: <br> {{ $processo->objeto }} </p>
 
         <p style="text-indent: 30px">
             Pelo presente, emitimos nossa opinião jurídica à Comissão de Contratação da Prefeitura
@@ -400,7 +406,7 @@
         <p style="font-weight: bold; font-size: 14px;">1 – DO RELATÓRIO </p>
 
         <p style="text-indent: 30px">
-            Foram encaminhados a esta assessoria jurídica os autos do processo nº XXXXXXXX/2025,
+            Foram encaminhados a esta assessoria jurídica os autos do processo nº {{ $processo->numero_processo }},
             para que seja feita a análise quanto as formalidades legais do procedimento que se encontra em sua
             fase interna. Constituídas dos seguintes documentos:
         </p>
@@ -417,11 +423,11 @@
                 atestando a adequação e existência
                 de saldo orçamentário;</li>
             <li>Despacho ao <span style="color: red;">Departamento de Compras</span>, solicitando a devida pesquisa
-                    de preços, de acordo com a descrição
-                    e quantitativo constante dos autos;</li>
+                de preços, de acordo com a descrição
+                e quantitativo constante dos autos;</li>
             <li>Pesquisa de Preços realizada no Painel de Preços do TCE-PI e com Fornecedor Local;</li>
             <li>Despacho do <span style="color: red;">Departamento de Compras</span> ao setor demandante informando
-                    da realização da pesquisa;</li>
+                da realização da pesquisa;</li>
             <li>Autuação do procedimento;</li>
             <li>Minuta do Edital de Licitação;</li>
             <li>Despacho da Comissão de Contratação, encaminhando os presentes autos para análise e elaboração de
@@ -866,7 +872,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td >
+                <td>
                     II - demonstração da previsão da contratação
                     no plano de contratações anual, sempre que
                     elaborado, de modo a indicar o seu alinhamento
@@ -1266,14 +1272,42 @@
             pretendidos, com fundamento na praxe e regras vigentes.
         </p>
 
-        {{-- Bloco de data e assinatura --}}
+                {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            XXXXXXXXX – PI, XX de XXXXX de 2025.
+            {{ $processo->prefeitura->nome }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Pregoeira/Agente de Contratação]</span>
+                </p>
+            </div>
+        @endif
 
     </div>
 
@@ -1286,10 +1320,10 @@
         </p>
 
         <p>
-            Processo Administrativo Nº XXXX/2025
+            Processo Administrativo Nº {{ $processo->numero_processo }}
         </p>
         <p>
-            REF: Análise de Minuta de Edital de Pregão Eletrônico Nº XXX/2025.
+            REF: Análise de Minuta de Edital de Pregão Eletrônico Nº {{ $processo->numero_procedimento }}.
         </p>
 
         <p style="text-align: center; font-weight: bold;">
@@ -1599,23 +1633,48 @@
             São os termos do parecer, reitera-se, meramente opinativo e orientador, que submetemos à
             decisão superior hierárquica.
         </p>
-        {{-- Bloco de data e assinatura --}}
+                {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            XXXXXXXXX – PI, XX de XXXXX de 2025.
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
 
-        <p style="font-weight: bold; margin-top: 200px;">
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[1]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
+        @endif
+
+        <p style="font-weight: bold;">
             PARECER JURÍDICO Nº XXX/2025 <br>
-            PROCESSO ADMINISTRATIVO Nº XXX/2025<br>
-            PREGÃO ELETRÔNICO Nº XXX/2025<br>
-            OBJETO:<br>
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XX
+            PROCESSO ADMINISTRATIVO Nº {{ $processo->numero_processo }}<br>
+            PREGÃO ELETRÔNICO Nº{{ $processo->numero_procedimento }}<br>
+            OBJETO:<br> {{ $processo->objeto }}
         </p>
 
         <p style="font-weight: bold;">
@@ -1624,8 +1683,7 @@
 
         <p style="text-indent: 30px">
             Trata-se de análise jurídica requerida pelo Pregoeiro acerca da regularidade do Pregão
-            Eletrônico objetivando “XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX o
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX’’.
+            Eletrônico objetivando o “{{ $processo->objeto }}”.
         </p>
         <p style="text-indent: 30px">
             Consta, ainda, no bojo do procedimento a Pesquisa de Preço direta com fornecedores
@@ -2185,12 +2243,40 @@
         </p>
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            XXXXXXXXX – PI, XX de XXXXX de 2025.
+            {{ $processo->prefeitura->nome }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Pregoeira/Agente de Contratação]</span>
+                </p>
+            </div>
+        @endif
 
     </div>
 
