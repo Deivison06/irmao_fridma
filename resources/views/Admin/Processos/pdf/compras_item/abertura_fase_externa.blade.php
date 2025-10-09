@@ -176,13 +176,12 @@
 
         <p>
             <span style="font-weight: bold;">DECLARO</span> que recebi o processo de Pregão Eletrônico, e verificadas as
-            condições de
-            regularidade procedo com a devida publicação, nos termos legais.
+            condições de regularidade procedo com a devida publicação, nos termos legais.
         </p>
 
-        {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            ____________________, ____ de _____________ de 20___
+            {{ $processo->prefeitura->nome }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         <div class="signature-block">
@@ -199,8 +198,7 @@
     {{-- ====================================================================== --}}
     <div id="certidao-encerramento-fase-preparatoria">
         <p style="font-weight: bold; text-align: center;">
-            CERTIDÃO DE ENCERRAMENTO <br>
-            DA FASE PREPARATÓRI
+            CERTIDÃO DE ENCERRAMENTO <br> DA FASE PREPARATÓRI
         </p>
         <table
             style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
@@ -258,20 +256,45 @@
 
         <p>
             <span style="font-weight: bold;">CERTIFICO</span> O ENCERRAMENTO DA FASE PREPARATÓRIA DO PROCESSO
-            LICITATÓRIO, ENCONTRANDO-SE O FEITO DISPONÍVEL PARA A PUBLICAÇÃO DO
-            AVISO DE LICITAÇÃO E DEMAIS
+            LICITATÓRIO, ENCONTRANDO-SE O FEITO DISPONÍVEL PARA A PUBLICAÇÃO DO AVISO DE LICITAÇÃO E DEMAIS
         </p>
         <p>ENCAMINHE-SE PARA O AGENTE CONDUTOR DA FASE DE SELEÇÃO DO FORNECEDOR PARA OS ATOS SUBSEQUENTES. </p>
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            ____________________,EM ____ DE _____ 2025
+            {{ $processo->prefeitura->nome }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-            <strong>XXXXXXXXXXX</strong>
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
+        @endif
     </div>
 
     {{-- QUEBRA DE PÁGINA --}}
@@ -284,11 +307,9 @@
         <p style="font-weight: bold; text-align: center;">TERMO DE AUTUAÇÃO </p>
         <p style="text-indent: 30px">
             No uso de minhas atribuições, em <span style="font-weight: bold;">XX de XXXXXXXXXX de 2025</span>, autuo o
-            presente Processo de Contratação na modalidade Pregão Eletrônico, sob o número XXX/,
-            originário do Processo Administrativo nº XXX/2025, que tem por finalidade
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, com valor total estimado em
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, e para
+            presente Processo de Contratação na modalidade Pregão Eletrônico, sob o número  {{ $processo->numero_procedimento }},
+            originário do Processo Administrativo nº {{ $processo->numero_processo }}, que tem por finalidade
+            {{ $processo->objeto }} com valor total estimado em XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, e para
             constar, lavro e assino o presente Termo de Autuação.
         </p>
         <table
@@ -318,14 +339,7 @@
                         {{ $processo->numero_procedimento }}
                     </td>
                 </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
-                        OBJETO
-                    </td>
-                    <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
-                    </td>
-                </tr>
+
                 <tr>
                     <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
                         MODALIDADE:
@@ -342,6 +356,30 @@
                         {{ $detalhe->unidade_setor }}
                     </td>
                 </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        OBJETO
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        {{ $processo->objeto }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        VALOR ESTIMADO:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
+                        FUNDAMENTAÇÃO:
+                    </td>
+                    <td style="border: 1px solid black; padding: 5px;">
+                        Lei 14.133/2021, Art. 28, I - Pregão Eletrônico
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -351,11 +389,36 @@
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-            XXXXXXXXXXXXXXXXXXXXXX<br>
-            Pregoeira/Agente de Contratação
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Pregoeira/Agente de Contratação]</span>
+                </p>
+            </div>
+        @endif
     </div>
 
 </body>

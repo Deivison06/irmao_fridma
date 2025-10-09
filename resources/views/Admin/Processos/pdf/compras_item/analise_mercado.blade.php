@@ -182,48 +182,50 @@
         <p style="text-indent: 30px">
             A {{ $detalhe->unidade_setor }}, encaminhou para esta unidade a necessidade
             de realização de Cotação referente a itens relacionados ao objeto
-            <span style="font-weight: bold;">“{{ $processo->objeto }}”</span>, ato seguido, foi realizado a cotação junto ao Painel de Preços
+            <span style="font-weight: bold;">“{{ $processo->objeto }}”</span>, ato seguido, foi realizado a cotação
+            junto ao Painel de Preços
             do TCE-PI, conforme tabela abaixo:
         </p>
 
-        <table style="border-collapse: collapse; width: 100%; font-size: 12px; text-align: center;">
+        <table border="1" cellspacing="0" cellpadding="4"
+            style="border-collapse: collapse; width: 100%; text-align: center;">
             <thead>
+                <th colspan="6"
+                    style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
+                    RESUMO
+                </th>
                 <tr>
-                    <th colspan="6"
-                        style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        RESUMO
-                    </th>
-                </tr>
-                <tr>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        ITEM
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 1
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 2
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        VALOR TCE 3
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        FORNECEDOR LOCAL
-                    </th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                        MÉDIA
-                    </th>
+                    <th style="width: 20%;">ITEM</th>
+                    <th style="width: 12%;">VALOR TCE 1</th>
+                    <th style="width: 12%;">VALOR TCE 2</th>
+                    <th style="width: 12%;">VALOR TCE 3</th>
+                    <th style="width: 12%;">FORNECEDOR LOCAL</th>
+                    <th style="width: 12%;">MÉDIA</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">NOME DO ITEM</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR</td>
-                    <td style="border: 1px solid black; padding: 5px;">VALOR MÉDIO</td>
-                </tr>
+                @php
+                    $painel = is_array($detalhe->painel_preco_tce)
+                        ? $detalhe->painel_preco_tce
+                        : json_decode($detalhe->painel_preco_tce, true);
+                @endphp
+
+                @if ($painel && count($painel) > 0)
+                    @foreach ($painel as $item)
+                        <tr>
+                            <td>{{ $item['item'] ?? '' }}</td>
+                            <td>{{ $item['valor_tce_1'] ?? '' }}</td>
+                            <td>{{ $item['valor_tce_2'] ?? '' }}</td>
+                            <td>{{ $item['valor_tce_3'] ?? '' }}</td>
+                            <td>{{ $item['fornecedor_local'] ?? '' }}</td>
+                            <td>{{ $item['media'] ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6">Nenhum dado disponível</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
         <p>Segue em anexo arquivos referentes à cotação realizada.</p>
@@ -235,36 +237,37 @@
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
-        <div class="signature-block">
-            ___________________________________<br>
-            {{ $processo->prefeitura->autoridade_competente }} <br>
-            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}
-        </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+            @php
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+            @endphp
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                    ___________________________________<br>
+                    <p style="font-size: 10pt; line-height: 1.2;">
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    </p>
+                </div>
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
+        @endif
     </div>
-
-    {{-- QUEBRA DE PÁGINA --}}
-    <div class="page-break"></div>
-
-    {{-- ====================================================================== --}}
-    {{-- BLOCO 3: ANEXOS PESQUISA OBTIDAS --}}
-    {{-- ====================================================================== --}}
-    <div id="anexos-pesquisa-obtidas">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-
-        <div class="content">
-            <strong>
-                ANEXOS PESQUISA OBTIDAS EM OUTAS FONTES COMO<br>
-                TCE, PAINEL DE PRECOS, PNCP, BANCO DE DADOS<br>
-                SAÚDE<br>
-                E PORTARIAS
-            </strong>
-        </div>
-
-        <div class="line"></div>
-    </div>
-
 
 </body>
 

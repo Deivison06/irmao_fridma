@@ -91,7 +91,7 @@ class ProcessoController extends Controller
         $detalhe = $processo->detalhe ?? new ProcessoDetalhe();
         $detalhe->processo_id = $processo->id;
 
-        // --- Tratamento do arquivo Excel/CSV/XML ---
+        // --- Tratamento do arquivo Excel/CSV/XML para itens_e_seus_quantitativos_xml ---
         if ($request->hasFile('itens_e_seus_quantitativos_xml')) {
             $file = $request->file('itens_e_seus_quantitativos_xml');
 
@@ -114,9 +114,42 @@ class ProcessoController extends Controller
             $detalhe->itens_e_seus_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
         }
 
+        if ($request->hasFile('painel_preco_tce')) {
+            $file = $request->file('painel_preco_tce');
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+
+            $painelPrecos = [];
+            foreach ($rows as $index => $row) {
+                if ($index === 0) continue; // pula cabeçalho
+                $painelPrecos[] = [
+                    'item' => $row[0] ?? null,
+                    'valor_tce_1' => $row[1] ?? null,
+                    'valor_tce_2' => $row[2] ?? null,
+                    'valor_tce_3' => $row[3] ?? null,
+                    'fornecedor_local' => $row[4] ?? null,
+                    'media' => $row[5] ?? null,
+                ];
+            }
+
+            $detalhe->painel_preco_tce = json_encode($painelPrecos, JSON_UNESCAPED_UNICODE);
+        }
+        // Anexo PDF usando move
+        if ($request->hasFile('anexo_pdf_analise_mercado')) {
+            $file = $request->file('anexo_pdf_analise_mercado');
+            $filename = 'anexo_analise_mercado_' . time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/anexos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $filename);
+            // Salva o caminho relativo para uso posterior
+            $detalhe->anexo_pdf_analise_mercado = 'uploads/anexos/' . $filename;
+        }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
@@ -231,16 +264,11 @@ class ProcessoController extends Controller
         $assinantes = [];
 
         if ($assinantesJson) {
-            // 1. Decodifica a URL (reverte o encodeURIComponent do JS)
             $assinantesDecoded = urldecode($assinantesJson);
-
-            // 2. Converte a string JSON para um array PHP
             $assinantes = json_decode($assinantesDecoded, true);
-
-            // Verifica se a decodificação falhou
             if (json_last_error() !== JSON_ERROR_NONE) {
                 Log::error("Erro ao decodificar JSON de assinantes: " . json_last_error_msg());
-                $assinantes = []; // Garante que a variável seja um array vazio em caso de erro
+                $assinantes = [];
             }
         }
         // =========================================================
@@ -253,7 +281,6 @@ class ProcessoController extends Controller
             'detalhe' => $processo->detalhe,
             'dataGeracao' => now()->format('d/m/Y H:i:s'),
             'dataSelecionada' => $dataSelecionada,
-            // PASSA O ARRAY DE ASSINANTES PARA A VIEW DO PDF
             'assinantes' => $assinantes,
         ];
 
@@ -265,13 +292,12 @@ class ProcessoController extends Controller
         $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
 
         try {
-            // O array $data (incluindo $assinantes) é injetado na view do PDF
+            // Gera o PDF principal
             $pdf = Pdf::loadView($view, $data)
                 ->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
 
-            // Diretório baseado na modalidade, procedimento e contratação
             $modalidade = strtolower(str_replace(' ', '_', $processo->modalidade?->name ?? 'sem_modalidade'));
             $subpasta = "{$modalidade}/{$procedimento}_{$contratacao}/{$documento}";
 
@@ -281,7 +307,6 @@ class ProcessoController extends Controller
                 mkdir($diretorio, 0777, true);
             }
 
-            // Nome do arquivo sem procedimento/contratação
             $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_"
                 . now()->format('Ymd')
                 . '.pdf';
@@ -315,8 +340,36 @@ class ProcessoController extends Controller
                 ]);
             }
 
-            // Salva o PDF no caminho
+            // Salva o PDF principal
             $pdf->save($caminhoCompleto);
+
+            // Junta o PDF anexado se existir (apenas para analise_mercado)
+            if ($documento === 'analise_mercado' && !empty($processo->detalhe->anexo_pdf_analise_mercado)) {
+                $anexoPath = public_path($processo->detalhe->anexo_pdf_analise_mercado);
+
+                if (file_exists($anexoPath)) {
+                    $fpdi = new Fpdi();
+
+                    // Adiciona páginas do PDF principal
+                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
+                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Adiciona páginas do anexo
+                    $numPagesAnexo = $fpdi->setSourceFile($anexoPath);
+                    for ($pageNo = 1; $pageNo <= $numPagesAnexo; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Salva o PDF final (sobrescreve o principal)
+                    $fpdi->Output('F', $caminhoCompleto);
+                }
+            }
 
             return response()->json([
                 'success' => true,

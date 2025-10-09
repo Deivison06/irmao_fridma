@@ -215,7 +215,7 @@
                                             'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
                                             'cor' => 'bg-green-500',
                                             'data_id' => 'data_analise_mercado',
-                                            'campos' => ['secretaria'],
+                                            'campos' => ['secretaria', 'painel_preco_tce', 'anexo_pdf_analise_mercado'],
                                         ],
                                         'disponibilidade_orçamento' => [
                                             'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
@@ -880,7 +880,7 @@
                                                                                                     :checked="instrumento_vinculativo
                                                                                                         .includes(
                                                                                                             '{{ $value }}'
-                                                                                                            )">
+                                                                                                        )">
                                                                                                 <span
                                                                                                     class="ml-2 text-sm">{{ $label }}</span>
                                                                                                 @if ($value === 'outro')
@@ -937,7 +937,7 @@
                                                                                                     :checked="prazo_vigencia
                                                                                                         .includes(
                                                                                                             '{{ $value }}'
-                                                                                                            )">
+                                                                                                        )">
                                                                                                 <span
                                                                                                     class="ml-2 text-sm">{{ $label }}</span>
                                                                                                 @if ($value === 'outro')
@@ -1001,6 +1001,72 @@
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
+                                                                        @elseif($campo === 'painel_preco_tce')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label for="painel_preco_tce"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Painel de Preço TCE (Excel/CSV)
+                                                                                    </label>
+                                                                                    <input type="file"
+                                                                                        id="painel_preco_tce"
+                                                                                        name="painel_preco_tce"
+                                                                                        accept=".xlsx, .xls, .csv"
+                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
+                                                                                    <p class="mt-1 text-xs text-gray-500">
+                                                                                        Selecione um arquivo Excel ou CSV
+                                                                                        contendo os dados do painel de
+                                                                                        preços TCE.
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('painel_preco_tce')"
+                                                                                        x-show="!confirmed.painel_preco_tce"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('painel_preco_tce')"
+                                                                                        x-show="confirmed.painel_preco_tce"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'anexo_pdf_analise_mercado')
+                                                                            <div class="flex items-start space-x-2">
+                                                                                <div class="flex-1">
+                                                                                    <label for="anexo_pdf_analise_mercado"
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                        Anexo PDF para juntar à Análise de
+                                                                                        Mercado
+                                                                                    </label>
+                                                                                    <input type="file"
+                                                                                        id="anexo_pdf_analise_mercado"
+                                                                                        name="anexo_pdf_analise_mercado"
+                                                                                        accept="application/pdf"
+                                                                                        class="block w-full mt-1 text-sm border-gray-300 rounded-lg shadow-sm cursor-pointer focus:ring-[#009496] focus:border-[#009496]">
+                                                                                    <p class="mt-1 text-xs text-gray-500">
+                                                                                        Selecione um arquivo PDF para ser
+                                                                                        anexado ao documento gerado.
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('anexo_pdf_analise_mercado')"
+                                                                                        x-show="!confirmed.anexo_pdf_analise_mercado"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('anexo_pdf_analise_mercado')"
+                                                                                        x-show="confirmed.anexo_pdf_analise_mercado"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -1045,7 +1111,18 @@
             toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
             menubar: false,
             branding: false,
-            height: 300
+            height: 300,
+            setup: function(editor) {
+                editor.on('change keyup', function() {
+                    // Obtém o nome do campo pelo id do textarea
+                    const fieldName = editor.id;
+                    // Atualiza o Alpine
+                    const alpineComponent = document.querySelector('[x-data]').__x.$data;
+                    if (alpineComponent && fieldName in alpineComponent) {
+                        alpineComponent[fieldName] = editor.getContent();
+                    }
+                });
+            }
         });
 
         // Inicialização da funcionalidade de acordeão
@@ -1249,6 +1326,8 @@
                 encaminhamento_pesquisa_preco: existing?.encaminhamento_pesquisa_preco ?? '',
                 encaminhamento_doacao_orcamentaria: existing?.encaminhamento_doacao_orcamentaria ?? '',
                 prevista_plano_anual: existing?.prevista_plano_anual ?? '',
+                painel_preco_tce: existing?.painel_preco_tce ?? '',
+                anexo_pdf_analise_mercado: existing?.anexo_pdf_analise_mercado ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -1285,6 +1364,8 @@
                     encaminhamento_pesquisa_preco: !!existing?.encaminhamento_pesquisa_preco,
                     encaminhamento_doacao_orcamentaria: !!existing?.encaminhamento_doacao_orcamentaria,
                     prevista_plano_anual: !!existing?.prevista_plano_anual,
+                    painel_preco_tce: !!existing?.painel_preco_tce,
+                    anexo_pdf_analise_mercado: !!existing?.anexo_pdf_analise_mercado,
                 },
 
                 onUnidadeChange() {
@@ -1313,7 +1394,7 @@
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                    'content'));
+                        'content'));
 
                     // Quando salvar unidade_setor, também salva o servidor_responsavel
                     if (field === 'unidade_setor' && this.servidor_responsavel) {
@@ -1335,6 +1416,16 @@
                     // Arquivos
                     else if (field === 'itens_e_seus_quantitativos_xml') {
                         const fileInput = document.getElementById('itens_e_seus_quantitativos_xml');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    } else if (field === 'painel_preco_tce') {
+                        const fileInput = document.getElementById('painel_preco_tce');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    } else if (field === 'anexo_pdf_analise_mercado') {
+                        const fileInput = document.getElementById('anexo_pdf_analise_mercado');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }

@@ -47,6 +47,8 @@ class ProcessoDetalhe extends Model
         'prevista_plano_anual',
         'encaminhamento_pesquisa_preco',
         'encaminhamento_doacao_orcamentaria',
+        'painel_preco_tce',
+        'anexo_pdf_analise_mercado',
     ];
 
     protected $casts = [
