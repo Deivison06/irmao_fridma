@@ -55,6 +55,8 @@ class ProcessoDetalhe extends Model
         'encaminhamento_autorizacao_abertura',
         'valor_estimado',
         'portaria_agente_equipe_pdf',
+        'dotacao_orcamentaria',
+        'anexar_minuta'
     ];
 
     protected $casts = [

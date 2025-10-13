@@ -123,7 +123,7 @@
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
 
-    <div id="parecer_juridico">
+    @if ($parecer === 'parecer_1')
         <p style="text-align: center; font-weight: bold;">
             PARECER JURÍDICO
         </p>
@@ -209,7 +209,8 @@
                 <!-- Coluna do texto ocupa 50% -->
                 <td style="width: 50%; text-align: justify; vertical-align: top; padding-top: 20px; line-height: 1.5;">
                     Art. 18. A fase preparatória do processo licitatório é caracterizada pelo planejamento e deve
-                    compatibilizar-se com o plano de contratações anual de que trata o inciso VII do caput do art. 12
+                    compatibilizar-se com o plano de contratações anual de que trata o inciso VII do caput do art.
+                    12
                     desta Lei, sempre que elaborado, e com as leis orçamentárias, bem como abordar todas as
                     considerações técnicas, mercadológicas e de gestão que podem interferir na contratação,
                     compreendidos: <br><br>
@@ -228,12 +229,14 @@
             </tr>
             <tr>
                 <td></td>
-                <td>III - a definição das condições de execução e pagamento, das garantias exigidas e ofertadas e das
+                <td>III - a definição das condições de execução e pagamento, das garantias exigidas e ofertadas e
+                    das
                     condições de recebimento;<br><br></td>
             </tr>
             <tr>
                 <td></td>
-                <td>IV - o orçamento estimado, com as composições dos preços utilizados para sua formação;<br><br></td>
+                <td>IV - o orçamento estimado, com as composições dos preços utilizados para sua formação;<br><br>
+                </td>
             </tr>
             <tr>
                 <td></td>
@@ -241,12 +244,14 @@
             </tr>
             <tr>
                 <td></td>
-                <td>VI - a elaboração de minuta de contrato, quando necessária, que constará obrigatoriamente como anexo
+                <td>VI - a elaboração de minuta de contrato, quando necessária, que constará obrigatoriamente como
+                    anexo
                     do edital de licitação;<br><br></td>
             </tr>
             <tr>
                 <td></td>
-                <td>VII - o regime de fornecimento de bens, de prestação de serviços ou de execução de obras e serviços
+                <td>VII - o regime de fornecimento de bens, de prestação de serviços ou de execução de obras e
+                    serviços
                     de engenharia, observados os potenciais de economia de escala;<br><br></td>
             </tr>
             <tr>
@@ -258,23 +263,27 @@
             </tr>
             <tr>
                 <td></td>
-                <td>IX - a motivação circunstanciada das condições do edital, tais como justificativa de exigências de
+                <td>IX - a motivação circunstanciada das condições do edital, tais como justificativa de exigências
+                    de
                     qualificação técnica, mediante indicação das parcelas de maior relevância técnica ou valor
                     significativo do objeto, e de qualificação econômico-financeira, justificativa dos critérios de
-                    pontuação e julgamento das propostas técnicas, nas licitações com julgamento por melhor técnica ou
+                    pontuação e julgamento das propostas técnicas, nas licitações com julgamento por melhor técnica
+                    ou
                     técnica e preço, e justificativa das regras pertinentes à participação de empresas em consórcio;
                     <br><br>
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td>X - a análise dos riscos que possam comprometer o sucesso da licitação e a boa execução contratual;
+                <td>X - a análise dos riscos que possam comprometer o sucesso da licitação e a boa execução
+                    contratual;
                     <br><br>
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td>XI - a motivação sobre o momento da divulgação do orçamento da licitação, observado o art. 24 desta
+                <td>XI - a motivação sobre o momento da divulgação do orçamento da licitação, observado o art. 24
+                    desta
                     Lei.<br><br></td>
             </tr>
         </table>
@@ -340,7 +349,8 @@
         </p>
         <p style="text-indent: 30px; text-align: justify;">
             Outrossim, é acertado o critério de julgamento por menor preço por XXXX, pois se coaduna o objeto do
-            presente certame o XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, bem como atende ao disposto no mesmo art.
+            presente certame o XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, bem como atende ao disposto no mesmo
+            art.
             6º,
             XLI, da Lei nº 14.133/2021:
         </p>
@@ -391,12 +401,17 @@
 
         <div class="signature-block">
             ___________________________________<br>
-            <strong>PARECER JURÍDICO</strong>
         </div>
+    @elseif ($parecer === 'parecer_2')
+        <p style="text-align: center; font-weight: bold;">
+            PARECER JURÍDICO
+        </p>
 
-        <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº {{ $processo->numero_procedimento }} <br>
+        <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº {{ $processo->numero_procedimento }}
+            <br>
             PROCESSO ADMINISTRATIVO Nº {{ $processo->numero_processo }} <br>
-            OBJETO: <br> {{ $processo->objeto }} </p>
+            OBJETO: <br> {{ $processo->objeto }}
+        </p>
 
         <p style="text-indent: 30px">
             Pelo presente, emitimos nossa opinião jurídica à Comissão de Contratação da Prefeitura
@@ -419,7 +434,8 @@
                     Finanças</span> se existe adequação
                 orçamentária e financeira das despesas especificadas no Termo de Referência com a atual lei
                 orçamentária;</li>
-            <li>Despacho da <span style="color: red;">Secretaria Municipal de Finanças</span> à Secretaria Demandante
+            <li>Despacho da <span style="color: red;">Secretaria Municipal de Finanças</span> à Secretaria
+                Demandante
                 atestando a adequação e existência
                 de saldo orçamentário;</li>
             <li>Despacho ao <span style="color: red;">Departamento de Compras</span>, solicitando a devida pesquisa
@@ -585,7 +601,8 @@
                     gestor, da conveniência e da oportunidade em prol do interesse público. Como a Administração não
                     pode prever todos os casos onde atuará, deverá valer-se da
                     discricionariedade para atender a finalidade legal, devendo, todavia, a escolha se pautar em
-                    critérios que respeitem os princípios constitucionais como a proporcionalidade e razoabilidade de
+                    critérios que respeitem os princípios constitucionais como a proporcionalidade e razoabilidade
+                    de
                     conduta (...)”<br><br>
                 </td>
             </tr>
@@ -704,7 +721,8 @@
                     rito procedimental comum a que se refere o art.
                     17 desta Lei, adotando-se o pregão sempre que
                     o objeto possuir padrões de desempenho e
-                    qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de
+                    qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais
+                    de
                     mercado.
                     <br><br>
                 </td>
@@ -1308,13 +1326,7 @@
                 </p>
             </div>
         @endif
-
-    </div>
-
-    {{-- QUEBRA DE PÁGINA --}}
-    <div class="page-break"></div>
-
-    <div>
+    @elseif($parecer === 'parecer_3')
         <p style="text-align: center; font-weight: bold;">
             PARECER JURÍDICO
         </p>
@@ -2280,7 +2292,7 @@
             </div>
         @endif
 
-    </div>
+    @endif
 
 </body>
 

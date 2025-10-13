@@ -16,13 +16,17 @@ class UnidadeController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'servidor_responsavel' => 'required|string|max:255',
+            'numero_portaria' => 'nullable|string|max:20',
+            'data_portaria' => 'nullable|date',
         ]);
 
         try {
             Unidade::create([
                 'prefeitura_id' => $prefeituraId,
                 'nome' => $request->nome,
-                'servidor_responsavel' => $request->servidor_responsavel
+                'servidor_responsavel' => $request->servidor_responsavel,
+                'numero_portaria' => $request->numero_portaria,
+                'data_portaria' => $request->data_portaria,
             ]);
 
             return response()->json(['success' => 'Unidade cadastrada com sucesso!']);
@@ -39,13 +43,17 @@ class UnidadeController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'servidor_responsavel' => 'required|string|max:255',
+            'numero_portaria' => 'nullable|string|max:20',
+            'data_portaria' => 'nullable|date',
         ]);
 
         try {
             $unidade = Unidade::findOrFail($id);
             $unidade->update([
                 'nome' => $request->nome,
-                'servidor_responsavel' => $request->servidor_responsavel
+                'servidor_responsavel' => $request->servidor_responsavel,
+                'numero_portaria' => $request->numero_portaria,
+                'data_portaria' => $request->data_portaria,
             ]);
 
             return response()->json(['success' => 'Unidade atualizada com sucesso!']);

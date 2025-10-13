@@ -15,7 +15,9 @@ class Unidade extends Model
     protected $fillable = [
         'prefeitura_id',
         'nome',
-        'servidor_responsavel'
+        'servidor_responsavel',
+        'numero_portaria',
+        'data_portaria'
     ];
 
     public function prefeitura(): BelongsTo

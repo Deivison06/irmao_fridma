@@ -128,7 +128,7 @@
             DIRETORIA XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         </p>
 
-        <p style="text-align: justify;">Considerando a necessidade de {{ $processo->objeto }}, segue em anexo Minuta de
+        <p style="text-align: justify;">Considerando a necessidade de {{ $processo->objeto }} segue em anexo Minuta de
             Edital e Minuta do Contrato desenvolvido por este departamento. </p>
 
         <p>

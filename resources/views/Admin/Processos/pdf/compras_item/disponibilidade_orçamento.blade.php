@@ -162,7 +162,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
+                        {!! $processo->objeto !!}
                     </td>
                 </tr>
                 <tr>
@@ -183,7 +183,7 @@
                 </tr>
             </tbody>
         </table>
-        @if ($detalhe->tipo_srp == 'sim')
+        @if ($detalhe->tipo_srp == 'nao')
             <p style="text-indent: 30px; text-align: justify;">
                 <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da
                 previsão de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da
@@ -202,27 +202,8 @@
             <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
                 <tr>
                     <!-- Coluna da esquerda -->
-                    <td style="width: 50%; vertical-align: top; padding: 10px; border-right: 1px solid black;">
-                        <p style="margin-top: 0; margin-bottom: 10px;">
-                            Gestão/Unidade: [...];
-                        </p>
-                        <p style="margin-bottom: 10px;">
-                            Fonte de Recursos: [...];
-                        </p>
-                        <p style="margin-bottom: 10px;">
-                            Programa de Trabalho: [...];
-                        </p>
-                        <p style="margin-bottom: 10px;">
-                            Elemento de Despesa: [...];
-                        </p>
-                        <p style="margin-bottom: 0;">
-                            Plano Interno: [...];
-                        </p>
-                    </td>
-
-                    <!-- Coluna da direita -->
-                    <td style="width: 50%; border-left: 1px solid black; vertical-align: top; padding: 10px;">
-                        <!-- pode adicionar conteúdo aqui -->
+                    <td style="vertical-align: top; padding: 10px;">
+                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->dotacao_orcamentaria) !!}
                     </td>
                 </tr>
             </table>
