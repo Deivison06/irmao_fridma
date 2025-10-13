@@ -304,7 +304,7 @@
                                         </td>
                                         <td class="flex gap-2 px-6 py-4 text-center">
                                             <input type="date"
-                                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                class="w-40 px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                                                 id="{{ $doc['data_id'] }}"
                                                 value="{{ $documentoGerado->data_selecionada ?? '' }}">
 
