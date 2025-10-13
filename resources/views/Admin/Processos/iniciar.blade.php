@@ -302,11 +302,23 @@
                                                 </button>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 text-center">
+                                        <td class="flex gap-2 px-6 py-4 text-center">
                                             <input type="date"
                                                 class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                                                 id="{{ $doc['data_id'] }}"
                                                 value="{{ $documentoGerado->data_selecionada ?? '' }}">
+
+                                            @if ($tipo === 'parecer_juridico')
+                                                <!-- Dropdown de Parecer -->
+                                                <select id="parecer_select_{{ $tipo }}"
+                                                    name="parecer_select_{{ $tipo }}"
+                                                    class="block w-40 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                                    <option value="">Selecione o Parecer</option>
+                                                    <option value="parecer_1">Parecer 1</option>
+                                                    <option value="parecer_2">Parecer 2</option>
+                                                    <option value="parecer_3">Parecer 3</option>
+                                                </select>
+                                            @endif
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex justify-center space-x-2">
@@ -360,20 +372,6 @@
                                                         <div class="pb-4 mb-6 border-b border-gray-200">
                                                             <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
                                                                 Assinantes</h4>
-
-                                                            @if ($tipo === 'parecer_juridico')
-                                                                <!-- Dropdown de Parecer -->
-                                                                <div class="flex items-center mb-3 space-x-2">
-                                                                    <label for="parecer_select_{{ $tipo }}" class="text-sm font-medium text-gray-700">Parecer:</label>
-                                                                    <select id="parecer_select_{{ $tipo }}" name="parecer_select_{{ $tipo }}"
-                                                                        class="block w-40 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
-                                                                        <option value="">Selecione o Parecer</option>
-                                                                        <option value="parecer_1">Parecer 1</option>
-                                                                        <option value="parecer_2">Parecer 2</option>
-                                                                        <option value="parecer_3">Parecer 3</option>
-                                                                    </select>
-                                                                </div>
-                                                            @endif
 
                                                             <div id="assinantes-container-{{ $tipo }}">
                                                                 <div class="flex items-center mb-3 space-x-2">
@@ -1658,12 +1656,12 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        <div x-show="tipo_srp === 'nao'">
+                                                                            <div x-show="tipo_srp === 'nao'">
                                                                             @elseif($campo === 'dotacao_orcamentaria')
-                                                                                    <x-form-field name="dotacao_orcamentaria"
-                                                                                        label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
-                                                                                        type="textarea" />
-                                                                        </div>
+                                                                                <x-form-field name="dotacao_orcamentaria"
+                                                                                    label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
+                                                                                    type="textarea" />
+                                                                            </div>
                                                                         @elseif($campo === 'anexar_minuta')
                                                                             {{-- Campo de anexo PDF - Versão Melhorada --}}
                                                                             <div
@@ -1688,8 +1686,7 @@
 
                                                                                     {{-- Conteúdo principal --}}
                                                                                     <div class="flex-1 min-w-0">
-                                                                                        <label
-                                                                                            for="anexar_minuta"
+                                                                                        <label for="anexar_minuta"
                                                                                             class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
                                                                                             📎 Anexar PDF à Minutas
                                                                                         </label>
@@ -1704,8 +1701,7 @@
 
                                                                                             <div
                                                                                                 class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
-                                                                                                <span
-                                                                                                    id="anexo_pdf_minuta"
+                                                                                                <span id="anexo_pdf_minuta"
                                                                                                     class="text-sm font-medium text-gray-500">Clique
                                                                                                     para selecionar um
                                                                                                     arquivo</span>
@@ -2145,7 +2141,8 @@
                     const tinyMceFields = [
                         'demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
-                        'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos', 'dotacao_orcamentaria'
+                        'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
+                        'dotacao_orcamentaria'
                     ];
 
                     if (tinyMceFields.includes(field)) {
@@ -2174,7 +2171,7 @@
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }
-                    }else if (field === 'anexar_minuta') {
+                    } else if (field === 'anexar_minuta') {
                         const fileInput = document.getElementById('anexar_minuta');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
