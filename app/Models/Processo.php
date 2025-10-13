@@ -22,8 +22,6 @@ class Processo extends Model
         'objeto',
         'tipo_procedimento', // Novo campo
         'tipo_contratacao',  // Novo campo
-        'numero_portaria',  // Novo campo
-        'data_portaria',  // Novo campo
     ];
 
     // Cast para trabalhar com enum diretamente

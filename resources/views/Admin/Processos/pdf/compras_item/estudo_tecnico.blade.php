@@ -1762,7 +1762,7 @@
 
         <p style="text-align: justify; text-indent: 30px;">
             O {{ $primeiroAssinante['responsavel'] ?? '____________________' }},
-            nos termos da Portaria nº{{ $processo->numero_portaria }}, de {{ $processo->data_portaria?->translatedFormat('d \d\e F \d\e Y') }}, apresenta o Mapa de Gerenciamento de Risco,
+            nos termos da Portaria nº{{ $prefeitura->unidade->numero_portaria }}, de {{ $prefeitura->unidade->data_portaria?->translatedFormat('d \d\e F \d\e Y') }}, apresenta o Mapa de Gerenciamento de Risco,
             certificando que somos responsáveis pela elaboração do presente documento.
         </p>
 

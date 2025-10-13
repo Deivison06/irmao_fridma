@@ -221,7 +221,7 @@
                                             'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
                                             'cor' => 'bg-yellow-500',
                                             'data_id' => 'data_disponibilidade_orçamento',
-                                            'campos' => ['secretaria'],
+                                            'campos' => ['secretaria', 'dotacao_orcamentaria'],
                                         ],
                                         'termo_referencia' => [
                                             'titulo' => 'TERMO DE REFERÊNCIA',
@@ -239,7 +239,7 @@
                                             'titulo' => 'MINUTAS',
                                             'cor' => 'bg-pink-500',
                                             'data_id' => 'data_minutas',
-                                            'campos' => ['secretaria'],
+                                            'campos' => ['secretaria', 'anexar_minuta'],
                                         ],
                                         'parecer_juridico' => [
                                             'titulo' => 'PARECER JURÍDICO',
@@ -360,6 +360,20 @@
                                                         <div class="pb-4 mb-6 border-b border-gray-200">
                                                             <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
                                                                 Assinantes</h4>
+
+                                                            @if ($tipo === 'parecer_juridico')
+                                                                <!-- Dropdown de Parecer -->
+                                                                <div class="flex items-center mb-3 space-x-2">
+                                                                    <label for="parecer_select_{{ $tipo }}" class="text-sm font-medium text-gray-700">Parecer:</label>
+                                                                    <select id="parecer_select_{{ $tipo }}" name="parecer_select_{{ $tipo }}"
+                                                                        class="block w-40 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                                                        <option value="">Selecione o Parecer</option>
+                                                                        <option value="parecer_1">Parecer 1</option>
+                                                                        <option value="parecer_2">Parecer 2</option>
+                                                                        <option value="parecer_3">Parecer 3</option>
+                                                                    </select>
+                                                                </div>
+                                                            @endif
 
                                                             <div id="assinantes-container-{{ $tipo }}">
                                                                 <div class="flex items-center mb-3 space-x-2">
@@ -1545,7 +1559,9 @@
                                                                                         <label
                                                                                             for="portaria_agente_equipe_pdf"
                                                                                             class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
-                                                                                            📎 Anexar PDF à PORTARIA DE AGENTE DE CONTRATAÇÃO E EQUIPE DE APOIO
+                                                                                            📎 Anexar PDF à PORTARIA DE
+                                                                                            AGENTE DE CONTRATAÇÃO E EQUIPE
+                                                                                            DE APOIO
 
                                                                                         </label>
 
@@ -1559,7 +1575,8 @@
 
                                                                                             <div
                                                                                                 class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
-                                                                                                <span id="anexo_pdf_portaria"
+                                                                                                <span
+                                                                                                    id="anexo_pdf_portaria"
                                                                                                     class="text-sm font-medium text-gray-500">Clique
                                                                                                     para selecionar um
                                                                                                     arquivo</span>
@@ -1637,6 +1654,135 @@
                                                                                 {{-- Indicador de status --}}
                                                                                 <div class="absolute top-3 right-3">
                                                                                     <div x-show="confirmed.portaria_agente_equipe_pdf"
+                                                                                        class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        <div x-show="tipo_srp === 'nao'">
+                                                                            @elseif($campo === 'dotacao_orcamentaria')
+                                                                                    <x-form-field name="dotacao_orcamentaria"
+                                                                                        label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
+                                                                                        type="textarea" />
+                                                                        </div>
+                                                                        @elseif($campo === 'anexar_minuta')
+                                                                            {{-- Campo de anexo PDF - Versão Melhorada --}}
+                                                                            <div
+                                                                                class="relative p-6 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-emerald-300 hover:border-emerald-400 hover:shadow-md">
+                                                                                <div class="flex items-start space-x-4">
+                                                                                    {{-- Ícone --}}
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div
+                                                                                            class="p-3 transition-colors duration-300 rounded-lg bg-emerald-50 group-hover:bg-emerald-100">
+                                                                                            <svg class="w-6 h-6 text-emerald-600"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <label
+                                                                                            for="anexar_minuta"
+                                                                                            class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
+                                                                                            📎 Anexar PDF à Minutas
+                                                                                        </label>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="anexar_minuta"
+                                                                                                name="anexar_minuta"
+                                                                                                accept="application/pdf"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="document.getElementById('anexo_pdf_minuta').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado'">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span
+                                                                                                    id="anexo_pdf_minuta"
+                                                                                                    class="text-sm font-medium text-gray-500">Clique
+                                                                                                    para selecionar um
+                                                                                                    arquivo</span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-gray-400">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-medium">PDF</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-emerald-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            O arquivo será anexado
+                                                                                            automaticamente ao documento
+                                                                                            gerado
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col items-center pt-1 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('anexar_minuta')"
+                                                                                            x-show="!confirmed.anexar_minuta"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-emerald-500 hover:bg-emerald-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('anexar_minuta')"
+                                                                                            x-show="confirmed.anexar_minuta"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.anexar_minuta"
                                                                                         class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
                                                                                     </div>
                                                                                 </div>
@@ -1800,12 +1946,16 @@
                 return;
             }
 
+            const parecer = document.getElementById('parecer_select_' + documento)?.value || '';
             const assinantes = getAssinantes(documento);
             const assinantesJson = JSON.stringify(assinantes);
             const assinantesEncoded = encodeURIComponent(assinantesJson);
 
             let url = `/admin/processos/${processoId}/pdf?documento=${documento}&data=${data}`;
 
+            if (parecer) {
+                url += `&parecer=${parecer}`;
+            }
             if (assinantes.length > 0) {
                 url += `&assinantes=${assinantesEncoded}`;
             }
@@ -1908,6 +2058,8 @@
                 encaminhamento_autorizacao_abertura: existing?.encaminhamento_autorizacao_abertura ?? '',
                 valor_estimado: existing?.valor_estimado ?? '',
                 portaria_agente_equipe_pdf: existing?.portaria_agente_equipe_pdf ?? '',
+                dotacao_orcamentaria: existing?.dotacao_orcamentaria ?? '',
+                anexar_minuta: existing?.anexar_minuta ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -1952,6 +2104,8 @@
                     encaminhamento_autorizacao_abertura: !!existing?.encaminhamento_autorizacao_abertura,
                     valor_estimado: !!existing?.valor_estimado,
                     portaria_agente_equipe_pdf: !!existing?.portaria_agente_equipe_pdf,
+                    anexar_minuta: !!existing?.anexar_minuta,
+                    dotacao_orcamentaria: !!existing?.dotacao_orcamentaria,
                 },
 
                 onUnidadeChange() {
@@ -1991,7 +2145,7 @@
                     const tinyMceFields = [
                         'demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
-                        'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos'
+                        'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos', 'dotacao_orcamentaria'
                     ];
 
                     if (tinyMceFields.includes(field)) {
@@ -2017,6 +2171,11 @@
                         }
                     } else if (field === 'portaria_agente_equipe_pdf') {
                         const fileInput = document.getElementById('portaria_agente_equipe_pdf');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    }else if (field === 'anexar_minuta') {
+                        const fileInput = document.getElementById('anexar_minuta');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }

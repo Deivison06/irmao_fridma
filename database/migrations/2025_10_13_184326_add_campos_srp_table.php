@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('unidades', function (Blueprint $table) {
-            $table->string('numero_portaria', 20)->nullable();
-            $table->date('data_portaria')->nullable();
+        Schema::table('processo_detalhes', function (Blueprint $table) {
+            $table->text('dotacao_orcamentaria')->nullable();
+            $table->string('anexar_minuta')->nullable();
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('unidades', function (Blueprint $table) {
-            $table->dropColumn(['numero_portaria', 'data_portaria']);
+        Schema::table('processo_detalhes', function (Blueprint $table) {
+            $table->dropColumn(['dotacao_orcamentaria', 'anexar_minuta']);
         });
     }
 };

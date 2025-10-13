@@ -155,8 +155,12 @@
                                     <tr>
                                         <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Nome
                                         </th>
-                                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Servidor Responsável</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Servidor
+                                            Responsável</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Nº
+                                            Portaria</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Data da
+                                            Portaria</th>
                                         <th class="px-6 py-3 text-xs font-medium text-center text-gray-500 uppercase">Ações
                                         </th>
                                     </tr>
@@ -166,6 +170,10 @@
                                         <tr id="unidade-row-{{ $unidade->id }}">
                                             <td class="px-6 py-4">{{ $unidade->nome }}</td>
                                             <td class="px-6 py-4">{{ $unidade->servidor_responsavel }}</td>
+                                            <td class="px-6 py-4">{{ $unidade->numero_portaria ?? '—' }}</td>
+                                            <td class="px-6 py-4">
+                                                {{ $unidade->data_portaria ? \Carbon\Carbon::parse($unidade->data_portaria)->format('d/m/Y') : '—' }}
+                                            </td>
                                             <td class="px-6 py-4 text-center">
                                                 <button type="button"
                                                     class="text-yellow-600 hover:underline edit-unidade"
@@ -176,6 +184,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+
                             </table>
                         </div>
                     @else
@@ -258,6 +267,30 @@
                                 placeholder="Ex: João da Silva">
                         </div>
                         <p id="unidade-servidor-error" class="hidden text-sm text-red-600 animate-pulse"></p>
+                    </div>
+
+                    {{-- Nº PORTARIA --}}
+                    <div>
+                        <label for="numero_portaria" class="block text-sm font-medium text-gray-700">Nº da
+                            Portaria</label>
+                        <input type="text" name="numero_portaria" id="numero_portaria"
+                            value="{{ old('numero_portaria') }}"
+                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                        @error('numero_portaria')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- DATA DA PORTARIA --}}
+                    <div>
+                        <label for="data_portaria" class="block text-sm font-medium text-gray-700">Data da
+                            Portaria</label>
+                        <input type="date" name="data_portaria" id="data_portaria"
+                            value="{{ old('data_portaria') }}"
+                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                        @error('data_portaria')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Footer do Modal -->
@@ -366,6 +399,9 @@
                             unidadeId.value = data.id;
                             unidadeNome.value = data.nome;
                             unidadeServidor.value = data.servidor_responsavel;
+                            document.getElementById('numero_portaria').value = data.numero_portaria ??
+                                '';
+                            document.getElementById('data_portaria').value = data.data_portaria ?? '';
                             openModal();
                         })
                         .catch(error => {
@@ -404,7 +440,9 @@
                         },
                         body: JSON.stringify({
                             nome: unidadeNome.value,
-                            servidor_responsavel: unidadeServidor.value
+                            servidor_responsavel: unidadeServidor.value,
+                            numero_portaria: document.getElementById('numero_portaria').value,
+                            data_portaria: document.getElementById('data_portaria').value
                         })
                     })
                     .then(response => response.json())
