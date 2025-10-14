@@ -230,8 +230,7 @@
         </p>
         <p>
             JUSTIFICATIVA DA CONTRATAÇÃO:
-            <br>
-            {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
+            {!! str_replace('<p>', '<p style="text-align: justify;">', $detalhe->justificativa) !!}
         </p>
 
         <p>MODALIDADE: {{ $processo->modalidade->getDisplayName() }}</p>
