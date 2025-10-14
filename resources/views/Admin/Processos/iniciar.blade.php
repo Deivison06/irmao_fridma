@@ -1276,8 +1276,7 @@
                                                                                     <label
                                                                                         for="encaminhamento_elaborar_editais"
                                                                                         class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Encaminhamento para pesquisa de
-                                                                                        Preços
+                                                                                        Encaminhamento para ELABORAÇÃO DE EDITAL E MINUTA DE CONTRATO
                                                                                     </label>
                                                                                     <select
                                                                                         id="encaminhamento_elaborar_editais"
@@ -1324,8 +1323,7 @@
                                                                                     <label
                                                                                         for="encaminhamento_parecer_juridico"
                                                                                         class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Encaminhamento para pesquisa de
-                                                                                        Preços
+                                                                                        Encaminhamento para ELABORAÇÃO DE PARECER JURÍDICO
                                                                                     </label>
                                                                                     <select
                                                                                         id="encaminhamento_parecer_juridico"
@@ -1372,8 +1370,7 @@
                                                                                     <label
                                                                                         for="encaminhamento_autorizacao_abertura"
                                                                                         class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Encaminhamento para pesquisa de
-                                                                                        Preços
+                                                                                        Encaminhamento para AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA AUTORIDADE COMPETENTE
                                                                                     </label>
                                                                                     <select
                                                                                         id="encaminhamento_autorizacao_abertura"
@@ -1668,12 +1665,12 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div x-show="tipo_srp == 'nao'">
-                                                                            @elseif($campo === 'dotacao_orcamentaria')
+                                                                        @elseif($campo === 'dotacao_orcamentaria')
+                                                                            @if($processo->detalhe->tipo_srp == 'nao')
                                                                                 <x-form-field name="dotacao_orcamentaria"
                                                                                     label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
                                                                                     type="textarea" />
-                                                                            </div>
+                                                                            @endif
                                                                         @elseif($campo === 'anexar_minuta')
                                                                             {{-- Campo de anexo PDF - Versão Melhorada --}}
                                                                             <div
