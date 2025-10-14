@@ -1762,7 +1762,14 @@
 
         <p style="text-align: justify; text-indent: 30px;">
             O {{ $primeiroAssinante['responsavel'] ?? '____________________' }},
-            nos termos da Portaria nº, de , apresenta o Mapa de Gerenciamento de Risco,
+            nos termos da Portaria nº{{  $primeiroAssinante['numero_portaria'] }},
+            de
+            {{
+                !empty($primeiroAssinante['data_portaria'])
+                    ? \Carbon\Carbon::parse($primeiroAssinante['data_portaria'])->translatedFormat('d \d\e F \d\e Y')
+                    : '____________________'
+            }},
+            apresenta o Mapa de Gerenciamento de Risco,
             certificando que somos responsáveis pela elaboração do presente documento.
         </p>
 

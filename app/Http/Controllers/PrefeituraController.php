@@ -35,7 +35,12 @@ class PrefeituraController extends Controller
         ]);
 
         $data = $request->only([
-            'nome', 'cnpj', 'endereco', 'telefone', 'email', 'autoridade_competente'
+            'nome',
+            'cnpj',
+            'endereco',
+            'telefone',
+            'email',
+            'autoridade_competente'
         ]);
 
         // Upload da capa
@@ -88,7 +93,12 @@ class PrefeituraController extends Controller
         $prefeitura = Prefeitura::findOrFail($id);
 
         $data = $request->only([
-            'nome', 'cnpj', 'endereco', 'telefone', 'email', 'autoridade_competente'
+            'nome',
+            'cnpj',
+            'endereco',
+            'telefone',
+            'email',
+            'autoridade_competente'
         ]);
 
         // Upload da capa (se houver)
@@ -142,5 +152,4 @@ class PrefeituraController extends Controller
 
         return view('dashboard', compact('processos', 'prefeituras'));
     }
-
 }

@@ -13,6 +13,8 @@
                 'id' => $unidade->id,
                 'nome' => $unidade->nome,
                 'servidor_responsavel' => $unidade->servidor_responsavel,
+                'numero_portaria' => $unidade->numero_portaria,
+                'data_portaria' => $unidade->data_portaria,
             ];
         });
     @endphp
@@ -191,11 +193,8 @@
                                             'cor' => 'bg-purple-500',
                                             'data_id' => 'data_estudo_tecnico',
                                             'campos' => [
-                                                'secretaria',
                                                 'alinhamento_planejamento_anual',
-                                                'responsavel_equipe_planejamento',
                                                 'problema_resolvido',
-                                                'justificativa',
                                                 'descricao_necessidade',
                                                 'inversao_fase',
                                                 'solucoes_disponivel_mercado',
@@ -370,45 +369,58 @@
 
                                                         <!-- Seção de Assinantes -->
                                                         <div class="pb-4 mb-6 border-b border-gray-200">
-                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Seleção de
-                                                                Assinantes</h4>
+                                                            <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
 
-                                                            <div id="assinantes-container-{{ $tipo }}">
-                                                                <div class="flex items-center mb-3 space-x-2">
+                                                            <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
+                                                                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                                                                     {{-- Select da Unidade --}}
-                                                                    <div class="flex-1">
-                                                                        <label class="sr-only">Unidade</label>
-                                                                        <select name="assinante_unidade[]"
-                                                                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
-                                                                            onchange="updateResponsavel(this, '{{ $tipo }}')">
-                                                                            <option value="">Selecione a Unidade
-                                                                            </option>
+                                                                    <div class="flex-1 min-w-[180px]">
+                                                                        <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
+                                                                            Unidade
+                                                                        </label>
+                                                                        <select
+                                                                            name="assinante_unidade[]"
+                                                                            id="assinante_unidade_{{ $tipo }}"
+                                                                            class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
+                                                                            onchange="updateResponsavel(this, '{{ $tipo }}')"
+                                                                        >
+                                                                            <option value="">Selecione a Unidade</option>
                                                                             @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                <option value="{{ $unidade->id }}">
-                                                                                    {{ $unidade->nome }}
-                                                                                </option>
+                                                                                <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
 
-                                                                    {{-- Input do Responsável --}}
-                                                                    <div class="flex-1">
-                                                                        <label class="sr-only">Responsável</label>
-                                                                        <input type="text"
-                                                                            name="assinante_responsavel[]"
-                                                                            placeholder="Nome do Responsável" readonly
-                                                                            class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                                                                    {{-- Input do Responsável e (opcionalmente) Portaria --}}
+                                                                    <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
+                                                                        {{-- Nome do Responsável --}}
+                                                                        <div class="flex-1 min-w-[200px]">
+                                                                            <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                Responsável
+                                                                            </label>
+                                                                            <input
+                                                                                type="text"
+                                                                                name="assinante_responsavel[]"
+                                                                                placeholder="Nome do Responsável"
+                                                                                readonly
+                                                                                class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
+                                                                            >
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <button type="button"
-                                                                onclick="adicionarAssinante('{{ $tipo }}')"
-                                                                class="px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                                                                + Adicionar Assinante
-                                                            </button>
+                                                            {{-- Botão de adicionar assinante --}}
+                                                            <div class="mt-4">
+                                                                <button
+                                                                    type="button"
+                                                                    onclick="adicionarAssinante('{{ $tipo }}')"
+                                                                    class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300"
+                                                                >
+                                                                    + Adicionar Assinante
+                                                                </button>
+                                                            </div>
                                                         </div>
-
                                                         <!-- Seção de Campos do Formulário -->
                                                         <div>
                                                             <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do
@@ -1656,7 +1668,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div x-show="tipo_srp === 'nao'">
+                                                                            <div x-show="tipo_srp == 'nao'">
                                                                             @elseif($campo === 'dotacao_orcamentaria')
                                                                                 <x-form-field name="dotacao_orcamentaria"
                                                                                     label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
@@ -1821,25 +1833,27 @@
 
     <script>
         document.addEventListener('alpine:init', () => {
-        // Inicializa TinyMCE em todos os textareas com x-ref terminando em _editor
-        document.querySelectorAll('textarea[x-ref$="_editor"]').forEach(textarea => {
-            tinymce.init({
-                selector: '#' + textarea.id,
-                plugins: 'lists link table code charmap emoticons',
-                toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
-                menubar: false,
-                branding: false,
-                height: 300,
-                setup: function(editor) {
-                    editor.on('change keyup', function() {
-                        // Atualiza o valor do textarea e dispara evento input para Alpine
-                        textarea.value = editor.getContent();
-                        textarea.dispatchEvent(new Event('input', { bubbles: true }));
-                    });
-                }
+            // Inicializa TinyMCE em todos os textareas com x-ref terminando em _editor
+            document.querySelectorAll('textarea[x-ref$="_editor"]').forEach(textarea => {
+                tinymce.init({
+                    selector: '#' + textarea.id,
+                    plugins: 'lists link table code charmap emoticons',
+                    toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
+                    menubar: false,
+                    branding: false,
+                    height: 300,
+                    setup: function(editor) {
+                        editor.on('change keyup', function() {
+                            // Atualiza o valor do textarea e dispara evento input para Alpine
+                            textarea.value = editor.getContent();
+                            textarea.dispatchEvent(new Event('input', {
+                                bubbles: true
+                            }));
+                        });
+                    }
+                });
             });
         });
-    });
         // Inicialização da funcionalidade de acordeão
         document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
             button.addEventListener('click', () => {
@@ -1869,7 +1883,7 @@
                 <div class="flex-1">
                     <label class="sr-only">Unidade</label>
                     <select name="assinante_unidade[]"
-                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select"
+                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select min-w-[300px]"
                             onchange="updateResponsavel(this, '${tipoDocumento}')">
                         <option value="">Selecione a Unidade</option>
                         @foreach ($processo->prefeitura->unidades as $unidade)
@@ -1881,7 +1895,7 @@
                     <label class="sr-only">Responsável</label>
                     <input type="text" name="assinante_responsavel[]"
                            placeholder="Nome do Responsável" readonly
-                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input">
+                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input min-w-[300px]">
                 </div>
                 <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
                         class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
@@ -1902,12 +1916,12 @@
         function updateResponsavel(select, tipoDocumento) {
             const selectedUnidadeId = select.value;
             const selectedUnidade = unidadesAssinantes.find(u => u.id == selectedUnidadeId);
-            const responsavelInput = select.closest('.flex.items-center').querySelector('.responsavel-input');
+            const assinanteDiv = select.closest('.flex.items-center');
 
-            if (responsavelInput && selectedUnidade) {
-                responsavelInput.value = selectedUnidade.servidor_responsavel;
-            } else if (responsavelInput) {
-                responsavelInput.value = '';
+            // Preenche o campo responsável
+            const responsavelInput = assinanteDiv.querySelector('.responsavel-input');
+            if (responsavelInput) {
+                responsavelInput.value = selectedUnidade?.servidor_responsavel || '';
             }
         }
 
@@ -1924,7 +1938,9 @@
                         assinantes.push({
                             unidade_id: unidade.id,
                             unidade_nome: unidade.nome,
-                            responsavel: unidade.servidor_responsavel
+                            responsavel: unidade.servidor_responsavel,
+                            numero_portaria: unidade.numero_portaria,
+                            data_portaria: unidade.data_portaria,
                         });
                     }
                 }
