@@ -10,7 +10,7 @@
 
         @if ($type === 'textarea')
             <textarea id="{{ $name }}" x-model="{{ $name }}" x-ref="{{ $name }}_editor"
-                :disabled="confirmed.{{ $name }}" rows="3"
+                :disabled="confirmed.{{ $name }}" rows="3" @input="{{ $name }} = $event.target.value"
                 class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm"></textarea>
         @else
             <input type="text" id="{{ $name }}" x-model="{{ $name }}"

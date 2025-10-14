@@ -465,7 +465,7 @@
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
         </div>
-        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {{ $processo->objeto }} da
+        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {!! $processo->objeto !!} da
             {{ $processo->prefeitura->nome }}: </p>
 
         {!! preg_replace(
@@ -761,7 +761,7 @@
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
         <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
-            {{ $processo->objeto }}, de forma a melhor atender as necessidades do município de
+            {!! $processo->objeto !!}, de forma a melhor atender as necessidades do município de
             {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
@@ -1806,7 +1806,7 @@
         @if ($detalhe->prevista_plano_anual == 'sim')
             <p>
                 Declaro, para os devidos fins, que a presente demanda referente à
-                <strong>{{ $processo->objeto }}</strong>
+                <strong>{!! $processo->objeto !!}</strong>
                 encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
                     [ano]</strong>,
                 elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
@@ -1935,7 +1935,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
+                        {!! $processo->objeto !!}
                     </td>
                 </tr>
                 <tr>

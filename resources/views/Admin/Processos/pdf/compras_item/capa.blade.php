@@ -100,7 +100,7 @@
 
                 <div class="objeto-titulo">OBJETO:</div>
                 <div class="objeto">
-                    {{ $processo->objeto }}
+                    {!! $processo->objeto !!}
                 </div>
             </div>
         </div>

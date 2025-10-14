@@ -156,7 +156,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
+                        {!! $processo->objeto !!}
                     </td>
                 </tr>
                 <tr>

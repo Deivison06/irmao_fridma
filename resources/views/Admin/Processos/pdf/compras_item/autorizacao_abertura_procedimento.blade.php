@@ -172,7 +172,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
+                        {!! $processo->objeto !!}
                     </td>
                 </tr>
                 <tr>
@@ -199,7 +199,7 @@
         </p>
         <p style="text-indent: 30px">
             Trata-se de demanda da {{ $detalhe->unidade_setor }}, para contratação de
-            {{ $processo->objeto }}.
+            {!! $processo->objeto !!}.
         </p>
         <p style="text-indent: 30px">
             O valor estimado para pretendida contratação é de R$ {{ $detalhe->valor_estimado }},

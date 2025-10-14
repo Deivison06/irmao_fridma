@@ -153,7 +153,7 @@
             Submeteu-se ao crivo dessa assessoria a análise dos aspectos jurídicos relativos à abertura do PROCESSO
             ADMINISTRATIVO N° {{ $processo->numero_processo }}, PREGÃO ELETRÔNICO N°
             {{ $processo->numero_procedimento }} cujo objeto é a:
-            “{{ $processo->objeto }}”
+            “{!! $processo->objeto !!}”
         </p>
         <p style="text-indent: 30px; text-align: justify;">
             Seguindo a liturgia de praxe, os autos foram submetidos à análise desta assessoria jurídica,
@@ -410,7 +410,7 @@
         <p style="font-weight: bold; margin-top: 200px;">PREGÃO ELETRÔNICO Nº {{ $processo->numero_procedimento }}
             <br>
             PROCESSO ADMINISTRATIVO Nº {{ $processo->numero_processo }} <br>
-            OBJETO: <br> {{ $processo->objeto }}
+            OBJETO: <br> {!! $processo->objeto !!}
         </p>
 
         <p style="text-indent: 30px">
@@ -1688,7 +1688,7 @@
             PARECER JURÍDICO Nº XXX/2025 <br>
             PROCESSO ADMINISTRATIVO Nº {{ $processo->numero_processo }}<br>
             PREGÃO ELETRÔNICO Nº{{ $processo->numero_procedimento }}<br>
-            OBJETO:<br> {{ $processo->objeto }}
+            OBJETO:<br> {!! $processo->objeto !!}
         </p>
 
         <p style="font-weight: bold;">
@@ -1697,7 +1697,7 @@
 
         <p style="text-indent: 30px">
             Trata-se de análise jurídica requerida pelo Pregoeiro acerca da regularidade do Pregão
-            Eletrônico objetivando o “{{ $processo->objeto }}”.
+            Eletrônico objetivando o “{!! $processo->objeto !!}”.
         </p>
         <p style="text-indent: 30px">
             Consta, ainda, no bojo do procedimento a Pesquisa de Preço direta com fornecedores

@@ -157,7 +157,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {{ $processo->objeto }}
+                        {!! $processo->objeto !!}
                     </td>
                 </tr>
                 <tr>
@@ -182,7 +182,7 @@
         <p style="text-indent: 30px">
             A {{ $detalhe->unidade_setor }}, encaminhou para esta unidade a necessidade
             de realização de Cotação referente a itens relacionados ao objeto
-            <span style="font-weight: bold;">“{{ $processo->objeto }}”</span>, ato seguido, foi realizado a cotação
+            <span style="font-weight: bold;">“{!! $processo->objeto !!}”</span>, ato seguido, foi realizado a cotação
             junto ao Painel de Preços
             do TCE-PI, conforme tabela abaixo:
         </p>

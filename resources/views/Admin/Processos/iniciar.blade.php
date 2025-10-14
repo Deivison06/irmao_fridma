@@ -111,7 +111,7 @@
                                 </tr>
                                 <tr class="bg-gray-50">
                                     <td colspan="6" class="px-6 py-4 text-sm text-gray-700">
-                                        <strong>Objeto:</strong> {{ $processo->objeto }}
+                                        <strong>Objeto:</strong> {!! $processo->objeto !!}
                                     </td>
                                 </tr>
                             </tbody>
@@ -1820,27 +1820,26 @@
     </div>
 
     <script>
-        // Inicialização do TinyMCE
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'lists link table code charmap emoticons',
-            toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
-            menubar: false,
-            branding: false,
-            height: 300,
-            setup: function(editor) {
-                editor.on('change keyup', function() {
-                    // Obtém o nome do campo pelo id do textarea
-                    const fieldName = editor.id;
-                    // Atualiza o Alpine
-                    const alpineComponent = document.querySelector('[x-data]').__x.$data;
-                    if (alpineComponent && fieldName in alpineComponent) {
-                        alpineComponent[fieldName] = editor.getContent();
-                    }
-                });
-            }
+        document.addEventListener('alpine:init', () => {
+        // Inicializa TinyMCE em todos os textareas com x-ref terminando em _editor
+        document.querySelectorAll('textarea[x-ref$="_editor"]').forEach(textarea => {
+            tinymce.init({
+                selector: '#' + textarea.id,
+                plugins: 'lists link table code charmap emoticons',
+                toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
+                menubar: false,
+                branding: false,
+                height: 300,
+                setup: function(editor) {
+                    editor.on('change keyup', function() {
+                        // Atualiza o valor do textarea e dispara evento input para Alpine
+                        textarea.value = editor.getContent();
+                        textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                    });
+                }
+            });
         });
-
+    });
         // Inicialização da funcionalidade de acordeão
         document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
             button.addEventListener('click', () => {
