@@ -214,20 +214,20 @@
                                             'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
                                             'cor' => 'bg-green-500',
                                             'data_id' => 'data_analise_mercado',
-                                            'campos' => ['secretaria', 'painel_preco_tce', 'anexo_pdf_analise_mercado'],
+                                            'campos' => [ 'painel_preco_tce', 'anexo_pdf_analise_mercado'],
                                         ],
                                         'disponibilidade_orçamento' => [
                                             'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
                                             'cor' => 'bg-yellow-500',
                                             'data_id' => 'data_disponibilidade_orçamento',
-                                            'campos' => ['secretaria', 'dotacao_orcamentaria'],
+                                            'campos' => [ 'dotacao_orcamentaria'],
                                         ],
                                         'termo_referencia' => [
                                             'titulo' => 'TERMO DE REFERÊNCIA',
                                             'cor' => 'bg-orange-500',
                                             'data_id' => 'data_termo_referencia',
                                             'campos' => [
-                                                'secretaria',
+
                                                 'encaminhamento_elaborar_editais',
                                                 'encaminhamento_parecer_juridico',
                                                 'encaminhamento_autorizacao_abertura',
@@ -238,7 +238,7 @@
                                             'titulo' => 'MINUTAS',
                                             'cor' => 'bg-pink-500',
                                             'data_id' => 'data_minutas',
-                                            'campos' => ['secretaria', 'anexar_minuta'],
+                                            'campos' => [ 'anexar_minuta'],
                                         ],
                                         'parecer_juridico' => [
                                             'titulo' => 'PARECER JURÍDICO',
@@ -250,19 +250,19 @@
                                             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
                                             'cor' => 'bg-teal-500',
                                             'data_id' => 'data_autorizacao_abertura_procedimento',
-                                            'campos' => ['secretaria', 'portaria_agente_equipe_pdf'],
+                                            'campos' => [ 'portaria_agente_equipe_pdf'],
                                         ],
                                         'abertura_fase_externa' => [
                                             'titulo' => 'ABERTURA FASE EXTERNA',
                                             'cor' => 'bg-cyan-500',
                                             'data_id' => 'data_abertura_fase_externa',
-                                            'campos' => ['secretaria'],
+                                            'campos' => [],
                                         ],
                                         'publicacoes_avisos_licitacao' => [
                                             'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
                                             'cor' => 'bg-indigo-500',
                                             'data_id' => 'data_publicacoes_avisos_licitacao',
-                                            'campos' => ['secretaria'],
+                                            'campos' => [],
                                         ],
                                     ];
                                 @endphp
@@ -1415,7 +1415,7 @@
                                                                             </div>
                                                                         @elseif($campo === 'valor_estimado')
                                                                             <x-form-field name="valor_estimado"
-                                                                                label="valor_estimado" />
+                                                                                label="Valor Estimado" />
                                                                         @elseif($campo === 'anexo_pdf_analise_mercado')
                                                                             {{-- Campo de anexo PDF - Versão Melhorada --}}
                                                                             <div
