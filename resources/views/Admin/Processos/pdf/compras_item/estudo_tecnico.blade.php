@@ -226,8 +226,7 @@
                                 <img src="{{ public_path('icons/Imagem2.png') }}" width="40">
                             </td>
                             <td class="content">
-                                <div style=" font-weight: bold; margin-bottom: 3px;">Alinhamento com o
-                                    Planejamento Anual</div>
+                                <div style=" font-weight: bold; margin-bottom: 3px;">Alinhamento com o Planejamento Anual</div>
                                 <div style="font-size: 14px">{{ $detalhe->alinhamento_planejamento_anual }}</div>
                             </td>
                         </tr>

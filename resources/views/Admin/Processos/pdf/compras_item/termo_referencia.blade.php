@@ -180,7 +180,7 @@
 
         <p style="text-indent: 30px; margin-top: 20px; text-align: justify;">
             Esta Secretaria solicitou a elaboração de ETP, Mapa de Riscos, Cotação de Mercado e emissão de Dotação
-            Orçamentária acerca da XXXXXXXXXXXXXXXXXXXXXXXXXXXXX, após sanada as solicitações, foi elaborado o Termo de
+            Orçamentária acerca da {{ $processo->objeto }}, após sanada as solicitações, foi elaborado o Termo de
             Referência, encaminha-se para:
         </p>
 

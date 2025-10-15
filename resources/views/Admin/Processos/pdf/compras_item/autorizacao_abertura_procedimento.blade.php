@@ -255,7 +255,7 @@
         @if ($hasSelectedAssinantes)
             {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
             @php
-                $primeiroAssinante = $assinantes[1]; // Pega o segundo item
+                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
             @endphp
 
             <div style="margin-top: 40px; text-align: center;">
