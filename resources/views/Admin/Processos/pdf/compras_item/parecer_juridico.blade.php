@@ -386,7 +386,7 @@
 
         <p style="text-indent: 30px; text-align: justify;">
             Ante o exposto, estando configurada a regularidade do procedimento adotado, com esteio
-            na legislação vigente, <strong>OPINO PELA APROVAÇÃO DA FASE INTERNA</strong>, a fim de que seja
+            na legislação vigente, <span style="font-weight: bold;">OPINO PELA APROVAÇÃO DA FASE INTERNA</span>, a fim de que seja
             autorizado o início da fase externa do referido certame.
         </p>
         <p style="text-indent: 30px;">
