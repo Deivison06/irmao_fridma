@@ -1666,11 +1666,9 @@
                                                                                 </div>
                                                                             </div>
                                                                         @elseif($campo === 'dotacao_orcamentaria')
-                                                                            @if($processo->detalhe->tipo_srp == 'nao')
-                                                                                <x-form-field name="dotacao_orcamentaria"
-                                                                                    label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
-                                                                                    type="textarea" />
-                                                                            @endif
+                                                                            <x-form-field name="dotacao_orcamentaria"
+                                                                                label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
+                                                                                type="textarea" />
                                                                         @elseif($campo === 'anexar_minuta')
                                                                             {{-- Campo de anexo PDF - Versão Melhorada --}}
                                                                             <div
