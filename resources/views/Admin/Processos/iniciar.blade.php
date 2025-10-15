@@ -177,9 +177,7 @@
                                                 'local_entrega',
                                                 'contratacoes_anteriores',
                                                 'instrumento_vinculativo',
-                                                'instrumento_vinculativo_outro',
                                                 'prazo_vigencia',
-                                                'prazo_vigencia_outro',
                                                 'objeto_continuado',
                                                 'descricao_necessidade_autorizacao',
                                                 'responsavel_equipe_planejamento',
@@ -224,7 +222,6 @@
                                             'cor' => 'bg-orange-500',
                                             'data_id' => 'data_termo_referencia',
                                             'campos' => [
-
                                                 'encaminhamento_elaborar_editais',
                                                 'encaminhamento_parecer_juridico',
                                                 'encaminhamento_autorizacao_abertura',
@@ -241,7 +238,7 @@
                                             'titulo' => 'PARECER JURÍDICO',
                                             'cor' => 'bg-emerald-500',
                                             'data_id' => 'data_parecer_juridico',
-                                            'campos' => ['secretaria'],
+                                            'campos' => [],
                                         ],
                                         'autorizacao_abertura_procedimento' => [
                                             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
@@ -433,7 +430,7 @@
                                                                 @foreach ($doc['campos'] as $campo)
                                                                     <div class="p-3 mb-3 bg-white border border-gray-200 rounded-lg">
                                                                         {{-- Grupo: IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE --}}
-                                                                        @if($campo === 'secretaria') {{-- MUDANÇA AQUI: Renderiza o grupo APENAS quando o campo é 'secretaria' --}}
+                                                                        @if($campo === 'secretaria')
                                                                             <div class="mb-6">
                                                                                 <div class="pb-2 mb-4 border-b-2 border-gray-300">
                                                                                     <h3 class="text-lg font-bold text-gray-800">IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE</h3>
