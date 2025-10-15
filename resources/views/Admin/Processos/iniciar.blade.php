@@ -172,9 +172,6 @@
                                             'data_id' => 'data_formalizacao',
                                             'campos' => [
                                                 'secretaria',
-                                                'unidade_setor',
-                                                'servidor_responsavel',
-                                                'demanda',
                                                 'justificativa',
                                                 'prazo_entrega',
                                                 'local_entrega',
@@ -434,72 +431,59 @@
                                                                     value="{{ $processo->id }}">
 
                                                                 @foreach ($doc['campos'] as $campo)
-                                                                    <div
-                                                                        class="p-3 mb-3 bg-white border border-gray-200 rounded-lg">
-                                                                        @if ($campo === 'secretaria')
-                                                                            <x-form-field name="secretaria"
-                                                                                label="Secretaria" />
-                                                                        @elseif($campo === 'unidade_setor')
-                                                                            <div class="flex items-start space-x-2">
-                                                                                <div class="flex-1">
-                                                                                    <label for="unidade_setor"
-                                                                                        class="block mb-1 text-sm font-medium text-gray-700">
-                                                                                        Unidade / Setor / Departamento
-                                                                                    </label>
-                                                                                    <select id="unidade_setor"
-                                                                                        x-model="unidade_setor"
-                                                                                        @change="onUnidadeChange"
-                                                                                        :disabled="confirmed.unidade_setor"
-                                                                                        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
-                                                                                        <option value="">Selecione
-                                                                                            uma unidade</option>
-                                                                                        @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                            <option
-                                                                                                value="{{ $unidade->nome }}"
-                                                                                                data-responsavel="{{ $unidade->servidor_responsavel }}"
-                                                                                                {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
-                                                                                                {{ $unidade->nome }}
-                                                                                            </option>
-                                                                                        @endforeach
-                                                                                    </select>
+                                                                    <div class="p-3 mb-3 bg-white border border-gray-200 rounded-lg">
+                                                                        {{-- Grupo: IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE --}}
+                                                                        @if($campo === 'secretaria') {{-- MUDANÇA AQUI: Renderiza o grupo APENAS quando o campo é 'secretaria' --}}
+                                                                            <div class="mb-6">
+                                                                                <div class="pb-2 mb-4 border-b-2 border-gray-300">
+                                                                                    <h3 class="text-lg font-bold text-gray-800">IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE</h3>
                                                                                 </div>
-                                                                                <div class="flex pt-6 space-x-1">
-                                                                                    <button type="button"
-                                                                                        @click="saveField('unidade_setor')"
-                                                                                        x-show="!confirmed.unidade_setor"
-                                                                                        :disabled="!unidade_setor"
-                                                                                        class="px-3 py-2 text-white transition rounded-lg"
-                                                                                        :class="!unidade_setor ?
-                                                                                            'bg-gray-400 cursor-not-allowed' :
-                                                                                            'bg-green-500 hover:bg-green-600'">
-                                                                                        ✔
-                                                                                    </button>
-                                                                                    <button type="button"
-                                                                                        @click="toggleConfirm('unidade_setor')"
-                                                                                        x-show="confirmed.unidade_setor"
-                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                                                        ✖
-                                                                                    </button>
+                                                                                {{-- Campos do grupo --}}
+                                                                                <x-form-field name="secretaria" label="Secretaria" />
+                                                                                <div class="mb-6">
+                                                                                    <div class="flex items-start space-x-2">
+                                                                                        <div class="flex-1">
+                                                                                            <label for="unidade_setor" class="block mb-1 text-sm font-medium text-gray-700">
+                                                                                                Unidade / Setor / Departamento
+                                                                                            </label>
+                                                                                            <select id="unidade_setor" x-model="unidade_setor" @change="onUnidadeChange"
+                                                                                                :disabled="confirmed.unidade_setor"
+                                                                                                class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
+                                                                                                <option value="">Selecione uma unidade</option>
+                                                                                                @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                                    <option value="{{ $unidade->nome }}" data-responsavel="{{ $unidade->servidor_responsavel }}"
+                                                                                                        {{ ($processo->detalhe->unidade_setor ?? '') == $unidade->nome ? 'selected' : '' }}>
+                                                                                                        {{ $unidade->nome }}
+                                                                                                    </option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="flex pt-6 space-x-1">
+                                                                                            <button type="button" @click="saveField('unidade_setor')" x-show="!confirmed.unidade_setor"
+                                                                                                :disabled="!unidade_setor" class="px-3 py-2 text-white transition rounded-lg"
+                                                                                                :class="!unidade_setor ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'">
+                                                                                                ✔
+                                                                                            </button>
+                                                                                            <button type="button" @click="toggleConfirm('unidade_setor')" x-show="confirmed.unidade_setor"
+                                                                                                class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                                ✖
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        @elseif($campo === 'servidor_responsavel')
-                                                                            <div class="flex items-start space-x-2">
-                                                                                <div class="flex-1">
-                                                                                    <label for="servidor_responsavel"
-                                                                                        class="block text-sm font-medium text-gray-700">
-                                                                                        Servidor Responsável
-                                                                                    </label>
-                                                                                    <input type="text"
-                                                                                        id="servidor_responsavel"
-                                                                                        x-model="servidor_responsavel"
-                                                                                        value="{{ $processo->detalhe->servidor_responsavel ?? '' }}"
-                                                                                        readonly
-                                                                                        class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
+                                                                                <div class="mb-6">
+                                                                                    <div class="flex items-start space-x-2">
+                                                                                        <div class="flex-1">
+                                                                                            <label for="servidor_responsavel" class="block text-sm font-medium text-gray-700">
+                                                                                                Servidor Responsável
+                                                                                            </label>
+                                                                                            <input type="text" id="servidor_responsavel" x-model="servidor_responsavel"
+                                                                                                value="{{ $processo->detalhe->servidor_responsavel ?? '' }}" readonly
+                                                                                                class="block w-full mt-1 bg-gray-100 border-gray-300 rounded-lg shadow-sm sm:text-sm">
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        @elseif($campo === 'demanda')
-                                                                            <x-form-field name="demanda" label="Demanda"
-                                                                                type="textarea" />
                                                                         @elseif($campo === 'justificativa')
                                                                             <x-form-field name="justificativa"
                                                                                 label="Justificativa da Necessidade da Contratação"
@@ -2024,7 +2008,6 @@
                 secretaria: existing?.secretaria ?? '',
                 unidade_setor: existing?.unidade_setor ?? '',
                 servidor_responsavel: existing?.servidor_responsavel ?? '',
-                demanda: existing?.demanda ?? '',
                 justificativa: existing?.justificativa ?? '',
                 prazo_entrega: existing?.prazo_entrega ?? '',
                 local_entrega: existing?.local_entrega ?? '',
@@ -2074,7 +2057,6 @@
                     servidor_responsavel: !!existing?.servidor_responsavel,
                     tipo_procedimento: !!existing?.tipo_procedimento,
                     tipo_contratacao: !!existing?.tipo_contratacao,
-                    demanda: !!existing?.demanda,
                     justificativa: !!existing?.justificativa,
                     prazo_entrega: !!existing?.prazo_entrega,
                     local_entrega: !!existing?.local_entrega,
@@ -2149,7 +2131,7 @@
 
                     // Campos do TinyMCE
                     const tinyMceFields = [
-                        'demanda', 'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
+                        'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
                         'dotacao_orcamentaria'

@@ -283,7 +283,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span class="field-label">Demanda: {!! strip_tags($detalhe->demanda) !!}</span>
+                        <span class="field-label">Demanda: {!! strip_tags($processo->objeto) !!}</span>
                         {{-- <div class="large-value-cell">
                             {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->demanda) !!}
                         </div> --}}
