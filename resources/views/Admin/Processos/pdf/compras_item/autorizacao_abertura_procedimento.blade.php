@@ -141,7 +141,7 @@
         <p>Assunto: Autorização para Abertura de {{ $processo->modalidade->getDisplayName() }} </p>
 
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;px;">
             <thead>
                 <tr>
                     <td colspan="2"

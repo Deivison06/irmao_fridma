@@ -616,7 +616,7 @@
         <p style=" text-indent: 30px; text-align: justify;">
             Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
             entre fornecedores, o que pode resultar em custos mais baixos e condições mais vantajosas para a
-            Administração Pública. Ao permitir que empresas ofereçam suas propostas para XXXXXXXXXX, a
+            Administração Pública. Ao permitir que empresas ofereçam suas propostas para {!! strip_tags($processo->objeto) !!}, a
             Prefeitura pode beneficiar-se da especialização dos fornecedores, garantindo aquisição de
             XXXXXXXXX de melhor qualidade. Essa dinâmica também contribui para minimizar riscos, uma vez
             que cada item pode ser ajustado conforme a resposta do mercado e as demandas emergentes,
