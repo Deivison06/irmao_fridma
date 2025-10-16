@@ -1933,14 +1933,16 @@
                                                                                 </div>
                                                                             </div>
                                                                         @elseif($campo === 'data_hora')
-                                                                            <div class="p-4 mb-3 bg-white border border-gray-200 rounded-lg">
-                                                                                <h4 class="mb-3 text-sm font-semibold text-gray-700">Data e Hora do Evento</h4>
+                                                                            <div class="p-5 mb-4 bg-white border border-gray-200 shadow-sm rounded-xl">
+                                                                                <h4 class="pb-2 mb-4 text-base font-semibold text-gray-700 border-b border-gray-200">
+                                                                                    📅 Data e Hora - ENTREGA E ABERTURA DAS PROPOSTAS
+                                                                                </h4>
 
                                                                                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                                                                     {{-- Campo de Data --}}
                                                                                     <div class="flex flex-col">
-                                                                                        <label for="data_evento" class="block mb-2 text-sm font-medium text-gray-700">
-                                                                                            Data do Evento
+                                                                                        <label for="data_evento" class="mb-1 text-sm font-medium text-gray-600">
+                                                                                            DATA
                                                                                         </label>
                                                                                         <input
                                                                                             type="date"
@@ -1948,14 +1950,14 @@
                                                                                             name="data_evento"
                                                                                             x-model="data_evento"
                                                                                             :disabled="confirmed.data_hora"
-                                                                                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                                                                            class="w-full px-3 py-2 transition border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                                                                         >
                                                                                     </div>
 
                                                                                     {{-- Campo de Hora --}}
                                                                                     <div class="flex flex-col">
-                                                                                        <label for="hora_evento" class="block mb-2 text-sm font-medium text-gray-700">
-                                                                                            Hora do Evento
+                                                                                        <label for="hora_evento" class="mb-1 text-sm font-medium text-gray-600">
+                                                                                            HORA
                                                                                         </label>
                                                                                         <input
                                                                                             type="time"
@@ -1963,20 +1965,19 @@
                                                                                             name="hora_evento"
                                                                                             x-model="hora_evento"
                                                                                             :disabled="confirmed.data_hora"
-                                                                                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                                                                            class="w-full px-3 py-2 transition border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                                                                         >
                                                                                     </div>
                                                                                 </div>
 
                                                                                 {{-- Botões de ação --}}
-                                                                                <div class="flex justify-end mt-4 space-x-2">
+                                                                                <div class="flex justify-end mt-5 space-x-3">
                                                                                     <button
                                                                                         type="button"
                                                                                         @click="saveDataHora()"
                                                                                         :disabled="!data_evento || !hora_evento"
                                                                                         x-show="!confirmed.data_hora"
-                                                                                        class="px-4 py-2 text-white transition rounded-lg"
-                                                                                        :class="(!data_evento || !hora_evento) ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'"
+                                                                                        class="flex items-center px-5 py-2 text-white transition bg-green-500 rounded-lg hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                                                                                     >
                                                                                         ✔ Salvar Data/Hora
                                                                                     </button>
@@ -1985,21 +1986,22 @@
                                                                                         type="button"
                                                                                         @click="toggleConfirm('data_hora')"
                                                                                         x-show="confirmed.data_hora"
-                                                                                        class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+                                                                                        class="flex items-center px-5 py-2 text-white transition bg-red-500 rounded-lg hover:bg-red-600"
                                                                                     >
                                                                                         ✖ Alterar Data/Hora
                                                                                     </button>
                                                                                 </div>
 
                                                                                 {{-- Indicador de status --}}
-                                                                                <div class="flex items-center mt-2 text-sm text-gray-600" x-show="confirmed.data_hora">
-                                                                                    <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                                                                <div class="flex items-center mt-3 text-sm text-gray-600" x-show="confirmed.data_hora">
+                                                                                    <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                                                     </svg>
-                                                                                    Data/hora salva:
-                                                                                    <span x-text="data_evento + ' ' + hora_evento" class="ml-1 font-medium"></span>
+                                                                                    <span class="font-medium">Data/Hora salva:</span>
+                                                                                    <span x-text="data_evento + ' ' + hora_evento" class="ml-2 font-semibold text-gray-700"></span>
                                                                                 </div>
                                                                             </div>
+
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
