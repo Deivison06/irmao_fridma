@@ -110,7 +110,21 @@
 </head>
 
 <body>
+    @php
+        // Verifica se a variável $assinantes existe e tem itens
+        $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
 
+        // Define o primeiro assinante, se existir
+        $primeiroAssinante = $hasSelectedAssinantes ? $assinantes[0] : null;
+
+        // Extrai o nome do município removendo "Prefeitura Municipal de" ou "Prefeitura de"
+        $municipio = preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome);
+
+        // Define a data formatada em português
+        $dataFormatada = \Carbon\Carbon::parse($dataSelecionada)
+        ->locale('pt_BR')
+        ->translatedFormat('d \d\e F \d\e Y');
+    @endphp
     {{-- ====================================================================== --}}
     {{-- BLOCO 1: CAPA DO DOCUMENTO --}}
     {{-- ====================================================================== --}}
@@ -127,12 +141,16 @@
     <div>
         <p style="text-align: center; font-weight: bold;">
             PROCESSO ADMINISTRATIVO {{ $processo->numero_processo }} <br>
-            XXXXXXXX Nº XXX/2025 <br>
-            TIPO: MENOR PREÇO XXXXXXXX
+            {{ $processo->modalidade->getDisplayName() }} Nº {{ $processo->numero_procedimento }} <br>
+            TIPO: MENOR PREÇO {{ $processo->tipo_contratacao->getDisplayName() }}
         </p>
         <p style="text-indent: 30; text-align: justify;">
             O Município de {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} – PI, através de seu Agente de Contratação / Pregoeiro e equipe de Apoio
-            instituída pela Portaria nº XXXXXXXXXXX, de XX de XXXXX de 2025, torna público, para conhecimento dos
+            instituída pela Portaria nº {{  $primeiroAssinante['numero_portaria'] }}, de {{
+                !empty($primeiroAssinante['data_portaria'])
+                    ? \Carbon\Carbon::parse($primeiroAssinante['data_portaria'])->translatedFormat('d \d\e F \d\e Y')
+                    : '____________________'
+            }}, torna público, para conhecimento dos
             interessados que realizará procedimento licitatório na modalidade {{ $processo->modalidade->getDisplayName() }}, tipo {{ $processo->tipo_contratacao->getDisplayName() }}, em
             sessão pública, mediante as condições estabelecidas em Edital, conforme as normas Gerais da Lei Federal nº.
             14.133/2021, Decretos Municipais, Lei Complementar nº 123/06, alterada pela Lei Complementar nº 147/2014,
@@ -143,48 +161,40 @@
             Objeto:<br> {!! strip_tags($processo->objeto) !!}
         </p>
         <p style="text-align: justify;">
-            O EDITAL e maiores informações poderão no Setor de Licitações na XXXXXXXXXXXXXX, Nº XXXXX, Bairro Centro, XXXXXXXXXXXXXXX – PI, no horário de 07:3h às 13:00h.
+            O EDITAL e maiores informações poderão no Setor de Licitações na {{ $processo->prefeitura->endereco }}, no horário de 07:3h às 13:00h.
         </p>
         <p style="text-align: justify;">
-            ENTREGA E ABERTURA DAS PROPOSTAS: dia XX de XXXX de 2025, às XXX:00hs (XXXXXXXXX), na XXXXXXXXXXXXXXXXX, Nº XXXX, Bairro XXXX, XXXXXXXXXX – PI.
+            ENTREGA E ABERTURA DAS PROPOSTAS: dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs ({{ $detalhe->data_hora->locale('pt_BR')->translatedFormat('l') }}),
+            na {{ $processo->prefeitura->endereco }}.
         </p>
         <p style="text-align: justify;">
             Esclarecendo que as despesas decorrentes da contratação correrão à conta dos recursos do Orçamento do FPM e/ou Recursos Próprios, ICMS, Dotação Orçamentária,
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+            {!! $detalhe->dotacao_orcamentaria !!}.
         </p>
-         {{-- Bloco de data e assinatura --}}
+
+        {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
-            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+            {{ $municipio }}, {{ $dataFormatada }}
         </div>
 
-        @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-        @endphp
-
         @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
-                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
-            @endphp
-
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+            {{-- Renderiza apenas o primeiro assinante --}}
+            <div style="margin-top:40px; text-align:center;">
+                <div class="signature-block" style="display:inline-block; margin:0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    <p style="font-size:10pt; line-height:1.2; margin:0;">
+                        {{ $primeiroAssinante['responsavel'] }}<br>
+                        <span style="color:#4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
         @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            {{-- Fallback (sem assinantes selecionados) --}}
+            <div class="signature-block" style="margin-top:40px; text-align:center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                <p style="font-size:10pt; line-height:1.2; margin:0;">
+                    {{ $processo->prefeitura->autoridade_competente ?? '____________________' }}<br>
+                    <span style="color:red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>
             </div>
         @endif

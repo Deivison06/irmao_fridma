@@ -56,10 +56,16 @@ class ProcessoDetalhe extends Model
         'valor_estimado',
         'portaria_agente_equipe_pdf',
         'dotacao_orcamentaria',
-        'anexar_minuta'
+        'anexar_minuta',
+        'riscos_extra',
+        'anexo_pdf_publicacoes',
+        'data_hora',
+        'tratamento_diferenciado_MEs_eEPPs',
+
     ];
 
     protected $casts = [
+        'data_hora' => 'datetime',
         'instrumento_vinculativo' => 'array',
         'prazo_vigencia' => 'array',
         'itens_e_seus_quantitativos_xml' => 'array',

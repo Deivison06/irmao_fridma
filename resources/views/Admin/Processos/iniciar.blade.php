@@ -256,7 +256,7 @@
                                             'titulo' => 'AVISOS DE LICITAÇÃO',
                                             'cor' => 'bg-indigo-500',
                                             'data_id' => 'data_avisos_licitacao',
-                                            'campos' => [''],
+                                            'campos' => ['data_hora'],
                                         ],
                                         'publicacoes_avisos_licitacao' => [
                                             'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
@@ -367,45 +367,74 @@
                                                     <div class="p-4 border-t border-gray-200 bg-gray-50"
                                                         id="accordion-content-{{ $tipo }}">
 
-                                                        @if ($documentos != 'publicacoes_avisos_licitacao')
                                                             <!-- Seção de Assinantes -->
                                                             <div class="pb-4 mb-6 border-b border-gray-200">
                                                                 <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
 
                                                                 <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
-                                                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                                                                        {{-- Select da Unidade --}}
-                                                                        <div class="flex-1 min-w-[180px]">
-                                                                            <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                Unidade
-                                                                            </label>
-                                                                            <select
-                                                                                name="assinante_unidade[]"
-                                                                                id="assinante_unidade_{{ $tipo }}"
-                                                                                class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
-                                                                                onchange="updateResponsavel(this, '{{ $tipo }}')"
-                                                                            >
-                                                                                <option value="">Selecione a Unidade</option>
-                                                                                @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                    <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-
-                                                                        {{-- Input do Responsável e (opcionalmente) Portaria --}}
-                                                                        <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
-                                                                            {{-- Nome do Responsável --}}
-                                                                            <div class="flex-1 min-w-[200px]">
-                                                                                <label class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                    Responsável
+                                                                    <div class="flex flex-col gap-3 p-4 bg-white border border-gray-200 rounded-lg assinante-item">
+                                                                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                                                            {{-- Select da Unidade --}}
+                                                                            <div class="flex-1 min-w-[180px]">
+                                                                                <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                    Unidade
                                                                                 </label>
-                                                                                <input
-                                                                                    type="text"
-                                                                                    name="assinante_responsavel[]"
-                                                                                    placeholder="Nome do Responsável"
-                                                                                    readonly
-                                                                                    class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
+                                                                                <select
+                                                                                    name="assinante_unidade[]"
+                                                                                    id="assinante_unidade_{{ $tipo }}"
+                                                                                    class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
+                                                                                    onchange="updateResponsavel(this, '{{ $tipo }}')"
                                                                                 >
+                                                                                    <option value="">Selecione a Unidade</option>
+                                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                        <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+
+                                                                            {{-- Campos do Responsável e Portaria --}}
+                                                                            <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
+                                                                                {{-- Nome do Responsável --}}
+                                                                                <div class="flex-1 min-w-[200px]">
+                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                        Responsável
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="assinante_responsavel[]"
+                                                                                        placeholder="Nome do Responsável"
+                                                                                        readonly
+                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
+                                                                                    >
+                                                                                </div>
+
+                                                                                {{-- Número da Portaria --}}
+                                                                                <div class="flex-1 min-w-[150px]">
+                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                        Nº Portaria
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="assinante_portaria[]"
+                                                                                        placeholder="Número da Portaria"
+                                                                                        readonly
+                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm portaria-input"
+                                                                                    >
+                                                                                </div>
+
+                                                                                {{-- Data da Portaria --}}
+                                                                                <div class="flex-1 min-w-[150px]">
+                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                        Data Portaria
+                                                                                    </label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="assinante_data_portaria[]"
+                                                                                        placeholder="Data da Portaria"
+                                                                                        readonly
+                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm data-portaria-input"
+                                                                                    >
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -422,7 +451,6 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        @endif
 
                                                         <!-- Seção de Campos do Formulário -->
                                                         <div>
@@ -1904,6 +1932,74 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                        @elseif($campo === 'data_hora')
+                                                                            <div class="p-4 mb-3 bg-white border border-gray-200 rounded-lg">
+                                                                                <h4 class="mb-3 text-sm font-semibold text-gray-700">Data e Hora do Evento</h4>
+
+                                                                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                                                                    {{-- Campo de Data --}}
+                                                                                    <div class="flex flex-col">
+                                                                                        <label for="data_evento" class="block mb-2 text-sm font-medium text-gray-700">
+                                                                                            Data do Evento
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="date"
+                                                                                            id="data_evento"
+                                                                                            name="data_evento"
+                                                                                            x-model="data_evento"
+                                                                                            :disabled="confirmed.data_hora"
+                                                                                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                                                                        >
+                                                                                    </div>
+
+                                                                                    {{-- Campo de Hora --}}
+                                                                                    <div class="flex flex-col">
+                                                                                        <label for="hora_evento" class="block mb-2 text-sm font-medium text-gray-700">
+                                                                                            Hora do Evento
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="time"
+                                                                                            id="hora_evento"
+                                                                                            name="hora_evento"
+                                                                                            x-model="hora_evento"
+                                                                                            :disabled="confirmed.data_hora"
+                                                                                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                                                                        >
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {{-- Botões de ação --}}
+                                                                                <div class="flex justify-end mt-4 space-x-2">
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        @click="saveDataHora()"
+                                                                                        :disabled="!data_evento || !hora_evento"
+                                                                                        x-show="!confirmed.data_hora"
+                                                                                        class="px-4 py-2 text-white transition rounded-lg"
+                                                                                        :class="(!data_evento || !hora_evento) ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'"
+                                                                                    >
+                                                                                        ✔ Salvar Data/Hora
+                                                                                    </button>
+
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        @click="toggleConfirm('data_hora')"
+                                                                                        x-show="confirmed.data_hora"
+                                                                                        class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+                                                                                    >
+                                                                                        ✖ Alterar Data/Hora
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="flex items-center mt-2 text-sm text-gray-600" x-show="confirmed.data_hora">
+                                                                                    <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                                    </svg>
+                                                                                    Data/hora salva:
+                                                                                    <span x-text="data_evento + ' ' + hora_evento" class="ml-1 font-medium"></span>
+                                                                                </div>
+                                                                            </div>
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -1987,74 +2083,151 @@
         function adicionarAssinante(tipoDocumento) {
             const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
             const novoAssinante = document.createElement('div');
-            novoAssinante.className = 'assinante-item flex items-center mb-3 space-x-2';
+            novoAssinante.className = 'assinante-item flex flex-col gap-3 p-4 mb-3 bg-white border border-gray-200 rounded-lg';
             novoAssinante.innerHTML = `
-                <div class="flex-1">
-                    <label class="sr-only">Unidade</label>
-                    <select name="assinante_unidade[]"
-                            class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm unidade-select min-w-[300px]"
-                            onchange="updateResponsavel(this, '${tipoDocumento}')">
-                        <option value="">Selecione a Unidade</option>
-                        @foreach ($processo->prefeitura->unidades as $unidade)
-                            <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
-                        @endforeach
-                    </select>
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    {{-- Select da Unidade --}}
+                    <div class="flex-1 min-w-[180px]">
+                        <label class="block mb-1 text-xs font-medium text-gray-600">
+                            Unidade
+                        </label>
+                        <select name="assinante_unidade[]"
+                                class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
+                                onchange="updateResponsavel(this, '${tipoDocumento}')">
+                            <option value="">Selecione a Unidade</option>
+                            @foreach ($processo->prefeitura->unidades as $unidade)
+                                <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Campos do Responsável e Portaria --}}
+                    <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
+                        {{-- Nome do Responsável --}}
+                        <div class="flex-1 min-w-[200px]">
+                            <label class="block mb-1 text-xs font-medium text-gray-600">
+                                Responsável
+                            </label>
+                            <input type="text" name="assinante_responsavel[]"
+                                placeholder="Nome do Responsável" readonly
+                                class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input">
+                        </div>
+
+                        {{-- Número da Portaria --}}
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block mb-1 text-xs font-medium text-gray-600">
+                                Nº Portaria
+                            </label>
+                            <input type="text" name="assinante_portaria[]"
+                                placeholder="Número da Portaria" readonly
+                                class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm portaria-input">
+                        </div>
+
+                        {{-- Data da Portaria --}}
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block mb-1 text-xs font-medium text-gray-600">
+                                Data Portaria
+                            </label>
+                            <input type="text" name="assinante_data_portaria[]"
+                                placeholder="Data da Portaria" readonly
+                                class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm data-portaria-input">
+                        </div>
+                    </div>
+
+                    {{-- Botão Remover --}}
+                    <div class="flex items-end sm:pt-6">
+                        <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
+                                class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            🗑 Remover
+                        </button>
+                    </div>
                 </div>
-                <div class="flex-1">
-                    <label class="sr-only">Responsável</label>
-                    <input type="text" name="assinante_responsavel[]"
-                           placeholder="Nome do Responsável" readonly
-                           class="block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm responsavel-input min-w-[300px]">
-                </div>
-                <button type="button" onclick="removerAssinante(this, '${tipoDocumento}')"
-                        class="p-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
-                    🗑
-                </button>
             `;
             container.appendChild(novoAssinante);
         }
 
         function removerAssinante(botao, tipoDocumento) {
             const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
-            const assinanteDiv = botao.closest('div');
+            const assinanteDiv = botao.closest('.assinante-item'); // ✅ CORRETO
             const todosAssinantes = container.querySelectorAll('.assinante-item');
 
-            // Garante que sempre tenha pelo menos 1 assinante
             if (todosAssinantes.length > 1) {
-                assinanteDiv.remove();
+                assinanteDiv.style.transition = 'opacity 0.3s ease';
+                assinanteDiv.style.opacity = '0';
+                setTimeout(() => assinanteDiv.remove(), 300);
             } else {
                 showMessage('É obrigatório ter pelo menos um assinante.', 'error');
             }
+
         }
 
         function updateResponsavel(select, tipoDocumento) {
             const selectedUnidadeId = select.value;
             const selectedUnidade = unidadesAssinantes.find(u => u.id == selectedUnidadeId);
-            const assinanteDiv = select.closest('.flex.items-center');
+            const assinanteDiv = select.closest('.assinante-item') || select.closest('.flex.items-center');
 
-            // Preenche o campo responsável
-            const responsavelInput = assinanteDiv.querySelector('.responsavel-input');
-            if (responsavelInput) {
-                responsavelInput.value = selectedUnidade?.servidor_responsavel || '';
+            if (selectedUnidade) {
+                // Preenche o campo responsável
+                const responsavelInput = assinanteDiv.querySelector('.responsavel-input');
+                if (responsavelInput) {
+                    responsavelInput.value = selectedUnidade.servidor_responsavel || '';
+                }
+
+                // Preenche o número da portaria (se existir o campo)
+                const portariaInput = assinanteDiv.querySelector('.portaria-input');
+                if (portariaInput) {
+                    portariaInput.value = selectedUnidade.numero_portaria || '';
+                }
+
+                // Preenche a data da portaria (se existir o campo)
+                const dataPortariaInput = assinanteDiv.querySelector('.data-portaria-input');
+                if (dataPortariaInput) {
+                    dataPortariaInput.value = selectedUnidade.data_portaria || '';
+                }
+
+                // Atualiza também os campos no formulário principal quando for a unidade_setor
+                if (select.id === 'unidade_setor') {
+                    const servidorResponsavelInput = document.getElementById('servidor_responsavel');
+                    if (servidorResponsavelInput) {
+                        servidorResponsavelInput.value = selectedUnidade.servidor_responsavel || '';
+                    }
+                }
+            } else {
+                // Limpa os campos se nenhuma unidade for selecionada
+                const responsavelInput = assinanteDiv.querySelector('.responsavel-input');
+                if (responsavelInput) responsavelInput.value = '';
+
+                const portariaInput = assinanteDiv.querySelector('.portaria-input');
+                if (portariaInput) portariaInput.value = '';
+
+                const dataPortariaInput = assinanteDiv.querySelector('.data-portaria-input');
+                if (dataPortariaInput) dataPortariaInput.value = '';
             }
         }
 
         // Função auxiliar para obter os dados dos assinantes
         function getAssinantes(tipoDocumento) {
-            const selects = document.querySelectorAll(
-                `#accordion-content-${tipoDocumento} select[name="assinante_unidade[]"]`);
+            const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
+            const selects = container.querySelectorAll('select[name="assinante_unidade[]"]');
             const assinantes = [];
-            selects.forEach(select => {
+
+            selects.forEach((select, index) => {
                 const selectedOption = select.options[select.selectedIndex];
                 if (selectedOption.value) {
                     const unidade = unidadesAssinantes.find(u => u.id == select.value);
                     if (unidade) {
+                        // Busca os valores dos inputs correspondentes
+                        const assinanteDiv = select.closest('.assinante-item');
+                        const responsavelInput = assinanteDiv.querySelector('input[name="assinante_responsavel[]"]');
+                        const portariaInput = assinanteDiv.querySelector('input[name="assinante_portaria[]"]');
+                        const dataPortariaInput = assinanteDiv.querySelector('input[name="assinante_data_portaria[]"]');
+
                         assinantes.push({
                             unidade_id: unidade.id,
                             unidade_nome: unidade.nome,
-                            responsavel: unidade.servidor_responsavel,
-                            numero_portaria: unidade.numero_portaria,
-                            data_portaria: unidade.data_portaria,
+                            responsavel: responsavelInput?.value || unidade.servidor_responsavel,
+                            numero_portaria: portariaInput?.value || unidade.numero_portaria,
+                            data_portaria: dataPortariaInput?.value || unidade.data_portaria,
                         });
                     }
                 }
@@ -2152,6 +2325,20 @@
 
         // Alpine.js Component
         function formField(existing = {}) {
+             // Parse da data_hora existente
+            const dataHoraExistente = existing?.data_hora || '';
+            let dataEvento = '';
+            let horaEvento = '';
+
+            if (dataHoraExistente) {
+                try {
+                    const dataHora = new Date(dataHoraExistente);
+                    dataEvento = dataHora.toISOString().split('T')[0];
+                    horaEvento = dataHora.toTimeString().split(' ')[0].substring(0, 5);
+                } catch (e) {
+                    console.error('Erro ao parse data_hora:', e);
+                }
+            }
             return {
                 // Campos do formulário
                 secretaria: existing?.secretaria ?? '',
@@ -2200,6 +2387,10 @@
                 anexar_minuta: existing?.anexar_minuta ?? '',
                 anexo_pdf_publicacoes: existing?.anexo_pdf_publicacoes ?? '',
                 riscos_extra: existing?.riscos_extra ?? '',
+                // Novos campos para data_hora
+                data_evento: dataEvento,
+                hora_evento: horaEvento,
+                data_hora: existing?.data_hora ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -2247,6 +2438,7 @@
                     tratamento_diferenciado_MEs_eEPPs: !!existing?.tratamento_diferenciado_MEs_eEPPs,
                     anexo_pdf_publicacoes: !!existing?.anexo_pdf_publicacoes,
                     riscos_extra: !!existing?.riscos_extra,
+                    data_hora: !!existing?.data_hora,
                 },
 
                 onUnidadeChange() {
@@ -2270,6 +2462,19 @@
                     }
                 },
 
+                // NOVO MÉTODO para salvar data_hora
+                async saveDataHora() {
+                    if (this.data_evento && this.hora_evento) {
+                        // Combina data e hora
+                        this.data_hora = `${this.data_evento} ${this.hora_evento}`;
+
+                        // Usa o método saveField existente
+                        await this.saveField('data_hora');
+                    } else {
+                        alert('Selecione a data e a hora antes de salvar.');
+                    }
+                },
+
                 // Salva campo individual
                 async saveField(field) {
                     const formData = new FormData();
@@ -2280,6 +2485,10 @@
                     // Quando salvar unidade_setor, também salva o servidor_responsavel
                     if (field === 'unidade_setor' && this.servidor_responsavel) {
                         formData.append('servidor_responsavel', this.servidor_responsavel);
+                    }
+                    // CASO ESPECIAL para data_hora
+                    if (field === 'data_hora') {
+                        formData.append('data_hora', this.data_hora);
                     }
 
                     // Campos do TinyMCE
@@ -2365,6 +2574,10 @@
                                 this.confirmed.servidor_responsavel = true;
                             }
                             console.log(field + ' salvo com sucesso!');
+                            // Debug específico para data_hora
+                            if (field === 'data_hora') {
+                                console.log('Data/hora salva:', this.data_hora);
+                            }
                         } else {
                             this.confirmed[field] = false;
                             console.error('Erro ao salvar campo:', field, responseData);
