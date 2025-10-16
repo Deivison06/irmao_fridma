@@ -113,7 +113,7 @@
                                 </tr>
                                 <tr class="bg-gray-50">
                                     <td colspan="6" class="px-6 py-4 text-sm text-gray-700">
-                                        <strong>Objeto:</strong> {!! $processo->objeto !!}
+                                        <strong>Objeto:</strong> {!! strip_tags($processo->objeto) !!}
                                     </td>
                                 </tr>
                             </tbody>
@@ -188,7 +188,6 @@
                                             'cor' => 'bg-purple-500',
                                             'data_id' => 'data_estudo_tecnico',
                                             'campos' => [
-                                                'alinhamento_planejamento_anual',
                                                 'problema_resolvido',
                                                 'descricao_necessidade',
                                                 'inversao_fase',
@@ -244,7 +243,7 @@
                                             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
                                             'cor' => 'bg-teal-500',
                                             'data_id' => 'data_autorizacao_abertura_procedimento',
-                                            'campos' => [ 'portaria_agente_equipe_pdf'],
+                                            'campos' => [ 'portaria_agente_equipe_pdf', 'tratamento_diferenciado_MEs_eEPPs'],
                                         ],
                                         'abertura_fase_externa' => [
                                             'titulo' => 'ABERTURA FASE EXTERNA',
@@ -708,10 +707,6 @@
                                                                         @elseif($campo === 'problema_resolvido')
                                                                             <x-form-field name="problema_resolvido"
                                                                                 label="Problema Resumido" />
-                                                                        @elseif($campo === 'alinhamento_planejamento_anual')
-                                                                            <x-form-field
-                                                                                name="alinhamento_planejamento_anual"
-                                                                                label="Alinhamento com o Planejamento Anual" />
                                                                         @elseif($campo === 'nome_equipe_planejamento')
                                                                             <x-form-field name="nome_equipe_planejamento"
                                                                                 label="EQUIPE DE PLANEJAMENTO" />
@@ -1646,6 +1641,10 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                        @elseif($campo === 'tratamento_diferenciado_MEs_eEPPs')
+                                                                            <x-form-field name="tratamento_diferenciado_MEs_eEPPs"
+                                                                                label="TRATAMENTO DIFERENCIA A MEs e EPPs"
+                                                                                type="textarea" />
                                                                         @elseif($campo === 'dotacao_orcamentaria')
                                                                             <x-form-field name="dotacao_orcamentaria"
                                                                                 label="CASO A LICITAÇÃO NÃO SEJA DO TIPO SRP, DESCREVA ABAIXO A DOTAÇÃO ORÇAMENTÁRIA"
@@ -1854,7 +1853,7 @@
         function adicionarAssinante(tipoDocumento) {
             const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
             const novoAssinante = document.createElement('div');
-            novoAssinante.className = 'flex items-center mb-3 space-x-2';
+            novoAssinante.className = 'assinante-item flex items-center mb-3 space-x-2';
             novoAssinante.innerHTML = `
                 <div class="flex-1">
                     <label class="sr-only">Unidade</label>
@@ -1883,9 +1882,14 @@
 
         function removerAssinante(botao, tipoDocumento) {
             const container = document.getElementById(`assinantes-container-${tipoDocumento}`);
-            const assinantes = container.querySelectorAll('.flex.items-center');
-            if (assinantes.length > 1) {
-                botao.closest('.flex.items-center').remove();
+            const assinanteDiv = botao.closest('div');
+            const todosAssinantes = container.querySelectorAll('.assinante-item');
+
+            // Garante que sempre tenha pelo menos 1 assinante
+            if (todosAssinantes.length > 1) {
+                assinanteDiv.remove();
+            } else {
+                showMessage('É obrigatório ter pelo menos um assinante.', 'error');
             }
         }
 
@@ -1936,15 +1940,16 @@
             const parecer = document.getElementById('parecer_select_' + documento)?.value || '';
             const assinantes = getAssinantes(documento);
 
-            // ✅ Validação de assinantes obrigatórios
-            if (assinantes.length === 0) {
-                showMessage('⚠️ É necessário adicionar pelo menos um assinante antes de gerar o documento.', 'error');
+            // Validação: todos os documentos (exceto a capa) precisam de pelo menos 1 assinante
+            if (documento !== 'capa' && assinantes.length < 1) {
+                showMessage('Você deve adicionar pelo menos um assinante antes de gerar o PDF.', 'error');
                 return;
             }
 
-            // ✅ Validação específica para estudo_tecnico e termo_referencia_2
-            if ((documento === 'estudo_tecnico' || documento === 'termo_referencia_2') && assinantes.length === 0) {
-                showMessage('⚠️ O documento "' + (documento === 'estudo_tecnico' ? 'Estudo Técnico' : 'Termo de Referência 2') + '" exige a inclusão de pelo menos um assinante.', 'error');
+            // Documentos que exigem 2 assinaturas obrigatórias
+            const documentosComDoisAssinantes = ['estudo_tecnico', 'parecer_juridico'];
+            if (documentosComDoisAssinantes.includes(documento) && assinantes.length < 2) {
+                showMessage('Este documento requer duas assinaturas obrigatórias.', 'error');
                 return;
             }
             const assinantesJson = JSON.stringify(assinantes);
@@ -2039,7 +2044,6 @@
                 solucoes_disponivel_mercado: existing?.solucoes_disponivel_mercado ?? '',
                 incluir_requisito_cada_caso_concreto: existing?.incluir_requisito_cada_caso_concreto ?? '',
                 descricao_necessidade: existing?.descricao_necessidade ?? '',
-                alinhamento_planejamento_anual: existing?.alinhamento_planejamento_anual ?? '',
                 problema_resolvido: existing?.problema_resolvido ?? '',
                 inversao_fase: existing?.inversao_fase ?? '',
                 solucao_escolhida: existing?.solucao_escolhida ?? '',
@@ -2059,6 +2063,7 @@
                 valor_estimado: existing?.valor_estimado ?? '',
                 portaria_agente_equipe_pdf: existing?.portaria_agente_equipe_pdf ?? '',
                 dotacao_orcamentaria: existing?.dotacao_orcamentaria ?? '',
+                tratamento_diferenciado_MEs_eEPPs: existing?.tratamento_diferenciado_MEs_eEPPs ?? '',
                 anexar_minuta: existing?.anexar_minuta ?? '',
 
                 // Controle de confirmação
@@ -2084,7 +2089,6 @@
                     solucoes_disponivel_mercado: !!existing?.solucoes_disponivel_mercado,
                     incluir_requisito_cada_caso_concreto: !!existing?.incluir_requisito_cada_caso_concreto,
                     descricao_necessidade: !!existing?.descricao_necessidade,
-                    alinhamento_planejamento_anual: !!existing?.alinhamento_planejamento_anual,
                     problema_resolvido: !!existing?.problema_resolvido,
                     inversao_fase: !!existing?.inversao_fase,
                     solucao_escolhida: !!existing?.solucao_escolhida,
@@ -2105,6 +2109,7 @@
                     portaria_agente_equipe_pdf: !!existing?.portaria_agente_equipe_pdf,
                     anexar_minuta: !!existing?.anexar_minuta,
                     dotacao_orcamentaria: !!existing?.dotacao_orcamentaria,
+                    tratamento_diferenciado_MEs_eEPPs: !!existing?.tratamento_diferenciado_MEs_eEPPs,
                 },
 
                 onUnidadeChange() {
@@ -2145,7 +2150,7 @@
                         'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
-                        'dotacao_orcamentaria'
+                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs',
                     ];
 
                     if (tinyMceFields.includes(field)) {

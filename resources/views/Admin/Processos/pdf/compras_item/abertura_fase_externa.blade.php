@@ -129,7 +129,7 @@
     <div id="termo-recebimento">
         <p style="font-weight: bold; text-align: center;">TERMO DE RECEBIMENTO </p>
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -160,7 +160,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>
@@ -209,7 +209,7 @@
             CERTIDÃO DE ENCERRAMENTO <br> DA FASE PREPARATÓRI
         </p>
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -240,7 +240,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>
@@ -317,11 +317,11 @@
             No uso de minhas atribuições, em <span style="font-weight: bold;">{{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}</span>, autuo o
             presente Processo de Contratação na modalidade Pregão Eletrônico, sob o número  {{ $processo->numero_procedimento }},
             originário do Processo Administrativo nº {{ $processo->numero_processo }}, que tem por finalidade
-            {!! $processo->objeto !!} com valor total estimado em {{ $detalhe->valor_estimado }}, e para
+            {!! strip_tags($processo->objeto) !!} com valor total estimado em {{ $detalhe->valor_estimado }}, e para
             constar, lavro e assino o presente Termo de Autuação.
         </p>
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -369,7 +369,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>

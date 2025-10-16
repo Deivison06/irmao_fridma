@@ -227,7 +227,13 @@
                             </td>
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Alinhamento com o Planejamento Anual</div>
-                                <div style="font-size: 14px">{{ $detalhe->alinhamento_planejamento_anual }}</div>
+                                <div>
+                                    @if ($detalhe->prevista_plano_anual == 'sim')
+                                        A demanda encontra-se regularmente prevista no Plano Anual de Contratações – PAC
+                                    @else
+                                        A demanda nao encontra-se regularmente prevista no Plano Anual de Contratações – PAC
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -464,7 +470,7 @@
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
         </div>
-        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {!! $processo->objeto !!} da
+        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {!! strip_tags($processo->objeto) !!} da
             {{ $processo->prefeitura->nome }}: </p>
 
         {!! preg_replace(
@@ -760,7 +766,7 @@
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
         <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
-            {!! $processo->objeto !!}, de forma a melhor atender as necessidades do município de
+            {!! strip_tags($processo->objeto) !!}, de forma a melhor atender as necessidades do município de
             {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
@@ -1808,13 +1814,11 @@
     <div id="alinhamento-pca">
         <p style="text-align: center; font-size:16px; font-weight: 700;">ALINHAMENTO AO PLANO DE CONTRATAÇÃO ANUAL (PCA) </p>
         <p style="text-align: center; font-size:14px; font-weight: 700;">DECLARAÇÃO</p>
-        <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
         @if ($detalhe->prevista_plano_anual == 'sim')
             <p>
                 Declaro, para os devidos fins, que a presente demanda referente à
-                <strong>{!! $processo->objeto !!}</strong>
-                encontra-se regularmente <strong>prevista no Plano Anual de Contratações – PAC do exercício de
-                    [ano]</strong>,
+                <span style="font-weight: bold">{!! strip_tags($processo->objeto) !!}</span>
+                encontra-se regularmente <span style="font-weight: bold">prevista no Plano Anual de Contratações – PAC </span>,
                 elaborado nos termos do art. 12 da Lei nº 14.133/2021 e da Instrução Normativa SEGES/ME nº 01/2019, ou
                 outro normativo vigente que disciplina a matéria.
             </p>
@@ -1823,8 +1827,6 @@
                 da Administração, em conformidade com os princípios da eficiência, economicidade e transparência,
                 garantindo a vinculação desta demanda às metas e prioridades da gestão municipal.
             </p>
-
-            <p style="font-size:16px; font-weight: 700; color:red; text-align: center;">OU</p>
         @else
             <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
                 motivo(s): </p>
@@ -1941,7 +1943,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>

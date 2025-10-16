@@ -100,7 +100,7 @@
 
                 <div class="objeto-titulo">OBJETO:</div>
                 <div class="objeto">
-                    {!! $processo->objeto !!}
+                    {!! strip_tags($processo->objeto) !!}
                 </div>
             </div>
         </div>

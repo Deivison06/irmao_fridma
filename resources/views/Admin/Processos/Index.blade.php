@@ -229,7 +229,7 @@
                                 <!-- Linha 2: objeto -->
                                 <tr class="bg-gray-50">
                                     <td colspan="7" class="px-6 py-4 text-sm text-gray-700">
-                                        <strong>Objeto:</strong> {!! $processo->objeto !!}
+                                        <strong>Objeto:</strong> {!! strip_tags($processo->objeto) !!}
                                     </td>
                                 </tr>
                             @empty

@@ -162,7 +162,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>

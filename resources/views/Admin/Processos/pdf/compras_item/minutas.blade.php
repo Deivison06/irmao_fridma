@@ -124,13 +124,8 @@
     <div class="page-break"></div>
 
     <div id="minutas">
-        <p style="text-align: center; font-weight: bold; margin-bottom: 20px;">
-            DIRETORIA XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        </p>
-
-        <p style="text-align: justify;">Considerando a necessidade de {!! $processo->objeto !!} segue em anexo Minuta de
+         <p style="text-align: justify;">Considerando a necessidade de {!! strip_tags($processo->objeto) !!} segue em anexo Minuta de
             Edital e Minuta do Contrato desenvolvido por este departamento. </p>
-
         <p>
             Base Legal: 14.133 e legislação complementar.
         </p>

@@ -138,7 +138,7 @@
             </span>
         </p>
 
-        <p><span style="background-color: yellow">Assunto: Autorização</span> para Abertura de Pregão Eletrônico </p>
+        <p>Assunto: Autorização para Abertura de {{ $processo->modalidade->getDisplayName() }} </p>
 
         <table
             style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 100px;">
@@ -172,7 +172,7 @@
                         OBJETO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! $processo->objeto !!}
+                        {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
                 <tr>
@@ -199,7 +199,7 @@
         </p>
         <p style="text-indent: 30px">
             Trata-se de demanda da {{ $detalhe->unidade_setor }}, para contratação de
-            {!! $processo->objeto !!}.
+            {!! strip_tags($processo->objeto) !!}.
         </p>
         <p style="text-indent: 30px">
             O valor estimado para pretendida contratação é de R$ {{ $detalhe->valor_estimado }},
@@ -237,10 +237,7 @@
         <p>MODO DE DISPUTA: ABERTO</p>
         <p>TRATAMENTO DIFERENCIA A MEs e EPPs</p>
         <p>
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+            {!! $detalhe->tratamento_diferenciado_MEs_eEPPs !!}
         </p>
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
