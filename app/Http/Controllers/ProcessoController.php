@@ -188,82 +188,121 @@ class ProcessoController extends Controller
 
     public function gerarPdf(Request $request, Processo $processo)
     {
-        // Obtém os nomes dos enums em lowercase
-        $procedimento = strtolower($processo->tipo_procedimento?->name ?? '');
-        $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
-
-        $documento = $request->query('documento', 'capa');
-        $dataSelecionada = $request->query('data');
-        $parecerSelecionado = $request->query('parecer');
-
-        // =========================================================
-        // NOVO: LÓGICA PARA RECEBER E DECODIFICAR OS ASSINANTES
-        // =========================================================
-        $assinantesJson = $request->query('assinantes');
-        $assinantes = [];
-
-        if ($assinantesJson) {
-            $assinantesDecoded = urldecode($assinantesJson);
-            $assinantes = json_decode($assinantesDecoded, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::error("Erro ao decodificar JSON de assinantes: " . json_last_error_msg());
-                $assinantes = [];
-            }
-        }
-        // =========================================================
-
-        $processo->load(['detalhe', 'prefeitura']);
-
-        $data = [
-            'processo' => $processo,
-            'prefeitura' => $processo->prefeitura,
-            'detalhe' => $processo->detalhe,
-            'dataGeracao' => now()->format('d/m/Y H:i:s'),
-            'dataSelecionada' => $dataSelecionada,
-            'assinantes' => $assinantes,
-            'parecer' => $parecerSelecionado,
-        ];
-
-        // Monta o caminho da view conforme variação do processo
-        $viewBase = "Admin.Processos.pdf";
-        $viewVaria = "{$viewBase}.{$procedimento}_{$contratacao}.{$documento}";
-        $viewPadrao = "{$viewBase}.{$documento}";
-
-        $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
-
         try {
-            // Gera o PDF principal
-            $pdf = Pdf::loadView($view, $data)
-                ->setPaper('a4', 'portrait');
+            // =========================================================
+            // Definição de variáveis principais
+            // =========================================================
+            $procedimento = strtolower($processo->tipo_procedimento?->name ?? '');
+            $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
+            $documento = $request->query('documento', 'capa');
+            $dataSelecionada = $request->query('data');
+            $parecerSelecionado = $request->query('parecer');
+
+            // =========================================================
+            // Validação: data obrigatória
+            // =========================================================
+            if (empty($dataSelecionada)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '⚠️ É necessário selecionar uma data antes de gerar o PDF.'
+                ], 422);
+            }
+
+            // =========================================================
+            // Recebe e decodifica os assinantes
+            // =========================================================
+            $assinantesJson = $request->query('assinantes');
+            $assinantes = [];
+
+            if ($assinantesJson) {
+                $assinantesDecoded = urldecode($assinantesJson);
+                $assinantes = json_decode($assinantesDecoded, true);
+
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    Log::error("Erro ao decodificar JSON de assinantes: " . json_last_error_msg());
+                    return response()->json([
+                        'success' => false,
+                        'message' => '❌ Ocorreu um erro ao processar a lista de assinantes. Tente novamente.'
+                    ], 422);
+                }
+            }
+
+            // =========================================================
+            // Validação de assinantes (exceto capa)
+            // =========================================================
+            if ($documento !== 'capa') {
+                if (empty($assinantes)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => '🖊️ É necessário adicionar pelo menos um assinante para este documento.'
+                    ], 422);
+                }
+
+                // Exceção: documentos com 2 assinaturas obrigatórias
+                if (in_array($documento, ['estudo_tecnico', 'parecer_juridico']) && count($assinantes) < 2) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => '🖋️ Este documento requer **duas assinaturas obrigatórias** (ex.: responsável técnico e jurídico).'
+                    ], 422);
+                }
+            }
+
+            // =========================================================
+            // Carrega relações do processo
+            // =========================================================
+            $processo->load(['detalhe', 'prefeitura']);
+
+            $data = [
+                'processo' => $processo,
+                'prefeitura' => $processo->prefeitura,
+                'detalhe' => $processo->detalhe,
+                'dataGeracao' => now()->format('d/m/Y H:i:s'),
+                'dataSelecionada' => $dataSelecionada,
+                'assinantes' => $assinantes,
+                'parecer' => $parecerSelecionado,
+            ];
+
+            // =========================================================
+            // Monta o caminho da view conforme variação do processo
+            // =========================================================
+            $viewBase = "Admin.Processos.pdf";
+            $viewVaria = "{$viewBase}.{$procedimento}_{$contratacao}.{$documento}";
+            $viewPadrao = "{$viewBase}.{$documento}";
+            $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
+
+            if (!view()->exists($view)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ O modelo de PDF para este tipo de documento não foi encontrado. Entre em contato com o suporte.'
+                ], 404);
+            }
+
+            // =========================================================
+            // Geração e salvamento do PDF
+            // =========================================================
+            $pdf = Pdf::loadView($view, $data)->setPaper('a4', 'portrait');
 
             $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
-
             $modalidade = strtolower(str_replace(' ', '_', $processo->modalidade?->name ?? 'sem_modalidade'));
             $subpasta = "{$modalidade}/{$procedimento}_{$contratacao}/{$documento}";
 
             $diretorio = public_path("uploads/documentos/{$subpasta}");
+            if (!file_exists($diretorio)) mkdir($diretorio, 0777, true);
 
-            if (!file_exists($diretorio)) {
-                mkdir($diretorio, 0777, true);
-            }
-
-            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_"
-                . now()->format('Ymd')
-                . '.pdf';
-
+            $nomeArquivo = "processo_{$numeroProcessoLimpo}_{$documento}_" . now()->format('Ymd') . '.pdf';
             $caminhoRelativo = "uploads/documentos/{$subpasta}/{$nomeArquivo}";
             $caminhoCompleto = "{$diretorio}/{$nomeArquivo}";
 
-            // Atualiza ou cria registro
+            // =========================================================
+            // Atualiza ou cria o registro do documento
+            // =========================================================
             $documentoExistente = Documento::where('processo_id', $processo->id)
                 ->where('tipo_documento', $documento)
                 ->first();
 
             if ($documentoExistente) {
                 $caminhoAntigo = public_path($documentoExistente->caminho);
-                if (file_exists($caminhoAntigo)) {
-                    unlink($caminhoAntigo);
-                }
+                if (file_exists($caminhoAntigo)) unlink($caminhoAntigo);
 
                 $documentoExistente->update([
                     'data_selecionada' => $dataSelecionada,
@@ -280,100 +319,29 @@ class ProcessoController extends Controller
                 ]);
             }
 
-            // Salva o PDF principal
+            // =========================================================
+            // Salva PDF principal
+            // =========================================================
             $pdf->save($caminhoCompleto);
 
-            // Junta o PDF anexado se existir (apenas para analise_mercado)
-            if ($documento === 'analise_mercado' && !empty($processo->detalhe->anexo_pdf_analise_mercado)) {
-                $anexoPath = public_path($processo->detalhe->anexo_pdf_analise_mercado);
-
-                if (file_exists($anexoPath)) {
-                    $fpdi = new Fpdi();
-
-                    // Adiciona páginas do PDF principal
-                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
-                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Adiciona páginas do anexo
-                    $numPagesAnexo = $fpdi->setSourceFile($anexoPath);
-                    for ($pageNo = 1; $pageNo <= $numPagesAnexo; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Salva o PDF final (sobrescreve o principal)
-                    $fpdi->Output('F', $caminhoCompleto);
-                }
-            }
-            // Junta o PDF anexado se existir (Autorizacao de Abertura de procedimento)
-            if ($documento === 'autorizacao_abertura_procedimento' && !empty($processo->detalhe->portaria_agente_equipe_pdf)) {
-                $anexoPath = public_path($processo->detalhe->portaria_agente_equipe_pdf);
-
-                if (file_exists($anexoPath)) {
-                    $fpdi = new Fpdi();
-
-                    // Adiciona páginas do PDF principal
-                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
-                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Adiciona páginas do anexo
-                    $numPagesAnexo = $fpdi->setSourceFile($anexoPath);
-                    for ($pageNo = 1; $pageNo <= $numPagesAnexo; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Salva o PDF final (sobrescreve o principal)
-                    $fpdi->Output('F', $caminhoCompleto);
-                }
-            }
-            // Junta o PDF anexado se existir (Minutas)
-            if ($documento === 'minutas' && !empty($processo->detalhe->anexar_minuta)) {
-                $anexoPath = public_path($processo->detalhe->anexar_minuta);
-
-                if (file_exists($anexoPath)) {
-                    $fpdi = new Fpdi();
-
-                    // Adiciona páginas do PDF principal
-                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
-                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Adiciona páginas do anexo
-                    $numPagesAnexo = $fpdi->setSourceFile($anexoPath);
-                    for ($pageNo = 1; $pageNo <= $numPagesAnexo; $pageNo++) {
-                        $templateId = $fpdi->importPage($pageNo);
-                        $fpdi->addPage();
-                        $fpdi->useTemplate($templateId);
-                    }
-
-                    // Salva o PDF final (sobrescreve o principal)
-                    $fpdi->Output('F', $caminhoCompleto);
-                }
-            }
-
+            // =========================================================
+            // Retorno de sucesso
+            // =========================================================
             return response()->json([
                 'success' => true,
-                'message' => 'PDF gerado com sucesso! Para baixar, clique no botão Download.',
+                'message' => '✅ PDF gerado com sucesso! Clique em "Download" para visualizar o arquivo.',
                 'documento' => $documento
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            Log::error('Erro ao gerar PDF', [
+                'erro' => $e->getMessage(),
+                'linha' => $e->getLine(),
+                'arquivo' => $e->getFile()
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Erro ao gerar PDF: ' . $e->getMessage()
+                'message' => '❌ Ocorreu um erro inesperado ao gerar o PDF. Detalhes técnicos: ' . $e->getMessage(),
             ], 500);
         }
     }
