@@ -33,6 +33,8 @@
             background-repeat: no-repeat;
             background-position: top left;
             background-size: cover;
+
+            text-align: justify;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
