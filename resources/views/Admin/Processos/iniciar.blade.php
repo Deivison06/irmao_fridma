@@ -238,7 +238,7 @@
                                             'titulo' => 'PARECER JURÍDICO',
                                             'cor' => 'bg-emerald-500',
                                             'data_id' => 'data_parecer_juridico',
-                                            'campos' => [],
+                                            'campos' => [''],
                                         ],
                                         'autorizacao_abertura_procedimento' => [
                                             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
@@ -250,13 +250,13 @@
                                             'titulo' => 'ABERTURA FASE EXTERNA',
                                             'cor' => 'bg-cyan-500',
                                             'data_id' => 'data_abertura_fase_externa',
-                                            'campos' => [],
+                                            'campos' => [''],
                                         ],
                                         'publicacoes_avisos_licitacao' => [
                                             'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
                                             'cor' => 'bg-indigo-500',
                                             'data_id' => 'data_publicacoes_avisos_licitacao',
-                                            'campos' => [],
+                                            'campos' => [''],
                                         ],
                                     ];
                                 @endphp
@@ -1935,6 +1935,18 @@
 
             const parecer = document.getElementById('parecer_select_' + documento)?.value || '';
             const assinantes = getAssinantes(documento);
+
+            // ✅ Validação de assinantes obrigatórios
+            if (assinantes.length === 0) {
+                showMessage('⚠️ É necessário adicionar pelo menos um assinante antes de gerar o documento.', 'error');
+                return;
+            }
+
+            // ✅ Validação específica para estudo_tecnico e termo_referencia_2
+            if ((documento === 'estudo_tecnico' || documento === 'termo_referencia_2') && assinantes.length === 0) {
+                showMessage('⚠️ O documento "' + (documento === 'estudo_tecnico' ? 'Estudo Técnico' : 'Termo de Referência 2') + '" exige a inclusão de pelo menos um assinante.', 'error');
+                return;
+            }
             const assinantesJson = JSON.stringify(assinantes);
             const assinantesEncoded = encodeURIComponent(assinantesJson);
 
@@ -1981,21 +1993,23 @@
 
         function showMessage(message, type) {
             const container = document.getElementById('message-container');
-            const bgColor = type === 'success' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200';
+            const bgColor = type === 'success' ? 'bg-green-100 border-green-400' : 'bg-red-100 border-red-400';
             const textColor = type === 'success' ? 'text-green-800' : 'text-red-800';
+            const icon = type === 'success' ? '✅' : '❌';
 
             container.innerHTML = `
-                <div class="p-4 border rounded-md ${bgColor} ${textColor}">
+                <div class="p-4 mb-4 border-l-4 rounded-md ${bgColor} ${textColor}">
                     <div class="flex items-center">
-                        <span class="mr-2">${type === 'success' ? '✅' : '❌'}</span>
-                        <span class="font-medium">${message}</span>
+                        <span class="mr-2 text-lg">${icon}</span>
+                        <span class="font-semibold">${message}</span>
                     </div>
                 </div>
             `;
 
+            // Remove a mensagem automaticamente após 6 segundos
             setTimeout(() => {
                 container.innerHTML = '';
-            }, 5000);
+            }, 6000);
         }
 
         // Alpine.js Component
