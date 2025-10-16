@@ -1630,7 +1630,7 @@
                 <tr>
                     <th colspan="3"
                         style="border: 1px solid black; padding: 8px; text-align: center; background-color: #f2f2f2; font-weight: bold; border-top: none;">
-                        RISCO 05</th>
+                        RISCO 06</th>
                 </tr>
             </thead>
             <tbody>
@@ -1748,6 +1748,7 @@
             </tbody>
         </table>
         <br>
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->riscos_extra) !!}
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">4 - APROVAÇÃO E ASSINATURA</p>
         @php
             // Verifica se a variável $assinantes existe e tem itens

@@ -197,6 +197,7 @@
                                                 'justificativa_solucao_escolhida',
                                                 'resultado_pretendidos',
                                                 'impacto_ambiental',
+                                                'riscos_extra',
                                                 'tipo_srp',
                                                 'prevista_plano_anual',
                                                 'encaminhamento_pesquisa_preco',
@@ -251,11 +252,17 @@
                                             'data_id' => 'data_abertura_fase_externa',
                                             'campos' => [''],
                                         ],
+                                        'avisos_licitacao' => [
+                                            'titulo' => 'AVISOS DE LICITAÇÃO',
+                                            'cor' => 'bg-indigo-500',
+                                            'data_id' => 'data_avisos_licitacao',
+                                            'campos' => [''],
+                                        ],
                                         'publicacoes_avisos_licitacao' => [
                                             'titulo' => 'PUBLICAÇÕES DOS AVISOS DE LICITAÇÃO',
                                             'cor' => 'bg-indigo-500',
                                             'data_id' => 'data_publicacoes_avisos_licitacao',
-                                            'campos' => [''],
+                                            'campos' => ['anexo_pdf_publicacoes'],
                                         ],
                                     ];
                                 @endphp
@@ -360,60 +367,63 @@
                                                     <div class="p-4 border-t border-gray-200 bg-gray-50"
                                                         id="accordion-content-{{ $tipo }}">
 
-                                                        <!-- Seção de Assinantes -->
-                                                        <div class="pb-4 mb-6 border-b border-gray-200">
-                                                            <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
+                                                        @if ($documentos != 'publicacoes_avisos_licitacao')
+                                                            <!-- Seção de Assinantes -->
+                                                            <div class="pb-4 mb-6 border-b border-gray-200">
+                                                                <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
 
-                                                            <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
-                                                                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                                                                    {{-- Select da Unidade --}}
-                                                                    <div class="flex-1 min-w-[180px]">
-                                                                        <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
-                                                                            Unidade
-                                                                        </label>
-                                                                        <select
-                                                                            name="assinante_unidade[]"
-                                                                            id="assinante_unidade_{{ $tipo }}"
-                                                                            class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
-                                                                            onchange="updateResponsavel(this, '{{ $tipo }}')"
-                                                                        >
-                                                                            <option value="">Selecione a Unidade</option>
-                                                                            @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-
-                                                                    {{-- Input do Responsável e (opcionalmente) Portaria --}}
-                                                                    <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
-                                                                        {{-- Nome do Responsável --}}
-                                                                        <div class="flex-1 min-w-[200px]">
-                                                                            <label class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                Responsável
+                                                                <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
+                                                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                                                        {{-- Select da Unidade --}}
+                                                                        <div class="flex-1 min-w-[180px]">
+                                                                            <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                Unidade
                                                                             </label>
-                                                                            <input
-                                                                                type="text"
-                                                                                name="assinante_responsavel[]"
-                                                                                placeholder="Nome do Responsável"
-                                                                                readonly
-                                                                                class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
+                                                                            <select
+                                                                                name="assinante_unidade[]"
+                                                                                id="assinante_unidade_{{ $tipo }}"
+                                                                                class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
+                                                                                onchange="updateResponsavel(this, '{{ $tipo }}')"
                                                                             >
+                                                                                <option value="">Selecione a Unidade</option>
+                                                                                @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                                    <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+
+                                                                        {{-- Input do Responsável e (opcionalmente) Portaria --}}
+                                                                        <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
+                                                                            {{-- Nome do Responsável --}}
+                                                                            <div class="flex-1 min-w-[200px]">
+                                                                                <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                                    Responsável
+                                                                                </label>
+                                                                                <input
+                                                                                    type="text"
+                                                                                    name="assinante_responsavel[]"
+                                                                                    placeholder="Nome do Responsável"
+                                                                                    readonly
+                                                                                    class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
+                                                                                >
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            {{-- Botão de adicionar assinante --}}
-                                                            <div class="mt-4">
-                                                                <button
-                                                                    type="button"
-                                                                    onclick="adicionarAssinante('{{ $tipo }}')"
-                                                                    class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300"
-                                                                >
-                                                                    + Adicionar Assinante
-                                                                </button>
+                                                                {{-- Botão de adicionar assinante --}}
+                                                                <div class="mt-4">
+                                                                    <button
+                                                                        type="button"
+                                                                        onclick="adicionarAssinante('{{ $tipo }}')"
+                                                                        class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300"
+                                                                    >
+                                                                        + Adicionar Assinante
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
+
                                                         <!-- Seção de Campos do Formulário -->
                                                         <div>
                                                             <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do
@@ -518,6 +528,10 @@
                                                                         @elseif($campo === 'impacto_ambiental')
                                                                             <x-form-field name="impacto_ambiental"
                                                                                 label="IMPACTOS AMBIENTAIS"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'riscos_extra')
+                                                                            <x-form-field name="riscos_extra"
+                                                                                label="RISCOS EXTRAS"
                                                                                 type="textarea" />
                                                                         @elseif($campo === 'tipo_srp')
                                                                             <div
@@ -1770,6 +1784,126 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+
+                                                                        @elseif($campo === 'anexo_pdf_publicacoes')
+                                                                            {{-- Campo de anexo PDF - Versão Melhorada --}}
+                                                                            <div
+                                                                                class="relative p-6 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-emerald-300 hover:border-emerald-400 hover:shadow-md">
+                                                                                <div class="flex items-start space-x-4">
+                                                                                    {{-- Ícone --}}
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div
+                                                                                            class="p-3 transition-colors duration-300 rounded-lg bg-emerald-50 group-hover:bg-emerald-100">
+                                                                                            <svg class="w-6 h-6 text-emerald-600"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <label for="anexo_pdf_publicacoes"
+                                                                                            class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
+                                                                                            📎 Anexar PDF à Publicações
+                                                                                        </label>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="anexo_pdf_publicacoes"
+                                                                                                name="anexo_pdf_publicacoes"
+                                                                                                accept="application/pdf"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="document.getElementById('pdf_publicacoes').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado'">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span id="pdf_publicacoes"
+                                                                                                    class="text-sm font-medium text-gray-500">Clique para selecionar um arquivo</span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-gray-400">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-medium">PDF</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-emerald-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            O arquivo será anexado
+                                                                                            automaticamente ao documento
+                                                                                            gerado
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col items-center pt-1 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('anexo_pdf_publicacoes')"
+                                                                                            x-show="!confirmed.anexo_pdf_publicacoes"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-emerald-500 hover:bg-emerald-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('anexo_pdf_publicacoes')"
+                                                                                            x-show="confirmed.anexo_pdf_publicacoes"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.anexar_minuta"
+                                                                                        class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -1940,8 +2074,7 @@
             const parecer = document.getElementById('parecer_select_' + documento)?.value || '';
             const assinantes = getAssinantes(documento);
 
-            // Validação: todos os documentos (exceto a capa) precisam de pelo menos 1 assinante
-            if (documento !== 'capa' && assinantes.length < 1) {
+           if (documento !== 'capa' && documento !== 'publicacoes_avisos_licitacao' && assinantes.length < 1) {
                 showMessage('Você deve adicionar pelo menos um assinante antes de gerar o PDF.', 'error');
                 return;
             }
@@ -2065,6 +2198,8 @@
                 dotacao_orcamentaria: existing?.dotacao_orcamentaria ?? '',
                 tratamento_diferenciado_MEs_eEPPs: existing?.tratamento_diferenciado_MEs_eEPPs ?? '',
                 anexar_minuta: existing?.anexar_minuta ?? '',
+                anexo_pdf_publicacoes: existing?.anexo_pdf_publicacoes ?? '',
+                riscos_extra: existing?.riscos_extra ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -2110,6 +2245,8 @@
                     anexar_minuta: !!existing?.anexar_minuta,
                     dotacao_orcamentaria: !!existing?.dotacao_orcamentaria,
                     tratamento_diferenciado_MEs_eEPPs: !!existing?.tratamento_diferenciado_MEs_eEPPs,
+                    anexo_pdf_publicacoes: !!existing?.anexo_pdf_publicacoes,
+                    riscos_extra: !!existing?.riscos_extra,
                 },
 
                 onUnidadeChange() {
@@ -2150,7 +2287,7 @@
                         'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
-                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs',
+                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra',
                     ];
 
                     if (tinyMceFields.includes(field)) {
@@ -2181,6 +2318,11 @@
                         }
                     } else if (field === 'anexar_minuta') {
                         const fileInput = document.getElementById('anexar_minuta');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    } else if (field === 'anexo_pdf_publicacoes') {
+                        const fileInput = document.getElementById('anexo_pdf_publicacoes');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }
