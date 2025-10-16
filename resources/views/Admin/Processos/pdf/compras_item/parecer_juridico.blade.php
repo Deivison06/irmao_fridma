@@ -393,9 +393,9 @@
             É, S,M.J., o Parecer, que submeto à análise superior.
         </p>
 
-        {{-- Bloco de data e assinatura --}}
+         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
@@ -1291,7 +1291,7 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
@@ -2253,9 +2253,9 @@
 
             É o parecer.
         </p>
-        {{-- Bloco de data e assinatura --}}
+         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
