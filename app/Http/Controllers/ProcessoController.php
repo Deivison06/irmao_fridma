@@ -113,6 +113,30 @@ class ProcessoController extends Controller
             // Salva JSON sem escapar acentos
             $detalhe->itens_e_seus_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
         }
+        // --- Tratamento do arquivo Excel/CSV/XML para itens_especificaca_quantitativos_xml ---
+        if ($request->hasFile('itens_especificaca_quantitativos_xml')) {
+            $file = $request->file('itens_especificaca_quantitativos_xml');
+
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+
+            $itens = [];
+            foreach ($rows as $index => $row) {
+                if ($index === 0) continue; // pula o cabeçalho
+                $itens[] = [
+                    'item'              => $row[0] ?? null,
+                    'especificacoes'    => $row[1] ?? null,
+                    'unidade'           => $row[2] ?? null,
+                    'quantidade'        => $row[3] ?? null,
+                    'valor_unitario'    => $row[4] ?? null,
+                    'valor_total'       => $row[5] ?? null,
+                ];
+            }
+
+            // Salva JSON sem escapar acentos
+            $detalhe->itens_especificaca_quantitativos_xml = json_encode($itens, JSON_UNESCAPED_UNICODE);
+        }
 
         if ($request->hasFile('painel_preco_tce')) {
             $file = $request->file('painel_preco_tce');
@@ -185,7 +209,7 @@ class ProcessoController extends Controller
         }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf', 'anexar_minuta', 'anexo_pdf_publicacoes']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }

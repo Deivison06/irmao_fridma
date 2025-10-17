@@ -226,6 +226,7 @@
                                                 'encaminhamento_parecer_juridico',
                                                 'encaminhamento_autorizacao_abertura',
                                                 'valor_estimado',
+                                                'itens_especificaca_quantitativos_xml'
                                             ],
                                         ],
                                         'minutas' => [
@@ -1156,6 +1157,150 @@
                                                                                 {{-- Indicador de status --}}
                                                                                 <div class="absolute top-3 right-3">
                                                                                     <div x-show="confirmed.itens_e_seus_quantitativos_xml"
+                                                                                        class="w-2 h-2 bg-purple-500 rounded-full animate-pulse">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'itens_especificaca_quantitativos_xml')
+                                                                            <div
+                                                                                class="relative p-5 mb-4 transition-all duration-300 bg-white border-2 border-purple-200 border-dashed shadow-sm group rounded-xl hover:border-purple-300 hover:shadow-md">
+                                                                                <div
+                                                                                    class="flex items-start justify-between">
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <div
+                                                                                            class="flex items-center mb-2">
+                                                                                            <div
+                                                                                                class="p-2 mr-3 transition-colors duration-300 rounded-lg bg-purple-50 group-hover:bg-purple-100">
+                                                                                                <svg class="w-5 h-5 text-purple-600"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    stroke-width="2"
+                                                                                                    viewBox="0 0 24 24">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                                                                                </svg>
+                                                                                            </div>
+                                                                                            <label
+                                                                                                for="itens_especificaca_quantitativos_xml"
+                                                                                                class="block text-sm font-semibold text-purple-700 cursor-pointer">
+                                                                                                📦 Itens e Seus quantitativos e especificações
+                                                                                            </label>
+                                                                                        </div>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="itens_especificaca_quantitativos_xml"
+                                                                                                name="itens_especificaca_quantitativos_xml"
+                                                                                                accept=".xml, .xlsx, .xls, .csv"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="updateFileName('itens_especificaca_quantitativos_xml', this)">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span
+                                                                                                    id="itens_especificaca_quantitativos_xml_nome"
+                                                                                                    class="text-sm font-medium text-gray-500">
+                                                                                                    Clique para selecionar
+                                                                                                    arquivo (XML/Excel)
+                                                                                                </span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2">
+                                                                                                    <div
+                                                                                                        class="flex items-center space-x-1 text-purple-600">
+                                                                                                        <svg class="w-4 h-4"
+                                                                                                            fill="none"
+                                                                                                            stroke="currentColor"
+                                                                                                            viewBox="0 0 24 24">
+                                                                                                            <path
+                                                                                                                stroke-linecap="round"
+                                                                                                                stroke-linejoin="round"
+                                                                                                                stroke-width="2"
+                                                                                                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                                                                                        </svg>
+                                                                                                        <span
+                                                                                                            class="text-xs font-semibold">XML</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="w-px h-4 bg-gray-300">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="flex items-center space-x-1 text-cyan-600">
+                                                                                                        <svg class="w-4 h-4"
+                                                                                                            fill="none"
+                                                                                                            stroke="currentColor"
+                                                                                                            viewBox="0 0 24 24">
+                                                                                                            <path
+                                                                                                                stroke-linecap="round"
+                                                                                                                stroke-linejoin="round"
+                                                                                                                stroke-width="2"
+                                                                                                                d="M9 17v-2a4 4 0 00-4-4H3m12 2a4 4 0 014 4v2m-8-6h6m-6-4h6m2 5h4m-4-3h4M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2m0 0h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V7z" />
+                                                                                                        </svg>
+                                                                                                        <span
+                                                                                                            class="text-xs font-semibold">XLSX/CSV</span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-purple-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            Arquivo XML ou Excel contendo os
+                                                                                            itens da tabela e seus
+                                                                                            quantitativos
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col pt-6 pl-4 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('itens_especificaca_quantitativos_xml')"
+                                                                                            x-show="!confirmed.itens_especificaca_quantitativos_xml"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-purple-500 rounded-lg shadow-sm hover:bg-purple-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('itens_especificaca_quantitativos_xml')"
+                                                                                            x-show="confirmed.itens_especificaca_quantitativos_xml"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {{-- Indicador de status --}}
+                                                                                <div class="absolute top-3 right-3">
+                                                                                    <div x-show="confirmed.itens_especificaca_quantitativos_xml"
                                                                                         class="w-2 h-2 bg-purple-500 rounded-full animate-pulse">
                                                                                     </div>
                                                                                 </div>
@@ -2393,6 +2538,7 @@
                 data_evento: dataEvento,
                 hora_evento: horaEvento,
                 data_hora: existing?.data_hora ?? '',
+                itens_especificaca_quantitativos_xml: existing?.itens_especificaca_quantitativos_xml ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -2441,6 +2587,7 @@
                     anexo_pdf_publicacoes: !!existing?.anexo_pdf_publicacoes,
                     riscos_extra: !!existing?.riscos_extra,
                     data_hora: !!existing?.data_hora,
+                    itens_especificaca_quantitativos_xml: !!existing?.itens_especificaca_quantitativos_xml,
                 },
 
                 onUnidadeChange() {
@@ -2537,9 +2684,13 @@
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }
-                    }
+                    }else if (field === 'itens_especificaca_quantitativos_xml') {
+                        const fileInput = document.getElementById('itens_especificaca_quantitativos_xml');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
                     // Arrays
-                    else if (Array.isArray(this[field])) {
+                    }else if (Array.isArray(this[field])) {
                         if (this[field].length === 0) {
                             formData.append(field, '');
                         } else {
