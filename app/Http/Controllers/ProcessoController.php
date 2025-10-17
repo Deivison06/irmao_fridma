@@ -450,7 +450,8 @@ class ProcessoController extends Controller
             'autorizacao_abertura_procedimento',
             'abertura_fase_externa',
             'avisos_licitacao',
-            'publicacoes_avisos_licitacao'
+            'publicacoes_avisos_licitacao',
+            'edital'
         ];
 
         // Buscar os documentos do processo

@@ -26,7 +26,6 @@
             margin: 0;
             padding: 3cm 2cm;
             font-size: 11pt;
-            line-height: 1;
             font-family: 'Aptos', sans-serif;
             /* Adiciona o timbre como background */
             background-image: url('{{ public_path($prefeitura->timbre) }}');
@@ -35,6 +34,8 @@
             background-size: cover;
 
             text-align: justify;
+            text-justify: inter-word;
+            line-height: 1;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */

@@ -38,6 +38,8 @@
             background-size: cover;
 
             text-align: justify;
+            text-justify: inter-word;
+            line-height: 1;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -227,6 +229,7 @@
             margin-top: 60px;
             text-align: center;
         }
+
     </style>
 </head>
 
@@ -254,251 +257,232 @@
             DOCUMENTO FORMALIZAÇÃO DE DEMANDA
         </div>
 
-        @if ($detalhe)
-            <table class="form-table">
-                <tr>
-                    <td colspan="1" class="section-header">1 – IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="field-label">Secretaria:
-                            {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="field-label">Unidade/Setor/Departamento:
-                            {{ $detalhe->unidade_setor ?? 'Unidade 1' }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="field-label">Servidor responsável pela demanda:
-                            {{ $detalhe->servidor_responsavel ?? 'Deivison' }}</span>
-                    </td>
-                </tr>
-            </table>
+        <table class="form-table">
+            <tr>
+                <td colspan="1" class="section-header">1 – IDENTIFICAÇÃO DO ÓRGÃO REQUISITANTE</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="field-label">Secretaria:
+                        {{ $detalhe->secretaria ?? 'SECRETARIA DE EDUCACAO' }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="field-label">Unidade/Setor/Departamento:
+                        {{ $detalhe->unidade_setor ?? 'Unidade 1' }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="field-label">Servidor responsável pela demanda:
+                        {{ $detalhe->servidor_responsavel ?? 'Deivison' }}</span>
+                </td>
+            </tr>
+        </table>
 
-            <table class="form-table">
-                <tr>
-                    <td class="section-header">2 – IDENTIFICAÇÃO DO OBJETO</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="field-label">{!! strip_tags($processo->objeto) !!}</span>
-                        {{-- <div class="large-value-cell">
+        <table class="form-table">
+            <tr>
+                <td class="section-header">2 – IDENTIFICAÇÃO DO OBJETO</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="field-label">{!! strip_tags($processo->objeto) !!}</span>
+                    {{-- <div class="large-value-cell">
                             {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->demanda) !!}
                         </div> --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">
-                        <span style="display:block; text-align:center; font-weight:bold;">
-                            Justificativa da necessidade da contratação:
-                        </span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">
+                    <span style="display:block; text-align:center; font-weight:bold;">
+                        Justificativa da necessidade da contratação:
+                    </span>
 
-                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; ">', $detalhe->justificativa) !!}
-                    </td>
-                </tr>
-            </table>
+                    {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; ">', $detalhe->justificativa) !!}
+                </td>
+            </tr>
+        </table>
 
-            <table
-                style="width: 100%; border-collapse: collapse; border: 1px solid #000 !important; margin-bottom: 15px; page-break-inside: avoid; font-family: Arial, sans-serif; font-size: 12px;">
-                <tr>
-                    <td colspan="2" style="font-weight: bold; text-align: center; background-color: #f2f2f2;">
-                        3 – OBSERVAÇÕES GERAIS
-                    </td>
-                </tr>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #000 !important; margin-bottom: 15px; page-break-inside: avoid; font-family: Arial, sans-serif; font-size: 12px;">
+            <tr>
+                <td colspan="2" style="font-weight: bold; text-align: center; background-color: #f2f2f2;">
+                    3 – OBSERVAÇÕES GERAIS
+                </td>
+            </tr>
 
-                <tr>
-                    <td style="width: 100%;  padding: 5px 8px; vertical-align: top;">
-                        Prazo de entrega/execução: {{ $detalhe->prazo_entrega ?? '' }}
-                    </td>
-                </tr>
+            <tr>
+                <td style="width: 100%;  padding: 5px 8px; vertical-align: top;">
+                    Prazo de entrega/execução: {{ $detalhe->prazo_entrega ?? '' }}
+                </td>
+            </tr>
 
-                <tr>
-                    <td style="width: 100%; border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
-                        Local(is) e horário(s) de entrega: {{ $detalhe->local_entrega ?? '' }}
-                    </td>
-                </tr>
+            <tr>
+                <td style="width: 100%; border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
+                    Local(is) e horário(s) de entrega: {{ $detalhe->local_entrega ?? '' }}
+                </td>
+            </tr>
 
-                <tr>
-                    <td colspan="2" style="border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
-                        Houve contratações anteriores?
-                        @php
-                            $contratacoes = strtolower($detalhe->contratacoes_anteriores ?? '');
-                            $opcoes = ['sim' => 'Sim', 'nao' => 'Não'];
-                        @endphp
-                        <div style="display: flex; gap: 20px; padding: 5px 0;">
-                            @foreach ($opcoes as $valor => $texto)
-                                <div style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
-                                    <span
-                                        style="width: 14px; height: 14px; border: 1px solid #000; text-align: center; line-height: 12px; font-weight: bold; display: inline-block; margin: 2px;">
-                                        {{ $contratacoes === $valor ? 'X' : '' }}
-                                    </span>
-                                    {{ $texto }}
-                                </div>
-                            @endforeach
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
-            <table
-                style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 12px;">
-                <tr>
-                    <!-- Coluna esquerda -->
-                    <td style="width: 50%; border-right: 1px solid #000; padding: 20px; vertical-align: top;">
-                        @php
-                            $vinculativo = is_array($detalhe->instrumento_vinculativo ?? null)
-                                ? $detalhe->instrumento_vinculativo
-                                : ['contrato'];
-                            $outro_vinculativo = $detalhe->instrumento_vinculativo_outro ?? '________________.';
-                        @endphp
-
-                        <div style="font-weight: bold; margin-bottom: 5px;">Instrumento Vinculativo</div>
-
-                        <div style="display: block; margin-bottom: 3px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('contrato', $vinculativo) ? 'X' : '' }}
+            <tr>
+                <td colspan="2" style="border: 1px solid #000; padding: 5px 8px; vertical-align: top;">
+                    Houve contratações anteriores?
+                    @php
+                    $contratacoes = strtolower($detalhe->contratacoes_anteriores ?? '');
+                    $opcoes = ['sim' => 'Sim', 'nao' => 'Não'];
+                    @endphp
+                    <div style="display: flex; gap: 20px; padding: 5px 0;">
+                        @foreach ($opcoes as $valor => $texto)
+                        <div style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                            <span style="width: 14px; height: 14px; border: 1px solid #000; text-align: center; line-height: 12px; font-weight: bold; display: inline-block; margin: 2px;">
+                                {{ $contratacoes === $valor ? 'X' : '' }}
                             </span>
-                            Contrato
+                            {{ $texto }}
                         </div>
-                        <div style="display: block; margin-bottom: 3px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('ata_registro_precos', $vinculativo) ? 'X' : '' }}
-                            </span>
-                            Ata de Registro de Preços
-                        </div>
-                        <div style="display: block; margin-bottom: 3px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('outro', $vinculativo) ? 'X' : '' }}
-                            </span>
-                            Outro: <span
-                                style="font-weight: normal; text-decoration: underline;">{{ $outro_vinculativo }}</span>
-                        </div>
-                    </td>
-
-                    <!-- Coluna direita -->
-                    <td style="width: 50%; padding: 20px; vertical-align: top;">
-                        @php
-                            $vigencia = is_array($detalhe->prazo_vigencia ?? null)
-                                ? $detalhe->prazo_vigencia
-                                : ['12_meses'];
-                            $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________.';
-                            $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
-                        @endphp
-
-                        <div style="font-weight: bold; margin-bottom: 5px;">Prazo de Vigência do Objeto</div>
-
-                        <div style="display: block; margin-bottom: 3px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('exercicio_financeiro', $vigencia) ? 'X' : '' }}
-                            </span>
-                            Exercício financeiro da contratação (até 31/12)
-                        </div>
-                        <div style="display: block; margin-bottom: 3px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('12_meses', $vigencia) ? 'X' : '' }}
-                            </span>
-                            Vigência de 12 meses
-                        </div>
-                        <div style="display: block; margin-bottom: 10px;">
-                            <span
-                                style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                {{ in_array('outro', $vigencia) ? 'X' : '' }}
-                            </span>
-                            Outro: <span
-                                style="font-weight: normal; text-decoration: underline;">{{ $outro_vigencia }}</span>
-                        </div>
-
-                        <div style="margin-top: 10px; padding-top: 5px;">
-                            <div style="padding: 0; display: block; font-weight: bold; margin-bottom: 3px;">
-                                Contratação
-                                de objeto continuado:</div>
-                            <div style="display: block; margin-bottom: 3px;">
-                                <span
-                                    style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                    {{ $objeto_continuado == 'sim' ? 'X' : '' }}
-                                </span>
-                                Sim
-                            </div>
-                            <div style="display: block; margin-bottom: 3px;">
-                                <span
-                                    style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
-                                    {{ $objeto_continuado == 'nao' ? 'X' : '' }}
-                                </span>
-                                Não
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
-
-            {{-- USANDO SOMENTE .footer-law para garantir borda, fundo e page-break-inside: avoid --}}
-            <div class="footer-law" style="margin-bottom: 10px; padding-bottom: 20px;">
-                <span>Regime licitatório adotado:</span><br>
-                Lei 14.133/2021 e legislação correlata.
-            </div>
-
-            {{-- USANDO .footer-law para garantir borda, fundo e page-break-inside: avoid, e alinhamento central --}}
-            <div class="footer-law" style="text-align: justify; margin-top: 5px;">
-                Despacho a Solicitação à Autoridade Competente, para a devida autorização acerca da elaboração de
-                Estudos Técnicos Preliminares.
-            </div>
-
-            @php
-                \Carbon\Carbon::setLocale('pt_BR');
-            @endphp
-
-            {{-- Bloco de data e assinatura --}}
-            <div class="footer-signature">
-                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
-                {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-            </div>
-
-            @php
-                // Verifica se a variável $assinantes existe e tem itens
-                $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-            @endphp
-
-            @if ($hasSelectedAssinantes)
-                {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-                @php
-                    $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
-                @endphp
-
-                <div style="margin-top: 40px; text-align: center;">
-                    <div class="signature-block" style="display: inline-block; margin: 0 40px;">
-                        ___________________________________<br>
-                        <p style="font-size: 10pt; line-height: 1.2;">
-                            {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
-                        </p>
+                        @endforeach
                     </div>
-                </div>
-            @else
-                {{-- Bloco Padrão (Fallback) --}}
-                <div class="signature-block" style="margin-top: 40px; text-align: center;">
-                    ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $processo->prefeitura->autoridade_competente }} <br>
-                        <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
-                    </p>
-                </div>
-            @endif
+                </td>
+            </tr>
+        </table>
+
+        <table style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 12px;">
+            <tr>
+                <!-- Coluna esquerda -->
+                <td style="width: 50%; border-right: 1px solid #000; padding: 20px; vertical-align: top;">
+                    @php
+                    $vinculativo = is_array($detalhe->instrumento_vinculativo ?? null)
+                    ? $detalhe->instrumento_vinculativo
+                    : ['contrato'];
+                    $outro_vinculativo = $detalhe->instrumento_vinculativo_outro ?? '________________.';
+                    @endphp
+
+                    <div style="font-weight: bold; margin-bottom: 5px;">Instrumento Vinculativo</div>
+
+                    <div style="display: block; margin-bottom: 3px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('contrato', $vinculativo) ? 'X' : '' }}
+                        </span>
+                        Contrato
+                    </div>
+                    <div style="display: block; margin-bottom: 3px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('ata_registro_precos', $vinculativo) ? 'X' : '' }}
+                        </span>
+                        Ata de Registro de Preços
+                    </div>
+                    <div style="display: block; margin-bottom: 3px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('outro', $vinculativo) ? 'X' : '' }}
+                        </span>
+                        Outro: <span style="font-weight: normal; text-decoration: underline;">{{ $outro_vinculativo }}</span>
+                    </div>
+                </td>
+
+                <!-- Coluna direita -->
+                <td style="width: 50%; padding: 20px; vertical-align: top;">
+                    @php
+                    $vigencia = is_array($detalhe->prazo_vigencia ?? null)
+                    ? $detalhe->prazo_vigencia
+                    : ['12_meses'];
+                    $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________.';
+                    $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
+                    @endphp
+
+                    <div style="font-weight: bold; margin-bottom: 5px;">Prazo de Vigência do Objeto</div>
+
+                    <div style="display: block; margin-bottom: 3px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('exercicio_financeiro', $vigencia) ? 'X' : '' }}
+                        </span>
+                        Exercício financeiro da contratação (até 31/12)
+                    </div>
+                    <div style="display: block; margin-bottom: 3px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('12_meses', $vigencia) ? 'X' : '' }}
+                        </span>
+                        Vigência de 12 meses
+                    </div>
+                    <div style="display: block; margin-bottom: 10px;">
+                        <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                            {{ in_array('outro', $vigencia) ? 'X' : '' }}
+                        </span>
+                        Outro: <span style="font-weight: normal; text-decoration: underline;">{{ $outro_vigencia }}</span>
+                    </div>
+
+                    <div style="margin-top: 10px; padding-top: 5px;">
+                        <div style="padding: 0; display: block; font-weight: bold; margin-bottom: 3px;">
+                            Contratação
+                            de objeto continuado:</div>
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ $objeto_continuado == 'sim' ? 'X' : '' }}
+                            </span>
+                            Sim
+                        </div>
+                        <div style="display: block; margin-bottom: 3px;">
+                            <span style="width: 14px; height: 14px; border: 1px solid #000; display: inline-block; text-align: center; line-height: 12px; font-weight: bold;">
+                                {{ $objeto_continuado == 'nao' ? 'X' : '' }}
+                            </span>
+                            Não
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        {{-- USANDO SOMENTE .footer-law para garantir borda, fundo e page-break-inside: avoid --}}
+        <div class="footer-law" style="margin-bottom: 10px; padding-bottom: 20px;">
+            <span>Regime licitatório adotado:</span><br>
+            Lei 14.133/2021 e legislação correlata.
+        </div>
+
+        {{-- USANDO .footer-law para garantir borda, fundo e page-break-inside: avoid, e alinhamento central --}}
+        <div class="footer-law" style="text-align: justify; margin-top: 5px;">
+            Despacho a Solicitação à Autoridade Competente, para a devida autorização acerca da elaboração de
+            Estudos Técnicos Preliminares.
+        </div>
+
+        @php
+        \Carbon\Carbon::setLocale('pt_BR');
+        @endphp
+
+        {{-- Bloco de data e assinatura --}}
+        <div class="footer-signature">
+            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+        </div>
+
+        @php
+        // Verifica se a variável $assinantes existe e tem itens
+        $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
+
+        @if ($hasSelectedAssinantes)
+        {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+        @php
+        $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
+        @endphp
+
+        <div style="margin-top: 40px; text-align: center;">
+            <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $primeiroAssinante['responsavel'] }} <br>
+                    <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                </p>
+            </div>
+        </div>
+        @else
+        {{-- Bloco Padrão (Fallback) --}}
+        <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            ___________________________________<br>
+            <p style="font-size: 10pt; line-height: 1.2;">
+                {{ $processo->prefeitura->autoridade_competente }} <br>
+                <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+            </p>
+        </div>
+        @endif
     </div>
-@else
-    <div style="text-align: center; color: #cc0000; font-style: italic; margin-top: 50px;">
-        Nenhum detalhe de formalização de demanda encontrado para este processo.
-    </div>
-    @endif
 
     {{-- QUEBRA DE PÁGINA AQUI --}}
     <div class="page-break"></div>

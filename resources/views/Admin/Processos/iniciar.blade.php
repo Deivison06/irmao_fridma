@@ -265,6 +265,12 @@
                                             'data_id' => 'data_publicacoes_avisos_licitacao',
                                             'campos' => ['anexo_pdf_publicacoes'],
                                         ],
+                                        'edital' => [
+                                            'titulo' => 'EDITAL',
+                                            'cor' => 'bg-indigo-500',
+                                            'data_id' => 'data_edital',
+                                            'campos' => [''],
+                                        ],
                                     ];
                                 @endphp
 
@@ -2394,7 +2400,7 @@
             const parecer = document.getElementById('parecer_select_' + documento)?.value || '';
             const assinantes = getAssinantes(documento);
 
-           if (documento !== 'capa' && documento !== 'publicacoes_avisos_licitacao' && assinantes.length < 1) {
+            if (documento !== 'capa' && documento !== 'publicacoes_avisos_licitacao' && assinantes.length < 1) {
                 showMessage('Você deve adicionar pelo menos um assinante antes de gerar o PDF.', 'error');
                 return;
             }
@@ -2628,8 +2634,7 @@
                 async saveField(field) {
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
-                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content'));
+                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
                     // Quando salvar unidade_setor, também salva o servidor_responsavel
                     if (field === 'unidade_setor' && this.servidor_responsavel) {
