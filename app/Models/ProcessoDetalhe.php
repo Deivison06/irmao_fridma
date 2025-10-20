@@ -61,14 +61,19 @@ class ProcessoDetalhe extends Model
         'anexo_pdf_publicacoes',
         'data_hora',
         'tratamento_diferenciado_MEs_eEPPs',
+        'itens_especificaca_quantitativos_xml',
 
         'intervalo_lances',
+        'portal',
         'exigencia_garantia_proposta',
         'exigencia_garantia_contrato',
         'participacao_exclusiva_mei_epp',
         'reserva_cotas_mei_epp',
         'prioridade_contratacao_mei_epp',
         'exigencias_tecnicas',
+        'regularidade_fisica',
+        'qualificacao_economica',
+        'anexo_pdf_minuta_contrato'
     ];
 
     protected $casts = [
@@ -76,6 +81,8 @@ class ProcessoDetalhe extends Model
         'instrumento_vinculativo' => 'array',
         'prazo_vigencia' => 'array',
         'itens_e_seus_quantitativos_xml' => 'array',
+        'itens_especificaca_quantitativos_xml' => 'array',
+
     ];
 
     /**

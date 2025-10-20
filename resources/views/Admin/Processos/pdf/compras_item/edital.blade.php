@@ -183,14 +183,14 @@
             <span style="font-weight: bold;">VALOR TOTAL DA CONTRATAÇÃO</span> <br>
             {{ $detalhe->valor_estimado }}<br>
             <span style="font-weight: bold;">DATA LIMITE PARA ENVIO DE PROPOSTAS</span> <br>
-            DIA XX/XX/2025 às XX:00h (Horário de Brasília)<br>
+            DIA {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs (Horário de Brasília)<br>
             <span style="font-weight: bold;">DATA DA SESSÃO PÚBLICA E FASE DE LANCES</span> <br>
-            DIA XX/XX/2025 às XX:01h (Horário de Brasília)<br>
-            <span style="font-weight: bold;">PORTAL UTILIZADO:</span> XXXXXX <br>
-            <span style="font-weight: bold;">HORÁRIO:</span> ____:____ (HORÁRIO DE BRASÍLIA/DF)<br>
+            DIA {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }} às {{ $detalhe->data_hora->format('H:i') }}hs (Horário de Brasília)<br>
+            <span style="font-weight: bold;">PORTAL UTILIZADO:</span> {{ $detalhe->portal }} <br>
+            <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
             <span style="font-weight: bold;">E-MAIL:</span> {{ $processo->prefeitura->email }}<br><br>
             <span style="font-weight: bold;">PREGOEIRO</span><br>
-            XXXXXXXXXXXXXXXXXXX<br>
+            {{ $detalhe->portaria_agente_equipe_pdf }}<br>
             <span style="font-weight: bold;">AUTORIDADE COMPETENTE</span><br>
             {{ $processo->prefeitura->autoridade_competente }}
         </p>
@@ -238,7 +238,7 @@
                         INTERVALO ENTRE OS LANCES
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        {!! strip_tags($processo->intervalo_lances) !!}
+                        {{$detalhe->intervalo_lances }}
                     </td>
                 </tr>
                 <tr>
@@ -336,12 +336,12 @@
     <div class="page-break"></div>
     <div>
         <p style="text-align: justify;">
-            A (órgão ou entidade pública), sediado(a) XXXXXXXX, inscrita no CNPJ: XXXXXXXXXXXXX, torna público por meio do(a) seu
+            A  {{ $processo->prefeitura->nome }}, sediado(a) {{ $processo->prefeitura->endereco }}, inscrita no CNPJ: {{ $processo->prefeitura->cnpj }}, torna público por meio do(a) seu
             Pregoeiro, realizará licitação, na modalidade PREGÃO, na forma ELETRÔNICA, nos termos da Lei nº 14.133, de 2021,
             Decretos Municipais e demais legislação aplicável e, ainda, de acordo com as condições estabelecidas neste Edital.
         </p>
         <p style="text-align: justify;">
-            O início da Sessão de disputa de preços será realizado no dia XX/XX/XXXX, às XXhXXmin, por meio de sessão virtual, com
+            O início da Sessão de disputa de preços será realizado no dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs, por meio de sessão virtual, com
             inserção e comunicação via plataforma digital já especificada neste instrumento de convocação.
         </p>
         <p style="text-align: justify;">
@@ -499,7 +499,7 @@
         </p>
         <p style="text-align: justify;">
             2.1 Poderão participar do processo os interessados que atenderem a todas as exigências contidas neste edital e anexos,
-            para os fins do objeto pleiteado e estejam devidamente cadastrados e credenciados no Portal XXXXXXXXXXXXX, que atuará
+            para os fins do objeto pleiteado e estejam devidamente cadastrados e credenciados no Portal {{ $detalhe->portal }}, que atuará
             como órgão provedor do Sistema Eletrônico.
         </p>
         <p style="text-align: justify;">
@@ -670,7 +670,7 @@
             <img src="{{ public_path('icons/grafico.png') }}" width="20" style="margin-right: 10px;"> 3. DO CREDENCIAMENTO DO LICITANTE
         </p>
         <p style="text-align: justify;">
-            3.1. Para participar do pregão, o licitante deverá se credenciar no Portal de Licitações através do site “http://XXXXXXXXXXX”.
+            3.1. Para participar do pregão, o licitante deverá se credenciar no Portal de Licitações através do site “{{ $detalhe->portal }}”.
         </p>
         <p style="text-align: justify;">
             3.2. O credenciamento dar-se-á pela atribuição de chave de identificação e de senha, pessoal e intransferível, para acesso
@@ -1005,6 +1005,7 @@
                 de Débitos Trabalhistas (CNDT), emitida pelo TST - Tribunal Superior do Trabalho, com data de emissão não superior a 180
                 (cento e oitenta) dias, quando não constar expressamente no corpo da Certidão o seu prazo de validade. (Lei 12.440/2011).
             </li>
+            {!! preg_replace('/<\/?ul[^>]*>/', '', $detalhe->regularidade_fisica) !!}
         </ol>
         <p style="text-align: justify; font-weight: bold;">
             6.6. Qualificação Econômico-financeira:
@@ -1030,6 +1031,7 @@
                 demonstrações contábeis do último exercício social, devidamente assinada pelo Representante Legal da Empresa e pelo
                 Contador responsável;
             </li>
+            {!! preg_replace('/<\/?ul[^>]*>/', '', $detalhe->qualificacao_economica) !!}
         </ol>
         <p style="text-align: justify; font-weight: bold;">
             6.7 Qualificação Técnica:
@@ -1260,14 +1262,6 @@
         </p>
         <p style="text-align: justify;">
             Integram este Edital, para todos os fins e efeitos, os seguintes anexos:
-            <br>
-            <br>
-            ANEXO I – Termo de Referência
-            <br>
-            <br>
-            ANEXO II – Minuta do Contrato
-            <br>
-            <br>
             <span style="color: red;">
                 ANEXO III – Ata de Registro de Preços (Quando a licitação for por registro de preços)
             </span>

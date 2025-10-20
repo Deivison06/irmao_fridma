@@ -164,7 +164,7 @@
                                             'titulo' => 'Capa do documento',
                                             'cor' => 'bg-red-500',
                                             'data_id' => 'data_capa',
-                                            'campos' => [],
+                                            'campos' => [''],
                                         ],
                                         'formalizacao' => [
                                             'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
@@ -271,12 +271,16 @@
                                             'data_id' => 'data_edital',
                                             'campos' => [
                                                 'intervalo_lances',
+                                                'portal',
                                                 'exigencia_garantia_proposta',
                                                 'exigencia_garantia_contrato',
                                                 'participacao_exclusiva_mei_epp',
                                                 'reserva_cotas_mei_epp',
                                                 'prioridade_contratacao_mei_epp',
-                                                'exigencias_tecnicas'
+                                                'regularidade_fisica',
+                                                'qualificacao_economica',
+                                                'exigencias_tecnicas',
+                                                'anexo_pdf_minuta_contrato',
                                             ],
                                         ],
                                     ];
@@ -2162,8 +2166,10 @@
                                                                             </div>
                                                                         @elseif($campo === 'intervalo_lances')
                                                                             <x-form-field name="intervalo_lances"
-                                                                                label="INTERVALO ENTRE OS LANCES"
-                                                                                type="textarea" />
+                                                                                label="INTERVALO ENTRE OS LANCES"/>
+                                                                        @elseif($campo === 'portal')
+                                                                            <x-form-field name="portal"
+                                                                                label="PORTAL UTILIZADO"/>
                                                                         @elseif($campo === 'exigencia_garantia_proposta')
                                                                             <div
                                                                                 class="flex items-start pt-4 space-x-2 border-t border-gray-200">
@@ -2374,10 +2380,129 @@
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
+                                                                        @elseif($campo === 'regularidade_fisica')
+                                                                            <x-form-field name="regularidade_fisica"
+                                                                                label="Regularidade Fiscal e Trabalhista:"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'qualificacao_economica')
+                                                                            <x-form-field name="qualificacao_economica"
+                                                                                label="Qualificação Econômico-financeira:"
+                                                                                type="textarea" />
                                                                         @elseif($campo === 'exigencias_tecnicas')
                                                                             <x-form-field name="exigencias_tecnicas"
                                                                                 label="EXIGÊNCIAS TÉCNICAS"
                                                                                 type="textarea" />
+                                                                        @elseif($campo === 'anexo_pdf_minuta_contrato')
+                                                                            {{-- Campo de anexo PDF - Versão Melhorada --}}
+                                                                            <div
+                                                                                class="relative p-6 mb-4 transition-all duration-300 bg-white border-2 border-dashed shadow-sm group rounded-xl border-emerald-300 hover:border-emerald-400 hover:shadow-md">
+                                                                                <div class="flex items-start space-x-4">
+                                                                                    {{-- Ícone --}}
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div
+                                                                                            class="p-3 transition-colors duration-300 rounded-lg bg-emerald-50 group-hover:bg-emerald-100">
+                                                                                            <svg class="w-6 h-6 text-emerald-600"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                stroke-width="2"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    {{-- Conteúdo principal --}}
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <label for="anexo_pdf_minuta_contrato"
+                                                                                            class="block mb-2 text-sm font-semibold cursor-pointer text-emerald-700">
+                                                                                            📎 Anexar PDF Minuta do Contrato
+                                                                                        </label>
+
+                                                                                        <div class="relative">
+                                                                                            <input type="file"
+                                                                                                id="anexo_pdf_minuta_contrato"
+                                                                                                name="anexo_pdf_minuta_contrato"
+                                                                                                accept="application/pdf"
+                                                                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                                                                onchange="document.getElementById('minuta_contrato').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado'">
+
+                                                                                            <div
+                                                                                                class="flex items-center justify-between px-4 py-3 transition-colors duration-200 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                                                                                <span id="minuta_contrato"
+                                                                                                    class="text-sm font-medium text-gray-500">Clique para selecionar um arquivo</span>
+                                                                                                <div
+                                                                                                    class="flex items-center space-x-2 text-gray-400">
+                                                                                                    <svg class="w-4 h-4"
+                                                                                                        fill="none"
+                                                                                                        stroke="currentColor"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <path
+                                                                                                            stroke-linecap="round"
+                                                                                                            stroke-linejoin="round"
+                                                                                                            stroke-width="2"
+                                                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                                                                    </svg>
+                                                                                                    <span
+                                                                                                        class="text-xs font-medium">PDF</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <p
+                                                                                            class="flex items-center mt-2 text-xs text-gray-500">
+                                                                                            <svg class="w-3 h-3 mr-1 text-emerald-500"
+                                                                                                fill="currentColor"
+                                                                                                viewBox="0 0 20 20">
+                                                                                                <path fill-rule="evenodd"
+                                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                                                    clip-rule="evenodd" />
+                                                                                            </svg>
+                                                                                            O arquivo será anexado
+                                                                                            automaticamente ao documento
+                                                                                            gerado
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    {{-- Botões de ação --}}
+                                                                                    <div
+                                                                                        class="flex flex-col items-center pt-1 space-y-2">
+                                                                                        <button type="button"
+                                                                                            @click="saveField('anexo_pdf_minuta_contrato')"
+                                                                                            x-show="!confirmed.anexo_pdf_minuta_contrato"
+                                                                                            class="p-2 text-white transition-all duration-200 transform rounded-lg shadow-sm bg-emerald-500 hover:bg-emerald-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Confirmar arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M5 13l4 4L19 7" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button type="button"
+                                                                                            @click="toggleConfirm('anexo_pdf_minuta_contrato')"
+                                                                                            x-show="confirmed.anexo_pdf_minuta_contrato"
+                                                                                            class="p-2 text-white transition-all duration-200 transform bg-red-500 rounded-lg shadow-sm hover:bg-red-600 hover:scale-105 hover:shadow-md"
+                                                                                            title="Remover arquivo">
+                                                                                            <svg class="w-4 h-4"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -2764,18 +2889,22 @@
                 anexar_minuta: existing?.anexar_minuta ?? '',
                 anexo_pdf_publicacoes: existing?.anexo_pdf_publicacoes ?? '',
                 riscos_extra: existing?.riscos_extra ?? '',
+                anexo_pdf_minuta_contrato: existing?.anexo_pdf_minuta_contrato ?? '',
                 // Novos campos para data_hora
                 data_evento: dataEvento,
                 hora_evento: horaEvento,
                 data_hora: existing?.data_hora ?? '',
                 itens_especificaca_quantitativos_xml: existing?.itens_especificaca_quantitativos_xml ?? '',
                 intervalo_lances: existing?.intervalo_lances ?? '',
+                portal: existing?.portal ?? '',
                 exigencia_garantia_proposta: existing?.exigencia_garantia_proposta ?? '',
                 exigencia_garantia_contrato: existing?.exigencia_garantia_contrato ?? '',
                 participacao_exclusiva_mei_epp: existing?.participacao_exclusiva_mei_epp ?? '',
                 reserva_cotas_mei_epp: existing?.reserva_cotas_mei_epp ?? '',
                 prioridade_contratacao_mei_epp: existing?.prioridade_contratacao_mei_epp ?? '',
                 exigencias_tecnicas: existing?.exigencias_tecnicas ?? '',
+                qualificacao_economica: existing?.qualificacao_economica ?? '',
+                regularidade_fisica: existing?.regularidade_fisica ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -2826,12 +2955,16 @@
                     data_hora: !!existing?.data_hora,
                     itens_especificaca_quantitativos_xml: !!existing?.itens_especificaca_quantitativos_xml,
                     intervalo_lances: !!existing?.intervalo_lances,
+                    portal: !!existing?.portal,
                     exigencia_garantia_proposta: !!existing?.exigencia_garantia_proposta,
                     exigencia_garantia_contrato: !!existing?.exigencia_garantia_contrato,
                     participacao_exclusiva_mei_epp: !!existing?.participacao_exclusiva_mei_epp,
                     reserva_cotas_mei_epp: !!existing?.reserva_cotas_mei_epp,
                     prioridade_contratacao_mei_epp: !!existing?.prioridade_contratacao_mei_epp,
                     exigencias_tecnicas: !!existing?.exigencias_tecnicas,
+                    qualificacao_economica: !!existing?.qualificacao_economica,
+                    regularidade_fisica: !!existing?.regularidade_fisica,
+                    anexo_pdf_minuta_contrato: !!existing?.anexo_pdf_minuta_contrato,
                 },
 
                 onUnidadeChange() {
@@ -2888,7 +3021,7 @@
                         'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
-                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra', 'intervalo_lances', 'exigencias_tecnicas'
+                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra', 'exigencias_tecnicas', 'qualificacao_economica', 'regularidade_fisica'
                     ];
 
                     if (tinyMceFields.includes(field)) {
@@ -2929,6 +3062,11 @@
                         }
                     }else if (field === 'itens_especificaca_quantitativos_xml') {
                         const fileInput = document.getElementById('itens_especificaca_quantitativos_xml');
+                        if (fileInput && fileInput.files.length > 0) {
+                            formData.append(field, fileInput.files[0]);
+                        }
+                    }else if (field === 'anexo_pdf_minuta_contrato') {
+                        const fileInput = document.getElementById('anexo_pdf_minuta_contrato');
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
                         }

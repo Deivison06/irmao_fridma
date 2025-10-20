@@ -207,9 +207,20 @@ class ProcessoController extends Controller
             // Salva o caminho relativo para uso posterior
             $detalhe->anexo_pdf_publicacoes = 'uploads/anexos/' . $filename;
         }
+        if ($request->hasFile('anexo_pdf_minuta_contrato')) {
+            $file = $request->file('anexo_pdf_minuta_contrato');
+            $filename = 'minuta_contrato_' . time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/anexos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $filename);
+            // Salva o caminho relativo para uso posterior
+            $detalhe->anexo_pdf_minuta_contrato = 'uploads/anexos/' . $filename;
+        }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml', 'anexo_pdf_minuta_contrato']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
@@ -365,6 +376,36 @@ class ProcessoController extends Controller
             // Junta o PDF principal com anexos (quando aplicável)
             // =========================================================
             $anexoPath = null;
+            if ($documento === 'edital') {
+                $termoReferencia = Documento::where('processo_id', $processo->id)
+                    ->where('tipo_documento', 'termo_referencia')
+                    ->first();
+
+                if ($termoReferencia && file_exists(public_path($termoReferencia->caminho))) {
+                    $termoPath = public_path($termoReferencia->caminho);
+
+                    $fpdi = new Fpdi();
+
+                    // Adiciona páginas do edital
+                    $numPages = $fpdi->setSourceFile($caminhoCompleto);
+                    for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Adiciona páginas do termo de referência
+                    $numPagesTermo = $fpdi->setSourceFile($termoPath);
+                    for ($pageNo = 1; $pageNo <= $numPagesTermo; $pageNo++) {
+                        $templateId = $fpdi->importPage($pageNo);
+                        $fpdi->addPage();
+                        $fpdi->useTemplate($templateId);
+                    }
+
+                    // Sobrescreve o PDF final (edital + termo de referência)
+                    $fpdi->Output('F', $caminhoCompleto);
+                }
+            }
 
             if ($documento === 'analise_mercado' && !empty($processo->detalhe->anexo_pdf_analise_mercado)) {
                 $anexoPath = public_path($processo->detalhe->anexo_pdf_analise_mercado);
@@ -374,6 +415,8 @@ class ProcessoController extends Controller
                 $anexoPath = public_path($processo->detalhe->anexar_minuta);
             } elseif ($documento === 'publicacoes_avisos_licitacao' && !empty($processo->detalhe->anexo_pdf_publicacoes)) {
                 $anexoPath = public_path($processo->detalhe->anexo_pdf_publicacoes);
+            }elseif ($documento === 'edital' && !empty($processo->detalhe->anexo_pdf_minuta_contrato)) {
+                $anexoPath = public_path($processo->detalhe->anexo_pdf_minuta_contrato);
             }
 
             if ($anexoPath && file_exists($anexoPath)) {
@@ -398,6 +441,11 @@ class ProcessoController extends Controller
                 // Salva o PDF final (sobrescreve o principal)
                 $fpdi->Output('F', $caminhoCompleto);
             }
+            // =========================================================
+            // Caso especial: se o documento for "edital",
+            // juntar com o termo de referência no final
+            // =========================================================
+
 
             // =========================================================
             // Retorno de sucesso (sem recarregar a página)
@@ -407,7 +455,6 @@ class ProcessoController extends Controller
                 'message' => '✅ PDF gerado com sucesso! Clique em "Download" para visualizar o arquivo.',
                 'documento' => $documento
             ]);
-
         } catch (\Throwable $e) {
             Log::error('Erro ao gerar PDF', [
                 'erro' => $e->getMessage(),

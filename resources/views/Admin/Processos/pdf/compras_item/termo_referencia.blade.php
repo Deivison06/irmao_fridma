@@ -229,7 +229,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">PRAZO DE VIGÊNCIA DA CONTRATAÇÃO</div>
                                 <div style="">
-                                    O prazo de vigência da contratação é de {{ $detalhe->prazo_vigencia }} contados da assinatura do contrato, na forma do artigo 105 da Lei n° 14.133, de 2021
+                                    O prazo de vigência da contratação é de XXXXXXXX contados da assinatura do contrato, na forma do artigo 105 da Lei n° 14.133, de 2021
                                 </div>
                             </td>
                         </tr>
@@ -331,7 +331,7 @@
         </p>
 
         <p style="text-align: justify;">
-            1.6. O prazo de vigência da contratação é de {{ $detalhe->prazo_vigencia }} contados da assinatura do contrato, na forma do artigo 105 da Lei
+            1.6. O prazo de vigência da contratação é de XXXXXXXX contados da assinatura do contrato, na forma do artigo 105 da Lei
             n° 14.133, de 2021.
         </p>
         @if($detalhe->objeto_continuado === 'sim')
