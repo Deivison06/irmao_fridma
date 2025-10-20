@@ -269,7 +269,15 @@
                                             'titulo' => 'EDITAL',
                                             'cor' => 'bg-indigo-500',
                                             'data_id' => 'data_edital',
-                                            'campos' => [''],
+                                            'campos' => [
+                                                'intervalo_lances',
+                                                'exigencia_garantia_proposta',
+                                                'exigencia_garantia_contrato',
+                                                'participacao_exclusiva_mei_epp',
+                                                'reserva_cotas_mei_epp',
+                                                'prioridade_contratacao_mei_epp',
+                                                'exigencias_tecnicas'
+                                            ],
                                         ],
                                     ];
                                 @endphp
@@ -2152,7 +2160,224 @@
                                                                                     <span x-text="data_evento + ' ' + hora_evento" class="ml-2 font-semibold text-gray-700"></span>
                                                                                 </div>
                                                                             </div>
-
+                                                                        @elseif($campo === 'intervalo_lances')
+                                                                            <x-form-field name="intervalo_lances"
+                                                                                label="INTERVALO ENTRE OS LANCES"
+                                                                                type="textarea" />
+                                                                        @elseif($campo === 'exigencia_garantia_proposta')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">EXIGÊNCIA DE GARANTIA DE PROPOSTA</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="exigencia_garantia_proposta"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.exigencia_garantia_proposta"
+                                                                                                :checked="exigencia_garantia_proposta === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="exigencia_garantia_proposta"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.exigencia_garantia_proposta"
+                                                                                                :checked="exigencia_garantia_proposta === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('exigencia_garantia_proposta')"
+                                                                                        x-show="!confirmed.exigencia_garantia_proposta"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('exigencia_garantia_proposta')"
+                                                                                        x-show="confirmed.exigencia_garantia_proposta"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'exigencia_garantia_contrato')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">EXIGÊNCIA DE GARANTIA DE CONTRATO</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="exigencia_garantia_contrato"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.exigencia_garantia_contrato"
+                                                                                                :checked="exigencia_garantia_contrato === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="exigencia_garantia_contrato"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.exigencia_garantia_contrato"
+                                                                                                :checked="exigencia_garantia_contrato === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('exigencia_garantia_contrato')"
+                                                                                        x-show="!confirmed.exigencia_garantia_contrato"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('exigencia_garantia_contrato')"
+                                                                                        x-show="confirmed.exigencia_garantia_contrato"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'participacao_exclusiva_mei_epp')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Itens destinados à participação exclusiva para MEI/ME/EPP até R$ 80.000,00</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="participacao_exclusiva_mei_epp"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.participacao_exclusiva_mei_epp"
+                                                                                                :checked="participacao_exclusiva_mei_epp === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="participacao_exclusiva_mei_epp"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.participacao_exclusiva_mei_epp"
+                                                                                                :checked="participacao_exclusiva_mei_epp === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('participacao_exclusiva_mei_epp')"
+                                                                                        x-show="!confirmed.participacao_exclusiva_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('participacao_exclusiva_mei_epp')"
+                                                                                        x-show="confirmed.participacao_exclusiva_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'reserva_cotas_mei_epp')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Itens com reserva de cotas destinados à participação exclusiva para MEI/ME/EPP</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="reserva_cotas_mei_epp"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.reserva_cotas_mei_epp"
+                                                                                                :checked="reserva_cotas_mei_epp === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="reserva_cotas_mei_epp"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.reserva_cotas_mei_epp"
+                                                                                                :checked="reserva_cotas_mei_epp === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('reserva_cotas_mei_epp')"
+                                                                                        x-show="!confirmed.reserva_cotas_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('reserva_cotas_mei_epp')"
+                                                                                        x-show="confirmed.reserva_cotas_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'prioridade_contratacao_mei_epp')
+                                                                            <div
+                                                                                class="flex items-start pt-4 space-x-2 border-t border-gray-200">
+                                                                                <div class="flex-1">
+                                                                                    <span
+                                                                                        class="block mb-1 text-sm font-medium text-gray-700">Prioridade de contratação para MEI/ME/EPP sediadas local ou regionalmente (até 10%)</span>
+                                                                                    <div class="flex mt-1 space-x-4">
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="prioridade_contratacao_mei_epp"
+                                                                                                value="sim"
+                                                                                                :disabled="confirmed.prioridade_contratacao_mei_epp"
+                                                                                                :checked="prioridade_contratacao_mei_epp === 'sim'">
+                                                                                            <span class="ml-2">Sim</span>
+                                                                                        </label>
+                                                                                        <label
+                                                                                            class="inline-flex items-center">
+                                                                                            <input type="radio"
+                                                                                                x-model="prioridade_contratacao_mei_epp"
+                                                                                                value="nao"
+                                                                                                :disabled="confirmed.prioridade_contratacao_mei_epp"
+                                                                                                :checked="prioridade_contratacao_mei_epp === 'nao'">
+                                                                                            <span class="ml-2">Não</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="flex pt-6 space-x-1">
+                                                                                    <button type="button"
+                                                                                        @click="saveField('prioridade_contratacao_mei_epp')"
+                                                                                        x-show="!confirmed.prioridade_contratacao_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                                                                        ✔
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        @click="toggleConfirm('prioridade_contratacao_mei_epp')"
+                                                                                        x-show="confirmed.prioridade_contratacao_mei_epp"
+                                                                                        class="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                                                        ✖
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($campo === 'exigencias_tecnicas')
+                                                                            <x-form-field name="exigencias_tecnicas"
+                                                                                label="EXIGÊNCIAS TÉCNICAS"
+                                                                                type="textarea" />
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -2191,27 +2416,26 @@
 
     <script>
         document.addEventListener('alpine:init', () => {
-            // Inicializa TinyMCE em todos os textareas com x-ref terminando em _editor
             document.querySelectorAll('textarea[x-ref$="_editor"]').forEach(textarea => {
                 tinymce.init({
                     selector: '#' + textarea.id,
-                    plugins: 'lists link table code charmap emoticons',
-                    toolbar: 'undo redo | bold italic underline | bullist numlist | link table | emoticons charmap | code',
+                    plugins: 'advlist lists link table code charmap emoticons',
+                    toolbar: 'undo redo | bold italic underline | bullist numlist | styleselect | link table | emoticons charmap | code',
                     menubar: false,
                     branding: false,
                     height: 300,
-                    setup: function(editor) {
-                        editor.on('change keyup', function() {
-                            // Atualiza o valor do textarea e dispara evento input para Alpine
+                    advlist_bullet_styles: 'default,circle,square',
+                    advlist_number_styles: 'default,lower-alpha,upper-alpha,lower-roman,upper-roman',
+                    setup: function (editor) {
+                        editor.on('change keyup', function () {
                             textarea.value = editor.getContent();
-                            textarea.dispatchEvent(new Event('input', {
-                                bubbles: true
-                            }));
+                            textarea.dispatchEvent(new Event('input', { bubbles: true }));
                         });
                     }
                 });
             });
         });
+
         // Inicialização da funcionalidade de acordeão
         document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
             button.addEventListener('click', () => {
@@ -2545,6 +2769,13 @@
                 hora_evento: horaEvento,
                 data_hora: existing?.data_hora ?? '',
                 itens_especificaca_quantitativos_xml: existing?.itens_especificaca_quantitativos_xml ?? '',
+                intervalo_lances: existing?.intervalo_lances ?? '',
+                exigencia_garantia_proposta: existing?.exigencia_garantia_proposta ?? '',
+                exigencia_garantia_contrato: existing?.exigencia_garantia_contrato ?? '',
+                participacao_exclusiva_mei_epp: existing?.participacao_exclusiva_mei_epp ?? '',
+                reserva_cotas_mei_epp: existing?.reserva_cotas_mei_epp ?? '',
+                prioridade_contratacao_mei_epp: existing?.prioridade_contratacao_mei_epp ?? '',
+                exigencias_tecnicas: existing?.exigencias_tecnicas ?? '',
 
                 // Controle de confirmação
                 confirmed: {
@@ -2594,6 +2825,13 @@
                     riscos_extra: !!existing?.riscos_extra,
                     data_hora: !!existing?.data_hora,
                     itens_especificaca_quantitativos_xml: !!existing?.itens_especificaca_quantitativos_xml,
+                    intervalo_lances: !!existing?.intervalo_lances,
+                    exigencia_garantia_proposta: !!existing?.exigencia_garantia_proposta,
+                    exigencia_garantia_contrato: !!existing?.exigencia_garantia_contrato,
+                    participacao_exclusiva_mei_epp: !!existing?.participacao_exclusiva_mei_epp,
+                    reserva_cotas_mei_epp: !!existing?.reserva_cotas_mei_epp,
+                    prioridade_contratacao_mei_epp: !!existing?.prioridade_contratacao_mei_epp,
+                    exigencias_tecnicas: !!existing?.exigencias_tecnicas,
                 },
 
                 onUnidadeChange() {
@@ -2650,7 +2888,7 @@
                         'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
-                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra',
+                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra', 'intervalo_lances', 'exigencias_tecnicas'
                     ];
 
                     if (tinyMceFields.includes(field)) {

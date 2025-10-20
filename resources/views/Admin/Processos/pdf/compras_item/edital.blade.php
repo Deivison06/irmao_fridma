@@ -222,7 +222,7 @@
                         FORMA DE ADJUDICAÇÃO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        PORTIEM
+                        POR ITEM
                     </td>
                 </tr>
                 <tr>
@@ -238,7 +238,7 @@
                         INTERVALO ENTRE OS LANCES
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        XXXXXX (CAMPO LIVRE)
+                        {!! strip_tags($processo->intervalo_lances) !!}
                     </td>
                 </tr>
                 <tr>
@@ -254,7 +254,7 @@
                         EXIGÊNCIA DE GARANTIA DE PROPOSTA
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->exigencia_garantia_proposta ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
                 <tr>
@@ -262,7 +262,7 @@
                         EXIGÊNCIA DE GARANTIA DE CONTRATO
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->exigencia_garantia_contrato ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
                 <tr>
@@ -278,7 +278,7 @@
                         HAVERÁ INVERSÃO A FASE DE HABILITAÇÃO?
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        SIM OU NÃO NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->inversao_fase ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
                 <tr>
@@ -307,7 +307,7 @@
                         <span style="font-weight: normal;">(Art. 48, I, Lei Complementar nº 123/2006)</span>
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->participacao_exclusiva_mei_epp ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
                 <tr>
@@ -316,7 +316,7 @@
                         <span style="font-weight: normal;">(Art. 48, III, Lei Complementar nº 123/06)</span>
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        SIM (25%) ou NÃO NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->reserva_cotas_mei_epp ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
                 <tr>
@@ -325,7 +325,7 @@
                         <span style="font-weight: normal;">(Art. 48, §3º, Lei Complementar nº 123/06)</span>
                     </td>
                     <td style="border: 1px solid black; padding: 5px;">
-                        SIM (LOCAL ou REGIONAL) ou NÃO NÃO OU SIM CAMPO PARA MARCAR
+                        {{ strtoupper($detalhe->prioridade_contratacao_mei_epp ?? 'NÃO INFORMADO') }}
                     </td>
                 </tr>
             </tbody>
@@ -360,7 +360,7 @@
         </p>
 
         <p style="text-align: justify;">
-            1.1 O objeto da presente licitação é a (XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX) conforme condições,
+            1.1 O objeto da presente licitação é a {!! strip_tags($processo->objeto) !!} conforme condições,
             quantidades e exigências estabelecidas neste Edital e seus anexos.
         </p>
         <p style="text-align: justify;">
@@ -1044,6 +1044,7 @@
                 Para fins da comprovação de que trata este subitem, os atestados deverão dizer respeito a contratos executados
                 com as seguintes características mínimas:
             </li>
+            {!! preg_replace('/<\/?ul[^>]*>/', '', $detalhe->exigencias_tecnicas) !!}
         </ol>
         <p style="text-align: justify;">
             6.8. O Pregoeiro fará a análise dos documentos de habilitação do licitante, será aberto o prazo para manifestação da intenção

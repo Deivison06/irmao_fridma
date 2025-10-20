@@ -62,6 +62,13 @@ class ProcessoDetalhe extends Model
         'data_hora',
         'tratamento_diferenciado_MEs_eEPPs',
 
+        'intervalo_lances',
+        'exigencia_garantia_proposta',
+        'exigencia_garantia_contrato',
+        'participacao_exclusiva_mei_epp',
+        'reserva_cotas_mei_epp',
+        'prioridade_contratacao_mei_epp',
+        'exigencias_tecnicas',
     ];
 
     protected $casts = [
