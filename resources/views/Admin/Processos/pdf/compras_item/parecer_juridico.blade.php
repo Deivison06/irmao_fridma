@@ -438,18 +438,17 @@
     </p>
 
     <p style="text-indent: 30px;  text-align: justify;">
-        Pelo presente, emitimos nossa opinião jurídica à Comissão de Contratação da Prefeitura
-        Municipal acerca da regularidade da fase interna do certame licitatório acima mencionado, nos
-        termos da Lei nº 14.133/2021.
+        Pelo presente, emitimos nossa opinião jurídica junto a Prefeitura Municipal
+        acerca da regularidade da fase interna do certame licitatório acima mencionado,
+        nos termos da Lei nº 14.133/2021.
     </p>
     <p style="font-weight: bold; font-size: 14px;">1 – DO RELATÓRIO </p>
 
     <p style="text-indent: 30px;  text-align: justify;">
         Foram encaminhados a esta assessoria jurídica os autos do processo nº {{ $processo->numero_processo }},
         para que seja feita a análise quanto as formalidades legais do procedimento que se encontra em sua fase interna.
-        Constituídas dos seguintes documentos: Documento de Formalização de Demanda (DFD);
-        Estudos Técnicos Preliminares (ETP); Mapa de Riscos;
-        Pesquisa de Preços realizada no Painel de Preços do TCE-PI:
+        Constituídas dos seguintes documentos:
+
         Termo de Referência com descrição e quantitativo dos itens;
         Adequação e existência de saldo orçamentário;
         Minuta do Edital de Licitação e minuta do Contrato;
@@ -458,25 +457,10 @@
         <li>Documento de Formalização de Demanda (DFD);</li>
         <li>Estudos Técnicos Preliminares (ETP);</li>
         <li>Mapa de Riscos;</li>
+        Pesquisa de Preços realizada no Painel de Preços do TCE-PI:
         <li>Termo de Referência com descrição e quantitativo dos itens;</li>
-        <li>Despacho da Secretaria Demandante questionando a <span style="color: red;">Secretaria Municipal de
-                Finanças</span> se existe adequação
-            orçamentária e financeira das despesas especificadas no Termo de Referência com a atual lei
-            orçamentária;</li>
-        <li>Despacho da <span style="color: red;">Secretaria Municipal de Finanças</span> à Secretaria
-            Demandante
-            atestando a adequação e existência
-            de saldo orçamentário;</li>
-        <li>Despacho ao <span style="color: red;">Departamento de Compras</span>, solicitando a devida pesquisa
-            de preços, de acordo com a descrição
-            e quantitativo constante dos autos;</li>
-        <li>Pesquisa de Preços realizada no Painel de Preços do TCE-PI e com Fornecedor Local;</li>
-        <li>Despacho do <span style="color: red;">Departamento de Compras</span> ao setor demandante informando
-            da realização da pesquisa;</li>
-        <li>Autuação do procedimento;</li>
-        <li>Minuta do Edital de Licitação;</li>
-        <li>Despacho da Comissão de Contratação, encaminhando os presentes autos para análise e elaboração de
-            parecer preliminar;</li>
+        <li>Adequação e existência de saldo orçamentário;</li>
+        <li>Minuta do Edital de Licitação e minuta do Contrato;</li>
     </ul>
     <p style="text-indent: 30px;  text-align: justify;">
         Este é o relatório dos principais documentos constantes nos autos, pelo que se prossegue a
