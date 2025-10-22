@@ -446,8 +446,13 @@
 
     <p style="text-indent: 30px;  text-align: justify;">
         Foram encaminhados a esta assessoria jurídica os autos do processo nº {{ $processo->numero_processo }},
-        para que seja feita a análise quanto as formalidades legais do procedimento que se encontra em sua
-        fase interna. Constituídas dos seguintes documentos:
+        para que seja feita a análise quanto as formalidades legais do procedimento que se encontra em sua fase interna.
+        Constituídas dos seguintes documentos: Documento de Formalização de Demanda (DFD);
+        Estudos Técnicos Preliminares (ETP); Mapa de Riscos;
+        Pesquisa de Preços realizada no Painel de Preços do TCE-PI:
+        Termo de Referência com descrição e quantitativo dos itens;
+        Adequação e existência de saldo orçamentário;
+        Minuta do Edital de Licitação e minuta do Contrato;
     </p>
     <ul>
         <li>Documento de Formalização de Demanda (DFD);</li>
