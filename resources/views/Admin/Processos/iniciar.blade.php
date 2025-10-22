@@ -356,7 +356,7 @@
                                                                     value="{{ $processo->id }}">
 
                                                                 @foreach ($doc['campos'] as $campo)
-                                                                    @include('admin.Processos.partials.forms')
+                                                                    @include('Admin.Processos.partials.forms')
                                                                 @endforeach
                                                             </form>
                                                         </div>
