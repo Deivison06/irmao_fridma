@@ -109,6 +109,7 @@
             display: block;
             /* Garante que o strong ocupe a largura total */
         }
+
     </style>
 </head>
 
@@ -134,12 +135,10 @@
     <div id="declaracao-compatibilidade">
         <p style="text-align: center; font-weight: bold;">DECLARAÇÃO DE COMPATIBILIDADE DA PREVISÃO DE RECURSOS
             ORÇAMENTÁRIOS</p>
-        <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 20px;">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; margin-top: 20px;">
             <thead>
                 <tr>
-                    <td colspan="2"
-                        style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
+                    <td colspan="2" style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
                         RESUMO DOS DADOS DO PROCESSO
                     </td>
                 </tr>
@@ -188,83 +187,82 @@
             </tbody>
         </table>
         @if ($detalhe->tipo_srp == 'nao')
-            <p style="text-indent: 30px; text-align: justify;">
-                <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da
-                previsão de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da
-                respectiva
-                contratação estimada em R$ {{ $detalhe->valor_estimado }} possui previsão de saldo orçamentário e
-                financeiro
-                compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
-                Diretrizes Orçamentárias (LDO) vigentes.
-            </p>
+        <p style="text-indent: 30px; text-align: justify;">
+            <span style="font-weight: bold;">DECLARO</span> para os fins de demonstração da compatibilidade da
+            previsão de recursos orçamentários, com base no art. 72, IV da Lei 14.133/21, que a despesa da
+            respectiva
+            contratação estimada em R$ {{ $detalhe->valor_estimado }} possui previsão de saldo orçamentário e
+            financeiro
+            compatível com a Lei Orçamentária Anual (LOA) e é compatível com o Plano Plurianual (PPA) e com a Lei de
+            Diretrizes Orçamentárias (LDO) vigentes.
+        </p>
 
-            <p style="text-indent: 30px; text-align: justify;">
-                As despesas para atender a presente solicitação da demanda, encontram-se amparadas pelo seguinte
-                detalhamento:
-            </p>
+        <p style="text-indent: 30px; text-align: justify;">
+            As despesas para atender a presente solicitação da demanda, encontram-se amparadas pelo seguinte
+            detalhamento:
+        </p>
 
-            <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
-                <tr>
-                    <!-- Coluna da esquerda -->
-                    <td style="vertical-align: top; padding: 10px;">
-                        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->dotacao_orcamentaria) !!}
-                    </td>
-                </tr>
-            </table>
+        <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+            <tr>
+                <!-- Coluna da esquerda -->
+                <td style="vertical-align: top; padding: 10px;">
+                    {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->dotacao_orcamentaria) !!}
+                </td>
+            </tr>
+        </table>
         @else
-            <p style="text-indent: 30px; text-align: justify;">
-                Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span
-                    style="font-weight: bold;">Sistema de
-                    Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
-                Por se tratar de procedimento que visa apenas ao registro formal de preços, <span
-                    style="font-weight: bold;">não há necessidade de
-                    indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
-                obrigatória somente no
-                momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas
-                das
-                Secretarias/Órgãos requisitantes.<br>
-                Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando
-                os
-                princípios da eficiência, economicidade e responsabilidade fiscal.
-            </p>
+        <p style="text-indent: 30px; text-align: justify;">
+            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span style="font-weight: bold;">Sistema de
+                Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
+            Por se tratar de procedimento que visa apenas ao registro formal de preços, <span style="font-weight: bold;">não há necessidade de
+                indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
+            obrigatória somente no
+            momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas
+            das
+            Secretarias/Órgãos requisitantes.<br>
+            Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando
+            os
+            princípios da eficiência, economicidade e responsabilidade fiscal.
+        </p>
         @endif
 
         <p>Encaminhe-se ao DEMANDANTE para a elaboração do TERMO DE REFERÊNCIA</p>
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ \Carbon\Carbon::parse($dataSelecionada)->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y') }}
+            {{ $processo->prefeitura->cidade }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
         @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        // Verifica se a variável $assinantes existe e tem itens
+        $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
         @endphp
 
         @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
-                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
-            @endphp
+        {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+        @php
+        $primeiroAssinante = $assinantes[0]; // Pega o segundo item
+        @endphp
 
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
-                    ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
-                    </p>
-                </div>
-            </div>
-        @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+        <div style="margin-top: 40px; text-align: center;">
+            <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                 ___________________________________<br>
                 <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                    {{ $primeiroAssinante['responsavel'] }} <br>
+                    <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
                 </p>
             </div>
+        </div>
+        @else
+        {{-- Bloco Padrão (Fallback) --}}
+        <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            ___________________________________<br>
+            <p style="font-size: 10pt; line-height: 1.2;">
+                {{ $processo->prefeitura->autoridade_competente }} <br>
+                <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+            </p>
+        </div>
         @endif
     </div>
 

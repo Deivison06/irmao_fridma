@@ -122,7 +122,7 @@
     $primeiroAssinante = $hasSelectedAssinantes ? $assinantes[0] : null;
 
     // Extrai o nome do município removendo "Prefeitura Municipal de" ou "Prefeitura de"
-    $municipio = preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome);
+    $municipio =  $processo->prefeitura->cidade;
 
     // Define a data formatada em português
     $dataFormatada = \Carbon\Carbon::parse($dataSelecionada)
@@ -149,7 +149,7 @@
             TIPO: MENOR PREÇO {{ $processo->tipo_contratacao->getDisplayName() }}
         </p>
         <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
-            O Município de {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} – PI, através de seu Agente de Contratação / Pregoeiro e equipe de Apoio
+            O Município de {{ $processo->prefeitura->cidade }}, através de seu Agente de Contratação / Pregoeiro e equipe de Apoio
             instituída pela Portaria nº {{ $primeiroAssinante['numero_portaria'] }}, de {{
                 !empty($primeiroAssinante['data_portaria'])
                     ? \Carbon\Carbon::parse($primeiroAssinante['data_portaria'])->translatedFormat('d \d\e F \d\e Y')
@@ -160,18 +160,18 @@
             14.133/2021, Decretos Municipais, Lei Complementar nº 123/06, alterada pela Lei Complementar nº 147/2014,
             de 07 de agosto de 2014 e demais normas regulamentares aplicáveis à espécie.
         </p>
-        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
+        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
             Objeto:<br> {!! strip_tags($processo->objeto) !!}
         </p>
-        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
+        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
             O EDITAL e maiores informações poderão no Setor de Licitações na {{ $processo->prefeitura->endereco }}, no horário de 07:3h às 13:00h.
         </p>
-        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
-            ENTREGA E ABERTURA DAS PROPOSTAS: dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs ({{ $detalhe->data_hora->locale('pt_BR')->translatedFormat('l') }}),
+        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
+            ABERTURA DAS PROPOSTAS: dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs ({{ $detalhe->data_hora->locale('pt_BR')->translatedFormat('l') }}),
             na {{ $processo->prefeitura->endereco }}.
         </p>
         @if ($detalhe->tipo_srp == 'sim')
-        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
+        <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
             Esclarecendo que as despesas decorrentes da contratação correrão à conta dos recursos do Orçamento do FPM e/ou Recursos Próprios, ICMS, Dotação Orçamentária,
             {!! $detalhe->dotacao_orcamentaria !!}.
         </p>
@@ -216,7 +216,7 @@
             RESUMO DE LICITAÇÃO
         </p>
         <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin: 0;">
-            O Município de {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} – PI, através de seu Agente de Contratação / Pregoeiro e equipe de Apoio instituída pela Portaria nº {{ $primeiroAssinante['numero_portaria'] }}, de {{ !empty($primeiroAssinante['data_portaria'])
+            O Município de {{ $processo->prefeitura->cidade }}, através de seu Agente de Contratação / Pregoeiro e equipe de Apoio instituída pela Portaria nº {{ $primeiroAssinante['numero_portaria'] }}, de {{ !empty($primeiroAssinante['data_portaria'])
             ? \Carbon\Carbon::parse($primeiroAssinante['data_portaria'])->translatedFormat('d \d\e F \d\e Y')
             : '____________________' }}, torna público, para conhecimento dos interessados que realizará procedimento licitatório na modalidade {{ $processo->modalidade->getDisplayName() }}, tipo {{ $processo->tipo_contratacao->getDisplayName() }}, objeto: {!! strip_tags($processo->objeto) !!}, conforme as normas Gerais da Lei Federal nº. 14.133/2021, Decretos Municipais, Lei Complementar nº 123/06, alterada pela Lei Complementar nº 147/2014, de 07 de agosto de 2014 e demais normas regulamentares aplicáveis à espécie. Informações pelo E-mail: {{ $processo->prefeitura->email }}, e/ou na sede da Prefeitura no horário de 07:30hs às 13:00hs no mesmo endereço, Agente de Contratação / Pregoeiro {{ $processo->prefeitura->endereco }}, {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}.
         </p>

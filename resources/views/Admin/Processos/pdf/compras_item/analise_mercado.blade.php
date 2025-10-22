@@ -237,7 +237,7 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 

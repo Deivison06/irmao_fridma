@@ -57,6 +57,17 @@
                                 @enderror
                             </div>
 
+                            {{-- Cidade --}}
+                            <div>
+                                <label for="cidade" class="block text-sm font-medium text-gray-700">Nome da Cidade</label>
+                                <input type="text" name="cidade" id="cidade"
+                                    value="{{ old('cidade', $prefeitura->cidade) }}"
+                                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                                @error('cidade')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             {{-- Telefone --}}
                             <div>
                                 <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>

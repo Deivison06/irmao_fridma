@@ -109,6 +109,7 @@
             display: block;
             /* Garante que o strong ocupe a largura total */
         }
+
     </style>
 </head>
 
@@ -127,42 +128,44 @@
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
 
-    <div id="minutas">
-         <p style="text-align: justify;">Considerando a necessidade de {!! strip_tags($processo->objeto) !!} segue em anexo Minuta de
-            Edital e Minuta do Contrato desenvolvido por este departamento. </p>
+    @php
+    // Verifica se a variável $assinantes existe e tem itens
+    $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+    $primeiroAssinante = $hasSelectedAssinantes ? $assinantes[0] : null;
+    @endphp
+
+    <div id="minutas" style="margin-top: 200px">
+        <h1 style="font-size: 16pt; text-align:center;margin-bottom: 30px">
+            {{ $primeiroAssinante ? $primeiroAssinante['unidade_nome'] : 'Unidade não informada' }}
+        </h1>
+
+        <p style="text-align: justify;">
+            Considerando a necessidade de {!! strip_tags($processo->objeto) !!}, segue em anexo Minuta de
+            Edital e Minuta do Contrato desenvolvido por este departamento.
+        </p>
+
         <p>
             Base Legal: 14.133 e legislação complementar.
         </p>
 
-        @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-        @endphp
-
         @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
-                $primeiroAssinante = $assinantes[0]; // Pega o segundo item
-            @endphp
-
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
-                    ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
-                    </p>
-                </div>
-            </div>
-        @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+        <div style="margin-top: 40px; text-align: center;">
+            <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                 ___________________________________<br>
                 <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                    {{ $primeiroAssinante['responsavel'] }} <br>
+                    <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
                 </p>
             </div>
+        </div>
+        @else
+        <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            ___________________________________<br>
+            <p style="font-size: 10pt; line-height: 1.2;">
+                {{ $processo->prefeitura->autoridade_competente }} <br>
+                <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+            </p>
+        </div>
         @endif
 
         <p>

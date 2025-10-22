@@ -82,8 +82,137 @@ class ProcessoController extends Controller
     {
         // Carrega a prefeitura com as unidades
         $processo->load('prefeitura.unidades');
+        $documentos = [
+            'capa' => [
+                'titulo' => 'Capa do documento',
+                'cor' => 'bg-red-500',
+                'data_id' => 'data_capa',
+                'campos' => [''],
+            ],
+            'formalizacao' => [
+                'titulo' => 'DOCUMENTO DE FORMALIZAÇÃO DE DEMANDA',
+                'cor' => 'bg-blue-500',
+                'data_id' => 'data_formalizacao',
+                'campos' => [
+                    'secretaria',
+                    'justificativa',
+                    'prazo_entrega',
+                    'local_entrega',
+                    'contratacoes_anteriores',
+                    'instrumento_vinculativo',
+                    'prazo_vigencia',
+                    'objeto_continuado',
+                    'descricao_necessidade_autorizacao',
+                    'responsavel_equipe_planejamento',
+                ],
+            ],
+            'estudo_tecnico' => [
+                'titulo' => 'INSTRUMENTOS DE PLANEJAMENTO ETP E MAPA DE RISCOS',
+                'cor' => 'bg-purple-500',
+                'data_id' => 'data_estudo_tecnico',
+                'campos' => [
+                    'problema_resolvido',
+                    'descricao_necessidade',
+                    'inversao_fase',
+                    'solucoes_disponivel_mercado',
+                    'incluir_requisito_cada_caso_concreto',
+                    'solucao_escolhida',
+                    'justificativa_solucao_escolhida',
+                    'resultado_pretendidos',
+                    'impacto_ambiental',
+                    'riscos_extra',
+                    'tipo_srp',
+                    'prevista_plano_anual',
+                    'encaminhamento_pesquisa_preco',
+                    'encaminhamento_doacao_orcamentaria',
+                    'itens_e_seus_quantitativos_xml',
+                ],
+            ],
+            'analise_mercado' => [
+                'titulo' => 'ANÁLISE DE MERCADO (PESQUISA DE PRECOS)',
+                'cor' => 'bg-green-500',
+                'data_id' => 'data_analise_mercado',
+                'campos' => ['painel_preco_tce', 'anexo_pdf_analise_mercado'],
+            ],
+            'disponibilidade_orçamento' => [
+                'titulo' => 'DISPONIBILIDADE ORÇAMENTÁRIA',
+                'cor' => 'bg-yellow-500',
+                'data_id' => 'data_disponibilidade_orçamento',
+                'campos' => [
+                    'valor_estimado',
+                    'dotacao_orcamentaria',
+                ],
+            ],
+            'termo_referencia' => [
+                'titulo' => 'TERMO DE REFERÊNCIA',
+                'cor' => 'bg-orange-500',
+                'data_id' => 'data_termo_referencia',
+                'campos' => [
+                    'encaminhamento_elaborar_editais',
+                    'encaminhamento_parecer_juridico',
+                    'encaminhamento_autorizacao_abertura',
+                    'itens_especificaca_quantitativos_xml'
+                ],
+            ],
+            'minutas' => [
+                'titulo' => 'MINUTAS',
+                'cor' => 'bg-pink-500',
+                'data_id' => 'data_minutas',
+                'campos' => ['anexar_minuta'],
+            ],
+            'parecer_juridico' => [
+                'titulo' => 'PARECER JURÍDICO',
+                'cor' => 'bg-emerald-500',
+                'data_id' => 'data_parecer_juridico',
+                'campos' => [''],
+            ],
+            'autorizacao_abertura_procedimento' => [
+                'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
+                'cor' => 'bg-teal-500',
+                'data_id' => 'data_autorizacao_abertura_procedimento',
+                'campos' => ['portaria_agente_equipe_pdf', 'tratamento_diferenciado_MEs_eEPPs'],
+            ],
+            'abertura_fase_externa' => [
+                'titulo' => 'ABERTURA FASE EXTERNA',
+                'cor' => 'bg-cyan-500',
+                'data_id' => 'data_abertura_fase_externa',
+                'campos' => [''],
+            ],
+            'avisos_licitacao' => [
+                'titulo' => 'AVISOS DE LICITAÇÃO',
+                'cor' => 'bg-indigo-500',
+                'data_id' => 'data_avisos_licitacao',
+                'campos' => ['data_hora'],
+            ],
+            'edital' => [
+                'titulo' => 'EDITAL',
+                'cor' => 'bg-indigo-500',
+                'data_id' => 'data_edital',
+                'campos' => [
+                    'pregoeiro',
+                    'intervalo_lances',
+                    'portal',
+                    'exigencia_garantia_proposta',
+                    'exigencia_garantia_contrato',
+                    'participacao_exclusiva_mei_epp',
+                    'reserva_cotas_mei_epp',
+                    'prioridade_contratacao_mei_epp',
+                    'regularidade_fisica',
+                    'qualificacao_economica',
+                    'exigencias_tecnicas',
+                    'anexo_pdf_minuta_contrato',
+                    'numero_items',
+                ],
+            ],
+            'publicacoes_avisos_licitacao' => [
+                'titulo' => 'PUBLICAÇÕES',
+                'cor' => 'bg-indigo-500',
+                'data_id' => 'data_publicacoes_avisos_licitacao',
+                'campos' => ['anexo_pdf_publicacoes'],
+            ],
+        ];
 
-        return view('Admin.Processos.iniciar', compact('processo'));
+        return view('Admin.Processos.iniciar', compact('processo', 'documentos'));
     }
 
     public function storeDetalhe(Request $request, Processo $processo)
@@ -287,7 +416,7 @@ class ProcessoController extends Controller
                 }
 
                 // Exceção: documentos com 2 assinaturas obrigatórias
-                if (in_array($documento, ['estudo_tecnico', 'parecer_juridico']) && count($assinantes) < 2) {
+                if (in_array($documento, ['estudo_tecnico']) && count($assinantes) < 2) {
                     return response()->json([
                         'success' => false,
                         'message' => '🖋️ Este documento requer duas assinaturas obrigatórias (ex.: responsável técnico e jurídico).'
@@ -415,7 +544,7 @@ class ProcessoController extends Controller
                 $anexoPath = public_path($processo->detalhe->anexar_minuta);
             } elseif ($documento === 'publicacoes_avisos_licitacao' && !empty($processo->detalhe->anexo_pdf_publicacoes)) {
                 $anexoPath = public_path($processo->detalhe->anexo_pdf_publicacoes);
-            }elseif ($documento === 'edital' && !empty($processo->detalhe->anexo_pdf_minuta_contrato)) {
+            } elseif ($documento === 'edital' && !empty($processo->detalhe->anexo_pdf_minuta_contrato)) {
                 $anexoPath = public_path($processo->detalhe->anexo_pdf_minuta_contrato);
             }
 

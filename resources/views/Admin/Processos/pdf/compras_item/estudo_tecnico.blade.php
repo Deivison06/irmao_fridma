@@ -26,7 +26,7 @@
         body {
             margin: 0;
             padding: 3cm 2cm;
-            font-size: 11pt;
+            font-size: 10pt;
             font-family: 'Aptos', sans-serif;
             /* Adiciona o timbre como background */
             background-image: url('{{ public_path($prefeitura->timbre) }}');
@@ -116,6 +116,7 @@
         }
 
         .justify {
+            text-align: justify;
             margin-top: 20px;
             text-indent: 30px;
         }
@@ -319,47 +320,45 @@
         </p>
 
         @if ($detalhe->inversao_fase == 'sim')
-            <div style="font-weight: bold; margin-bottom: 20px;">
+            <div style="font-weight: bold;">
                 Recomendação sobre a Ordem das Fases da Licitação
             </div>
 
-            <p style="line-height: 1.5; text-align: justify;">
+            <p style="text-align: justify;">
                 Nos termos do art. 17, § 1º, da Lei nº 14.133/2021, a Administração tem a prerrogativa de optar pela
                 inversão das fases do processo licitatório, começando com o julgamento das propostas e, posteriormente,
-                analisando a habilitação do licitante melhor classificado.<br><br>
+                analisando a habilitação do licitante melhor classificado.<br>
 
                 No entanto, para a presente contratação, recomenda-se <strong>manter a ordem tradicional das fases
                     (habilitação antes do julgamento das propostas)</strong>, com fundamento nos seguintes
-                aspectos:<br><br>
+                aspectos:<br>
 
                 <strong>Justificativa:</strong>
             </p>
 
-            <ol style="text-align: justify; margin-left: 20px;">
+            <ol style="text-align: justify;">
                 <li>
-                    <p><strong>Complexidade da habilitação exigida:</strong> Trata-se de contratação que demanda análise
+                    <strong>Complexidade da habilitação exigida:</strong> Trata-se de contratação que demanda análise
                         detalhada e criteriosa da documentação de habilitação, especialmente quanto à capacidade
                         técnica, regularidade fiscal e requisitos de qualificação econômico-financeira. A avaliação
                         prévia garante maior segurança jurídica e evita que se avance no julgamento de propostas
-                        de licitantes que possam ser inabilitados posteriormente. </p>
+                        de licitantes que possam ser inabilitados posteriormente.
                 </li>
                 <li>
-                    <p><strong>Mitigação de riscos:</strong> A habilitação prévia reduz o risco de retrabalho e eventual
+                    <strong>Mitigação de riscos:</strong> A habilitação prévia reduz o risco de retrabalho e eventual
                         anulação do procedimento, assegurando que apenas concorram na etapa de propostas os licitantes
-                        que efetivamente atendam a todos os requisitos legais e técnicos. </p>
+                        que efetivamente atendam a todos os requisitos legais e técnicos.
                 </li>
                 <li>
-                    <p><strong>Transparência e confiabilidade:</strong> A ordem tradicional favorece a credibilidade do
+                    <strong>Transparência e confiabilidade:</strong> A ordem tradicional favorece a credibilidade do
                         processo, uma vez que os participantes e órgãos de controle verificam, desde o início, que
                         apenas
                         empresas habilitadas estarão aptas a disputar.
-                    </p>
                 </li>
                 <li>
-                    <p><strong>Alinhamento com o interesse público:</strong> A opção contribui para maior lisura do
+                    <strong>Alinhamento com o interesse público:</strong> A opção contribui para maior lisura do
                         certame, assegurando que a Administração se dedique exclusivamente à análise das propostas de
                         licitantes plenamente habilitados, reduzindo riscos de impugnações e contestações posteriores.
-                    </p>
                 </li>
             </ol>
 
@@ -396,7 +395,7 @@
     {{-- ====================================================================== --}}
     {{-- BLOCO 4: REQUISITOS DA CONTRATAÇÃO --}}
     {{-- ====================================================================== --}}
-    <div id="requisito-necessario" style="margin-top: 50px;">
+    <div id="requisito-necessario" style="margin-top: 20px;">
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/rquisitos-contratacao.png') }}" width="30px"
@@ -498,8 +497,7 @@
 
         <p style=" text-indent: 30px;">
             A escolha pela <strong>{{ $detalhe->solucao_escolhida }}</strong> é fundamentada em diversos aspectos
-            técnicos
-            e operacionais que atendem às necessidades específicas do município.
+            técnicos e operacionais que atendem às necessidades específicas do município.
         </p>
 
         {!! str_replace(
@@ -514,7 +512,7 @@
         </div>
 
         <table border="1" cellspacing="0" cellpadding="4"
-            style="border-collapse: collapse; width: 100%; text-align: center; ">
+            style="border-collapse: collapse; width: 100%; text-align: center; font-size: 10pt;">
             <thead>
                 <tr>
                     <th style="width: 8%;">ITEM</th>
@@ -723,7 +721,7 @@
 
             {{-- Bloco de data e assinatura --}}
             <div class="footer-signature">
-                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+                {{ $processo->prefeitura->cidade }},
                 {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
             </div>
 
@@ -771,7 +769,7 @@
         <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
             {!! strip_tags($processo->objeto) !!}, de forma a melhor atender as necessidades do município de
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }}.</p>
+            {{ $processo->prefeitura->cidade }}.</p>
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">1- INTRODUÇÃO</p>
 
         <div style="text-indent: 30px; text-align: justify;">
@@ -900,9 +898,9 @@
             consiste em
             um instrumento de apoio para a definição dos critérios de classificação do nível de risco
         </p>
-        <div style="margin-bottom: 20px; font-size:12px; display: flex; justify-content: flex-end;">
+        <div style="margin-bottom: 20px; display: flex; justify-content: flex-end;">
             <table
-                style="border-collapse: collapse; margin-bottom: 30px; border: 1px solid black; text-align: center;">
+                style="border-collapse: collapse; margin-bottom: 30px; border: 1px solid black; text-align: center; font-size: 10pt;">
                 <thead>
                     <tr>
                         <td colspan="7"
@@ -970,7 +968,7 @@
             </table>
 
 
-            <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
+            <table style="border-collapse: collapse; width: auto; border: 1px solid black; font-size: 10pt;">
                 <thead>
 
                 </thead>
@@ -1002,7 +1000,7 @@
             <div style="text-align: center; font-weight: bold;  margin-bottom:30px;">PROBABILIDADE</div>
 
             <table
-                style="border-collapse: collapse; width: auto; margin: 0 auto; border: 1px solid black; justify-content: right;">
+                style="border-collapse: collapse; width: auto; margin: 0 auto; border: 1px solid black; justify-content: right; font-size: 10pt;">
                 <thead>
                     <tr>
                         <td colspan="2"
@@ -1074,7 +1072,7 @@
             RISCOS</p>
 
         <table
-            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-size:12px; text-align: center;">
+            style="border-collapse: collapse; width: 100%; border: 2px solid black; font-size: 10pt; text-align: center;">
             <thead>
                 <tr style="background-color: #f2f2f2; border: 1px solid black;">
                     <th style="border: 1px solid black; padding: 8px;">RISCO</th>
@@ -1159,7 +1157,7 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.1- Riscos relacionados à fase de Planejamento
             da Contratação:</p>
         {{-- RISCO 01 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1239,7 +1237,7 @@
         </table>
         <br>
         {{-- RISCO 02 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1356,7 +1354,7 @@
         </table>
         <br>
         {{-- RISCO 03 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1451,7 +1449,7 @@
         </table>
         <br>
         {{-- RISCO 04 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1557,7 +1555,7 @@
         <p style="font-size:16px; font-weight: 700; text-indent: 30px;">3.2. Riscos relacionados à fase de Seleção do
             Fornecedor:</p>
         {{-- RISCO 05 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1629,7 +1627,7 @@
         </table>
         <br>
         {{-- RISCO 06 --}}
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid black;  font-size: 14px;">
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid black; font-size: 10pt;">
             <thead>
                 <tr>
                     <th colspan="3"
@@ -1762,7 +1760,7 @@
             $primeiroAssinante = $hasSelectedAssinantes ? $assinantes[0] : null;
 
             // Extrai o nome do município removendo "Prefeitura Municipal de" ou "Prefeitura de"
-            $municipio = preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome);
+            $municipio = $municipio =  $processo->prefeitura->cidade;
 
             // Define a data formatada em português
             $dataFormatada = \Carbon\Carbon::parse($dataSelecionada)
@@ -1835,11 +1833,11 @@
         @else
             <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
                 motivo(s): </p>
-            <div style="border: 1px solid black; padding: 10px;">
+            <div style="border: 1px solid black; padding: 10px; font-size: 10pt;">
                 <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
                 <p style="text-indent: 30px;">
                     É importante ressaltar que a ausência de um plano de contratações anual no município de
-                    {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }} se deve a uma
+                    {{ $processo->prefeitura->cidade }}, se deve a uma
                     série de fatores que limitaram a sua implementação até o momento. Embora
                     a legislação (Artigo 12, VII, da Lei nº 14.133) estabeleça a obrigatoriedade de um plano de
                     contratações
@@ -1866,7 +1864,7 @@
             </div>
         @endif
         <p
-            style="text-align: center; font-size:16px; font-weight: 700; border: 1px solid black; padding: 10px; background:#dadada; margin-top:20px;">
+            style="text-align: center; font-size:12px; font-weight: 700; border: 1px solid black; padding: 10px; background:#dadada; margin-top:20px;">
             ENCAMINHAMENTO PARA ÓRGÃO DEMANDANTE
         </p>
         <div style="border: 1px solid black; padding: 10px;">
@@ -1877,7 +1875,7 @@
 
             {{-- Bloco de data e assinatura --}}
             <div class="footer-signature">
-                {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+                {{ $processo->prefeitura->cidade }},
                 {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
             </div>
 
@@ -1917,7 +1915,7 @@
         <div class="page-break"></div>
 
         <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
+            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black; font-size: 10pt;">
             <thead>
                 <tr>
                     <td colspan="2"
@@ -1979,7 +1977,7 @@
         <p>Encaminhe-se à {{ $detalhe->encaminhamento_doacao_orcamentaria }} para a VERIFICAÇÃO DE DOTACÃO ORÇAMENTÁRIA
             EXISTENTE.
         </p>
-        <table style="border-collapse: collapse; width: auto; border: 1px solid black;">
+        <table style="border-collapse: collapse; width: auto; border: 1px solid black; font-size: 10pt;">
             <tr>
                 <td style="border: 1px solid black; padding: 6px; font-weight: normal;">
                     Forma indicada da contratação:
@@ -2027,7 +2025,7 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 

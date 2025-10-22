@@ -167,6 +167,30 @@
 </head>
 
 <body>
+    @php
+    // Mapeamento das opções para texto legível
+    $opcoes_vigencia = [
+    '12_meses' => '12 meses',
+    '24_meses' => '24 meses',
+    '36_meses' => '36 meses',
+    'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
+    'outro' => 'Outro',
+    ];
+
+    // Captura o campo (pode ser string ou array)
+    $vigencia = $detalhe->prazo_vigencia ?? ['12_meses'];
+
+    // Garante que é array
+    $vigencia = is_array($vigencia) ? $vigencia : [$vigencia];
+
+    // Substitui os códigos pelos textos legíveis
+    $vigencia_formatada = collect($vigencia)
+    ->map(fn($item) => $opcoes_vigencia[$item] ?? ucfirst(str_replace('_', ' ', $item)))
+    ->implode(', ');
+
+    $outro_vigencia = $detalhe->prazo_vigencia_outro ?? '________________.';
+    $objeto_continuado = strtolower($detalhe->objeto_continuado ?? 'nao');
+    @endphp
     {{-- ====================================================================== --}}
     {{-- BLOCO 1: CAPA DO DOCUMENTO --}}
     {{-- ====================================================================== --}}
@@ -229,7 +253,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">PRAZO DE VIGÊNCIA DA CONTRATAÇÃO</div>
                                 <div style="">
-                                    O prazo de vigência da contratação é de XXXXXXXX contados da assinatura do contrato, na forma do artigo 105 da Lei n° 14.133, de 2021
+                                    O prazo de vigência da contratação é de {{ $vigencia_formatada }} contados da assinatura do contrato, na forma do artigo 105 da Lei n° 14.133, de 2021
                                 </div>
                             </td>
                         </tr>
@@ -254,7 +278,7 @@
             1.2 JUSTIFICATIVA PARA CONTRATAÇÃO {!! strip_tags($detalhe->justificativa) !!}
         </p>
         <p style="text-align: justify;">
-            1.3. Este procedimento licitatório adotará como critério de julgamento, a forma de adjudicação por {{ $processo->tipo_contratacao }}, com base nas
+            1.3. Este procedimento licitatório adotará como critério de julgamento, a forma de adjudicação por {{ $processo->tipo_contratacao->getDisplayName() }}, com base nas
             justificativas:
         </p>
         <p style="text-align: justify;">
@@ -290,7 +314,7 @@
             1.4 Para a cotação de preços a ser realizada neste certame, esta administração coloca à disposição dos licitantes, as
             informações e preços unitários a seguir:
         </p>
-        <table border="1" cellspacing="0" cellpadding="4" style="border-collapse: collapse; width: 100%; text-align: center;">
+        <table border="1" cellspacing="0" cellpadding="4" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 8pt;">
             <thead>
                 <tr>
                     <th style="width: 6%;">ITEM</th>
@@ -303,25 +327,25 @@
             </thead>
             <tbody>
                 @php
-                    $itens = is_array($detalhe->itens_especificaca_quantitativos_xml)
-                        ? $detalhe->itens_especificaca_quantitativos_xml
-                        : json_decode($detalhe->itens_especificaca_quantitativos_xml, true);
+                $itens = is_array($detalhe->itens_especificaca_quantitativos_xml)
+                ? $detalhe->itens_especificaca_quantitativos_xml
+                : json_decode($detalhe->itens_especificaca_quantitativos_xml, true);
                 @endphp
                 @if ($itens && count($itens) > 0)
-                    @foreach ($itens as $item)
-                        <tr>
-                            <td>{{ $item['item'] ?? '' }}</td>
-                            <td style="text-align: left;">{{ $item['especificacoes'] ?? '' }}</td>
-                            <td>{{ $item['unidade'] ?? '' }}</td>
-                            <td>{{ $item['quantidade'] ?? '' }}</td>
-                            <td>{{ $item['valor_unitario'] ?? '' }}</td>
-                            <td>{{ $item['valor_total'] ?? '' }}</td>
-                        </tr>
-                    @endforeach
+                @foreach ($itens as $item)
+                <tr>
+                    <td>{{ $item['item'] ?? '' }}</td>
+                    <td style="text-align: left;">{{ $item['especificacoes'] ?? '' }}</td>
+                    <td>{{ $item['unidade'] ?? '' }}</td>
+                    <td>{{ $item['quantidade'] ?? '' }}</td>
+                    <td>{{ $item['valor_unitario'] ?? '' }}</td>
+                    <td>{{ $item['valor_total'] ?? '' }}</td>
+                </tr>
+                @endforeach
                 @else
-                    <tr>
-                        <td colspan="6">Nenhum item encontrado</td>
-                    </tr>
+                <tr>
+                    <td colspan="6">Nenhum item encontrado</td>
+                </tr>
                 @endif
             </tbody>
         </table>
@@ -332,7 +356,7 @@
         </p>
 
         <p style="text-align: justify;">
-            1.6. O prazo de vigência da contratação é de XXXXXXXX contados da assinatura do contrato, na forma do artigo 105 da Lei
+            1.6. O prazo de vigência da contratação é de {{ $vigencia_formatada }} contados da assinatura do contrato, na forma do artigo 105 da Lei
             n° 14.133, de 2021.
         </p>
         @if($detalhe->objeto_continuado === 'sim')
@@ -631,8 +655,7 @@
             Geral da Município.
         </p>
         <p style="text-align: justify;">
-            8.2. A contratação será atendida pela seguinte dotação: (SE FOR REGISTRO PREÇO APARECE A JUSTIFICATIVA, SE NÃO FOR
-            PUXA DO CAMPO EM DISPONIBILIDADE ORÇAMENTÁRIA)
+            8.2. A contratação será atendida pela seguinte dotação: 
         </p>
         <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
             <tr>
@@ -649,9 +672,9 @@
     </div>
     {{-- Bloco de data e assinatura --}}
     <div class="footer-signature">
-        {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
-        {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-    </div>
+            {{ $processo->prefeitura->cidade }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+        </div>
 
     @php
     // Verifica se a variável $assinantes existe e tem itens

@@ -190,7 +190,7 @@
             <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
             <span style="font-weight: bold;">E-MAIL:</span> {{ $processo->prefeitura->email }}<br><br>
             <span style="font-weight: bold;">PREGOEIRO</span><br>
-            {{ $detalhe->portaria_agente_equipe_pdf }}<br>
+            {{ $detalhe->pregoeiro }}<br>
             <span style="font-weight: bold;">AUTORIDADE COMPETENTE</span><br>
             {{ $processo->prefeitura->autoridade_competente }}
         </p>
@@ -409,7 +409,7 @@
         <p style="text-align: justify;">
             1.3. Este certame licitatório obedecerá a seguinte ordem procedimental:
         </p>
-        @if ($detalhe->inversao_fase == 'sim')
+        @if ($detalhe->inversao_fase === 'sim')
         <ol type="a" style="text-align: justify; ">
             <li style="margin-bottom: 6px;">
                 Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para
@@ -527,10 +527,12 @@
             para o microempreendedor individual - MEI, nos limites previstos da Lei Complementar nº 123, de 2006.
         </p>
 
-        <p style="color: red;">
-            2.7. Para os itens ....., ....., ....., a participação é exclusiva a microempresas e empresas de pequeno porte, nos termos do art.
-            48 da Lei Complementar nº 123, de 14 de dezembro de 2006
-        </p>
+        @if($detalhe->participacao_exclusiva_mei_epp === 'nao')
+            <p style="text-align: justify;">
+                2.7. Para os itens {{ $detalhe->numero_items }} a participação é exclusiva a microempresas e empresas de pequeno porte, nos termos do art.
+                48 da Lei Complementar nº 123, de 14 de dezembro de 2006
+            </p>
+        @endif
         <p style="text-align: justify;">
             2.8. Não poderão disputar esta licitação:
         </p>
@@ -728,61 +730,16 @@
             4.6. Até a abertura da sessão, as licitantes poderão retirar ou substituir a proposta anteriormente apresentada.
         </p>
         <p style="text-align: justify;">
-            4.7. Com base no § único do Art. 7º do Decreto Federal 10.024/2019, também deverá ser anexada, a proposta comercial
-            inicial (contida em papel timbrado, escaneada e em formato PDF) na condição de “catálogo”, a qual deverá ser apresentada
-            contendo a declaração de que nos preços cotados já deverão estar inclusas eventuais vantagens e/ou abatimentos,
-            impostos, taxas e encargos sociais, obrigações trabalhistas, previdenciárias, fiscais e comerciais, além das especificações
-            analíticas dos itens contidos no respectivo Termo de Referência deste Edital, para efeito de julgamento das propostas.
+            4.7. Ao encaminhar a proposta de preços na forma prevista pelo sistema eletrônico, a licitante deverá preencher as informações no campo “CADASTRO PROPOSTA” e anexar FICHA TÉCNICA em arquivo PDF no campo apropriado do sistema da Bolsa Nacional de Compras - BNC, sendo vedada a identificação do licitante por qualquer meio.
         </p>
         <p style="text-align: justify;">
-            4.7. Considerando ainda nesta fase, o licitante, juntamente com a proposta inicial, na condição de catálogo, na fase de
-            abertura de vistas, para efeito de pré-habilitação, o licitante deverá apresentar o recolhimento de quantia a título de garantia
-            de proposta, de um por cento do valor global desta licitação, conforme as modalidades previstas no art. 96 da Lei 14.133,
-            como condição de classificação de sua proposta no julgamento a ser realizado na fase de abertura de vistas.
+            4.8. Na ficha técnica de preços não deve conter identificação do licitante como: nome, razão social ou timbre do proponente, endereço, telefone, fax e endereço de correio eletrônico, nome do representante, carteira de identidade e cargo na empresa ou qualquer outra forma que possa identificar a proposta.
         </p>
         <p style="text-align: justify;">
-            4.8. A não apresentação da exigência acima, acarretará a desclassificação da proposta inicial apresentada, assim como os
-            valores de lances efetivados na fase de lances iniciais, o que remeterá ao Pregoeiro, a necessidade de chamar os licitantes
-            remanescentes, na respectiva ordem de classificação na fase anterior.
+            4.9. Deve conter o detalhamento dos produtos ofertados, indicando, marca, fabricante, modelo, prazo de validade ou de garantia, prazo máximo da entrega acondicionamento.
         </p>
         <p style="text-align: justify;">
-            4.9. Após o encerramento da fase de lances, será iniciada a fase de “Abertura de Vistas”, momento em que a proposta inicial
-            do primeiro classificado, será analisada para a verificação das exigências contidas no item 8.2 e 8.7.1, em face do preço
-            apresentado, assim como, também, em face das composições inseridas na proposta, conforme a previsão legal contida no
-            art. 28, § único do Decreto Federal 10.024/2019.
-        </p>
-        <p style="text-align: justify;">
-            4.10. A proposta inicial que não apresentar as especificações e exigências anteriormente informadas, será automaticamente
-            desclassificada, sendo convocado o vencedor subsequente da fase de lances.
-        </p>
-        <p style="text-align: justify;">
-            4.11. Na abertura de vistas, o pregoeiro irá analisar as condições de exigência pertinentes ao objeto e as exigências nele
-            ressaltadas.
-        </p>
-        <p style="text-align: justify;">
-            4.12. Após a análise da proposta inicial na fase de abertura de vistas, uma vez atendida as exigências pertinentes, o licitante
-            vencedor será convocado a enviar a proposta realinhada ou readequada, ou caso necessário em momento posterior, fixado
-            pelo Pregoeiro em sessão, apenas com a modificação dos valores unitários e totais, não sendo admitida a inserção de
-            quaisquer outras informações pertinentes à garantia de execução do objeto, não previstas inicialmente na proposta inicial.
-        </p>
-        <p style="text-align: justify;">
-            4.13. Para efeito de atendimento do item 8.2 deste edital, será considerada especificação analítica, a proposta que
-            apresentar:
-        </p>
-        <ol type="a" style="text-align: justify;">
-            <li style="margin-bottom: 6px;">
-                Comprovação de a empresa licitante possuir
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
-            </li>
-            <li style="margin-bottom: 6px;">
-                Comprovação de a empresa licitante possuir
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
-            </li>
-        </ol>
-        <p style="text-align: justify;">
-            4.16. A não apresentação das exigências acima, acarretará na desclassificação da proposta inicial apresentada, assim como
-            os valores de lances efetivados na fase de lances iniciais, o que remeterá ao Pregoeiro, a necessidade de chamar os licitantes
-            remanescentes, na respectiva ordem de classificação na fase anterior.
+            4.10. Preço unitário do item, cotando-se cada produto discriminado no item, em moeda corrente nacional, em algarismo com até 02 (duas) casas decimais após a vírgula e por extenso. O preço total deverá ser indicado em algarismos e por extenso. Nos preços propostos deverão estar incluídos, além do lucro, todas as despesas e custos, como por exemplo: transportes (fretes), montagem e instalação, tributos de qualquer natureza e todas as despesas, diretas ou indiretas, relacionadas com o perfeito fornecimento do objeto desta licitação.
         </p>
     </div>
     <div>
@@ -1174,75 +1131,77 @@
         </p>
     </div>
     <div>
-        <p style="display: flex; align-items: center; font-weight: bold; ">
-            <img src="{{ public_path('icons/check.png') }}" width="20" style="margin-right: 10px;"> 10. - DA ATA DE REGISTRO DE PREÇOS
-        </p>
-        <p style="text-align: justify;">
-            10.1. Por se tratar de mero registro de preços, INEXISTE obrigatoriedade de contratação do objeto desta licitação pelo
-            Município, tudo conforme legislação vigente.
-        </p>
-        <p style="text-align: justify;">
-            10.2.O Município poderá ainda “dar carona” do referido certame a quem interessar, obedecendo aos percentuais legais e as
-            formalidades de praxe.
-        </p>
-        <p style="text-align: justify;">
-            10.3. Serão formalizadas tantas Atas de Registro de Preços quanto necessárias para o registro de todos os itens constantes
-            no Termo de Referência, com a indicação do licitante vencedor, a descrição do(s) item(ns), as respectivas quantidades,
-            preços registrados e demais condições.
-        </p>
-        <p style="text-align: justify;">
-            10.4. Poderá utilizar-se da Ata de Registro de Preços os órgãos interessados, ou qualquer outro órgão/entidade da
-            Administração Pública que não tenha participado do certame objeto deste Edital, mediante prévia consulta à CONTRATANTE
-            desde que devidamente comprovada a vantagem, respeitado o limite contido na legislação.
-        </p>
-        <p style="text-align: justify;">
-            10.5. Os órgãos e entidades que não participaram do Registro de Preços, quando desejarem fazer uso da Ata de Registro de
-            Preços, deverão manifestar seu interesse junto à CONTRATANTE para que esta indique os possíveis fornecedores e
-            respectivos preços a serem praticados, obedecida a ordem de classificação;
-        </p>
-        <p style="text-align: justify;">
-            10.6. Será incluído na ata, sob a forma de anexo, o registro dos licitantes que aceitarem cotar os bens ou serviços com preços
-            iguais aos do licitante vencedor na sequência da classificação do certame, excluído o percentual referente à margem de
-            preferência, quando o objeto não atender aos requisitos previstos no inciso VII, art. 82 da Lei 14.133/2021
-        </p>
-        <p style="text-align: justify;">
-            10.7. Caberá ao fornecedor beneficiário da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
-            pela aceitação ou não do fornecimento decorrente de adesão. Os Não Participantes da licitação poderão aderir a ATA, desde
-            que devidamente autorizados pelo Chefe do Executivo Municipal.
-        </p>
-        <p style="text-align: justify;">
-            10.4 Caberá aos fornecedores beneficiários da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
-            pela aceitação ou não do fornecimento aos órgãos não participantes que solicitem adesão à Ata de Registro de Preços acima
-            do quantitativo previsto, desde que este fornecimento não prejudique as obrigações anteriormente assumidas;
-        </p>
-        <p style="text-align: justify;">
-            10.5 As solicitações de adesão, concessão de anuência pelo fornecedor e autorização do órgão gerenciador serão realizadas
-            por meio de formalização de processo administrativo com as documentações necessárias, cuja responsabilidade é do órgão
-            gerenciador.
-        </p>
-        <p style="text-align: justify;">
-            10.6. O quantitativo decorrente das adesões à Ata de Registro de Preços não poderá exceder, na totalidade, ao dobro do
-            quantitativo de cada item registrado na Ata de Registro de Preços para o órgão gerenciador e órgão participantes,
-            independentemente do número de órgãos não participantes que aderirem.
-        </p>
-        <p style="text-align: justify;">
-            10.7. Após a aceitação à adesão da Ata de Registro de Preços pelo órgão gerenciador, o Órgão denominado Carona deverá
-            observar as seguintes instruções:
-        </p>
-        <ol type="a" style="text-align: justify;">
-            <li style="margin-bottom: 6px;">
-                O Órgão Carona somente poderá adquirir os itens registrados nas mesmas condições comerciais e financeiras
-                estabelecidas no Pregão, dentro da vigência da Ata, não podendo ultrapassar 50% do registrado na mesma;
-            </li>
-            <li style="margin-bottom: 6px;">
-                Qualquer ato que o Órgão Carona, cometer de abuso às condições comerciais e financeiras expressas nesse
-                Processo Licitatório – Registro de Preços, responderá exclusivamente por si e assumirá inteira responsabilidade,
-                não envolvendo assim, o Órgão gerenciador do registro;
-            </li>
-            <li>
-                O Órgão Carona fará o contato com o vencedor do certame, conforme Termo de Adjudicação;
-            </li>
-        </ol>
+        @if ($detalhe->tipo_srp == 'sim')
+            <p style="display: flex; align-items: center; font-weight: bold; ">
+                <img src="{{ public_path('icons/check.png') }}" width="20" style="margin-right: 10px;"> 10. - DA ATA DE REGISTRO DE PREÇOS
+            </p>
+            <p style="text-align: justify;">
+                10.1. Por se tratar de mero registro de preços, INEXISTE obrigatoriedade de contratação do objeto desta licitação pelo
+                Município, tudo conforme legislação vigente.
+            </p>
+            <p style="text-align: justify;">
+                10.2.O Município poderá ainda “dar carona” do referido certame a quem interessar, obedecendo aos percentuais legais e as
+                formalidades de praxe.
+            </p>
+            <p style="text-align: justify;">
+                10.3. Serão formalizadas tantas Atas de Registro de Preços quanto necessárias para o registro de todos os itens constantes
+                no Termo de Referência, com a indicação do licitante vencedor, a descrição do(s) item(ns), as respectivas quantidades,
+                preços registrados e demais condições.
+            </p>
+            <p style="text-align: justify;">
+                10.4. Poderá utilizar-se da Ata de Registro de Preços os órgãos interessados, ou qualquer outro órgão/entidade da
+                Administração Pública que não tenha participado do certame objeto deste Edital, mediante prévia consulta à CONTRATANTE
+                desde que devidamente comprovada a vantagem, respeitado o limite contido na legislação.
+            </p>
+            <p style="text-align: justify;">
+                10.5. Os órgãos e entidades que não participaram do Registro de Preços, quando desejarem fazer uso da Ata de Registro de
+                Preços, deverão manifestar seu interesse junto à CONTRATANTE para que esta indique os possíveis fornecedores e
+                respectivos preços a serem praticados, obedecida a ordem de classificação;
+            </p>
+            <p style="text-align: justify;">
+                10.6. Será incluído na ata, sob a forma de anexo, o registro dos licitantes que aceitarem cotar os bens ou serviços com preços
+                iguais aos do licitante vencedor na sequência da classificação do certame, excluído o percentual referente à margem de
+                preferência, quando o objeto não atender aos requisitos previstos no inciso VII, art. 82 da Lei 14.133/2021
+            </p>
+            <p style="text-align: justify;">
+                10.7. Caberá ao fornecedor beneficiário da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
+                pela aceitação ou não do fornecimento decorrente de adesão. Os Não Participantes da licitação poderão aderir a ATA, desde
+                que devidamente autorizados pelo Chefe do Executivo Municipal.
+            </p>
+            <p style="text-align: justify;">
+                10.4 Caberá aos fornecedores beneficiários da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
+                pela aceitação ou não do fornecimento aos órgãos não participantes que solicitem adesão à Ata de Registro de Preços acima
+                do quantitativo previsto, desde que este fornecimento não prejudique as obrigações anteriormente assumidas;
+            </p>
+            <p style="text-align: justify;">
+                10.5 As solicitações de adesão, concessão de anuência pelo fornecedor e autorização do órgão gerenciador serão realizadas
+                por meio de formalização de processo administrativo com as documentações necessárias, cuja responsabilidade é do órgão
+                gerenciador.
+            </p>
+            <p style="text-align: justify;">
+                10.6. O quantitativo decorrente das adesões à Ata de Registro de Preços não poderá exceder, na totalidade, ao dobro do
+                quantitativo de cada item registrado na Ata de Registro de Preços para o órgão gerenciador e órgão participantes,
+                independentemente do número de órgãos não participantes que aderirem.
+            </p>
+            <p style="text-align: justify;">
+                10.7. Após a aceitação à adesão da Ata de Registro de Preços pelo órgão gerenciador, o Órgão denominado Carona deverá
+                observar as seguintes instruções:
+            </p>
+            <ol type="a" style="text-align: justify;">
+                <li style="margin-bottom: 6px;">
+                    O Órgão Carona somente poderá adquirir os itens registrados nas mesmas condições comerciais e financeiras
+                    estabelecidas no Pregão, dentro da vigência da Ata, não podendo ultrapassar 50% do registrado na mesma;
+                </li>
+                <li style="margin-bottom: 6px;">
+                    Qualquer ato que o Órgão Carona, cometer de abuso às condições comerciais e financeiras expressas nesse
+                    Processo Licitatório – Registro de Preços, responderá exclusivamente por si e assumirá inteira responsabilidade,
+                    não envolvendo assim, o Órgão gerenciador do registro;
+                </li>
+                <li>
+                    O Órgão Carona fará o contato com o vencedor do certame, conforme Termo de Adjudicação;
+                </li>
+            </ol>
+        @endif
         <p style="font-weight: bold;">
             DAS DISPOSIÇÕES GERAIS
         </p>
@@ -1262,17 +1221,22 @@
         </p>
         <p style="text-align: justify;">
             Integram este Edital, para todos os fins e efeitos, os seguintes anexos:
-            <span style="color: red;">
-                ANEXO III – Ata de Registro de Preços (Quando a licitação for por registro de preços)
-            </span>
+            <br>
+            ANEXO I – Termo de Referência
+            <br>
+            ANEXO II – Minuta do Contrato
+            <br>
+            @if ($detalhe->tipo_srp == 'sim')
+                    ANEXO III – Ata de Registro de Preços
+            @endif
         </p>
     </div>
 
     {{-- Bloco de data e assinatura --}}
     <div class="footer-signature">
-        {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
-        {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-    </div>
+            {{ $processo->prefeitura->cidade }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+        </div>
 
     @php
     // Verifica se a variável $assinantes existe e tem itens

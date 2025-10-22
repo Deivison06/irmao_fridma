@@ -27,6 +27,7 @@ class PrefeituraController extends Controller
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:18|unique:prefeituras,cnpj',
             'endereco' => 'required|string|max:255',
+            'cidade' => 'required|string|max:255',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'autoridade_competente' => 'required|string|max:255',
@@ -38,6 +39,7 @@ class PrefeituraController extends Controller
             'nome',
             'cnpj',
             'endereco',
+            'cidade',
             'telefone',
             'email',
             'autoridade_competente'
@@ -83,6 +85,7 @@ class PrefeituraController extends Controller
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:18|unique:prefeituras,cnpj,' . $id,
             'endereco' => 'required|string|max:255',
+            'cidade' => 'required|string|max:255',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'autoridade_competente' => 'required|string|max:255',
@@ -96,6 +99,7 @@ class PrefeituraController extends Controller
             'nome',
             'cnpj',
             'endereco',
+            'cidade',
             'telefone',
             'email',
             'autoridade_competente'

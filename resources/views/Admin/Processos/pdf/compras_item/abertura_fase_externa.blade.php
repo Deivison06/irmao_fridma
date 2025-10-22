@@ -120,7 +120,7 @@
     <div id="cover-page">
         <img src="{{ public_path('icons/capa-documento.png') }}" alt="Martelo da Justiça" class="cover-image">
         <div class="cover-title">
-            ABERTURA FASE EXTERNA
+            ABERTURA DA FASE EXTERNA
         </div>
     </div>
 
@@ -192,7 +192,7 @@
         </p>
 
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
@@ -210,7 +210,7 @@
     {{-- ====================================================================== --}}
     <div id="certidao-encerramento-fase-preparatoria">
         <p style="font-weight: bold; text-align: center;">
-            CERTIDÃO DE ENCERRAMENTO <br> DA FASE PREPARATÓRI
+            CERTIDÃO DE ENCERRAMENTO <br> DA FASE PREPARATÓRIA
         </p>
         <table
             style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;">
@@ -270,11 +270,10 @@
             <span style="font-weight: bold;">CERTIFICO</span> O ENCERRAMENTO DA FASE PREPARATÓRIA DO PROCESSO
             LICITATÓRIO, ENCONTRANDO-SE O FEITO DISPONÍVEL PARA A PUBLICAÇÃO DO AVISO DE LICITAÇÃO E DEMAIS
         </p>
-        <p>ENCAMINHE-SE PARA O AGENTE CONDUTOR DA FASE DE SELEÇÃO DO FORNECEDOR PARA OS ATOS SUBSEQUENTES. </p>
-
+        
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 
@@ -397,7 +396,7 @@
 
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ $processo->prefeitura->nome }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
 

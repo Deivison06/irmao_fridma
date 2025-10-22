@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Minutas - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
         @font-face {
             font-family: 'Aptos';
@@ -245,7 +245,7 @@
         </p>
         {{-- Bloco de data e assinatura --}}
         <div class="footer-signature">
-            {{ preg_replace('/Prefeitura (Municipal )?de /', '', $processo->prefeitura->nome) }},
+            {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
         @php
