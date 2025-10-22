@@ -183,11 +183,11 @@
             <span style="font-weight: bold;">VALOR TOTAL DA CONTRATAÇÃO</span> <br>
             {{ $detalhe->valor_estimado }}<br>
             <span style="font-weight: bold;">DATA LIMITE PARA ENVIO DE PROPOSTAS</span> <br>
-            DIA {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs (Horário de Brasília)<br>
+            DIA {{ $detalhe->data_hora_limite_edital->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora_limite_edital->format('H:i') }}hs (Horário de Brasília)<br>
             <span style="font-weight: bold;">DATA DA SESSÃO PÚBLICA E FASE DE LANCES</span> <br>
-            DIA {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }} às {{ $detalhe->data_hora->format('H:i') }}hs (Horário de Brasília)<br>
+            DIA {{ $detalhe->data_hora_fase_edital->translatedFormat('d \d\e F \d\e Y') }} às {{ $detalhe->data_hora_fase_edital->format('H:i') }}hs (Horário de Brasília)<br>
             <span style="font-weight: bold;">PORTAL UTILIZADO:</span> {{ $detalhe->portal }} <br>
-            <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
+            <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora_limite_edital->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
             <span style="font-weight: bold;">E-MAIL:</span> {{ $processo->prefeitura->email }}<br><br>
             <span style="font-weight: bold;">PREGOEIRO</span><br>
             {{ $detalhe->pregoeiro }}<br>
@@ -341,7 +341,7 @@
             Decretos Municipais e demais legislação aplicável e, ainda, de acordo com as condições estabelecidas neste Edital.
         </p>
         <p style="text-align: justify;">
-            O início da Sessão de disputa de preços será realizado no dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs, por meio de sessão virtual, com
+            O início da Sessão de disputa de preços será realizado no dia {{ $detalhe->data_hora_fase_edital->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora_fase_edital->format('H:i') }}hs, por meio de sessão virtual, com
             inserção e comunicação via plataforma digital já especificada neste instrumento de convocação.
         </p>
         <p style="text-align: justify;">
@@ -350,8 +350,7 @@
             MUNICIPAL, denominado Pregoeiro.
         </p>
         <p style="text-align: justify;">
-            Também fica registrado neste instrumento de convocação, que as empresas licitantes terão até o dia XX/XX/XXXX, às
-            XXhXXmin, para finalizar o envio de suas propostas com as devidas exigências do edital e documentos de habilitação
+            Também fica registrado neste instrumento de convocação, que as empresas licitantes terão até o dia {{ $detalhe->data_hora_limite_edital->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora_limite_edital->format('H:i') }}min, para finalizar o envio de suas propostas com as devidas exigências do edital e documentos de habilitação
             pertinentes à futura disputa.
         </p>
 

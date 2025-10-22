@@ -189,6 +189,8 @@ class ProcessoController extends Controller
                 'cor' => 'bg-indigo-500',
                 'data_id' => 'data_edital',
                 'campos' => [
+                    'data_hora_limite_edital',
+                    'data_hora_fase_edital',
                     'pregoeiro',
                     'intervalo_lances',
                     'portal',

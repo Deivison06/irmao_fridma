@@ -668,22 +668,79 @@
             }, 6000);
         }
 
-        // Alpine.js Component
-        function formField(existing = {}) {
-             // Parse da data_hora existente
-            const dataHoraExistente = existing?.data_hora || '';
-            let dataEvento = '';
-            let horaEvento = '';
+        function formatDateTime(dateTimeString) {
+            if (!dateTimeString) return '';
 
-            if (dataHoraExistente) {
-                try {
-                    const dataHora = new Date(dataHoraExistente);
-                    dataEvento = dataHora.toISOString().split('T')[0];
-                    horaEvento = dataHora.toTimeString().split(' ')[0].substring(0, 5);
-                } catch (e) {
-                    console.error('Erro ao parse data_hora:', e);
-                }
+            try {
+                // Divide a string "YYYY-MM-DD HH:MM:SS"
+                const [datePart, timePart] = dateTimeString.split(' ');
+                const [year, month, day] = datePart.split('-');
+                const [hours, minutes] = timePart.split(':');
+
+                // Retorna no formato brasileiro sem conversão de fuso
+                return `${day}/${month}/${year} ${hours}:${minutes}`;
+            } catch (e) {
+                console.error('Erro ao formatar data:', e);
+                return dateTimeString;
             }
+        }
+
+        // Alpine.js Component CORRIGIDO
+        function formField(existing = {}) {
+            const parseDateTime = (dateTimeString, fieldName) => {
+                if (!dateTimeString) return { date: '', time: '' };
+
+                try {
+                    console.log(`Parse ${fieldName}:`, dateTimeString);
+
+                    // Para datas do MySQL (YYYY-MM-DD HH:MM:SS)
+                    if (dateTimeString.includes(' ')) {
+                        const [datePart, timePart] = dateTimeString.split(' ');
+                        const [year, month, day] = datePart.split('-');
+                        const [hours, minutes] = timePart.split(':');
+
+                        return {
+                            date: `${year}-${month}-${day}`,
+                            time: `${hours}:${minutes}`
+                        };
+                    }
+
+                    // Para datas ISO (YYYY-MM-DDTHH:MM:SS)
+                    if (dateTimeString.includes('T')) {
+                        const [datePart, timePart] = dateTimeString.split('T');
+                        const [year, month, day] = datePart.split('-');
+                        const [hours, minutes] = timePart.split(':');
+
+                        return {
+                            date: `${year}-${month}-${day}`,
+                            time: `${hours}:${minutes}`
+                        };
+                    }
+
+                    return { date: '', time: '' };
+                } catch (e) {
+                    console.error('Erro ao parse data/hora para ' + fieldName + ':', e);
+                    return { date: '', time: '' };
+                }
+            };
+
+            // Parse automático para todos os campos data_hora
+            const datetimeFields = ['data_hora', 'data_hora_limite_edital', 'data_hora_fase_edital'];
+            const initialData = {};
+
+            datetimeFields.forEach(field => {
+                const parsed = parseDateTime(existing?.[field], field);
+                initialData[field + '_date'] = parsed.date;
+                initialData[field + '_time'] = parsed.time;
+
+                // Debug
+                console.log(`Campo ${field}:`, {
+                    existente: existing?.[field],
+                    parsed: parsed
+                });
+            });
+
+
             return {
                 // Campos do formulário
                 secretaria: existing?.secretaria ?? '',
@@ -721,7 +778,6 @@
                 prevista_plano_anual: existing?.prevista_plano_anual ?? '',
                 painel_preco_tce: existing?.painel_preco_tce ?? '',
                 anexo_pdf_analise_mercado: existing?.anexo_pdf_analise_mercado ?? '',
-
                 encaminhamento_elaborar_editais: existing?.encaminhamento_elaborar_editais ?? '',
                 encaminhamento_parecer_juridico: existing?.encaminhamento_parecer_juridico ?? '',
                 encaminhamento_autorizacao_abertura: existing?.encaminhamento_autorizacao_abertura ?? '',
@@ -733,10 +789,6 @@
                 anexo_pdf_publicacoes: existing?.anexo_pdf_publicacoes ?? '',
                 riscos_extra: existing?.riscos_extra ?? '',
                 anexo_pdf_minuta_contrato: existing?.anexo_pdf_minuta_contrato ?? '',
-                // Novos campos para data_hora
-                data_evento: dataEvento,
-                hora_evento: horaEvento,
-                data_hora: existing?.data_hora ?? '',
                 itens_especificaca_quantitativos_xml: existing?.itens_especificaca_quantitativos_xml ?? '',
                 intervalo_lances: existing?.intervalo_lances ?? '',
                 portal: existing?.portal ?? '',
@@ -749,8 +801,73 @@
                 qualificacao_economica: existing?.qualificacao_economica ?? '',
                 regularidade_fisica: existing?.regularidade_fisica ?? '',
                 pregoeiro: existing?.pregoeiro ?? '',
-                data_hora_edital: existing?.data_hora_edital ?? '',
                 numero_items: existing?.numero_items ?? '',
+
+                // Campos separados para datetime
+                ...initialData,
+                data_hora: existing?.data_hora ?? '',
+                data_hora_limite_edital: existing?.data_hora_limite_edital ?? '',
+                data_hora_fase_edital: existing?.data_hora_fase_edital ?? '',
+
+                // Watchers para campos datetime CORRIGIDOS
+                init() {
+                    // Inicializa os watchers após o componente montar
+                    datetimeFields.forEach(field => {
+                        this.$watch(field + '_date', (value) => {
+                            this.updateDateTimeField(field);
+                        });
+
+                        this.$watch(field + '_time', (value) => {
+                            this.updateDateTimeField(field);
+                        });
+                    });
+                },
+
+                // Método para atualizar campo datetime combinado
+                updateDateTimeField(field) {
+                    const date = this[field + '_date'];
+                    const time = this[field + '_time'];
+
+                    if (date && time) {
+                        // Combina no formato MySQL (YYYY-MM-DD HH:MM:SS)
+                        const combined = `${date} ${time}:00`;
+                        this[field] = combined;
+                        console.log(`Combined ${field}:`, combined);
+                    } else {
+                        this[field] = '';
+                    }
+                },
+
+                // Função para formatar data/hora para exibição CORRIGIDA
+                formatDisplayDateTime(dateTimeString) {
+                    if (!dateTimeString) return '';
+
+                    try {
+                        // Para formato MySQL (YYYY-MM-DD HH:MM:SS)
+                        if (dateTimeString.includes(' ')) {
+                            const [datePart, timePart] = dateTimeString.split(' ');
+                            const [year, month, day] = datePart.split('-');
+                            const [hours, minutes] = timePart.split(':');
+
+                            // Formata para exibição brasileira (DD/MM/YYYY HH:MM)
+                            return `${day}/${month}/${year} ${hours}:${minutes}`;
+                        }
+
+                        // Para formato ISO (YYYY-MM-DDTHH:MM:SS)
+                        if (dateTimeString.includes('T')) {
+                            const [datePart, timePart] = dateTimeString.split('T');
+                            const [year, month, day] = datePart.split('-');
+                            const [hours, minutes] = timePart.split(':');
+
+                            return `${day}/${month}/${year} ${hours}:${minutes}`;
+                        }
+
+                        return dateTimeString;
+                    } catch (e) {
+                        console.error('Erro ao formatar data:', e);
+                        return dateTimeString;
+                    }
+                },
 
                 // Controle de confirmação
                 confirmed: {
@@ -787,7 +904,6 @@
                     prevista_plano_anual: !!existing?.prevista_plano_anual,
                     painel_preco_tce: !!existing?.painel_preco_tce,
                     anexo_pdf_analise_mercado: !!existing?.anexo_pdf_analise_mercado,
-
                     encaminhamento_elaborar_editais: !!existing?.encaminhamento_elaborar_editais,
                     encaminhamento_parecer_juridico: !!existing?.encaminhamento_parecer_juridico,
                     encaminhamento_autorizacao_abertura: !!existing?.encaminhamento_autorizacao_abertura,
@@ -812,7 +928,8 @@
                     regularidade_fisica: !!existing?.regularidade_fisica,
                     anexo_pdf_minuta_contrato: !!existing?.anexo_pdf_minuta_contrato,
                     pregoeiro: !!existing?.pregoeiro,
-                    data_hora_edital: !!existing?.data_hora_edital,
+                    data_hora_limite_edital: !!existing?.data_hora_limite_edital,
+                    data_hora_fase_edital: !!existing?.data_hora_fase_edital,
                     numero_items: !!existing?.numero_items,
                 },
 
@@ -837,32 +954,10 @@
                     }
                 },
 
-                // NOVO MÉTODO para salvar data_hora
-                async saveDataHora() {
-                    if (this.data_evento && this.hora_evento) {
-                        // Combina data e hora
-                        this.data_hora = `${this.data_evento} ${this.hora_evento}`;
-
-                        // Usa o método saveField existente
-                        await this.saveField('data_hora');
-                    } else {
-                        alert('Selecione a data e a hora antes de salvar.');
-                    }
-                },
-                async saveDataHoraEdital() {
-                if (this.data_edital_evento && this.hora_edital_evento) {
-                    // Combina data e hora para o edital
-                    this.data_hora_edital = `${this.data_edital_evento} ${this.hora_edital_evento}`;
-
-                    // Usa o método saveField existente
-                    await this.saveField('data_hora_edital');
-                } else {
-                    alert('Selecione a data e a hora do edital antes de salvar.');
-                }
-            },
-
-                // Salva campo individual
+                // Método saveField
                 async saveField(field) {
+                    console.log('Salvando campo:', field, 'Valor:', this[field]);
+
                     const formData = new FormData();
                     formData.append('processo_id', {{ $processo->id }});
                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
@@ -871,17 +966,14 @@
                     if (field === 'unidade_setor' && this.servidor_responsavel) {
                         formData.append('servidor_responsavel', this.servidor_responsavel);
                     }
-                    // CASO ESPECIAL para data_hora
-                    if (field === 'data_hora') {
-                        formData.append('data_hora', this.data_hora);
-                    }
 
                     // Campos do TinyMCE
                     const tinyMceFields = [
                         'justificativa', 'descricao_necessidade', 'descricao_necessidade_autorizacao',
                         'solucoes_disponivel_mercado', 'incluir_requisito_cada_caso_concreto',
                         'justificativa_solucao_escolhida', 'impacto_ambiental', 'resultado_pretendidos',
-                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra', 'exigencias_tecnicas', 'qualificacao_economica', 'regularidade_fisica'
+                        'dotacao_orcamentaria', 'tratamento_diferenciado_MEs_eEPPs', 'riscos_extra',
+                        'exigencias_tecnicas', 'qualificacao_economica', 'regularidade_fisica'
                     ];
 
                     if (tinyMceFields.includes(field)) {
@@ -889,55 +981,24 @@
                         const content = editor ? editor.getContent() : this[field];
                         formData.append(field, content);
                     }
-                    // Arquivos
-                    else if (field === 'itens_e_seus_quantitativos_xml') {
-                        const fileInput = document.getElementById('itens_e_seus_quantitativos_xml');
+                    // Campos de arquivo
+                    else if (this.isFileField(field)) {
+                        const fileInput = document.getElementById(field);
                         if (fileInput && fileInput.files.length > 0) {
                             formData.append(field, fileInput.files[0]);
+                        } else {
+                            formData.append(field, '');
                         }
-                    } else if (field === 'painel_preco_tce') {
-                        const fileInput = document.getElementById('painel_preco_tce');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    } else if (field === 'anexo_pdf_analise_mercado') {
-                        const fileInput = document.getElementById('anexo_pdf_analise_mercado');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    } else if (field === 'portaria_agente_equipe_pdf') {
-                        const fileInput = document.getElementById('portaria_agente_equipe_pdf');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    } else if (field === 'anexar_minuta') {
-                        const fileInput = document.getElementById('anexar_minuta');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    } else if (field === 'anexo_pdf_publicacoes') {
-                        const fileInput = document.getElementById('anexo_pdf_publicacoes');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    }else if (field === 'itens_especificaca_quantitativos_xml') {
-                        const fileInput = document.getElementById('itens_especificaca_quantitativos_xml');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    }else if (field === 'anexo_pdf_minuta_contrato') {
-                        const fileInput = document.getElementById('anexo_pdf_minuta_contrato');
-                        if (fileInput && fileInput.files.length > 0) {
-                            formData.append(field, fileInput.files[0]);
-                        }
-                    // Arrays
-                    }else if (Array.isArray(this[field])) {
+                    }
+                    // Arrays (checkbox)
+                    else if (Array.isArray(this[field])) {
                         if (this[field].length === 0) {
                             formData.append(field, '');
                         } else {
                             this[field].forEach(v => formData.append(field + '[]', v));
                         }
 
+                        // Campos "outro" especiais
                         if (field === 'instrumento_vinculativo' && this.instrumento_vinculativo_outro) {
                             formData.append('instrumento_vinculativo_outro', this.instrumento_vinculativo_outro);
                         }
@@ -945,7 +1006,7 @@
                             formData.append('prazo_vigencia_outro', this.prazo_vigencia_outro);
                         }
                     }
-                    // Campos normais
+                    // Campos normais (inclui datetime)
                     else {
                         formData.append(field, this[field]);
                     }
@@ -954,41 +1015,59 @@
                         const response = await fetch("{{ route('admin.processos.detalhes.store', $processo) }}", {
                             method: 'POST',
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                    'content')
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
                             body: formData
                         });
 
                         const responseData = await response.json();
+                        console.log('Resposta do servidor:', responseData);
 
                         if (response.ok) {
                             this.confirmed[field] = true;
-                            if (field === 'unidade_setor' && this.servidor_responsavel) {
-                                this.confirmed.servidor_responsavel = true;
-                            }
-                            console.log(field + ' salvo com sucesso!');
-                            // Debug específico para data_hora
-                            if (field === 'data_hora') {
-                                console.log('Data/hora salva:', this.data_hora);
+                            console.log(field + ' salvo com sucesso! Valor:', this[field]);
+
+                            // Feedback para campos de arquivo
+                            if (this.isFileField(field)) {
+                                const fileInput = document.getElementById(field);
+                                if (fileInput && fileInput.files.length > 0) {
+                                    showMessage('Arquivo ' + fileInput.files[0].name + ' salvo com sucesso!', 'success');
+                                }
+                            } else {
+                                showMessage('Campo ' + field + ' salvo com sucesso!', 'success');
                             }
                         } else {
                             this.confirmed[field] = false;
                             console.error('Erro ao salvar campo:', field, responseData);
-                            alert('Erro ao salvar ' + field + '. Verifique o console.');
+                            showMessage('Erro ao salvar ' + field, 'error');
                         }
                     } catch (error) {
                         this.confirmed[field] = false;
                         console.error('Erro de rede ao salvar campo:', field, error);
-                        alert('Erro de rede ao salvar ' + field + '.');
+                        showMessage('Erro de rede ao salvar ' + field, 'error');
                     }
+                },
+
+                // Método auxiliar para identificar campos de arquivo
+                isFileField(field) {
+                    const fileFields = [
+                        'itens_e_seus_quantitativos_xml',
+                        'itens_especificaca_quantitativos_xml',
+                        'painel_preco_tce',
+                        'anexo_pdf_analise_mercado',
+                        'portaria_agente_equipe_pdf',
+                        'anexar_minuta',
+                        'anexo_pdf_publicacoes',
+                        'anexo_pdf_minuta_contrato'
+                    ];
+                    return fileFields.includes(field);
                 },
 
                 // Submit do formulário completo
                 submitForm() {
                     this.$el.submit();
                 }
-            }
+            };
         }
     </script>
 @endsection
