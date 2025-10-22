@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TERMO DE REFERÊNCIA - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
+    <title>EDITAL - Processo {{ $processo->numero_processo ?? $processo->id }}</title>
     <style type="text/css">
         @font-face {
             font-family: 'Aptos';
@@ -688,7 +688,7 @@
             e a presunção de sua capacidade técnica para realização das transações inerentes ao pregão eletrônico.
         </p>
         <p style="display: flex; align-items: center; font-weight: bold; ">
-            <img src="{{ public_path('icons/dinheiro.png') }}" width="20" style="margin-right: 10px;"> 4. DO ENVIO DAS PROPOSTAS E DA FASE DE ABERTURA DE VISTAS
+            <img src="{{ public_path('icons/dinheiro.png') }}" width="20" style="margin-right: 10px;"> 4. DO ENVIO DAS PROPOSTAS
         </p>
         <p style="text-align: justify;">
             4.1. Após a divulgação do edital no endereço eletrônico, as licitantes deverão, até a data e hora marcadas para recebimento
@@ -1226,7 +1226,7 @@
             ANEXO II – Minuta do Contrato
             <br>
             @if ($detalhe->tipo_srp == 'sim')
-                    ANEXO III – Ata de Registro de Preços
+                ANEXO III – Ata de Registro de Preços
             @endif
         </p>
     </div>

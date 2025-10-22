@@ -789,6 +789,7 @@
                 anexo_pdf_publicacoes: existing?.anexo_pdf_publicacoes ?? '',
                 riscos_extra: existing?.riscos_extra ?? '',
                 anexo_pdf_minuta_contrato: existing?.anexo_pdf_minuta_contrato ?? '',
+                anexo_pdf_ata_resgitro_preco: existing?.anexo_pdf_ata_resgitro_preco ?? '',
                 itens_especificaca_quantitativos_xml: existing?.itens_especificaca_quantitativos_xml ?? '',
                 intervalo_lances: existing?.intervalo_lances ?? '',
                 portal: existing?.portal ?? '',
@@ -927,6 +928,7 @@
                     qualificacao_economica: !!existing?.qualificacao_economica,
                     regularidade_fisica: !!existing?.regularidade_fisica,
                     anexo_pdf_minuta_contrato: !!existing?.anexo_pdf_minuta_contrato,
+                    anexo_pdf_ata_resgitro_preco: !!existing?.anexo_pdf_ata_resgitro_preco,
                     pregoeiro: !!existing?.pregoeiro,
                     data_hora_limite_edital: !!existing?.data_hora_limite_edital,
                     data_hora_fase_edital: !!existing?.data_hora_fase_edital,
@@ -1058,7 +1060,8 @@
                         'portaria_agente_equipe_pdf',
                         'anexar_minuta',
                         'anexo_pdf_publicacoes',
-                        'anexo_pdf_minuta_contrato'
+                        'anexo_pdf_minuta_contrato',
+                        'anexo_pdf_ata_resgitro_preco',
                     ];
                     return fileFields.includes(field);
                 },

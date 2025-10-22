@@ -74,6 +74,7 @@ class ProcessoDetalhe extends Model
         'regularidade_fisica',
         'qualificacao_economica',
         'anexo_pdf_minuta_contrato',
+        'anexo_pdf_ata_resgitro_preco',
         'data_hora_limite_edital',
         'data_hora_fase_edital',
         'pregoeiro',

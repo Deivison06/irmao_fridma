@@ -188,6 +188,9 @@
     @elseif($campo === 'anexo_pdf_minuta_contrato')
     <x-form-field name="anexo_pdf_minuta_contrato" label="📎 Anexar PDF Minuta do Contrato" type="file" accept="application/pdf" />
 
+    @elseif($campo === 'anexo_pdf_ata_resgitro_preco')
+    <x-form-field name="anexo_pdf_ata_resgitro_preco" label="📎 Anexar PDF Ata de Registro de Preços" type="file" accept="application/pdf" />
+
     {{-- Campos Select --}}
     @elseif($campo === 'encaminhamento_pesquisa_preco')
     <x-form-field name="encaminhamento_pesquisa_preco" label="Encaminhamento para pesquisa de Preços" type="select" :options="$processo->prefeitura->unidades->pluck('nome', 'nome')->toArray()" placeholder="Selecione uma unidade" />
