@@ -129,6 +129,19 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+                            {{-- Capa Edital --}}
+                            <div>
+                                <label for="capa_edital" class="block text-sm font-medium text-gray-700">Capa Edital</label>
+                                <input type="file" name="capa_edital" id="capa_edital"
+                                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                                @if ($prefeitura->capa_edital)
+                                    <img src="{{ asset($prefeitura->capa_edital) }}" alt="capa_edital atual"
+                                        class="h-16 mt-2 rounded shadow">
+                                @endif
+                                @error('capa_edital')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
 
                         </div>
 

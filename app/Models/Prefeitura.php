@@ -21,7 +21,8 @@ class Prefeitura extends Model
         'email',
         'autoridade_competente',
         'capa',
-        'timbre'
+        'timbre',
+        'capa_edital'
     ];
 
     public function unidades(): HasMany

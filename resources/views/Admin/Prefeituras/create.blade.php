@@ -93,6 +93,14 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div>
+                            <label for="capa_edital" class="block text-sm font-medium text-gray-700">Capa Edital</label>
+                            <input type="file" name="capa_edital" id="capa_edital"
+                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
+                            @error('capa_edital')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="flex justify-end mt-6 space-x-4">

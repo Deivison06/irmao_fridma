@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Capa do Processo - {{ $processo->numero_processo }}</title>
     <style type="text/css">
-         @font-face {
+        @font-face {
             font-family: 'Aptos';
             src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
             font-weight: 900;
@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <!-- Imagem de fundo da capa -->
-        <img src="{{  public_path($prefeitura->capa)}}"
+        <img src="{{  public_path($prefeitura->capa_edital)}}"
             class="capa-background" alt="Capa da Prefeitura">
 
         <!-- Conteúdo centralizado -->

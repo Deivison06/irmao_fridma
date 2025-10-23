@@ -170,7 +170,7 @@ class ProcessoController extends Controller
                 'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
                 'cor' => 'bg-teal-500',
                 'data_id' => 'data_autorizacao_abertura_procedimento',
-                'campos' => ['portaria_agente_equipe_pdf', 'tratamento_diferenciado_MEs_eEPPs'],
+                'campos' => ['tratamento_diferenciado_MEs_eEPPs'],
             ],
             'abertura_fase_externa' => [
                 'titulo' => 'ABERTURA FASE EXTERNA',
@@ -203,7 +203,6 @@ class ProcessoController extends Controller
                     'qualificacao_economica',
                     'exigencias_tecnicas',
                     'anexo_pdf_minuta_contrato',
-                    'anexo_pdf_ata_resgitro_preco',
                     'numero_items',
                 ],
             ],
@@ -304,18 +303,6 @@ class ProcessoController extends Controller
             $detalhe->anexo_pdf_analise_mercado = 'uploads/anexos/' . $filename;
         }
         // Anexo PDF usando move
-        if ($request->hasFile('portaria_agente_equipe_pdf')) {
-            $file = $request->file('portaria_agente_equipe_pdf');
-            $filename = 'portaria_agente_equipe_' . time() . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/anexos');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
-            $file->move($destinationPath, $filename);
-            // Salva o caminho relativo para uso posterior
-            $detalhe->portaria_agente_equipe_pdf = 'uploads/anexos/' . $filename;
-        }
-        // Anexo PDF usando move
         if ($request->hasFile('anexar_minuta')) {
             $file = $request->file('anexar_minuta');
             $filename = 'minuta_' . time() . '.' . $file->getClientOriginalExtension();
@@ -350,20 +337,9 @@ class ProcessoController extends Controller
             // Salva o caminho relativo para uso posterior
             $detalhe->anexo_pdf_minuta_contrato = 'uploads/anexos/' . $filename;
         }
-        if ($request->hasFile('anexo_pdf_ata_resgitro_preco')) {
-            $file = $request->file('anexo_pdf_ata_resgitro_preco');
-            $filename = 'ata_resgitro_preco_' . time() . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/anexos');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
-            $file->move($destinationPath, $filename);
-            // Salva o caminho relativo para uso posterior
-            $detalhe->anexo_pdf_ata_resgitro_preco = 'uploads/anexos/' . $filename;
-        }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'portaria_agente_equipe_pdf', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml', 'anexo_pdf_minuta_contrato', 'anexo_pdf_ata_resgitro_preco']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml', 'anexo_pdf_minuta_contrato']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
@@ -375,7 +351,6 @@ class ProcessoController extends Controller
             'data' => $detalhe->toArray()
         ]);
     }
-
 
     public function gerarPdf(Request $request, Processo $processo)
     {
@@ -615,21 +590,49 @@ class ProcessoController extends Controller
      * Processa anexos e junta com o PDF principal quando necessário
      */
     private function processarAnexos(Processo $processo, string $documento, string $caminhoPrincipal): void
-    {
-        // CASO ESPECIAL: Edital deve ser processado primeiro com Termo de Referência
-        if ($documento === 'edital') {
-            $this->juntarTermoReferencia($processo, $caminhoPrincipal);
-        }
+{
+    // =========================================================
+    // CASO ESPECIAL: Edital deve ser processado primeiro com Termo de Referência
+    // =========================================================
+    if ($documento === 'edital') {
+        $this->juntarTermoReferencia($processo, $caminhoPrincipal);
+    }
 
-        // Depois processa os anexos normais
-        $anexos = $this->obterAnexos($processo, $documento);
+    // =========================================================
+    // PROCESSAMENTO DOS ANEXOS NORMAIS
+    // =========================================================
+    $anexos = $this->obterAnexos($processo, $documento);
 
-        foreach ($anexos as $anexoPath) {
-            if ($anexoPath && file_exists($anexoPath)) {
-                $this->juntarPdfs($caminhoPrincipal, $anexoPath);
-            }
+    foreach ($anexos as $anexoPath) {
+        if ($anexoPath && file_exists($anexoPath)) {
+            $this->juntarPdfs($caminhoPrincipal, $anexoPath);
         }
     }
+
+    // =========================================================
+    // CASO ESPECIAL: Se for SRP, juntar a ATA DE REGISTRO DE PREÇO
+    // =========================================================
+    if ($documento === 'edital' && $processo->detalhe->tipo_srp === 'sim') {
+        // Gera o PDF da ata_registro_preco
+        $viewAta = $this->determinarViewPdf($processo, 'ata_registro_preco');
+        $data = $this->prepararDadosPdf($processo, [
+            'dataSelecionada' => now()->format('Y-m-d'),
+            'assinantes' => [],
+            'parecerSelecionado' => null,
+        ]);
+
+        $pdfAta = Pdf::loadView($viewAta, $data)->setPaper('a4', 'portrait');
+
+        $arquivoAta = storage_path('app/temp_ata_' . $processo->id . '.pdf');
+        $pdfAta->save($arquivoAta);
+
+        if (file_exists($arquivoAta)) {
+            $this->juntarPdfs($caminhoPrincipal, $arquivoAta);
+            unlink($arquivoAta); // limpa arquivo temporário
+        }
+    }
+}
+
 
     /**
      * Obtém os caminhos dos anexos baseado no documento
@@ -640,10 +643,9 @@ class ProcessoController extends Controller
 
         $mapeamentoAnexos = [
             'analise_mercado' => 'anexo_pdf_analise_mercado',
-            'autorizacao_abertura_procedimento' => 'portaria_agente_equipe_pdf',
             'minutas' => 'anexar_minuta',
             'publicacoes_avisos_licitacao' => 'anexo_pdf_publicacoes',
-            'edital' => ['anexo_pdf_minuta_contrato', 'anexo_pdf_ata_resgitro_preco'],
+            'edital' => ['anexo_pdf_minuta_contrato'],
         ];
 
         $camposAnexo = $mapeamentoAnexos[$documento] ?? null;
@@ -718,7 +720,6 @@ class ProcessoController extends Controller
             throw new \Exception('Erro ao processar anexos do PDF: ' . $e->getMessage());
         }
     }
-
 
     public function baixarDocumento(Processo $processo, $tipo)
     {

@@ -54,7 +54,7 @@ class ProcessoDetalhe extends Model
         'encaminhamento_parecer_juridico',
         'encaminhamento_autorizacao_abertura',
         'valor_estimado',
-        'portaria_agente_equipe_pdf',
+        '.env',
         'dotacao_orcamentaria',
         'anexar_minuta',
         'riscos_extra',

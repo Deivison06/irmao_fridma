@@ -176,9 +176,6 @@
     @elseif($campo === 'anexo_pdf_analise_mercado')
     <x-form-field name="anexo_pdf_analise_mercado" label="📎 Anexar PDF à Análise de Mercado" type="file" accept="application/pdf" />
 
-    @elseif($campo === 'portaria_agente_equipe_pdf')
-    <x-form-field name="portaria_agente_equipe_pdf" label="📎 Anexar PDF à PORTARIA DE AGENTE DE CONTRATAÇÃO E EQUIPE DE APOIO" type="file" accept="application/pdf" />
-
     @elseif($campo === 'anexar_minuta')
     <x-form-field name="anexar_minuta" label="📎 Anexar PDF à Minutas" type="file" accept="application/pdf" />
 
@@ -187,9 +184,6 @@
 
     @elseif($campo === 'anexo_pdf_minuta_contrato')
     <x-form-field name="anexo_pdf_minuta_contrato" label="📎 Anexar PDF Minuta do Contrato" type="file" accept="application/pdf" />
-
-    @elseif($campo === 'anexo_pdf_ata_resgitro_preco')
-    <x-form-field name="anexo_pdf_ata_resgitro_preco" label="📎 Anexar PDF Ata de Registro de Preços" type="file" accept="application/pdf" />
 
     {{-- Campos Select --}}
     @elseif($campo === 'encaminhamento_pesquisa_preco')

@@ -33,6 +33,7 @@ class PrefeituraController extends Controller
             'autoridade_competente' => 'required|string|max:255',
             'capa' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'timbre' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'capa_edital' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $data = $request->only([
@@ -57,6 +58,12 @@ class PrefeituraController extends Controller
             $timbreName = time() . '_timbre.' . $request->file('timbre')->getClientOriginalExtension();
             $request->file('timbre')->move(public_path('uploads/prefeituras'), $timbreName);
             $data['timbre'] = 'uploads/prefeituras/' . $timbreName;
+        }
+        // Upload do capa_edital
+        if ($request->hasFile('capa_edital')) {
+            $capa_editalName = time() . '_capa_edital.' . $request->file('capa_edital')->getClientOriginalExtension();
+            $request->file('capa_edital')->move(public_path('uploads/prefeituras'), $capa_editalName);
+            $data['capa_edital'] = 'uploads/prefeituras/' . $capa_editalName;
         }
 
         try {
@@ -91,6 +98,7 @@ class PrefeituraController extends Controller
             'autoridade_competente' => 'required|string|max:255',
             'capa' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'timbre' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'capa_edital' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $prefeitura = Prefeitura::findOrFail($id);
@@ -117,6 +125,12 @@ class PrefeituraController extends Controller
             $timbreName = time() . '_timbre.' . $request->file('timbre')->getClientOriginalExtension();
             $request->file('timbre')->move(public_path('uploads/prefeituras'), $timbreName);
             $data['timbre'] = 'uploads/prefeituras/' . $timbreName;
+        }
+        // Upload do capa_edital (se houver)
+        if ($request->hasFile('capa_edital')) {
+            $capa_editalName = time() . '_capa_edital.' . $request->file('capa_edital')->getClientOriginalExtension();
+            $request->file('capa_edital')->move(public_path('uploads/prefeituras'), $capa_editalName);
+            $data['capa_edital'] = 'uploads/prefeituras/' . $capa_editalName;
         }
 
         try {

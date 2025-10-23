@@ -10,7 +10,6 @@
             src: url('{{ public_path('storage/fonts/Aptos.ttf') }}') format('truetype');
             font-style: normal;
         }
-
         @font-face {
             font-family: 'AptosExtraBold';
             src: url('{{ public_path('storage/fonts/Aptos-ExtraBold.ttf') }}') format('truetype');
@@ -21,7 +20,6 @@
             margin: 0;
             size: A4;
         }
-
         body {
             margin: 0;
             padding: 3cm 2cm;
@@ -43,41 +41,6 @@
             page-break-after: always;
         }
 
-        /* ---------------------------------- */
-        /* ESTILOS - CAPA DO DOCUMENTO (PÁGINA 0) */
-        /* ---------------------------------- */
-        #cover-page {
-            /* Define a área de referência como a página inteira */
-            height: 100vh;
-            width: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .cover-image {
-            /* Tamanho da imagem */
-            width: 300px;
-            height: 300px;
-            margin-bottom: 30px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cover-title {
-            width: 60%;
-            font-size: 18pt;
-            font-weight: 900;
-            border: 2px solid #000;
-            display: inline-block;
-            line-height: 0.9;
-            padding: 10px 50px;
-            font-family: 'AptosExtraBold', sans-serif;
-        }
-
         .footer-signature {
             margin-top: 60px;
             text-align: right;
@@ -88,26 +51,6 @@
             text-align: center;
         }
 
-        /* Estilos opcionais para simular as linhas da imagem */
-        .line {
-            border-top: 2px solid black;
-            margin: 10px 0;
-            /* Espaçamento entre as linhas */
-        }
-
-        .content {
-            /* Centraliza o texto como na imagem */
-            margin: 40px 0;
-            /* Espaçamento acima e abaixo do conteúdo principal */
-        }
-
-        strong {
-            line-height: 1.5;
-            /* Melhora a leitura do texto em várias linhas */
-            display: block;
-            /* Garante que o strong ocupe a largura total */
-        }
-
         /* ---------------------------------- */
         /* ESTILOS - CONTEÚDO PRINCIPAL */
         /* ---------------------------------- */
@@ -115,58 +58,78 @@
             position: relative;
             width: 100%;
             height: 100%;
+            text-align: center;
         }
 
-        .conteudo-all {
+        .capa-background {
             position: absolute;
-            top: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .conteudo {
+            position: absolute;
+            top: 55%;
             left: 50%;
-            width: 100%;
+            width: 78%;
             transform: translate(-50%, -50%);
-            text-align: left;
-        }
-
-        .title {
-            margin-left: -85px;
-            font-weight: bold;
-            font-size: 20pt;
-            background: #bebebe;
-            border: 1px solid #7a7a7a;
-            padding: 5px 50px;
-            display: inline-block;
-            margin-bottom: 20px;
             text-align: center;
         }
 
-        .section {
-            margin-bottom: 15px;
+        .dados-processo {
+            padding: 20px;
+            border-radius: 8px;
         }
 
-        .justify {
-            margin-top: 20px;
-            text-indent: 30px;
+        .numero-processo {
+            color: #000000;
+            margin-bottom: 5px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .modalidade {
+            color: #000;
+            margin-bottom: 5px;
         }
 
-        td.icon {
-            width: 80px;
+        .objeto-titulo {
+            margin: 20px 0;
+        }
+
+        .objeto {
             text-align: center;
-            vertical-align: middle;
-        }
-
-        td.content {
-            vertical-align: middle;
-            padding-left: 10px;
         }
 
     </style>
 </head>
 
 <body>
+    <div class="container">
+        <!-- Imagem de fundo da capa -->
+        <img src="{{  public_path($prefeitura->capa_edital)}}"
+            class="capa-background" alt="Capa da Prefeitura">
+        <!-- Conteúdo centralizado -->
+        <div class="conteudo">
+            <div class="dados-processo">
+                <div class="numero-processo">
+                    PROCESSO ADMINISTRATIVO<br>
+                    <strong>{{ $processo->numero_processo }}</strong>
+                </div>
+
+                <div class="modalidade">
+                    {{ strtoupper($processo->modalidade->getDisplayName()) }}<br>
+                    <strong>{{ $processo->numero_procedimento }}</strong>
+                </div>
+
+                <div class="objeto-titulo">OBJETO:</div>
+                <div class="objeto">
+                    {!! strip_tags($processo->objeto) !!}
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div>
         <p style="font-weight: bold; text-align: center; font-size: 14pt;">
@@ -336,7 +299,7 @@
     <div class="page-break"></div>
     <div>
         <p style="text-align: justify;">
-            A  {{ $processo->prefeitura->nome }}, sediado(a) {{ $processo->prefeitura->endereco }}, inscrita no CNPJ: {{ $processo->prefeitura->cnpj }}, torna público por meio do(a) seu
+            A {{ $processo->prefeitura->nome }}, sediado(a) {{ $processo->prefeitura->endereco }}, inscrita no CNPJ: {{ $processo->prefeitura->cnpj }}, torna público por meio do(a) seu
             Pregoeiro, realizará licitação, na modalidade PREGÃO, na forma ELETRÔNICA, nos termos da Lei nº 14.133, de 2021,
             Decretos Municipais e demais legislação aplicável e, ainda, de acordo com as condições estabelecidas neste Edital.
         </p>
@@ -411,83 +374,51 @@
         @if ($detalhe->inversao_fase === 'sim')
         <ol type="a" style="text-align: justify; ">
             <li style="margin-bottom: 6px;">
-                Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para
-                o fim do envio das propostas, prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica exigido neste edital
-                e os valores globais de sua proposta, os quais, em hipótese alguma, poderá ser superior ao valor global estimado pelo Edital,
-                sob pena de desclassificação de sua proposta e consequente impossibilidade de disputar a fase de lances.
+                Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para o fim do envio das propostas, prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica exigido neste edital e os valores globais de sua proposta, os quais, em hipótese alguma, poderá ser superior ao valor global estimado pelo Edital, sob pena de desclassificação de sua proposta e consequente impossibilidade de disputar a fase de lances;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de lances: Nesta fase, os licitantes que cumprirem as exigências contidas na alínea “a” irão estabelecer lances
-                sucessivos, obedecendo o critério de menor preço global, dentro do tempo limite de 10 (dez) minutos estabelecidos pelo
-                edital, assim como suas respectivas prorrogações de 2 (dois) minutos, os quais serão sistematicamente controlados pelo
-                Sistema Eletrônico do Portal BNC.
+                Fase de lances: Nesta fase, os licitantes que cumprirem a exigências contidas na alínea “a”, irão estabelecer lances sucessivos, obedecendo o critério de menor preço global, dentro do tempo limite de 10 (dez) minutos estabelecidos pelo edital, assim como, suas respectivas prorrogações de 2 (dois) minutos, os quais serão sistematicamente controlados pelo Sistema Eletrônico do Portal BNC;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Habilitação: Nesta fase, o licitante classificado em primeiro lugar, obedecendo o critério de menor preço por lote,
-                terá sua proposta inicial, documentos de habilitação e demais exigências contidas neste edital e no Termo de Referência
-                analisadas para efeito de classificação e prosseguimento para a fase seguinte. Também será analisada nesta fase a
-                respectiva exequibilidade da proposta informada na fase de lances, a qual deverá obedecer aos critérios legais previstos na
-                Lei 14.133/2021 e no próprio edital.
+                Fase de Habilitação: Nesta fase, o licitante classificado em primeiro lugar, obedecendo o critério de menor preço por lote, terá sua proposta inicial, documentos de habilitação e demais exigências contidas neste edital e no Termo de Referência, analisadas para efeito de classificação e prosseguimento para a fase seguinte. Também será analisado nesta fase, a respectiva exequibilidade da proposta informada na fase de lances, a qual deverá obedecer aos critérios legais previstos na Lei 14.133/2021 e no próprio edital;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Recursos: As empresas licitantes que discordarem das decisões proferidas poderão registrar as razões de seu
-                recurso em campo específico do sistema, vedada a manifestação via “chat”, dentro do prazo de 30 (trinta) minutos
-                improrrogáveis, a contar da autorização do pregoeiro.
+                Fase de Recursos: As empresas licitantes que discordarem das decisões proferidas poderão registrar as razões de seu recurso em campo específico do sistema, vedada a manifestação via “chat”, dentro do prazo de 30 (trinta) minutos improrrogáveis, a contar da autorização do pregoeiro;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na fase de documentos de habilitação terá o
-                objeto adjudicado a seu favor, sendo posteriormente declarado vencedor do certame.
+                Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na fase de documentos de habilitação, terá o objeto adjudicado a seu favor, sendo posteriormente declarado vencedor do certame.
             </li>
         </ol>
         @else
         <ol type="a" style="text-align: justify; padding-left: 20px;">
             <li style="margin-bottom: 6px;">
-                Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para
-                o fim do envio das propostas, prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica exigido neste edital
-                e os valores globais de sua proposta, os quais, em hipótese alguma, poderá ser superior ao valor global estimado pelo Edital,
-                sob pena de desclassificação de sua proposta e consequente impossibilidade de disputar a fase de lances.
+                Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para o fim do envio das propostas, prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica exigido neste edital e os valores globais de sua proposta, os quais, em hipótese alguma, poderá ser superior ao valor global estimado pelo Edital, sob pena de desclassificação de sua proposta e consequente impossibilidade de disputar a fase de lances;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Habilitação: Nesta fase, o licitante classificado em primeiro lugar, obedecendo o critério de menor preço por lote,
-                terá sua proposta inicial, documentos de habilitação e demais exigências contidas neste edital e no Termo de Referência,
-                analisadas para efeito de classificação e prosseguimento para a fase seguinte. Também será analisada nesta fase a
-                respectiva exequibilidade da proposta informada na fase de lances, a qual deverá obedecer aos critérios legais previstos na
-                Lei 14.133/2021 e no próprio edital.
+                Fase de Habilitação: Nesta fase, o licitante classificado em primeiro lugar, obedecendo o critério de menor preço por lote, terá sua proposta inicial, documentos de habilitação e demais exigências contidas neste edital e no Termo de Referência, analisadas para efeito de classificação e prosseguimento para a fase seguinte. Também será analisado nesta fase, a respectiva exequibilidade da proposta informada na fase de lances, a qual deverá obedecer aos critérios legais previstos na Lei 14.133/2021 e no próprio edital;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de lances: Nesta fase, os licitantes que cumprirem as exigências contidas na alínea “a” irão estabelecer lances
-                sucessivos, obedecendo o critério de menor preço global, dentro do tempo limite de 10 (dez) minutos estabelecidos pelo
-                edital, assim como suas respectivas prorrogações de 2 (dois) minutos, os quais serão sistematicamente controlados pelo
-                Sistema Eletrônico do Portal BNC.
+                Fase de lances: Nesta fase, os licitantes que cumprirem a exigências contidas na alínea “a”, irão estabelecer lances sucessivos, obedecendo o critério de menor preço global, dentro do tempo limite de 10 (dez) minutos estabelecidos pelo edital, assim como, suas respectivas prorrogações de 2 (dois) minutos, os quais serão sistematicamente controlados pelo Sistema Eletrônico do Portal BNC;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Recursos: As empresas licitantes que discordarem das decisões proferidas poderão registrar as razões de seu
-                recurso em campo específico do sistema, vedada a manifestação via “chat”, dentro do prazo de 30 (trinta) minutos
-                improrrogáveis, a contar da autorização do pregoeiro.
+                Fase de Recursos: As empresas licitantes que discordarem das decisões proferidas poderão registrar as razões de seu recurso em campo específico do sistema, vedada a manifestação via “chat”, dentro do prazo de 30 (trinta) minutos improrrogáveis, a contar da autorização do pregoeiro;
             </li>
 
             <li style="margin-bottom: 6px;">
-                Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na fase de documentos de habilitação terá o
-                objeto adjudicado a seu favor, sendo posteriormente declarado vencedor do certame.
+                Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na fase de documentos de habilitação, terá o objeto adjudicado a seu favor, sendo posteriormente declarado vencedor do certame.
                 <br><br>
-                1.4. Nenhum licitante passará para a fase seguinte sem o devido cumprimento das exigências contidas em cada fase, sob
-                pena de desclassificação ou inabilitação.
-            </li>
-
-            <li style="margin-bottom: 6px;">
-                1.5. Na fase de lances, cada empresa licitante poderá inserir quantos lances forem necessários, ficando resguardado apenas
-                os critérios de inexequibilidade de proposta, que serão devidamente verificados na fase de abertura de vistas.
+                1.4. Nenhum licitante passará para a fase seguinte, sem o devido cumprimento das exigências contidas em cada fase, sob pena de desclassificação ou inabilitação.
                 <br><br>
-                1.6. Na fase recursal, após o início da contagem do tempo de 30 (trinta) minutos, será aberto campo específico para que as
-                manifestações dos licitantes sejam devidamente registradas e reconhecidas pelo Sistema BNC (<a href="https://bnc.org.br/" target="_blank">https://bnc.org.br/</a>), não
-                sendo aceitas, em nenhuma hipótese, manifestações recursais inseridas dentro do campo de “chat”.
+                1.5. Na fase de lances, cada empresa licitante poderá inserir quantos lances forem necessários, ficando resguardado apenas os critérios de inexequibilidade de proposta, que serão devidamente verificados na fase de abertura de vistas.
+                <br><br>
+                1.6. Na fase recursal, após o inicial da contagem do tempo de 30 (trinta) minutos, será aberto campo específico para que as manifestações dos licitantes sejam devidamente registradas e reconhecidas pelo Sistema BNC https://bnc.org.br/, não sendo aceitas, em nenhuma hipótese, manifestações recursais inseridas dentro do campo de “chat”.
             </li>
         </ol>
         @endif
@@ -527,10 +458,10 @@
         </p>
 
         @if($detalhe->participacao_exclusiva_mei_epp === 'nao')
-            <p style="text-align: justify;">
-                2.7. Para os itens {{ $detalhe->numero_items }} a participação é exclusiva a microempresas e empresas de pequeno porte, nos termos do art.
-                48 da Lei Complementar nº 123, de 14 de dezembro de 2006
-            </p>
+        <p style="text-align: justify;">
+            2.7. Para os itens {{ $detalhe->numero_items }} a participação é exclusiva a microempresas e empresas de pequeno porte, nos termos do art.
+            48 da Lei Complementar nº 123, de 14 de dezembro de 2006
+        </p>
         @endif
         <p style="text-align: justify;">
             2.8. Não poderão disputar esta licitação:
@@ -1131,75 +1062,75 @@
     </div>
     <div>
         @if ($detalhe->tipo_srp == 'sim')
-            <p style="display: flex; align-items: center; font-weight: bold; ">
-                <img src="{{ public_path('icons/check.png') }}" width="20" style="margin-right: 10px;"> 10. - DA ATA DE REGISTRO DE PREÇOS
-            </p>
-            <p style="text-align: justify;">
-                10.1. Por se tratar de mero registro de preços, INEXISTE obrigatoriedade de contratação do objeto desta licitação pelo
-                Município, tudo conforme legislação vigente.
-            </p>
-            <p style="text-align: justify;">
-                10.2.O Município poderá ainda “dar carona” do referido certame a quem interessar, obedecendo aos percentuais legais e as
-                formalidades de praxe.
-            </p>
-            <p style="text-align: justify;">
-                10.3. Serão formalizadas tantas Atas de Registro de Preços quanto necessárias para o registro de todos os itens constantes
-                no Termo de Referência, com a indicação do licitante vencedor, a descrição do(s) item(ns), as respectivas quantidades,
-                preços registrados e demais condições.
-            </p>
-            <p style="text-align: justify;">
-                10.4. Poderá utilizar-se da Ata de Registro de Preços os órgãos interessados, ou qualquer outro órgão/entidade da
-                Administração Pública que não tenha participado do certame objeto deste Edital, mediante prévia consulta à CONTRATANTE
-                desde que devidamente comprovada a vantagem, respeitado o limite contido na legislação.
-            </p>
-            <p style="text-align: justify;">
-                10.5. Os órgãos e entidades que não participaram do Registro de Preços, quando desejarem fazer uso da Ata de Registro de
-                Preços, deverão manifestar seu interesse junto à CONTRATANTE para que esta indique os possíveis fornecedores e
-                respectivos preços a serem praticados, obedecida a ordem de classificação;
-            </p>
-            <p style="text-align: justify;">
-                10.6. Será incluído na ata, sob a forma de anexo, o registro dos licitantes que aceitarem cotar os bens ou serviços com preços
-                iguais aos do licitante vencedor na sequência da classificação do certame, excluído o percentual referente à margem de
-                preferência, quando o objeto não atender aos requisitos previstos no inciso VII, art. 82 da Lei 14.133/2021
-            </p>
-            <p style="text-align: justify;">
-                10.7. Caberá ao fornecedor beneficiário da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
-                pela aceitação ou não do fornecimento decorrente de adesão. Os Não Participantes da licitação poderão aderir a ATA, desde
-                que devidamente autorizados pelo Chefe do Executivo Municipal.
-            </p>
-            <p style="text-align: justify;">
-                10.4 Caberá aos fornecedores beneficiários da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
-                pela aceitação ou não do fornecimento aos órgãos não participantes que solicitem adesão à Ata de Registro de Preços acima
-                do quantitativo previsto, desde que este fornecimento não prejudique as obrigações anteriormente assumidas;
-            </p>
-            <p style="text-align: justify;">
-                10.5 As solicitações de adesão, concessão de anuência pelo fornecedor e autorização do órgão gerenciador serão realizadas
-                por meio de formalização de processo administrativo com as documentações necessárias, cuja responsabilidade é do órgão
-                gerenciador.
-            </p>
-            <p style="text-align: justify;">
-                10.6. O quantitativo decorrente das adesões à Ata de Registro de Preços não poderá exceder, na totalidade, ao dobro do
-                quantitativo de cada item registrado na Ata de Registro de Preços para o órgão gerenciador e órgão participantes,
-                independentemente do número de órgãos não participantes que aderirem.
-            </p>
-            <p style="text-align: justify;">
-                10.7. Após a aceitação à adesão da Ata de Registro de Preços pelo órgão gerenciador, o Órgão denominado Carona deverá
-                observar as seguintes instruções:
-            </p>
-            <ol type="a" style="text-align: justify;">
-                <li style="margin-bottom: 6px;">
-                    O Órgão Carona somente poderá adquirir os itens registrados nas mesmas condições comerciais e financeiras
-                    estabelecidas no Pregão, dentro da vigência da Ata, não podendo ultrapassar 50% do registrado na mesma;
-                </li>
-                <li style="margin-bottom: 6px;">
-                    Qualquer ato que o Órgão Carona, cometer de abuso às condições comerciais e financeiras expressas nesse
-                    Processo Licitatório – Registro de Preços, responderá exclusivamente por si e assumirá inteira responsabilidade,
-                    não envolvendo assim, o Órgão gerenciador do registro;
-                </li>
-                <li>
-                    O Órgão Carona fará o contato com o vencedor do certame, conforme Termo de Adjudicação;
-                </li>
-            </ol>
+        <p style="display: flex; align-items: center; font-weight: bold; ">
+            <img src="{{ public_path('icons/check.png') }}" width="20" style="margin-right: 10px;"> 10. - DA ATA DE REGISTRO DE PREÇOS
+        </p>
+        <p style="text-align: justify;">
+            10.1. Por se tratar de mero registro de preços, INEXISTE obrigatoriedade de contratação do objeto desta licitação pelo
+            Município, tudo conforme legislação vigente.
+        </p>
+        <p style="text-align: justify;">
+            10.2.O Município poderá ainda “dar carona” do referido certame a quem interessar, obedecendo aos percentuais legais e as
+            formalidades de praxe.
+        </p>
+        <p style="text-align: justify;">
+            10.3. Serão formalizadas tantas Atas de Registro de Preços quanto necessárias para o registro de todos os itens constantes
+            no Termo de Referência, com a indicação do licitante vencedor, a descrição do(s) item(ns), as respectivas quantidades,
+            preços registrados e demais condições.
+        </p>
+        <p style="text-align: justify;">
+            10.4. Poderá utilizar-se da Ata de Registro de Preços os órgãos interessados, ou qualquer outro órgão/entidade da
+            Administração Pública que não tenha participado do certame objeto deste Edital, mediante prévia consulta à CONTRATANTE
+            desde que devidamente comprovada a vantagem, respeitado o limite contido na legislação.
+        </p>
+        <p style="text-align: justify;">
+            10.5. Os órgãos e entidades que não participaram do Registro de Preços, quando desejarem fazer uso da Ata de Registro de
+            Preços, deverão manifestar seu interesse junto à CONTRATANTE para que esta indique os possíveis fornecedores e
+            respectivos preços a serem praticados, obedecida a ordem de classificação;
+        </p>
+        <p style="text-align: justify;">
+            10.6. Será incluído na ata, sob a forma de anexo, o registro dos licitantes que aceitarem cotar os bens ou serviços com preços
+            iguais aos do licitante vencedor na sequência da classificação do certame, excluído o percentual referente à margem de
+            preferência, quando o objeto não atender aos requisitos previstos no inciso VII, art. 82 da Lei 14.133/2021
+        </p>
+        <p style="text-align: justify;">
+            10.7. Caberá ao fornecedor beneficiário da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
+            pela aceitação ou não do fornecimento decorrente de adesão. Os Não Participantes da licitação poderão aderir a ATA, desde
+            que devidamente autorizados pelo Chefe do Executivo Municipal.
+        </p>
+        <p style="text-align: justify;">
+            10.4 Caberá aos fornecedores beneficiários da Ata de Registro de Preços, observadas as condições nela estabelecidas, optar
+            pela aceitação ou não do fornecimento aos órgãos não participantes que solicitem adesão à Ata de Registro de Preços acima
+            do quantitativo previsto, desde que este fornecimento não prejudique as obrigações anteriormente assumidas;
+        </p>
+        <p style="text-align: justify;">
+            10.5 As solicitações de adesão, concessão de anuência pelo fornecedor e autorização do órgão gerenciador serão realizadas
+            por meio de formalização de processo administrativo com as documentações necessárias, cuja responsabilidade é do órgão
+            gerenciador.
+        </p>
+        <p style="text-align: justify;">
+            10.6. O quantitativo decorrente das adesões à Ata de Registro de Preços não poderá exceder, na totalidade, ao dobro do
+            quantitativo de cada item registrado na Ata de Registro de Preços para o órgão gerenciador e órgão participantes,
+            independentemente do número de órgãos não participantes que aderirem.
+        </p>
+        <p style="text-align: justify;">
+            10.7. Após a aceitação à adesão da Ata de Registro de Preços pelo órgão gerenciador, o Órgão denominado Carona deverá
+            observar as seguintes instruções:
+        </p>
+        <ol type="a" style="text-align: justify;">
+            <li style="margin-bottom: 6px;">
+                O Órgão Carona somente poderá adquirir os itens registrados nas mesmas condições comerciais e financeiras
+                estabelecidas no Pregão, dentro da vigência da Ata, não podendo ultrapassar 50% do registrado na mesma;
+            </li>
+            <li style="margin-bottom: 6px;">
+                Qualquer ato que o Órgão Carona, cometer de abuso às condições comerciais e financeiras expressas nesse
+                Processo Licitatório – Registro de Preços, responderá exclusivamente por si e assumirá inteira responsabilidade,
+                não envolvendo assim, o Órgão gerenciador do registro;
+            </li>
+            <li>
+                O Órgão Carona fará o contato com o vencedor do certame, conforme Termo de Adjudicação;
+            </li>
+        </ol>
         @endif
         <p style="font-weight: bold;">
             DAS DISPOSIÇÕES GERAIS
@@ -1226,16 +1157,16 @@
             ANEXO II – Minuta do Contrato
             <br>
             @if ($detalhe->tipo_srp == 'sim')
-                ANEXO III – Ata de Registro de Preços
+            ANEXO III – Ata de Registro de Preços
             @endif
         </p>
     </div>
 
     {{-- Bloco de data e assinatura --}}
     <div class="footer-signature">
-            {{ $processo->prefeitura->cidade }},
-            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-        </div>
+        {{ $processo->prefeitura->cidade }},
+        {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+    </div>
 
     @php
     // Verifica se a variável $assinantes existe e tem itens
@@ -1267,7 +1198,6 @@
         </p>
     </div>
     @endif
-
 </body>
 
 </html>
