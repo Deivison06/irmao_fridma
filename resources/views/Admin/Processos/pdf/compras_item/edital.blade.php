@@ -55,6 +55,10 @@
         /* ESTILOS - CONTEÚDO PRINCIPAL */
         /* ---------------------------------- */
         .container {
+            font-family: 'Aptos', sans-serif;
+            font-size: 18pt;
+            font-weight: 900;
+            text-transform: uppercase;
             position: relative;
             width: 100%;
             height: 100%;
