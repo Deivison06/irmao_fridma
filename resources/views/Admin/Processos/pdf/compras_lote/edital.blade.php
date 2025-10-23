@@ -137,6 +137,7 @@
     </div>
 
     <div class="timbre">
+
         <div>
             <p style="font-weight: bold; text-align: center; font-size: 14pt;">
                 PROCESSO ADMINISTRATIVO <br>
@@ -183,7 +184,7 @@
                             CRITÉRIO DE JULGAMENTO
                         </td>
                         <td style="border: 1px solid black; padding: 5px;">
-                            MENOR PREÇO POR ITEM
+                            MENOR PREÇO POR LOTE
                         </td>
                     </tr>
                     <tr>
@@ -336,41 +337,104 @@
                 participação em quantos itens forem de seu interesse, conforme justificativa abaixo:
             </p>
             <ol type="a">
-                <li style="margin-bottom: 6px; text-align: justify;">
-                    O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da Lei nº 14.133/2021, que
-                    incentiva o parcelamento sempre que viável, desde que não comprometa a execução do objeto. A medida visa
-                    permitir a ampla participação de fornecedores, principalmente de pequeno porte, bem como alcançar melhor
-                    resultado para a Administração.
+                <li>
+                    O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
+                    Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
+                    a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
+                    de pequeno porte, bem como alcançar melhor resultado para a Administração.
                 </li>
-                <li style="margin-bottom: 6px; text-align: justify;">
-                    O objeto da presente licitação abrange diversos produtos/serviços com características distintas, que podem ser
-                    adquiridos, entregues ou executados de forma independente, sem prejuízo à integridade da execução contratual.
+                <li>
+                    A presente justificativa tem por objetivo demonstrar a vantajosidade da contratação do
+                    objeto em LOTES, ao invés da aquisição ou contratação individualizada por itens, conforme os
+                    princípios e diretrizes estabelecidos pela Lei nº 14.133/2021, especialmente no art. 5º (princípios
+                    da eficiência e planejamento) e no art. 40, §1º, que dispõe:
                 </li>
-                <li style="margin-bottom: 6px; text-align: justify;">
-                    A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário, estimula a competitividade,
-                    ao permitir que microempresas, empresas locais e fornecedores especializados possam concorrer apenas nos itens
-                    de sua capacidade técnica e logística.
+                <li>
+                    “A administração pública poderá dividir o objeto da contratação em lotes, sempre que
+                    técnica e economicamente viável, visando à ampliação da competitividade e ao desenvolvimento
+                    do mercado local, regional ou nacional, conforme o caso.”
                 </li>
-                <li style="margin-bottom: 6px; text-align: justify;">
-                    Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo maior eficiência,
-                    economicidade e mitigação de riscos contratuais.
-                </li>
-                <li style="margin-bottom: 6px; text-align: justify;">
-                    A adoção do parcelamento por itens está alinhada ao planejamento da Administração Pública, favorecendo:
-                    <ul style="margin-top: 5px; margin-bottom: 5px;">
-                        <li style="margin-bottom: 5px; text-align: justify;">Atendimento adequado às necessidades específicas de cada unidade administrativa;</li>
-                        <li style="margin-bottom: 5px; text-align: justify;">Diversificação de fornecedores e redução do risco de desabastecimento;</li>
-                        <li style="margin-bottom: 5px; text-align: justify;">Fortalecimento da economia local/regional;</li>
-                        <li style="margin-bottom: 5px; text-align: justify;">Observância ao princípio da isonomia, conforme art. 5º da Lei nº 14.133/2021.</li>
+                <h4>
+                    VANTAGENS OPERACIONAIS DA CONTRATAÇÃO POR LOTES
+                </h4>
+                <li>
+                    A contratação por lotes permite:
+                    <ul>
+                        <li>Melhor organização e gestão contratual, ao reduzir o número de fornecedores e simplificar
+                            o acompanhamento das entregas ou da prestação dos serviços; </li>
+
+                        <li>Centralização de responsabilidades, evitando múltiplos prazos, locais de entrega e
+                            agentes executores; </li>
+
+                        <li>Facilidade logística, pois os lotes são organizados por natureza ou destinação dos itens
+                            (ex: lotes por tipo de material, setor usuário ou região de entrega); </li>
+
+                        <li>Adoção de cronogramas otimizados, com menos risco de atrasos por fragmentação
+                            excessiva de contratos.</li>
                     </ul>
                 </li>
-                <li style="text-align: justify;">
-                    Além disso, o parcelamento da contratação em itens favorece uma competição saudável entre fornecedores, o que
-                    pode resultar em custos mais baixos e condições mais vantajosas para a Administração Pública. Ao permitir que
-                    empresas ofereçam suas propostas para XXXXXXXXXX, a Prefeitura pode beneficiar-se da especialização dos
-                    fornecedores, garantindo aquisição de produtos de melhor qualidade. Essa dinâmica também contribui para
-                    minimizar riscos, uma vez que cada item pode ser ajustado conforme a resposta do mercado e as demandas
-                    emergentes, facilitando adaptações ao longo do fornecimento.
+
+                <div>
+                    <h4>
+                        VANTAGENS ECONÔMICAS
+                    </h4>
+                    <ul>
+                        <li>Redução de custos operacionais, tanto para a Administração quanto para os fornecedores
+                            (ex: transporte, emissão de notas, gestão de pedidos);</li>
+
+                        <li>Aproveitamento de economia de escala, com agrupamento racional de itens semelhantes; </li>
+
+                        <li>Estimulação da competitividade saudável, uma vez que empresas de médio porte podem
+                            participar de lotes especializados, e empresas menores de lotes regionais ou setoriais.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>
+                        VANTAGENS NA FISCALIZAÇÃO E CONTROLE
+                    </h4>
+                    <ul>
+                        <li>
+                            Facilidade de fiscalização: menos contratos a serem monitorados e maior coerência entre
+                            os itens de cada lote;
+                        </li>
+                        <li>
+                            Redução de inconsistências entre entregas: evitando divergências de padrões ou prazos
+                            quando múltiplas empresas atuam em paralelo em itens correlatos.
+                        </li>
+                    </ul>
+                </div>
+
+                <li>
+                    A análise técnica e econômica da contratação indica que a divisão do objeto em lotes
+                    representa a solução mais vantajosa para a Administração Pública, ao permitir:
+                    <ul>
+                        <li>
+                            Racionalização da contratação e execução;
+                        </li>
+                        <li>
+                            Maior eficiência administrativa e operacional;
+                        </li>
+                        <li>
+                            Aderência ao planejamento de compras centralizadas;
+                        </li>
+                        <li>
+                            Observância dos princípios da economicidade, eficiência e interesse público.
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    Assim, justifica-se plenamente a adoção da contratação por lotes, em detrimento da
+                    contratação por itens isolados.
+                </li>
+                <li>
+                    Por fim, a adoção deste modelo impacta diretamente no atendimento ao interesse público
+                    e na eficiência da contratação. A estrutura em lotes assegura que as necessidades imediatas da
+                    população sejam atendidas de maneira mais célere, visto que diferentes tipos de itens poderão
+                    estar disponíveis simultaneamente. Isso reduz o tempo de espera para o fornecimento, resultando
+                    em melhorias tangíveis na qualidade do fornecimento pretendido. Assim, a estratégia de licitação
+                    em lotes representa uma solução prática e eficiente para os desafios enfrentados pela Prefeitura,
+                    refletindo um compromisso com a transparência e a máxima utilidade dos recursos públicos.
                 </li>
             </ol>
 
@@ -551,7 +615,7 @@
                 <li style="margin-bottom: 6px;">
                     Caso ocorra a situação de empate descrita, o pregoeiro convocará o representante da empresa de pequeno porte,
                     da microempresa ou da cooperativa mais bem classificada, imediatamente e por meio do sistema eletrônico, a ofertar lance
-                    inferior ao menor lance registrado para o item no prazo de cinco minutos.
+                    inferior ao menor lance registrado para o lote no prazo de cinco minutos.
                 </li>
                 <li style="margin-bottom: 6px;">
                     Caso a licitante convocada não apresente lance inferior ao menor valor registrado no prazo acima indicado, as
@@ -560,7 +624,7 @@
                 </li>
                 <li style="margin-bottom: 6px;">
                     A microempresa, empresa de pequeno porte ou cooperativa que primeiro apresentar lance inferior ao menor lance
-                    ofertado na sessão de disputa será considerada arrematante pelo pregoeiro, que encerrará a disputa do item na sala virtual,
+                    ofertado na sessão de disputa será considerada arrematante pelo pregoeiro, que encerrará a disputa do lote na sala virtual,
                     e que deverá apresentar a documentação de habilitação e da proposta de preços.
                 </li>
                 <li style="margin-bottom: 6px;">
@@ -637,7 +701,7 @@
             </p>
             <ol type="a" style="text-align: justify;">
                 <li style="margin-bottom: 6px;">
-                    valor do item;
+                    valor do lote;
                 </li>
                 <li style="margin-bottom: 6px;">
                     Marca;
