@@ -508,7 +508,7 @@ class ProcessoController extends Controller
      */
     private function determinarViewPdf(Processo $processo, string $documento): string
     {
-        $procedimento = strtolower($processo->tipo_procedimento?->name ?? '');
+        $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
         $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
 
         $viewBase = "Admin.Processos.pdf";
@@ -531,7 +531,7 @@ class ProcessoController extends Controller
     {
         $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
         $modalidade = strtolower(str_replace(' ', '_', $processo->modalidade?->name ?? 'sem_modalidade'));
-        $procedimento = strtolower($processo->tipo_procedimento?->name ?? '');
+        $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
         $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
 
         $subpasta = "{$modalidade}/{$procedimento}_{$contratacao}/{$validatedData['documento']}";

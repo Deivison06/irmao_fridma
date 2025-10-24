@@ -5,7 +5,7 @@
 @section('content')
     <!-- Botão Novo Processo -->
     <div class="flex justify-end mb-8">
-        <a href="{{ route('admin.processos.create') }}"
+        <a href="{{ route('admin.prefeituras.create') }}"
             class="inline-flex items-center gap-3 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 bg-gradient-to-r from-[#009496] to-[#007a7a] rounded-xl hover:from-[#007a7a] hover:to-[#005f5f] hover:shadow-lg hover:scale-105">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
