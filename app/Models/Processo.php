@@ -20,16 +20,17 @@ class Processo extends Model
         'numero_processo',
         'numero_procedimento',
         'objeto',
-        'tipo_procedimento', // Novo campo
-        'tipo_contratacao',  // Novo campo
+        'tipo_procedimento',
+        'tipo_contratacao',
+        'unidade_numeracao',
+        'responsavel_numeracao',
+        'portaria_numeracao',
     ];
 
-    // Cast para trabalhar com enum diretamente
     protected $casts = [
         'modalidade' => ModalidadeEnum::class,
         'tipo_procedimento' => TipoProcedimentoEnum::class,
         'tipo_contratacao' => TipoContratacaoEnum::class,
-        'data_portaria' => 'date'
     ];
 
     // Relacionamento com Prefeitura
@@ -47,6 +48,7 @@ class Processo extends Model
     {
         return $this->hasMany(Documento::class);
     }
+
     public function getTipoContratacaoNomeAttribute(): string
     {
         return $this->tipo_contratacao?->getDisplayName() ?? '—';
@@ -55,5 +57,21 @@ class Processo extends Model
     public function getTipoProcedimentoNomeAttribute(): string
     {
         return $this->tipo_procedimento?->getDisplayName() ?? '—';
+    }
+
+    // Accessor para garantir que campos nullable retornem null quando vazios
+    public function setResponsavelNumeracaoAttribute($value)
+    {
+        $this->attributes['responsavel_numeracao'] = $value ?: null;
+    }
+
+    public function setPortariaNumeracaoAttribute($value)
+    {
+        $this->attributes['portaria_numeracao'] = $value ?: null;
+    }
+
+    public function setUnidadeNumeracaoAttribute($value)
+    {
+        $this->attributes['unidade_numeracao'] = $value ?: null;
     }
 }

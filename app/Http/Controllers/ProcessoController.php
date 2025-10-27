@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProcessoRequest;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Requests\ProcessoDetalheRequest;
+use setasign\Fpdi\PdfReader\PdfReader;
 
 class ProcessoController extends Controller
 {
@@ -45,7 +46,7 @@ class ProcessoController extends Controller
 
     public function create()
     {
-        $prefeituras = Prefeitura::all();
+        $prefeituras = Prefeitura::with('unidades')->get();
         return view('Admin.Processos.create', compact('prefeituras'));
     }
 
@@ -62,7 +63,7 @@ class ProcessoController extends Controller
 
     public function edit(Processo $processo)
     {
-        $prefeituras = Prefeitura::all();
+        $prefeituras = Prefeitura::with('unidades')->get();
         return view('Admin.Processos.edit', compact('processo', 'prefeituras'));
     }
 
@@ -590,49 +591,48 @@ class ProcessoController extends Controller
      * Processa anexos e junta com o PDF principal quando necessário
      */
     private function processarAnexos(Processo $processo, string $documento, string $caminhoPrincipal): void
-{
-    // =========================================================
-    // CASO ESPECIAL: Edital deve ser processado primeiro com Termo de Referência
-    // =========================================================
-    if ($documento === 'edital') {
-        $this->juntarTermoReferencia($processo, $caminhoPrincipal);
-    }
+    {
+        // =========================================================
+        // CASO ESPECIAL: Edital deve ser processado primeiro com Termo de Referência
+        // =========================================================
+        if ($documento === 'edital') {
+            $this->juntarTermoReferencia($processo, $caminhoPrincipal);
+        }
 
-    // =========================================================
-    // PROCESSAMENTO DOS ANEXOS NORMAIS
-    // =========================================================
-    $anexos = $this->obterAnexos($processo, $documento);
+        // =========================================================
+        // PROCESSAMENTO DOS ANEXOS NORMAIS
+        // =========================================================
+        $anexos = $this->obterAnexos($processo, $documento);
 
-    foreach ($anexos as $anexoPath) {
-        if ($anexoPath && file_exists($anexoPath)) {
-            $this->juntarPdfs($caminhoPrincipal, $anexoPath);
+        foreach ($anexos as $anexoPath) {
+            if ($anexoPath && file_exists($anexoPath)) {
+                $this->juntarPdfs($caminhoPrincipal, $anexoPath);
+            }
+        }
+
+        // =========================================================
+        // CASO ESPECIAL: Se for SRP, juntar a ATA DE REGISTRO DE PREÇO
+        // =========================================================
+        if ($documento === 'edital' && $processo->detalhe->tipo_srp === 'sim') {
+            // Gera o PDF da ata_registro_preco
+            $viewAta = $this->determinarViewPdf($processo, 'ata_registro_preco');
+            $data = $this->prepararDadosPdf($processo, [
+                'dataSelecionada' => now()->format('Y-m-d'),
+                'assinantes' => [],
+                'parecerSelecionado' => null,
+            ]);
+
+            $pdfAta = Pdf::loadView($viewAta, $data)->setPaper('a4', 'portrait');
+
+            $arquivoAta = storage_path('app/temp_ata_' . $processo->id . '.pdf');
+            $pdfAta->save($arquivoAta);
+
+            if (file_exists($arquivoAta)) {
+                $this->juntarPdfs($caminhoPrincipal, $arquivoAta);
+                unlink($arquivoAta); // limpa arquivo temporário
+            }
         }
     }
-
-    // =========================================================
-    // CASO ESPECIAL: Se for SRP, juntar a ATA DE REGISTRO DE PREÇO
-    // =========================================================
-    if ($documento === 'edital' && $processo->detalhe->tipo_srp === 'sim') {
-        // Gera o PDF da ata_registro_preco
-        $viewAta = $this->determinarViewPdf($processo, 'ata_registro_preco');
-        $data = $this->prepararDadosPdf($processo, [
-            'dataSelecionada' => now()->format('Y-m-d'),
-            'assinantes' => [],
-            'parecerSelecionado' => null,
-        ]);
-
-        $pdfAta = Pdf::loadView($viewAta, $data)->setPaper('a4', 'portrait');
-
-        $arquivoAta = storage_path('app/temp_ata_' . $processo->id . '.pdf');
-        $pdfAta->save($arquivoAta);
-
-        if (file_exists($arquivoAta)) {
-            $this->juntarPdfs($caminhoPrincipal, $arquivoAta);
-            unlink($arquivoAta); // limpa arquivo temporário
-        }
-    }
-}
-
 
     /**
      * Obtém os caminhos dos anexos baseado no documento
@@ -734,7 +734,6 @@ class ProcessoController extends Controller
 
     public function baixarTodosDocumentos(Processo $processo)
     {
-        // Defina a ordem desejada dos documentos
         $ordem = [
             'capa',
             'formalizacao',
@@ -752,40 +751,81 @@ class ProcessoController extends Controller
             'edital'
         ];
 
-        // Buscar os documentos do processo
         $documentos = Documento::where('processo_id', $processo->id)->get()->keyBy('tipo_documento');
-
-        // Inicializar o FPDI para mesclar os PDFs
         $pdf = new Fpdi();
 
-        // Seguir a ordem definida
+        // 🔹 Fonte Aptos
+        $fontPath = public_path('storage/app/public/fonts/Aptos.ttf');
+        if (file_exists($fontPath)) {
+            $pdf->AddFont('Aptos', '', 'Aptos.ttf', true);
+        }
+
+        // 🔹 Contar páginas totais
+        $pageCountTotal = 0;
+        $paginas = [];
         foreach ($ordem as $tipo) {
-            if (!isset($documentos[$tipo])) {
-                continue; // pula se o documento não existe
-            }
-
-            $caminhoDocumento = public_path($documentos[$tipo]->caminho);
-
-            if (file_exists($caminhoDocumento)) {
-                $numPages = $pdf->setSourceFile($caminhoDocumento);
-
-                for ($pageNo = 1; $pageNo <= $numPages; $pageNo++) {
-                    $templateId = $pdf->importPage($pageNo);
-                    $pdf->addPage();
-                    $pdf->useTemplate($templateId);
-                }
+            if (!isset($documentos[$tipo])) continue;
+            $caminho = public_path($documentos[$tipo]->caminho);
+            if (file_exists($caminho)) {
+                $numPages = $pdf->setSourceFile($caminho);
+                $paginas[$tipo] = $numPages;
+                $pageCountTotal += $numPages;
             }
         }
 
-        // Gerar nome do arquivo final
+        $paginaAtual = 1;
+
+        // 🔹 Mesclar e carimbar cada página
+        foreach ($ordem as $tipo) {
+            if (!isset($documentos[$tipo])) continue;
+            $caminho = public_path($documentos[$tipo]->caminho);
+            if (!file_exists($caminho)) continue;
+
+            $numPages = $pdf->setSourceFile($caminho);
+
+            for ($i = 1; $i <= $numPages; $i++) {
+                $tplId = $pdf->importPage($i);
+                $pdf->AddPage();
+                $pdf->useTemplate($tplId);
+
+                $pageWidth = $pdf->GetPageWidth();
+
+                // 🔸 Caixa do carimbo (somente borda)
+                $boxWidth = 40;
+                $boxHeight = 35;
+                $x = $pageWidth - $boxWidth - 5;
+                $y = 3;
+
+                $pdf->SetDrawColor(0, 0, 0);
+                $pdf->Rect($x, $y, $boxWidth, $boxHeight, 'D');
+
+                // 🔹 Texto do carimbo
+                $pdf->SetFont(file_exists($fontPath) ? 'Aptos' : 'Helvetica', '', 6);
+                $pdf->SetTextColor(0, 0, 0);
+                $pdf->SetXY($x + 2, $y + 2);
+
+                // Converter para ISO-8859-1
+                $textoCarimbo = "Processo numerado por:\n{$processo->responsavel_numeracao}\n" .
+                    "Cargo: {$processo->unidade_numeracao}\n" .
+                    "Portaria nº {$processo->portaria_numeracao}\n" .
+                    "PAG: {$paginaAtual} / {$pageCountTotal}\n" .
+                    "Nº Processo: {$processo->numero_processo}\n" .
+                    "Nº Procedimento: {$processo->numero_procedimento}";
+
+                $textoCarimbo = utf8_decode($textoCarimbo);
+
+                $pdf->MultiCell($boxWidth - 4, 4, $textoCarimbo, 0, 'L');
+
+                $paginaAtual++;
+            }
+        }
+
+        // 🔹 Salvar PDF final
         $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
         $nomeArquivo = "processo_{$numeroProcessoLimpo}_todos_documentos_" . now()->format('Ymd_His') . '.pdf';
 
         $diretorio = public_path('uploads/documentos/');
-
-        if (!file_exists($diretorio)) {
-            mkdir($diretorio, 0777, true);
-        }
+        if (!file_exists($diretorio)) mkdir($diretorio, 0777, true);
 
         $caminhoArquivo = $diretorio . $nomeArquivo;
         $pdf->Output('F', $caminhoArquivo);
