@@ -788,33 +788,36 @@ class ProcessoController extends Controller
                 $pdf->AddPage();
                 $pdf->useTemplate($tplId);
 
+                // 🔸 Configuração da caixa do carimbo no rodapé
                 $pageWidth = $pdf->GetPageWidth();
+                $pageHeight = $pdf->GetPageHeight();
 
-                // 🔸 Caixa do carimbo (somente borda)
-                $boxWidth = 40;
-                $boxHeight = 35;
-                $x = $pageWidth - $boxWidth - 5;
-                $y = 3;
+                $boxWidth = 200;
+                $boxHeight = 10;
+                $x = ($pageWidth - $boxWidth) / 2; // centralizado horizontalmente
+                $y = $pageHeight - $boxHeight - 35; // 10mm de margem inferior
 
+                // 🔸 Borda do carimbo
                 $pdf->SetDrawColor(0, 0, 0);
                 $pdf->Rect($x, $y, $boxWidth, $boxHeight, 'D');
 
-                // 🔹 Texto do carimbo
+                // 🔸 Texto do carimbo
                 $pdf->SetFont(file_exists($fontPath) ? 'Aptos' : 'Helvetica', '', 6);
                 $pdf->SetTextColor(0, 0, 0);
-                $pdf->SetXY($x + 2, $y + 2);
 
-                // Converter para ISO-8859-1
-                $textoCarimbo = "Processo numerado por:\n{$processo->responsavel_numeracao}\n" .
-                    "Cargo: {$processo->unidade_numeracao}\n" .
-                    "Portaria nº {$processo->portaria_numeracao}\n" .
-                    "PAG: {$paginaAtual} / {$pageCountTotal}\n" .
-                    "Nº Processo: {$processo->numero_processo}\n" .
-                    "Nº Procedimento: {$processo->numero_procedimento}";
+                $codigoAutenticacao = strtoupper(substr(md5($processo->prefeitura->id . $paginaAtual . now()->format('YmdHi')), 0, 10));
+                $textoCarimbo = "Processo numerado por: {$processo->responsavel_numeracao} " .
+                    "Cargo: {$processo->unidade_numeracao} " .
+                    "Portaria nº {$processo->portaria_numeracao} " .
+                    "Pág. {$paginaAtual} / {$pageCountTotal} - " .
+                    "Documento criado na Plataforma SoftCon - Licenciado para Prefeitura de {$processo->prefeitura->cidade}.\n" .
+                    "Cod. de Autenticação: {$codigoAutenticacao} - Para autenticar acesse softcon.org/autenticacao";
 
                 $textoCarimbo = utf8_decode($textoCarimbo);
 
-                $pdf->MultiCell($boxWidth - 4, 4, $textoCarimbo, 0, 'L');
+                // 🔸 Centralizar e justificar texto dentro da caixa
+                $pdf->SetXY($x + 2, $y + 2);
+                $pdf->MultiCell($boxWidth - 4, 3, $textoCarimbo, 0, 'C'); // 'C' centralizado
 
                 $paginaAtual++;
             }
