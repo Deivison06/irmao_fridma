@@ -507,19 +507,37 @@ class ProcessoController extends Controller
     /**
      * Determina qual view usar baseado no tipo de processo e documento
      */
+    /**
+     * Determina qual view usar baseado no tipo de processo e documento
+     */
     private function determinarViewPdf(Processo $processo, string $documento): string
     {
-        $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
-        $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
-
         $viewBase = "Admin.Processos.pdf";
-        $viewVaria = "{$viewBase}.{$procedimento}_{$contratacao}.{$documento}";
-        $viewPadrao = "{$viewBase}.{$documento}";
 
-        $view = view()->exists($viewVaria) ? $viewVaria : $viewPadrao;
+        // Verifica se é Pregão Eletrônico
+        if (
+            $processo->modalidade?->name == '4' ||
+            strtoupper($processo->modalidade?->name ?? '') == 'PREGAO ELETRONICO' ||
+            stripos($processo->modalidade?->name ?? '', 'pregao') !== false
+        ) {
+            // Para Pregão Eletrônico, usa a estrutura de pastas específica
+            $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
+            $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
+
+            // Converte para o formato de pasta correto (ex: "compras_item")
+            $procedimento = str_replace(' ', '_', $procedimento);
+            $contratacao = str_replace(' ', '_', $contratacao);
+
+            $view = "{$viewBase}.pregao_eletronico.{$procedimento}_{$contratacao}.{$documento}";
+        } else {
+            // Para outras modalidades
+            $modalidade = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->modalidade?->name ?? ''));
+            $modalidade = str_replace(' ', '_', $modalidade);
+            $view = "{$viewBase}.{$modalidade}.{$documento}";
+        }
 
         if (!view()->exists($view)) {
-            throw new \Exception("O modelo de PDF para o documento '{$documento}' não foi encontrado.");
+            throw new \Exception("O modelo de PDF para o documento '{$documento}' não foi encontrado. View: {$view}");
         }
 
         return $view;
