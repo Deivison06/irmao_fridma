@@ -507,9 +507,6 @@ class ProcessoController extends Controller
     /**
      * Determina qual view usar baseado no tipo de processo e documento
      */
-    /**
-     * Determina qual view usar baseado no tipo de processo e documento
-     */
     private function determinarViewPdf(Processo $processo, string $documento): string
     {
         $viewBase = "Admin.Processos.pdf";
@@ -542,18 +539,37 @@ class ProcessoController extends Controller
 
         return $view;
     }
-
     /**
      * Salva o documento no sistema de arquivos e no banco de dados
      */
     private function salvarDocumento(Processo $processo, $pdf, array $validatedData): string
     {
         $numeroProcessoLimpo = str_replace(['/', '\\'], '_', $processo->numero_processo);
-        $modalidade = strtolower(str_replace(' ', '_', $processo->modalidade?->name ?? 'sem_modalidade'));
-        $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
-        $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
 
-        $subpasta = "{$modalidade}/{$procedimento}_{$contratacao}/{$validatedData['documento']}";
+        // Detecta se é Pregão Eletrônico
+        $isPregaoEletronico =
+            $processo->modalidade?->name == '4' ||
+            strtoupper($processo->modalidade?->name ?? '') == 'PREGAO ELETRONICO' ||
+            stripos($processo->modalidade?->name ?? '', 'pregao') !== false;
+
+        if ($isPregaoEletronico) {
+            // Padrão para Pregão Eletrônico
+            $procedimento = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->tipo_procedimento?->name ?? ''));
+            $contratacao = strtolower($processo->tipo_contratacao?->name ?? '');
+
+            $procedimento = str_replace(' ', '_', $procedimento);
+            $contratacao = str_replace(' ', '_', $contratacao);
+
+            $subpasta = "pregao_eletronico/{$procedimento}_{$contratacao}/{$validatedData['documento']}";
+        } else {
+            // Padrão para outras modalidades
+            $modalidade = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $processo->modalidade?->name ?? 'sem_modalidade'));
+            $modalidade = str_replace(' ', '_', $modalidade);
+
+            $subpasta = "{$modalidade}/{$validatedData['documento']}";
+        }
+
+        // Caminho completo para salvar o arquivo
         $diretorio = public_path("uploads/documentos/{$subpasta}");
 
         if (!file_exists($diretorio)) {
@@ -564,7 +580,7 @@ class ProcessoController extends Controller
         $caminhoRelativo = "uploads/documentos/{$subpasta}/{$nomeArquivo}";
         $caminhoCompleto = "{$diretorio}/{$nomeArquivo}";
 
-        // Salva o PDF
+        // Salva o PDF no diretório
         $pdf->save($caminhoCompleto);
 
         // Atualiza ou cria o registro no banco
@@ -791,6 +807,11 @@ class ProcessoController extends Controller
             }
         }
 
+        // 🔹 Ajustar total de páginas: remover as páginas da capa do total
+        if (isset($paginas['capa'])) {
+            $pageCountTotal -= $paginas['capa'];
+        }
+
         $paginaAtual = 1;
 
         // 🔹 Mesclar e carimbar cada página
@@ -806,14 +827,20 @@ class ProcessoController extends Controller
                 $pdf->AddPage();
                 $pdf->useTemplate($tplId);
 
+                // ⚠️ Não aplicar carimbo se o documento for a capa
+                if ($tipo === 'capa') {
+                    // Não incrementa o contador aqui!
+                    continue;
+                }
+
                 // 🔸 Configuração da caixa do carimbo no rodapé
                 $pageWidth = $pdf->GetPageWidth();
                 $pageHeight = $pdf->GetPageHeight();
 
                 $boxWidth = 200;
                 $boxHeight = 10;
-                $x = ($pageWidth - $boxWidth) / 2; // centralizado horizontalmente
-                $y = $pageHeight - $boxHeight - 35; // 10mm de margem inferior
+                $x = ($pageWidth - $boxWidth) / 2;
+                $y = $pageHeight - $boxHeight - 35;
 
                 // 🔸 Borda do carimbo
                 $pdf->SetDrawColor(0, 0, 0);
@@ -824,6 +851,7 @@ class ProcessoController extends Controller
                 $pdf->SetTextColor(0, 0, 0);
 
                 $codigoAutenticacao = strtoupper(substr(md5($processo->prefeitura->id . $paginaAtual . now()->format('YmdHi')), 0, 10));
+
                 $textoCarimbo = "Processo numerado por: {$processo->responsavel_numeracao} " .
                     "Cargo: {$processo->unidade_numeracao} " .
                     "Portaria nº {$processo->portaria_numeracao} " .
@@ -833,9 +861,9 @@ class ProcessoController extends Controller
 
                 $textoCarimbo = utf8_decode($textoCarimbo);
 
-                // 🔸 Centralizar e justificar texto dentro da caixa
+                // 🔸 Centralizar texto dentro da caixa
                 $pdf->SetXY($x + 2, $y + 2);
-                $pdf->MultiCell($boxWidth - 4, 3, $textoCarimbo, 0, 'C'); // 'C' centralizado
+                $pdf->MultiCell($boxWidth - 4, 3, $textoCarimbo, 0, 'C');
 
                 $paginaAtual++;
             }
