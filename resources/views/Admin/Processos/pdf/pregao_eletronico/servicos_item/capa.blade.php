@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <!-- Imagem de fundo da capa -->
-        <img src="{{  public_path($prefeitura->capa_edital)}}"
+        <img src="{{  public_path($prefeitura->capa)}}"
             class="capa-background" alt="Capa da Prefeitura">
 
         <!-- Conteúdo centralizado -->
