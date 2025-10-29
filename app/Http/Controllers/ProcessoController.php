@@ -859,8 +859,8 @@ class ProcessoController extends Controller
             "Cargo: {$processo->unidade_numeracao} " .
             "Portaria nº {$processo->portaria_numeracao} " .
             "Pág. {$paginaAtual} / {$pageCountTotal} - " .
-            "Documento gerado na Plataforma SoftCon - Licenciado para Prefeitura de {$processo->prefeitura->cidade}. " .
-            "Cod. de Autenticação: {$codigoAutenticacao} - Para autenticar acesse softcon.org/autenticacao";
+            "Documento gerado na Plataforma GestGov - Licenciado para Prefeitura de {$processo->prefeitura->cidade}. " .
+            "Cod. de Autenticação: {$codigoAutenticacao} - Para autenticar acesse gestgov.com.br/autenticacao";
 
         $pdf->StartTransform();
         $rotateX = $x + ($boxWidth / 2);
