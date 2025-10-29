@@ -183,7 +183,7 @@
                             CRITÉRIO DE JULGAMENTO
                         </td>
                         <td style="border: 1px solid black; padding: 5px;">
-                            MENOR PREÇO POR ITEM
+                            MENOR PREÇO GLOBAL
                         </td>
                     </tr>
                     <tr>
@@ -191,7 +191,7 @@
                             FORMA DE ADJUDICAÇÃO
                         </td>
                         <td style="border: 1px solid black; padding: 5px;">
-                            POR ITEM
+                            GLOBAL
                         </td>
                     </tr>
                     <tr>
@@ -1158,7 +1158,7 @@
             <p style="text-align: justify;">
                 Integram este Edital, para todos os fins e efeitos, os seguintes anexos:
                 <br>
-                ANEXO I – Termo de Referência
+                ANEXO I – Projeto Básico
                 <br>
                 ANEXO II – Minuta do Contrato
                 <br>

@@ -168,8 +168,8 @@
     @elseif($campo === 'itens_e_seus_quantitativos_xml' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
     <x-form-field name="itens_e_seus_quantitativos_xml" label="📦 Itens e Seus Quantitativos" type="file" accept=".xml, .xlsx, .xls, .csv" />
 
-    @elseif($campo === 'projeto_basico')
-    <x-form-field name="projeto_basico" label="📎 Anexar PDF Projeto Básico" type="file" accept="application/pdf" />
+    @elseif($campo === 'projeto_basico_pdf')
+    <x-form-field name="projeto_basico_pdf" label="📎 Anexar PDF Projeto Básico" type="file" accept="application/pdf" />
 
     @elseif($campo === 'itens_especificaca_quantitativos_xml')
     <x-form-field name="itens_especificaca_quantitativos_xml" label="📦 Itens e Seus quantitativos e especificações" type="file" accept=".xml, .xlsx, .xls, .csv" />
@@ -190,7 +190,7 @@
     <x-form-field name="anexo_pdf_minuta_contrato" label="📎 Anexar PDF Minuta do Contrato" type="file" accept="application/pdf" />
 
     {{-- Campos Select --}}
-    @elseif($campo === 'encaminhamento_pesquisa_preco')
+    @elseif($campo === 'encaminhamento_pesquisa_preco' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
     <x-form-field name="encaminhamento_pesquisa_preco" label="Encaminhamento para pesquisa de Preços" type="select" :options="$processo->prefeitura->unidades->pluck('nome', 'nome')->toArray()" placeholder="Selecione uma unidade" />
 
     @elseif($campo === 'encaminhamento_doacao_orcamentaria')

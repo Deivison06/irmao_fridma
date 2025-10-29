@@ -491,34 +491,6 @@
             $detalhe->justificativa_solucao_escolhida,
         ) !!}
 
-        <p style="">Memória de Cálculo para Justificativa dos Quantitativos </p>
-        <p style="">Metodologia de Definição dos Quantitativos </p>
-
-        <div style="">O quantitativo de itens/serviços foi definido a partir da seguinte metodologia:
-        </div>
-        <ul style="">
-            <li>Levantamento da demanda junto às Secretarias/Unidades requisitantes; </li>
-            <li>Consideração do histórico de consumo/uso dos últimos [2] anos ou exercícios;</li>
-            <li>Análise do estoque atual disponível e das condições de uso dos bens já existentes
-                (quando aplicável); </li>
-            <li>Adequação à vigência estimada do contrato e à previsão de utilização durante esse
-                período. </li>
-        </ul>
-
-        <div style="">Dados Utilizados </div>
-        <ul style="">
-            <li>Unidades/Setores atendidos</li>
-            <li>Quantidade de usuários/beneficiários</li>
-            <li>Consumo médio histórico</li>
-            <li>Estoque atual disponível:</li>
-            <li>Déficit identificado: </li>
-        </ul>
-
-        <p style="">O quantitativo estimado encontra-se devidamente justificado com base em dados
-            oficiais, históricos de consumo, análise de estoque e previsão de demanda, atendendo ao princípio da
-            eficiência e
-            assegurando o interesse público, nos termos da Lei nº 14.133/2021. </p>
-
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             PARCELAMENTO OU NÃO DA CONTRATAÇÃO
@@ -538,10 +510,6 @@
             prática e eficiente para os desafios enfrentados pela Prefeitura, refletindo um compromisso com a
             transparência e a máxima utilidade dos recursos públicos.
         </p>
-        <p style=" text-indent: 30px; text-align: justify; font-weight: bold;">
-            Não utilizamos o caso de licitação por itens ou lotes atualmente na concorrência, ela é adjudicação
-            por preço global.
-        </p>
 
     </div>
 
@@ -559,17 +527,6 @@
             '<p$1 style="text-indent:30px; text-align: justify;">',
             $detalhe->resultado_pretendidos,
         ) !!}
-
-        <div style="font-weight: 600;  margin-bottom: 20px;">
-            <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
-            CONTRATAÇÕES CORRELATAS
-        </div>
-
-        <p style=" text-indent: 30px;">A Prefeitura possui todos os seus departamentos abrigados em um mesmo
-            endereço, e
-            possui um único centro de compras, de modo que é possível assegurar com certeza a inexistência
-            de contratações correlatas ou interdependentes que possam interferir na futura contratação.
-        </p>
 
         <div style="font-weight: 600;  margin-bottom: 20px;">
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
@@ -636,43 +593,42 @@
                     situações de necessidade e contribui para a boa continuidade dos serviços públicos.
                 </li>
             </ol>
+        @endif
+        {{-- Bloco de data e assinatura --}}
+        <div class="footer-signature">
+            {{ $processo->prefeitura->cidade }},
+            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+        </div>
 
-            {{-- Bloco de data e assinatura --}}
-            <div class="footer-signature">
-                {{ $processo->prefeitura->cidade }},
-                {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-            </div>
+        @php
+            // Verifica se a variável $assinantes existe e tem itens
+            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+        @endphp
 
+        @if ($hasSelectedAssinantes)
+            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
             @php
-                // Verifica se a variável $assinantes existe e tem itens
-                $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+                $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
             @endphp
 
-            @if ($hasSelectedAssinantes)
-                {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-                @php
-                    $primeiroAssinante = $assinantes[0]; // Pega o primeiro item
-                @endphp
-
-                <div style="margin-top: 40px; text-align: center;">
-                    <div class="signature-block" style="display: inline-block; margin: 0 40px;">
-                        ___________________________________<br>
-                        <p style="font-size: 10pt; line-height: 1.2;">
-                            {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
-                        </p>
-                    </div>
-                </div>
-            @else
-                {{-- Bloco Padrão (Fallback) --}}
-                <div class="signature-block" style="margin-top: 40px; text-align: center;">
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                     ___________________________________<br>
                     <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $processo->prefeitura->autoridade_competente }} <br>
-                        <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                        {{ $primeiroAssinante['responsavel'] }} <br>
+                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
-            @endif
+            </div>
+        @else
+            {{-- Bloco Padrão (Fallback) --}}
+            <div class="signature-block" style="margin-top: 40px; text-align: center;">
+                ___________________________________<br>
+                <p style="font-size: 10pt; line-height: 1.2;">
+                    {{ $processo->prefeitura->autoridade_competente }} <br>
+                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
+                </p>
+            </div>
         @endif
     </div>
 
@@ -1650,7 +1606,7 @@
                 <tr>
                     <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">03</td>
                     <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
-                        Instituir nova equipe de planejamento da contratação e promover uma nova contratação 
+                        Instituir nova equipe de planejamento da contratação e promover uma nova contratação
                         para evitar o comprometimento da continuidade dos serviços da instituição, em caso de dificuldade de resolução das inconformidades
                     </td>
                     <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
@@ -1742,7 +1698,7 @@
         @else
             <p>A demanda não está prevista no Plano de Contratações Anual, porém se justifica pelo(s) seguinte(s)
                 motivo(s): </p>
-            <div style="border: 1px solid black; padding: 10px; font-size: 10pt;">
+            <div style="border: 1px solid black; padding: 10px; font-size: 9pt;">
                 <p>Fundamentação Legal: conforme Artigo 12, VII, da Lei nº 14.133.</p>
                 <p style="text-indent: 30px; text-align: justify;">
                     É importante ressaltar que a ausência de um plano de contratações anual no município de
@@ -1776,8 +1732,8 @@
             style="text-align: center; font-size:12px; font-weight: 700; border: 1px solid black; padding: 10px; background:#dadada; margin-top:20px;">
             ENCAMINHAMENTO PARA ÓRGÃO DEMANDANTE
         </p>
-        <div style="border: 1px solid black; padding: 10px;">
-            <p style="line-height: 1.6">Em conformidade com a legislação aplicável, encaminhamos o Presente Estudo
+        <div style="border: 1px solid black; padding: 10px; font-size: 9pt;">
+            <p style="">Em conformidade com a legislação aplicável, encaminhamos o Presente Estudo
                 Técnico Preliminar, Mapa
                 de Riscos e Alinhamento com o Plano de Contratação Anual (PCA) ao órgão solicitante para análise de
                 conveniência e oportunidade para a contratação e demais providências cabíveis. </p>
@@ -1921,52 +1877,6 @@
             {{ $processo->prefeitura->cidade }},
             {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
         </div>
-
-        @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-        @endphp
-
-        @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
-                $primeiroAssinante = $assinantes[1]; // Pega o segundo item
-            @endphp
-
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
-                    ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
-                    </p>
-                </div>
-            </div>
-        @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
-                ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
-                </p>
-            </div>
-        @endif
-    </div>
-
-    {{-- QUEBRA DE PÁGINA--}}
-    <div class="page-break"></div>
-
-    <div>
-        <p style="font-weight: bold; text-align: center;">SECRETARIA MUNICIPAL DE OBRAS</p>
-
-        <p style="text-indent: 30px; text-align: justify;">
-            Considerando a necessidade de Contratação de XXXXXXXXXXXXXXXXXXXXXXX, segue em
-            anexo PROJETO BÁSICO desenvolvido por essa XXXXXXXXXX.
-        </p>
-        <p style="text-indent: 30px; text-align: justify;">
-            Encaminhe-se à XXXXXXXXXXX para a ELABORAÇÃO DE MINUTA DO EDITAL E MINUTA DO CONTRATO.
-        </p>
 
         @php
             // Verifica se a variável $assinantes existe e tem itens

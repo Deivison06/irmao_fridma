@@ -136,7 +136,7 @@
         <span style="font-weight: bold">ADMINISTRATIVO Nº</span> {{ $processo->numero_processo }}.<br>
         <span style="font-weight: bold">DESTINATÁRIO:</span> {{ $processo->prefeitura->nome }} <br>
         <span style="font-weight: bold">EMENTA: </span> DIREITO ADMINISTRATIVO. INTELIGÊNCIA DO ART. 28, INCISO II, DA
-        LEI N.º 14.133/21. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        LEI N.º 14.133/21.
     </p>
 
     <p style="font-weight: bold;">1- RELATÓRIO</p>
@@ -173,7 +173,7 @@
         Antes de se adentrar ao mérito, cumpre registrar que o exame realizado neste
         parecer se restringe aos aspectos jurídicos acerca da possibilidade ou não de se
         contratar, por Concorrência Eletrônica, obra de engenharia para
-        {{ $processo->objeto }}
+        {!! strip_tags($processo->objeto) !!}
     </p>
     <p style="text-indent: 30px;  text-align: justify;">
         No tocante a contratação pela Entidade Pública, a nossa Carta Maior

@@ -159,7 +159,15 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($documentos as $tipo => $doc)
-                                    @continue($processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA && $tipo === 'termo_referencia')
+                                    @continue(
+                                        $processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA
+                                        && ($tipo === 'termo_referencia' || $tipo === 'analise_mercado')
+                                    )
+                                    @continue(
+                                        $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO
+                                        && ($tipo === 'projeto_basico')
+                                    )
+
                                     @php
                                         $documentoGerado = $processo->documentos
                                             ->where('tipo_documento', $tipo)
@@ -801,6 +809,7 @@
                 regularidade_fisica: existing?.regularidade_fisica ?? '',
                 pregoeiro: existing?.pregoeiro ?? '',
                 numero_items: existing?.numero_items ?? '',
+                projeto_basico_pdf: existing?.projeto_basico_pdf ?? '',
 
                 // Campos separados para datetime
                 ...initialData,
@@ -929,6 +938,7 @@
                     data_hora_limite_edital: !!existing?.data_hora_limite_edital,
                     data_hora_fase_edital: !!existing?.data_hora_fase_edital,
                     numero_items: !!existing?.numero_items,
+                    projeto_basico_pdf: !!existing?.projeto_basico_pdf,
                 },
 
                 onUnidadeChange() {
@@ -1056,6 +1066,7 @@
                         'anexar_minuta',
                         'anexo_pdf_publicacoes',
                         'anexo_pdf_minuta_contrato',
+                        'projeto_basico_pdf',
                     ];
                     return fileFields.includes(field);
                 },
