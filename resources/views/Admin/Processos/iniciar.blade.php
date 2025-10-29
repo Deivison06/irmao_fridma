@@ -159,6 +159,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($documentos as $tipo => $doc)
+                                    @continue($processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA && $tipo === 'termo_referencia')
                                     @php
                                         $documentoGerado = $processo->documentos
                                             ->where('tipo_documento', $tipo)
@@ -198,7 +199,7 @@
                                                 id="{{ $doc['data_id'] }}"
                                                 value="{{ $documentoGerado->data_selecionada ?? '' }}">
 
-                                            @if ($tipo === 'parecer_juridico')
+                                            @if ($tipo === 'parecer_juridico' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
                                                 <!-- Dropdown de Parecer -->
                                                 <select id="parecer_select_{{ $tipo }}"
                                                     name="parecer_select_{{ $tipo }}"
@@ -345,8 +346,7 @@
 
                                                         <!-- Seção de Campos do Formulário -->
                                                         <div>
-                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do
-                                                                Documento</h4>
+                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do Documento</h4>
                                                             <form
                                                                 action="{{ route('admin.processos.detalhes.store', $processo) }}"
                                                                 method="POST" x-data="formField({{ json_encode($processo->detalhe ?? null) }})"

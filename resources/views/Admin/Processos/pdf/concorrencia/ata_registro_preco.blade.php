@@ -172,7 +172,7 @@
         <p style="font-weight: bold; text-align: center;">ATA DE REGISTRO DE PREÇOS</p>
         <p style="font-weight: bold;">
             ATA DE REGISTRO DE PREÇOS Nº_____/2025<br>
-            PREGÃO ELETRÔNICO SRP Nº ___/2025<br>
+            Concorrência SRP Nº ___/2025<br>
             PROCESSO ADMINISTRATIVO Nº _______________– XXXXXXXXXX-PI<br>
             VALIDADE: 12 (DOZE) MESES.
         </p>

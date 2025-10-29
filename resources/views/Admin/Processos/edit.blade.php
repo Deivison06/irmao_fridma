@@ -50,8 +50,7 @@
 
                         {{-- Nº PROCESSO --}}
                         <div>
-                            <label for="numero_processo" class="block text-sm font-medium text-gray-700">Nº do
-                                Processo</label>
+                            <label for="numero_processo" class="block text-sm font-medium text-gray-700">Nº do Processo</label>
                             <input type="text" name="numero_processo" id="numero_processo" value="{{ old('numero_processo', $processo->numero_processo) }}" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
                             @error('numero_processo')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -60,8 +59,7 @@
 
                         {{-- Nº PROCEDIMENTO --}}
                         <div>
-                            <label for="numero_procedimento" class="block text-sm font-medium text-gray-700">Nº do
-                                Procedimento</label>
+                            <label for="numero_procedimento" class="block text-sm font-medium text-gray-700">Nº do Procedimento</label>
                             <input type="text" name="numero_procedimento" id="numero_procedimento" value="{{ old('numero_procedimento', $processo->numero_procedimento) }}" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">
                             @error('numero_procedimento')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -69,7 +67,7 @@
                         </div>
 
                         {{-- TIPO DE PROCEDIMENTO --}}
-                        <div>
+                        <div id="tipo_procedimento_wrapper">
                             <label for="tipo_procedimento" class="block mb-1 text-sm font-medium text-gray-700">
                                 Tipo de Procedimento
                             </label>
@@ -87,7 +85,7 @@
                         </div>
 
                         {{-- TIPO DE CONTRATAÇÃO --}}
-                        <div>
+                        <div id="tipo_contratacao_wrapper">
                             <label for="tipo_contratacao" class="block mb-1 text-sm font-medium text-gray-700">
                                 Tipo de Contratação
                             </label>
@@ -98,7 +96,6 @@
                                     {{ $enum->getDisplayName() }}
                                 </option>
                                 @endforeach
-
                             </select>
                             @error('tipo_contratacao')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -147,7 +144,6 @@
                             </div>
                         </div>
 
-
                         {{-- OBJETO --}}
                         <div class="md:col-span-2">
                             <textarea name="objeto" id="objeto" rows="4" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-[#009496] focus:border-[#009496]">{{ old('objeto', $processo->objeto) }}</textarea>
@@ -171,9 +167,10 @@
         </div>
     </div>
 </div>
+
 <script>
-   document.addEventListener("DOMContentLoaded", function() {
-    // Configuração do TinyMCE
+document.addEventListener("DOMContentLoaded", function() {
+    // Configuração TinyMCE
     tinymce.init({
         selector: 'textarea#objeto',
         plugins: 'lists link table code charmap emoticons',
@@ -188,26 +185,38 @@
         }
     });
 
-    // Lógica de preenchimento automático
+    // Preenchimento automático dos campos de responsável
     const unidadeSelect = document.getElementById('unidade_numeracao');
     const responsavelInput = document.getElementById('responsavel_numeracao');
     const portariaInput = document.getElementById('portaria_numeracao');
 
     if (unidadeSelect) {
         unidadeSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            if (selectedOption) {
-                responsavelInput.value = selectedOption.getAttribute('data-responsavel') || '';
-                portariaInput.value = selectedOption.getAttribute('data-portaria') || '';
-            }
+            const opt = this.options[this.selectedIndex];
+            responsavelInput.value = opt?.dataset.responsavel || '';
+            portariaInput.value = opt?.dataset.portaria || '';
         });
+        if (unidadeSelect.value) unidadeSelect.dispatchEvent(new Event('change'));
+    }
 
-        // Dispara change se já tiver valor
-        if (unidadeSelect.value) {
-            unidadeSelect.dispatchEvent(new Event('change'));
+    // Ocultar campos de tipo quando modalidade for "Concorrência"
+    const modalidadeSelect = document.getElementById('modalidade');
+    const tipoProcedimentoDiv = document.getElementById('tipo_procedimento_wrapper');
+    const tipoContratacaoDiv = document.getElementById('tipo_contratacao_wrapper');
+
+    function atualizarVisibilidadeTipos() {
+        const valor = modalidadeSelect.value;
+        if (valor == "1") { // 1 = Concorrência
+            tipoProcedimentoDiv.style.display = 'none';
+            tipoContratacaoDiv.style.display = 'none';
+        } else {
+            tipoProcedimentoDiv.style.display = '';
+            tipoContratacaoDiv.style.display = '';
         }
     }
-});
 
+    modalidadeSelect.addEventListener('change', atualizarVisibilidadeTipos);
+    atualizarVisibilidadeTipos(); // Executa ao carregar
+});
 </script>
 @endsection

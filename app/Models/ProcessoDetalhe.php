@@ -78,7 +78,8 @@ class ProcessoDetalhe extends Model
         'data_hora_limite_edital',
         'data_hora_fase_edital',
         'pregoeiro',
-        'numero_items'
+        'numero_items',
+        'projeto_basico'
     ];
 
     protected $casts = [

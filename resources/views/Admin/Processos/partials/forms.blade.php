@@ -81,7 +81,7 @@
     @elseif($campo === 'prazo_entrega')
     <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
 
-    @elseif($campo === 'local_entrega')
+    @elseif($campo === 'local_entrega' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
     <x-form-field name="local_entrega" label="Local(is) e Horário(s) de Entrega" />
 
     @elseif($campo === 'fiscais')
@@ -124,7 +124,7 @@
     @elseif($campo === 'prevista_plano_anual')
     <x-form-field name="prevista_plano_anual" label="A CONTRATAÇÃO ESTÁ PREVISTA NO PLANO DE CONTRATAÇÃO ANUAL?" type="radio" :options="['sim' => 'Sim', 'nao' => 'Não']" />
 
-    @elseif($campo === 'contratacoes_anteriores')
+    @elseif($campo === 'contratacoes_anteriores' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
     <x-form-field name="contratacoes_anteriores" label="Houve contratações anteriores?" type="radio" :options="['sim' => 'Sim', 'nao' => 'Não']" />
 
     @elseif($campo === 'objeto_continuado')
@@ -157,6 +157,7 @@
         ]" />
 
     @elseif($campo === 'prazo_vigencia')
+
     <x-form-field name="prazo_vigencia" label="Prazo de Vigência do Objeto" type="checkbox" :options="[
             'exercicio_financeiro' => 'Exercício financeiro da contratação (até 31/12)',
             '12_meses' => 'Vigência de 12 meses',
@@ -164,8 +165,11 @@
         ]" />
 
     {{-- Campos File --}}
-    @elseif($campo === 'itens_e_seus_quantitativos_xml')
+    @elseif($campo === 'itens_e_seus_quantitativos_xml' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
     <x-form-field name="itens_e_seus_quantitativos_xml" label="📦 Itens e Seus Quantitativos" type="file" accept=".xml, .xlsx, .xls, .csv" />
+
+    @elseif($campo === 'projeto_basico')
+    <x-form-field name="projeto_basico" label="📎 Anexar PDF Projeto Básico" type="file" accept="application/pdf" />
 
     @elseif($campo === 'itens_especificaca_quantitativos_xml')
     <x-form-field name="itens_especificaca_quantitativos_xml" label="📦 Itens e Seus quantitativos e especificações" type="file" accept=".xml, .xlsx, .xls, .csv" />

@@ -67,7 +67,7 @@
                         </div>
 
                         {{-- TIPO DE PROCEDIMENTO --}}
-                        <div>
+                        <div id="tipo_procedimento_wrapper">
                             <label for="tipo_procedimento" class="block mb-1 text-sm font-medium text-gray-700">Tipo de Procedimento</label>
                             <select name="tipo_procedimento" id="tipo_procedimento" class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
                                 <option value="">Selecione o tipo de procedimento</option>
@@ -83,7 +83,7 @@
                         </div>
 
                         {{-- TIPO DE CONTRATAÇÃO --}}
-                        <div>
+                        <div id="tipo_contratacao_wrapper">
                             <label for="tipo_contratacao" class="block mb-1 text-sm font-medium text-gray-700">Tipo de Contratação</label>
                             <select name="tipo_contratacao" id="tipo_contratacao" class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-[#009496] focus:border-[#009496] sm:text-sm">
                                 <option value="">Selecione o tipo de contratação</option>
@@ -189,7 +189,7 @@
             }
         });
 
-        // Lógica de preenchimento automático
+        // Preenchimento automático dos campos de responsável
         const unidadeSelect = document.getElementById('unidade_numeracao');
         const responsavelInput = document.getElementById('responsavel_numeracao');
         const portariaInput = document.getElementById('portaria_numeracao');
@@ -203,11 +203,31 @@
                 }
             });
 
-            // Dispara change se já tiver valor (em caso de retorno por validação)
             if (unidadeSelect.value) {
                 unidadeSelect.dispatchEvent(new Event('change'));
             }
         }
+
+        // Ocultar campos tipo quando modalidade for "Concorrência"
+        const modalidadeSelect = document.getElementById('modalidade');
+        const tipoProcedimentoDiv = document.getElementById('tipo_procedimento_wrapper');
+        const tipoContratacaoDiv = document.getElementById('tipo_contratacao_wrapper');
+
+        function atualizarVisibilidadeTipos() {
+            const valor = modalidadeSelect.value;
+
+            // Valor 1 = CONCORRÊNCIA no Enum ModalidadeEnum
+            if (valor == "1") {
+                tipoProcedimentoDiv.style.display = 'none';
+                tipoContratacaoDiv.style.display = 'none';
+            } else {
+                tipoProcedimentoDiv.style.display = '';
+                tipoContratacaoDiv.style.display = '';
+            }
+        }
+
+        modalidadeSelect.addEventListener('change', atualizarVisibilidadeTipos);
+        atualizarVisibilidadeTipos();
     });
 </script>
 @endsection

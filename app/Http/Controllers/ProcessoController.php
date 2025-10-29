@@ -127,6 +127,7 @@ class ProcessoController extends Controller
                     'encaminhamento_pesquisa_preco',
                     'encaminhamento_doacao_orcamentaria',
                     'itens_e_seus_quantitativos_xml',
+                    'projeto_basico',
                 ],
             ],
             'analise_mercado' => [
@@ -338,9 +339,20 @@ class ProcessoController extends Controller
             // Salva o caminho relativo para uso posterior
             $detalhe->anexo_pdf_minuta_contrato = 'uploads/anexos/' . $filename;
         }
+        if ($request->hasFile('projeto_basico')) {
+            $file = $request->file('projeto_basico');
+            $filename = 'projeto_basico_' . time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/anexos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $file->move($destinationPath, $filename);
+            // Salva o caminho relativo para uso posterior
+            $detalhe->projeto_basico = 'uploads/anexos/' . $filename;
+        }
 
         // --- Salva outros campos normais ---
-        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml', 'anexo_pdf_minuta_contrato']);
+        $dataToSave = $request->except(['_token', 'processo_id', 'itens_e_seus_quantitativos_xml', 'painel_preco_tce', 'anexo_pdf_analise_mercado', 'anexar_minuta', 'anexo_pdf_publicacoes', 'itens_especificaca_quantitativos_xml', 'anexo_pdf_minuta_contrato', 'projeto_basico']);
         foreach ($dataToSave as $field => $value) {
             $detalhe->{$field} = $value;
         }
@@ -680,6 +692,7 @@ class ProcessoController extends Controller
             'minutas' => 'anexar_minuta',
             'publicacoes_avisos_licitacao' => 'anexo_pdf_publicacoes',
             'edital' => ['anexo_pdf_minuta_contrato'],
+            'estudo_tecnico' => 'projeto_basico',
         ];
 
         $camposAnexo = $mapeamentoAnexos[$documento] ?? null;

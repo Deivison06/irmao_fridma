@@ -314,7 +314,7 @@
                 inserção e comunicação via plataforma digital já especificada neste instrumento de convocação.
             </p>
             <p style="text-align: justify;">
-                O Pregão Eletrônico será realizado em sessão pública, por meio da INTERNET, mediante condições de segurança -
+                O Concorrência será realizado em sessão pública, por meio da INTERNET, mediante condições de segurança -
                 criptografia e autenticação - em todas as suas fases. Os trabalhos serão conduzidos por servidor da PREFEITURA
                 MUNICIPAL, denominado Pregoeiro.
             </p>
@@ -622,7 +622,7 @@
             </p>
             <p style="text-align: justify;">
                 3.4. O credenciamento junto ao provedor do sistema implica a responsabilidade legal da licitante ou seu representante legal
-                e a presunção de sua capacidade técnica para realização das transações inerentes ao pregão eletrônico.
+                e a presunção de sua capacidade técnica para realização das transações inerentes ao Concorrência.
             </p>
             <p style="display: flex; align-items: center; font-weight: bold; ">
                 <img src="{{ public_path('icons/dinheiro.png') }}" width="20" style="margin-right: 10px;"> 4. DO ENVIO DAS PROPOSTAS
@@ -722,7 +722,7 @@
                 intermediários quanto em relação à proposta que cobrir a melhor oferta deverá ser de 1% do valor Global.
             </p>
             <p style="text-align: justify;">
-                5.6. O modo de disputa adotado para o envio de lances no pregão eletrônico será o “aberto”, os licitantes apresentarão
+                5.6. O modo de disputa adotado para o envio de lances no Concorrência será o “aberto”, os licitantes apresentarão
                 lances públicos e sucessivos, com prorrogações.
             </p>
             <p style="text-align: justify;">
@@ -1153,7 +1153,7 @@
             </p>
             <p style="text-align: justify;">
                 Havendo qualquer fato superveniente que impeça a realização do certame na data marcada, a sessão será transferida para
-                dia e horário definidos pelo pregoeiro, comunicando devidamente aos licitantes do pregão eletrônico.
+                dia e horário definidos pelo pregoeiro, comunicando devidamente aos licitantes do Concorrência.
             </p>
             <p style="text-align: justify;">
                 Integram este Edital, para todos os fins e efeitos, os seguintes anexos:
