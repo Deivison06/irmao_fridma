@@ -27,7 +27,7 @@
     <style>
         :root {
             --primary-dark: #1a3c46;
-            --primary: #00888a;
+            --primary: #1D9698;
             --primary-light: #4fb6b8;
             --primary-extra-light: #e6f4f4;
             --accent: #ff6b35;
@@ -212,19 +212,6 @@
         .btn-profile:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
-        }
-
-        .soft-logo {
-            display: block;
-            margin: 1.5rem auto 0;
-            width: 100px;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .soft-logo:hover {
-            opacity: 1;
-            transform: scale(1.05);
         }
 
         /* Conteúdo principal */
@@ -600,7 +587,7 @@
             <div>
                 <!-- Logo -->
                 <div class="sidebar-logo">
-                    <img src="{{ url('logo/logo_licicon.png') }}" alt="Logo LICICON">
+                    <img src="{{ url('logo/logo_gestgov.png') }}" alt="LOGO GESTGOV">
                 </div>
 
                 <!-- Navegação -->
@@ -647,32 +634,11 @@
                         <span>Sair</span>
                     </button>
                 </form>
-
-                <img src="{{ asset('logo/soft-logo.png') }}" alt="Logo Soft" class="soft-logo">
             </div>
         </aside>
 
         <!-- Conteúdo Principal -->
         <div class="main-content">
-            <header class="main-header">
-                <div class="header-left">
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1 class="page-title">@yield('title', 'Administração')</h1>
-                </div>
-
-                <div class="header-actions">
-
-
-                    <div class="user-menu">
-                        <a href="{{ route('profile.edit') }}">
-                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'Admin' }}&background=00888a&color=fff&bold=true"
-                                alt="Usuário" class="user-avatar">
-                        </a>
-                    </div>
-                </div>
-            </header>
 
             <div class="page-content fade-in">
                 <!-- Banner de boas-vindas -->

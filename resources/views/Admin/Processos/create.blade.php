@@ -162,7 +162,7 @@
                         <a href="{{ route('admin.processos.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                             Cancelar
                         </a>
-                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-[#009496] rounded-md hover:bg-[#244853]">
+                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-[#062F43] rounded-md hover:bg-[#244853]">
                             Salvar
                         </button>
                     </div>

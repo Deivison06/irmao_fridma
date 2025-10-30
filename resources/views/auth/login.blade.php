@@ -1,7 +1,7 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    
+
 
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
@@ -32,14 +32,14 @@
 
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}"
-                    class="text-sm text-white hover:text-[#FF9E1F] hover:underline transition-colors duration-300">
+                    class="text-sm text-white hover:text-[#062F43] hover:underline transition-colors duration-300">
                     Esqueci minha senha
                 </a>
             @endif
         </div>
 
         <button type="submit"
-            class="w-full bg-[#FF9E1F] hover:bg-[#FF8A00] text-white font-semibold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-orange-300">
+            class="w-full bg-[#062F43] hover:bg-[#083f5a] text-white font-semibold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-orange-300">
             Entrar
         </button>
     </form>

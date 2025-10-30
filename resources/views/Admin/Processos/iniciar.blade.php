@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Iniciar processo ' . $processo->id)
+@section('page-title', 'Iniciar processo ' . $processo->numero_processo)
 @section('page-subtitle', 'Cadastrar/Editar detalhes do processo')
 
 @section('content')
@@ -124,266 +124,204 @@
 
             <!-- Seção de Documentos -->
             <div class="mb-8">
-                <div class="overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl">
-                    <!-- Header -->
-                    <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
-                        <div class="flex flex-col items-start justify-between lg:flex-row lg:items-center">
-                            <h3 class="text-xl font-semibold text-gray-800">Gerar Documentos</h3>
-                            <span class="mt-2 text-sm text-gray-500 lg:mt-0">
-                                {{ $processo->modalidade->getDisplayName() }}
-                            </span>
-                        </div>
+                <div class="px-6 py-5">
+                    <div class="flex flex-col items-start justify-between lg:flex-row lg:items-center">
+                        <h3 class="text-xl font-semibold text-gray-800">Gerar Documentos</h3>
+                        <span class="mt-2 text-sm text-gray-500 lg:mt-0">
+                            {{ $processo->modalidade->getDisplayName() }}
+                        </span>
                     </div>
+                </div>
+                <!-- Tabela de Documentos -->
+                <div class="overflow-x-auto rounded-lg shadow-sm">
+                    <!-- Área de Mensagens -->
+                    <div id="message-container" class="p-4"></div>
 
-                    <!-- Tabela de Documentos -->
-                    <div class="overflow-x-auto rounded-lg shadow-sm">
-                        <!-- Área de Mensagens -->
-                        <div id="message-container" class="p-4"></div>
+                    <table class="min-w-full bg-white divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
+                                    Documentos
+                                </th>
+                                <th class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    Data
+                                </th>
+                                <th class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($documentos as $tipo => $doc)
+                            @continue(
+                            $processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA
+                            && ($tipo === 'termo_referencia' || $tipo === 'analise_mercado')
+                            )
+                            @continue(
+                            $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO
+                            && ($tipo === 'projeto_basico')
+                            )
 
-                        <table class="min-w-full bg-white divide-y divide-gray-200">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th
-                                        class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">
-                                        Documentos
-                                    </th>
-                                    <th
-                                        class="w-40 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
-                                        Data
-                                    </th>
-                                    <th
-                                        class="w-48 px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-700 uppercase">
-                                        Ações
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($documentos as $tipo => $doc)
-                                    @continue(
-                                        $processo->modalidade === \App\Enums\ModalidadeEnum::CONCORRENCIA
-                                        && ($tipo === 'termo_referencia' || $tipo === 'analise_mercado')
-                                    )
-                                    @continue(
-                                        $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO
-                                        && ($tipo === 'projeto_basico')
-                                    )
+                            @php
+                            $documentoGerado = $processo->documentos
+                            ->where('tipo_documento', $tipo)
+                            ->first();
+                            $accordionId = "accordion-collapse-{$tipo}";
+                            @endphp
 
-                                    @php
-                                        $documentoGerado = $processo->documentos
-                                            ->where('tipo_documento', $tipo)
-                                            ->first();
-                                        $accordionId = "accordion-collapse-{$tipo}";
-                                    @endphp
-
-                                    {{-- Linha principal do documento --}}
-                                    <tr class="transition-colors duration-150 hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full">
-                                                </div>
-                                                <div class="text-sm font-semibold text-gray-900">
-                                                    {{ $doc['titulo'] }}
-                                                    @if ($documentoGerado)
-                                                        <span class="ml-2 text-xs font-normal text-green-600">
-                                                            ✓ Gerado em
-                                                            {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            {{-- Botão para expandir/colapsar o acordeão --}}
-                                            @if (!empty($doc['campos']))
-                                                <button type="button"
-                                                    class="mt-2 text-xs font-medium text-red-600 hover:text-red-800"
-                                                    data-collapse-toggle="{{ $accordionId }}" aria-expanded="false"
-                                                    aria-controls="{{ $accordionId }}">
-                                                    <span class="collapse-text">Definir Campos e Assinantes</span>
-                                                </button>
+                            {{-- Linha principal do documento --}}
+                            <tr class="transition-colors duration-150 hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-2 h-2 mr-3 {{ $doc['cor'] }} rounded-full">
+                                        </div>
+                                        <div class="text-sm font-semibold text-gray-900">
+                                            {{ $doc['titulo'] }}
+                                            @if ($documentoGerado)
+                                            <span class="ml-2 text-xs font-normal text-green-600">
+                                                ✓ Gerado em
+                                                {{ \Carbon\Carbon::parse($documentoGerado->gerado_em)->format('d/m/Y H:i') }}
+                                            </span>
                                             @endif
-                                        </td>
-                                        <td class="flex gap-2 px-6 py-4 text-center">
-                                            <input type="date"
-                                                class="w-40 px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                                                id="{{ $doc['data_id'] }}"
-                                                value="{{ $documentoGerado->data_selecionada ?? '' }}">
-
-                                            @if ($tipo === 'parecer_juridico' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
-                                                <!-- Dropdown de Parecer -->
-                                                <select id="parecer_select_{{ $tipo }}"
-                                                    name="parecer_select_{{ $tipo }}"
-                                                    class="block w-40 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
-                                                    <option value="">Selecione o Parecer</option>
-                                                    <option value="parecer_1">Parecer 1</option>
-                                                    <option value="parecer_2">Parecer 2</option>
-                                                    <option value="parecer_3">Parecer 3</option>
-                                                </select>
-                                            @endif
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex justify-center space-x-2">
-                                                <button type="button"
-                                                    onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value, event)"
-                                                    class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                                    Gerar PDF
-                                                </button>
-                                                @if ($documentoGerado)
-                                                    <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}"
-                                                        download
-                                                        class="p-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                                                        aria-label="Baixar documento">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                                            <line x1="12" y1="15" x2="12"
-                                                                y2="3"></line>
-                                                        </svg>
-                                                    </a>
-                                                @else
-                                                    <span
-                                                        class="p-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed"
-                                                        aria-hidden="true" title="Aguardando geração">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                                            <line x1="12" y1="15" x2="12"
-                                                                y2="3"></line>
-                                                        </svg>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    {{-- Linha do Acordeão (Collapse) - Apenas se tiver campos --}}
+                                        </div>
+                                    </div>
+                                    {{-- Botão para expandir/colapsar o acordeão --}}
                                     @if (!empty($doc['campos']))
-                                        <tr>
-                                            <td colspan="3" class="p-0">
-                                                <div id="{{ $accordionId }}" class="hidden">
-                                                    <div class="p-4 border-t border-gray-200 bg-gray-50"
-                                                        id="accordion-content-{{ $tipo }}">
+                                    <button type="button" class="mt-2 text-xs font-medium text-red-600 hover:text-red-800" data-collapse-toggle="{{ $accordionId }}" aria-expanded="false" aria-controls="{{ $accordionId }}">
+                                        <span class="collapse-text">Definir Campos e Assinantes</span>
+                                    </button>
+                                    @endif
+                                </td>
+                                <td class="flex gap-2 px-6 py-4 text-center">
+                                    <input type="date" class="w-40 px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="{{ $doc['data_id'] }}" value="{{ $documentoGerado->data_selecionada ?? '' }}">
 
-                                                            <!-- Seção de Assinantes -->
-                                                            <div class="pb-4 mb-6 border-b border-gray-200">
-                                                                <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
+                                    @if ($tipo === 'parecer_juridico' && $processo->modalidade === \App\Enums\ModalidadeEnum::PREGAO_ELETRONICO)
+                                    <!-- Dropdown de Parecer -->
+                                    <select id="parecer_select_{{ $tipo }}" name="parecer_select_{{ $tipo }}" class="block w-40 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                        <option value="">Selecione o Parecer</option>
+                                        <option value="parecer_1">Parecer 1</option>
+                                        <option value="parecer_2">Parecer 2</option>
+                                        <option value="parecer_3">Parecer 3</option>
+                                    </select>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-center space-x-2">
+                                        <button type="button" onclick="gerarPdf('{{ $processo->id }}', '{{ $tipo }}', document.getElementById('{{ $doc['data_id'] }}').value, event)" class="px-4 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                            Gerar PDF
+                                        </button>
+                                        @if ($documentoGerado)
+                                        <a href="{{ route('admin.processo.documento.dowload', ['processo' => $processo->id, 'tipo' => $tipo]) }}" download class="p-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" aria-label="Baixar documento">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                        @else
+                                        <span class="p-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed" aria-hidden="true" title="Aguardando geração">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
 
-                                                                <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
-                                                                    <div class="flex flex-col gap-3 p-4 bg-white border border-gray-200 rounded-lg assinante-item">
-                                                                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                                                                            {{-- Select da Unidade --}}
-                                                                            <div class="flex-1 min-w-[180px]">
-                                                                                <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                    Unidade
-                                                                                </label>
-                                                                                <select
-                                                                                    name="assinante_unidade[]"
-                                                                                    id="assinante_unidade_{{ $tipo }}"
-                                                                                    class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select"
-                                                                                    onchange="updateResponsavel(this, '{{ $tipo }}')"
-                                                                                >
-                                                                                    <option value="">Selecione a Unidade</option>
-                                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
-                                                                                        <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
+                            {{-- Linha do Acordeão (Collapse) - Apenas se tiver campos --}}
+                            @if (!empty($doc['campos']))
+                            <tr>
+                                <td colspan="3" class="p-0">
+                                    <div id="{{ $accordionId }}" class="hidden">
+                                        <div class="p-4 border-t border-gray-200 bg-gray-50" id="accordion-content-{{ $tipo }}">
 
-                                                                            {{-- Campos do Responsável e Portaria --}}
-                                                                            <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
-                                                                                {{-- Nome do Responsável --}}
-                                                                                <div class="flex-1 min-w-[200px]">
-                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                        Responsável
-                                                                                    </label>
-                                                                                    <input
-                                                                                        type="text"
-                                                                                        name="assinante_responsavel[]"
-                                                                                        placeholder="Nome do Responsável"
-                                                                                        readonly
-                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input"
-                                                                                    >
-                                                                                </div>
+                                            <!-- Seção de Assinantes -->
+                                            <div class="pb-4 mb-6 border-b border-gray-200">
+                                                <h4 class="mb-4 text-sm font-semibold text-gray-700">Seleção de Assinantes</h4>
 
-                                                                                {{-- Número da Portaria --}}
-                                                                                <div class="flex-1 min-w-[150px]">
-                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                        Nº Portaria
-                                                                                    </label>
-                                                                                    <input
-                                                                                        type="text"
-                                                                                        name="assinante_portaria[]"
-                                                                                        placeholder="Número da Portaria"
-                                                                                        readonly
-                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm portaria-input"
-                                                                                    >
-                                                                                </div>
-
-                                                                                {{-- Data da Portaria --}}
-                                                                                <div class="flex-1 min-w-[150px]">
-                                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
-                                                                                        Data Portaria
-                                                                                    </label>
-                                                                                    <input
-                                                                                        type="text"
-                                                                                        name="assinante_data_portaria[]"
-                                                                                        placeholder="Data da Portaria"
-                                                                                        readonly
-                                                                                        class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm data-portaria-input"
-                                                                                    >
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                {{-- Botão de adicionar assinante --}}
-                                                                <div class="mt-4">
-                                                                    <button
-                                                                        type="button"
-                                                                        onclick="adicionarAssinante('{{ $tipo }}')"
-                                                                        class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300"
-                                                                    >
-                                                                        + Adicionar Assinante
-                                                                    </button>
-                                                                </div>
+                                                <div id="assinantes-container-{{ $tipo }}" class="space-y-3">
+                                                    <div class="flex flex-col gap-3 p-4 bg-white border border-gray-200 rounded-lg assinante-item">
+                                                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                                            {{-- Select da Unidade --}}
+                                                            <div class="flex-1 min-w-[180px]">
+                                                                <label for="assinante_unidade_{{ $tipo }}" class="block mb-1 text-xs font-medium text-gray-600">
+                                                                    Unidade
+                                                                </label>
+                                                                <select name="assinante_unidade[]" id="assinante_unidade_{{ $tipo }}" class="block w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 unidade-select" onchange="updateResponsavel(this, '{{ $tipo }}')">
+                                                                    <option value="">Selecione a Unidade</option>
+                                                                    @foreach ($processo->prefeitura->unidades as $unidade)
+                                                                    <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
-                                                        <!-- Seção de Campos do Formulário -->
-                                                        <div>
-                                                            <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do Documento</h4>
-                                                            <form
-                                                                action="{{ route('admin.processos.detalhes.store', $processo) }}"
-                                                                method="POST" x-data="formField({{ json_encode($processo->detalhe ?? null) }})"
-                                                                @submit.prevent="submitForm">
-                                                                @csrf
-                                                                <input type="hidden" name="processo_id"
-                                                                    value="{{ $processo->id }}">
+                                                            {{-- Campos do Responsável e Portaria --}}
+                                                            <div class="flex flex-col flex-1 gap-2 sm:flex-row sm:items-center sm:gap-3">
+                                                                {{-- Nome do Responsável --}}
+                                                                <div class="flex-1 min-w-[200px]">
+                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                        Responsável
+                                                                    </label>
+                                                                    <input type="text" name="assinante_responsavel[]" placeholder="Nome do Responsável" readonly class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm responsavel-input">
+                                                                </div>
 
-                                                                @foreach ($doc['campos'] as $campo)
-                                                                    @include('Admin.Processos.partials.forms')
-                                                                @endforeach
-                                                            </form>
+                                                                {{-- Número da Portaria --}}
+                                                                <div class="flex-1 min-w-[150px]">
+                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                        Nº Portaria
+                                                                    </label>
+                                                                    <input type="text" name="assinante_portaria[]" placeholder="Número da Portaria" readonly class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm portaria-input">
+                                                                </div>
+
+                                                                {{-- Data da Portaria --}}
+                                                                <div class="flex-1 min-w-[150px]">
+                                                                    <label class="block mb-1 text-xs font-medium text-gray-600">
+                                                                        Data Portaria
+                                                                    </label>
+                                                                    <input type="text" name="assinante_data_portaria[]" placeholder="Data da Portaria" readonly class="block w-full px-3 py-2 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm data-portaria-input">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
 
-                        <!-- Botão para Baixar Todos os PDFs -->
-                        <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
-                            <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}"
-                                class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                📥 Baixar Todos os PDFs
-                            </a>
-                        </div>
+                                                {{-- Botão de adicionar assinante --}}
+                                                <div class="mt-4">
+                                                    <button type="button" onclick="adicionarAssinante('{{ $tipo }}')" class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300">
+                                                        + Adicionar Assinante
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Seção de Campos do Formulário -->
+                                            <div>
+                                                <h4 class="mb-3 text-sm font-semibold text-gray-700">Campos do Documento</h4>
+                                                <form action="{{ route('admin.processos.detalhes.store', $processo) }}" method="POST" x-data="formField({{ json_encode($processo->detalhe ?? null) }})" @submit.prevent="submitForm">
+                                                    @csrf
+                                                    <input type="hidden" name="processo_id" value="{{ $processo->id }}">
+
+                                                    @foreach ($doc['campos'] as $campo)
+                                                    @include('Admin.Processos.partials.forms')
+                                                    @endforeach
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <!-- Botão para Baixar Todos os PDFs -->
+                    <div class="flex justify-center p-4 mt-6 border-t border-gray-200 bg-gray-50">
+                        <a href="{{ route('admin.processo.documento.dowload-all', ['processo' => $processo->id]) }}" class="px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            📥 Baixar Todos os PDFs
+                        </a>
                     </div>
                 </div>
             </div>

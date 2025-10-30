@@ -9,7 +9,7 @@
             <!-- Botão Novo Processo -->
             <div class="flex justify-end mb-8">
                 <a href="{{ route('admin.processos.create') }}"
-                    class="inline-flex items-center gap-3 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 bg-gradient-to-r from-[#009496] to-[#007a7a] rounded-xl hover:from-[#007a7a] hover:to-[#005f5f] hover:shadow-lg hover:scale-105">
+                    class="inline-flex items-center gap-3 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 bg-gradient-to-r from-[#062F43] to-[#07405c] rounded-xl hover:from-[#07405c] hover:to-[#062F43] hover:shadow-lg hover:scale-105">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
                         </path>
@@ -66,10 +66,10 @@
                                     </div>
                                 </div>
                                 <h3
-                                    class="text-lg font-semibold text-gray-800 group-hover:text-[#009496] transition-colors duration-300">
+                                    class="text-base font-semibold text-gray-800 group-hover:text-[#009496] transition-colors duration-300">
                                     {{ $prefeitura->nome }}
                                 </h3>
-                                <p class="mt-1 text-sm text-gray-500">{{ $prefeitura->email }}</p>
+                                <p class="mt-1 text-xs text-gray-500">{{ $prefeitura->email }}</p>
                                 <div class="pt-3 mt-3 border-t border-gray-100">
                                     <span class="text-xs font-medium text-[#009496] bg-[#009496]/10 px-2 py-1 rounded-full">
                                         {{ $processos->where('prefeitura_id', $prefeitura->id)->count() }} processos
@@ -199,7 +199,7 @@
                                                 ✏️
                                             </a>
                                             <a href="{{ route('admin.processos.iniciar', $processo->id) }}"
-                                                class="p-2 text-white transition-colors duration-200 bg-[#009496] rounded-lg hover:bg-[#007a7a]"
+                                                class="p-2 text-white transition-colors duration-200 bg-[#062F43] rounded-lg hover:bg-[#065f8b]"
                                                 title="Iniciar processo">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">

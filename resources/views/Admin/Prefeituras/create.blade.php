@@ -109,7 +109,7 @@
                             Cancelar
                         </a>
                         <button type="submit"
-                            class="px-4 py-2 text-sm font-medium text-white bg-[#009496] rounded-md hover:bg-[#244853] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#009496]">
+                            class="px-4 py-2 text-sm font-medium text-white bg-[#062F43] rounded-md hover:bg-[#244853] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#009496]">
                             Salvar
                         </button>
                     </div>

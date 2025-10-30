@@ -324,7 +324,7 @@
                             Cancelar
                         </button>
                         <button type="submit"
-                            class="px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-[#009496] to-[#244853] rounded-lg shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#009496] transition-all duration-200 transform hover:-translate-y-0.5 hover:scale-105">
+                            class="px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-[#062F43] to-[#244853] rounded-lg shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#009496] transition-all duration-200 transform hover:-translate-y-0.5 hover:scale-105">
                             <span class="flex items-center">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
