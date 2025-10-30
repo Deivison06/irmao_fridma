@@ -25,16 +25,14 @@
             padding: 4cm 2cm;
             font-size: 11pt;
             font-family: 'Aptos', sans-serif;
-            text-align: justify;
-            text-justify: inter-word;
-            line-height: 1;
-        }
-        /* TIMBRE PARA TODAS AS PÁGINAS, MENOS A PRIMEIRA */
-        body.timbre {
+            /* Adiciona o timbre como background */
             background-image: url('{{ public_path($prefeitura->timbre) }}');
             background-repeat: no-repeat;
             background-position: top left;
             background-size: cover;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -55,17 +53,6 @@
         /* ---------------------------------- */
         /* ESTILOS - CONTEÚDO PRINCIPAL */
         /* ---------------------------------- */
-        .container {
-            font-family: 'Aptos', sans-serif;
-            font-size: 18pt;
-            font-weight: 900;
-            text-transform: uppercase;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-        }
-
         .capa-background {
             position: absolute;
             top: 0;
@@ -74,82 +61,16 @@
             height: 100%;
             z-index: -1;
         }
-
-        .conteudo {
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            width: 78%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .dados-processo {
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .numero-processo {
-            color: #000000;
-            margin-bottom: 5px;
-        }
-
-        .modalidade {
-            color: #000;
-            margin-bottom: 5px;
-        }
-
-        .objeto-titulo {
-            margin: 20px 0;
-        }
-
-        .objeto {
-            text-align: center;
-        }
-
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Imagem de fundo da capa -->
-        <img src="{{  public_path($prefeitura->capa_edital)}}"
-            class="capa-background" alt="Capa da Prefeitura">
-        <!-- Conteúdo centralizado -->
-        <div>
-            <p style="font-weight: bold; text-align: center; font-size: 14pt;">
-                PROCESSO ADMINISTRATIVO <br>
-                {{ $processo->numero_processo }} <br>
-                {{ $processo->modalidade->getDisplayName() }} <br>
-                {{ $processo->numero_procedimento }}
-            </p>
-            <p style="text-align: center; font-size: 14pt;">
-                OBJETO:
-            </p>
-            <div style="text-align: justify;">{!! strip_tags($processo->objeto) !!}</div>
-            <p>
-                <span style="font-weight: bold;">VALOR TOTAL DA CONTRATAÇÃO</span> <br>
-                {{ $detalhe->valor_estimado }}<br>
-                <span style="font-weight: bold;">DATA LIMITE PARA ENVIO DE PROPOSTAS</span> <br>
-                DIA {{ $detalhe->data_hora_limite_edital->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora_limite_edital->format('H:i') }}hs (Horário de Brasília)<br>
-                <span style="font-weight: bold;">DATA DA SESSÃO PÚBLICA E FASE DE LANCES</span> <br>
-                DIA {{ $detalhe->data_hora_fase_edital->translatedFormat('d \d\e F \d\e Y') }} às {{ $detalhe->data_hora_fase_edital->format('H:i') }}hs (Horário de Brasília)<br>
-                <span style="font-weight: bold;">PORTAL UTILIZADO:</span> {{ $detalhe->portal }} <br>
-                <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora_limite_edital->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
-                <span style="font-weight: bold;">E-MAIL:</span> {{ $processo->prefeitura->email }}<br><br>
-                <span style="font-weight: bold;">PREGOEIRO</span><br>
-                {{ $detalhe->pregoeiro }}<br>
-                <span style="font-weight: bold;">AUTORIDADE COMPETENTE</span><br>
-                {{ $processo->prefeitura->autoridade_competente }}
-            </p>
-
-        </div>
-    </div>
+    @include('Admin.Processos.pdf.capa_edital')
 
     {{-- QUEBRA DE PÁGINA --}}
     <div class="page-break"></div>
 
-    <div class="timbre">
+    <div>
         <div>
             <table style="border-collapse: collapse; width: 100%; border: 1px solid black; margin-top: 20px;">
                 <thead>
