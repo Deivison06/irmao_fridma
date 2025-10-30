@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Licicon</title>
+    <title>GestGov</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -679,7 +679,7 @@
                 <div class="welcome-banner slide-in">
                     <div class="welcome-text">
                         <h2>@yield('page-title', 'Olá, ' . (auth()->user()->name ?? 'Administrador') . '!')</h2>
-                        <p>@yield('page-subtitle', 'Bem-vindo à plataforma de administração da Licicon Consultoria e Assessoria Administrativa. Aqui você pode gerenciar todos os aspectos do sistema.')</p>
+                        <p>@yield('page-subtitle', 'Bem-vindo à plataforma de administração da GestGov Consultoria e Assessoria Administrativa. Aqui você pode gerenciar todos os aspectos do sistema.')</p>
                     </div>
                     <div class="welcome-icon">
                         <i class="fas fa-building-circle-check"></i>
