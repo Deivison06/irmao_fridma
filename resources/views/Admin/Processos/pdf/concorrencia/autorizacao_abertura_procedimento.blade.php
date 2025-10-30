@@ -106,6 +106,7 @@
             line-height: 1.5;
             display: block;
         }
+
     </style>
 </head>
 
@@ -127,13 +128,18 @@
     {{-- ====================================================================== --}}
     {{-- BLOCO 2: AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO --}}
     {{-- ====================================================================== --}}
+    @php
+        if (isset($assinantes) && count($assinantes) > 0) {
+        $responsavel = $assinantes[0]['responsavel'];
+        }
+    @endphp
     <div id="autorizacao-abertura-procedimento">
         <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br>
             PROCESSO ADMINISTRATIVO N° {{ $processo->numero_processo }}</p>
 
         <p>
             Ao(À) Ilmo(a). Sr(a).<br>
-            <span>{{ $processo->prefeitura->autoridade_competente }}</span>
+            <span>{{ $responsavel }}</span>
             <br>
             Agente de Contratação / Pregoeiro
             <br>
@@ -144,12 +150,10 @@
 
         <p>Assunto: Autorização para Abertura de {{ $processo->modalidade->getDisplayName() }} </p>
 
-        <table
-            style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;px;">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; border: 1px solid black;px;">
             <thead>
                 <tr>
-                    <td colspan="2"
-                        style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
+                    <td colspan="2" style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
                         RESUMO DOS DADOS DO PROCESSO
                     </td>
                 </tr>
@@ -236,49 +240,49 @@
         <p>
             JUSTIFICATIVA DA CONTRATAÇÃO:
             {!! str_replace('<p>', '<p style="text-align: justify;">', $detalhe->justificativa) !!}
-        </p>
+                </p>
 
-        <p>MODALIDADE: {{ $processo->modalidade->getDisplayName() }}</p>
-        <p>MODO DE DISPUTA: ABERTO</p>
-        <p>TRATAMENTO DIFERENCIA A MEs e EPPs</p>
-        <p>
-            {!! $detalhe->tratamento_diferenciado_MEs_eEPPs !!}
-        </p>
-        {{-- Bloco de data e assinatura --}}
-        <div class="footer-signature">
-            {{ $processo->prefeitura->cidade }},
-            {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
-        </div>
-        @php
-            // Verifica se a variável $assinantes existe e tem itens
-            $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
-        @endphp
+                <p>MODALIDADE: {{ $processo->modalidade->getDisplayName() }}</p>
+                <p>MODO DE DISPUTA: ABERTO</p>
+                <p>TRATAMENTO DIFERENCIA A MEs e EPPs</p>
+                <p>
+                    {!! $detalhe->tratamento_diferenciado_MEs_eEPPs !!}
+                </p>
+                {{-- Bloco de data e assinatura --}}
+                <div class="footer-signature">
+                    {{ $processo->prefeitura->cidade }},
+                    {{ \Carbon\Carbon::parse($dataSelecionada)->translatedFormat('d \d\e F \d\e Y') }}
+                </div>
+                @php
+                // Verifica se a variável $assinantes existe e tem itens
+                $hasSelectedAssinantes = isset($assinantes) && count($assinantes) > 0;
+                @endphp
 
-        @if ($hasSelectedAssinantes)
-            {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
-            @php
+                @if ($hasSelectedAssinantes)
+                {{-- Renderiza APENAS O PRIMEIRO assinante da lista --}}
+                @php
                 $primeiroAssinante = $assinantes[0]; // Pega o segundo item
-            @endphp
+                @endphp
 
-            <div style="margin-top: 40px; text-align: center;">
-                <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                <div style="margin-top: 40px; text-align: center;">
+                    <div class="signature-block" style="display: inline-block; margin: 0 40px;">
+                        ___________________________________<br>
+                        <p style="line-height: 1.2;">
+                            {{ $primeiroAssinante['responsavel'] }} <br>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        </p>
+                    </div>
+                </div>
+                @else
+                {{-- Bloco Padrão (Fallback) --}}
+                <div class="signature-block" style="margin-top: 40px; text-align: center;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
-                        {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    <p style="line-height: 1.2;">
+                        {{ $processo->prefeitura->autoridade_competente }} <br>
+                        <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                     </p>
                 </div>
-            </div>
-        @else
-            {{-- Bloco Padrão (Fallback) --}}
-            <div class="signature-block" style="margin-top: 40px; text-align: center;">
-                ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
-                    {{ $processo->prefeitura->autoridade_competente }} <br>
-                    <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
-                </p>
-            </div>
-        @endif
+                @endif
     </div>
 </body>
 

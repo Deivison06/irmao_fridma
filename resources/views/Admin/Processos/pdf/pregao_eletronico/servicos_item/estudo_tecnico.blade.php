@@ -272,7 +272,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style="text-align: justify;">{{ $detalhe->problema_resolvido }}</div>
+                                <div style="text-align: justify; font-size: 11pt;">{!! strip_tags($detalhe->problema_resolvido) !!}</div>
                             </td>
                         </tr>
                     </table>
@@ -303,13 +303,13 @@
             DESCRIÇÃO DA NECESSIDADE
         </div>
 
-        <p style=" text-indent: 30px; text-align: justify;">
+        <p style=" text-indent: 30px; text-align: justify; font-size: 11pt;">
             A {{ $prefeitura->nome }} enfrenta um problema significativo relacionado à
             {!! strip_tags($processo->objeto) !!} A contínua demanda por {!! strip_tags($detalhe->descricao_necessidade) !!}
             expõe a fragilidade atual dos recursos disponíveis.
         </p>
 
-        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; font-size: 11pt;">', $detalhe->justificativa) !!}
 
 
         <p style=" text-indent: 30px; text-align: justify;">
@@ -458,7 +458,7 @@
 
         {!! str_replace(
             '<p>',
-            '<p style="text-indent:30px; text-align: justify;">',
+            '<p style="text-indent:30px; text-align: justify; font-size: 11pt;">',
             $detalhe->incluir_requisito_cada_caso_concreto,
         ) !!}
 
@@ -474,12 +474,12 @@
                 alt="SOLUÇÕES DISPONÍVEIS NO MERCADO">
             SOLUÇÕES DISPONÍVEIS NO MERCADO
         </div>
-        <p style=" text-indent: 30px;">Soluções disponíveis para o problema de {!! strip_tags($processo->objeto) !!} da
+        <p style=" text-indent: 30px; font-size: 11pt;">Soluções disponíveis para o problema de {!! strip_tags($processo->objeto) !!} da
             {{ $processo->prefeitura->nome }}: </p>
 
         {!! preg_replace(
             '/<p([^>]*)>/i',
-            '<p$1 style="text-indent:30px; text-align: justify;">',
+            '<p$1 style="text-indent:30px; text-align: justify; font-size: 11pt;">',
             $detalhe->solucoes_disponivel_mercado,
         ) !!}
 
@@ -503,7 +503,7 @@
 
         {!! str_replace(
             '<p>',
-            '<p style="text-indent:30px; text-align: justify;">',
+            '<p style="text-indent:30px; text-align: justify; font-size: 11pt;">',
             $detalhe->justificativa_solucao_escolhida,
         ) !!}
 
@@ -616,7 +616,7 @@
                 5º da Lei nº 14.133/2021.</li>
         </ul>
 
-        <p style=" text-indent: 30px; text-align: justify;">
+        <p style=" text-indent: 30px; text-align: justify; font-size: 11pt;">
             Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
             entre fornecedores, o que pode resultar em custos mais baixos e condições mais vantajosas para a
             Administração Pública. Ao permitir que empresas ofereçam suas propostas para {!! strip_tags($processo->objeto) !!}, a
@@ -639,7 +639,7 @@
 
         {!! preg_replace(
             '/<p([^>]*)>/i',
-            '<p$1 style="text-indent:30px; text-align: justify;">',
+            '<p$1 style="text-indent:30px; text-align: justify; font-size: 11pt;">',
             $detalhe->resultado_pretendidos,
         ) !!}
 
@@ -661,7 +661,7 @@
 
         {!! preg_replace(
             '/<p([^>]*)>/i',
-            '<p$1 style="text-indent:30px; text-align: justify;">',
+            '<p$1 style="text-indent:30px; text-align: justify; font-size: 11pt;">',
             $detalhe->impacto_ambiental,
         ) !!}
 
@@ -740,9 +740,9 @@
                 <div style="margin-top: 40px; text-align: center;">
                     <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                         ___________________________________<br>
-                        <p style="font-size: 10pt; line-height: 1.2;">
+                        <p style="line-height: 1.2;">
                             {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -750,7 +750,7 @@
                 {{-- Bloco Padrão (Fallback) --}}
                 <div class="signature-block" style="margin-top: 40px; text-align: center;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $processo->prefeitura->autoridade_competente }} <br>
                         <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                     </p>
@@ -767,7 +767,7 @@
     {{-- ====================================================================== --}}
     <div id="mapa-gerenciamento-risco">
         <p style="text-align: center; font-size:16px; font-weight: 700;">MAPA DE GERENCIAMENTO DE RISCOS</p>
-        <p style="text-indent: 30px; text-align: justify;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
+        <p style="text-indent: 30px; text-align: justify; font-size: 11pt;">O documento visa a elaboração de um MAPA DE GERANCIAMENTO DE
             RISCOS para a
             {!! strip_tags($processo->objeto) !!}, de forma a melhor atender as necessidades do município de
             {{ $processo->prefeitura->cidade }}.</p>
@@ -1751,7 +1751,7 @@
             </tbody>
         </table>
         <br>
-        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->riscos_extra) !!}
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify; font-size: 11pt;">', $detalhe->riscos_extra) !!}
         <p style="font-size:16px; font-weight: 700; text-indent: 20px;">4 - APROVAÇÃO E ASSINATURA</p>
         @php
             // Verifica se a variável $assinantes existe e tem itens
@@ -1894,9 +1894,9 @@
                 <div style="margin-top: 40px; text-align: center;">
                     <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                         ___________________________________<br>
-                        <p style="font-size: 10pt; line-height: 1.2;">
+                        <p style="line-height: 1.2;">
                             {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -1904,7 +1904,7 @@
                 {{-- Bloco Padrão (Fallback) --}}
                 <div class="signature-block" style="margin-top: 40px; text-align: center;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $processo->prefeitura->autoridade_competente }} <br>
                         <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                     </p>
@@ -1946,7 +1946,7 @@
                     <td style="border: 1px solid black; padding: 5px; font-weight: bold;">
                         OBJETO
                     </td>
-                    <td style="border: 1px solid black; padding: 5px;">
+                    <td style="border: 1px solid black; padding: 5px; font-size: 11pt;">
                         {!! strip_tags($processo->objeto) !!}
                     </td>
                 </tr>
@@ -2044,9 +2044,9 @@
             <div style="margin-top: 40px; text-align: center;">
                 <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
@@ -2054,7 +2054,7 @@
             {{-- Bloco Padrão (Fallback) --}}
             <div class="signature-block" style="margin-top: 40px; text-align: center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $processo->prefeitura->autoridade_competente }} <br>
                     <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>

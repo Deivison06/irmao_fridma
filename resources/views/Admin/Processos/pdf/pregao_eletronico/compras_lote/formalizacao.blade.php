@@ -466,9 +466,9 @@
         <div style="margin-top: 40px; text-align: center;">
             <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $primeiroAssinante['responsavel'] }} <br>
-                    <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                 </p>
             </div>
         </div>
@@ -476,7 +476,7 @@
         {{-- Bloco Padrão (Fallback) --}}
         <div class="signature-block" style="margin-top: 40px; text-align: center;">
             ___________________________________<br>
-            <p style="font-size: 10pt; line-height: 1.2;">
+            <p style="line-height: 1.2;">
                 {{ $processo->prefeitura->autoridade_competente }} <br>
                 <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
             </p>
@@ -498,8 +498,7 @@
 
         <p style="text-indent: 30px; text-align: justify;">
             Fica <strong>AUTORIZADO</strong> a equipe de planejamento a dar início aos trabalhos de estudo e
-            planejamento
-            da com vistas evidenciar o problema a ser resolvido e identificar a melhor solução, de modo a permitir a
+            planejamento de modo a permitir a
             avaliação da viabilidade técnica e econômica da contratação, respeitando-se os critérios mínimos
             estabelecidos no § 1º
             do artigo 18 da Lei 14.133/2021, conforme quadro resumo abaixo:

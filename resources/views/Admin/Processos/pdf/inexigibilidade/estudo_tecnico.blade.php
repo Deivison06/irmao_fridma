@@ -272,7 +272,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style="text-align: justify;">{{ $detalhe->problema_resolvido }}</div>
+                                <div style="text-align: justify;">{!! strip_tags($detalhe->problema_resolvido) !!}</div>
                             </td>
                         </tr>
                     </table>
@@ -659,7 +659,7 @@
                         ___________________________________<br>
                         <p style="font-size: 10pt; line-height: 1.2;">
                             {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -1650,7 +1650,7 @@
                 <tr>
                     <td style="border: 1px solid black; padding: 4px; vertical-align: top; text-align: center;">03</td>
                     <td style="border: 1px solid black; padding: 4px; vertical-align: top;">
-                        Instituir nova equipe de planejamento da contratação e promover uma nova contratação 
+                        Instituir nova equipe de planejamento da contratação e promover uma nova contratação
                         para evitar o comprometimento da continuidade dos serviços da instituição, em caso de dificuldade de resolução das inconformidades
                     </td>
                     <td style="border: 1px solid black; padding: 4px; text-align: center; vertical-align: top;">
@@ -1804,7 +1804,7 @@
                         ___________________________________<br>
                         <p style="font-size: 10pt; line-height: 1.2;">
                             {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -1938,7 +1938,7 @@
                     ___________________________________<br>
                     <p style="font-size: 10pt; line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
@@ -1984,7 +1984,7 @@
                     ___________________________________<br>
                     <p style="font-size: 10pt; line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>

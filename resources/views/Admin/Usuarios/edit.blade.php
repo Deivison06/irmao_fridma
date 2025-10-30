@@ -19,10 +19,10 @@
 
 <div class="overflow-hidden bg-white shadow-sm rounded-xl">
     <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
-        <h3 class="text-lg font-medium text-gray-700">Editando: {{ $user->name }}</h3>
+        <h3 class="text-lg font-medium text-gray-700">Editando: {{ $usuario->name }}</h3>
     </div>
 
-    <form action="{{ route('admin.usuarios.update', $user) }}" method="POST">
+    <form action="{{ route('admin.usuarios.update', $usuario) }}" method="POST" class="px-6 py-6">
         @csrf
         @method('PUT')
 
@@ -40,14 +40,14 @@
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Nome completo</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}"
+                <input type="text" name="name" id="name" value="{{ old('name', $usuario->name) }}"
                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#009496] focus:border-[#009496] transition-colors"
                        placeholder="Digite o nome completo" required>
             </div>
 
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}"
+                <input type="email" name="email" id="email" value="{{ old('email', $usuario->email) }}"
                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#009496] focus:border-[#009496] transition-colors"
                        placeholder="Digite o email" required>
             </div>
@@ -76,7 +76,7 @@
                     @foreach($roles as $role)
                         <div class="flex items-center mb-2">
                             <input type="checkbox" name="roles[]" value="{{ $role->id }}" id="role_{{ $role->id }}"
-                                   {{ $user->roles->contains($role->id) ? 'checked' : '' }}
+                                   {{ $usuario->roles->contains($role->id) ? 'checked' : '' }}
                                    class="h-4 w-4 text-[#009496] focus:ring-[#009496] border-gray-300 rounded">
                             <label for="role_{{ $role->id }}" class="block ml-2 text-sm text-gray-700">
                                 {{ $role->name }}
@@ -90,7 +90,7 @@
                     @foreach($permissions as $permission)
                         <div class="flex items-center mb-2">
                             <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" id="permission_{{ $permission->id }}"
-                                   {{ $user->permissions->contains($permission->id) ? 'checked' : '' }}
+                                   {{ $usuario->permissions->contains($permission->id) ? 'checked' : '' }}
                                    class="h-4 w-4 text-[#009496] focus:ring-[#009496] border-gray-300 rounded">
                             <label for="permission_{{ $permission->id }}" class="block ml-2 text-sm text-gray-700">
                                 {{ $permission->name }}

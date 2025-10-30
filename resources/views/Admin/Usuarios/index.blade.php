@@ -55,8 +55,8 @@
                                 @endforeach
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <a href="{{ route('admin.usuarios.edit', $user->id) }}" class="text-yellow-600 hover:underline">Editar</a>
-                                <form action="{{ route('admin.usuarios.destroy', $user->id) }}" method="POST" class="inline">
+                                <a href="{{ route('admin.usuarios.edit', $user) }}" class="text-yellow-600 hover:underline">Editar</a>
+                                <form action="{{ route('admin.usuarios.destroy', $user) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button onclick="return confirm('Excluir usuário?')" class="text-red-600 hover:underline">Excluir</button>

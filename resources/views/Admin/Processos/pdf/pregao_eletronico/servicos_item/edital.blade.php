@@ -25,16 +25,14 @@
             padding: 4cm 2cm;
             font-size: 11pt;
             font-family: 'Aptos', sans-serif;
-            text-align: justify;
-            text-justify: inter-word;
-            line-height: 1;
-        }
-        /* TIMBRE PARA TODAS AS PÁGINAS, MENOS A PRIMEIRA */
-        body.timbre {
+            /* Adiciona o timbre como background */
             background-image: url('{{ public_path($prefeitura->timbre) }}');
             background-repeat: no-repeat;
             background-position: top left;
             background-size: cover;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1;
         }
 
         /* CLASSE PARA FORÇAR QUEBRA DE PÁGINA (ESSENCIAL PARA PDF) */
@@ -55,17 +53,6 @@
         /* ---------------------------------- */
         /* ESTILOS - CONTEÚDO PRINCIPAL */
         /* ---------------------------------- */
-        .container {
-            font-family: 'Aptos', sans-serif;
-            font-size: 18pt;
-            font-weight: 900;
-            text-transform: uppercase;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-        }
-
         .capa-background {
             position: absolute;
             top: 0;
@@ -74,100 +61,16 @@
             height: 100%;
             z-index: -1;
         }
-
-        .conteudo {
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            width: 78%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .dados-processo {
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .numero-processo {
-            color: #000000;
-            margin-bottom: 5px;
-        }
-
-        .modalidade {
-            color: #000;
-            margin-bottom: 5px;
-        }
-
-        .objeto-titulo {
-            margin: 20px 0;
-        }
-
-        .objeto {
-            text-align: center;
-        }
-
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Imagem de fundo da capa -->
-        <img src="{{  public_path($prefeitura->capa_edital)}}"
-            class="capa-background" alt="Capa da Prefeitura">
-        <!-- Conteúdo centralizado -->
-        <div class="conteudo">
-            <div class="dados-processo">
-                <div class="numero-processo">
-                    PROCESSO ADMINISTRATIVO<br>
-                    <strong>{{ $processo->numero_processo }}</strong>
-                </div>
+    @include('Admin.Processos.pdf.capa_edital')
 
-                <div class="modalidade">
-                    {{ strtoupper($processo->modalidade->getDisplayName()) }}<br>
-                    <strong>{{ $processo->numero_procedimento }}</strong>
-                </div>
+    {{-- QUEBRA DE PÁGINA --}}
+    <div class="page-break"></div>
 
-                <div class="objeto-titulo">OBJETO:</div>
-                <div class="objeto">
-                    {!! strip_tags($processo->objeto) !!}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="timbre">
-        <div>
-            <p style="font-weight: bold; text-align: center; font-size: 14pt;">
-                PROCESSO ADMINISTRATIVO <br>
-                {{ $processo->numero_processo }} <br>
-                {{ $processo->modalidade->getDisplayName() }} <br>
-                {{ $processo->numero_procedimento }}
-            </p>
-            <p style="text-align: center; font-size: 14pt;">
-                OBJETO:
-            </p>
-            <div style="text-align: justify;">{!! strip_tags($processo->objeto) !!}</div>
-            <p>
-                <span style="font-weight: bold;">VALOR TOTAL DA CONTRATAÇÃO</span> <br>
-                {{ $detalhe->valor_estimado }}<br>
-                <span style="font-weight: bold;">DATA LIMITE PARA ENVIO DE PROPOSTAS</span> <br>
-                DIA {{ $detalhe->data_hora_limite_edital->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora_limite_edital->format('H:i') }}hs (Horário de Brasília)<br>
-                <span style="font-weight: bold;">DATA DA SESSÃO PÚBLICA E FASE DE LANCES</span> <br>
-                DIA {{ $detalhe->data_hora_fase_edital->translatedFormat('d \d\e F \d\e Y') }} às {{ $detalhe->data_hora_fase_edital->format('H:i') }}hs (Horário de Brasília)<br>
-                <span style="font-weight: bold;">PORTAL UTILIZADO:</span> {{ $detalhe->portal }} <br>
-                <span style="font-weight: bold;">HORÁRIO:</span> {{ $detalhe->data_hora_limite_edital->format('H:i') }} (HORÁRIO DE BRASÍLIA/DF)<br>
-                <span style="font-weight: bold;">E-MAIL:</span> {{ $processo->prefeitura->email }}<br><br>
-                <span style="font-weight: bold;">PREGOEIRO</span><br>
-                {{ $detalhe->pregoeiro }}<br>
-                <span style="font-weight: bold;">AUTORIDADE COMPETENTE</span><br>
-                {{ $processo->prefeitura->autoridade_competente }}
-            </p>
-
-        </div>
-        {{-- QUEBRA DE PÁGINA --}}
-        <div class="page-break"></div>
-
+    <div>
         <div>
             <table style="border-collapse: collapse; width: 100%; border: 1px solid black; margin-top: 20px;">
                 <thead>
@@ -367,7 +270,7 @@
                 <li style="text-align: justify;">
                     Além disso, o parcelamento da contratação em itens favorece uma competição saudável entre fornecedores, o que
                     pode resultar em custos mais baixos e condições mais vantajosas para a Administração Pública. Ao permitir que
-                    empresas ofereçam suas propostas para XXXXXXXXXX, a Prefeitura pode beneficiar-se da especialização dos
+                    empresas ofereçam suas propostas por item, a Prefeitura pode beneficiar-se da especialização dos
                     fornecedores, garantindo aquisição de produtos de melhor qualidade. Essa dinâmica também contribui para
                     minimizar riscos, uma vez que cada item pode ser ajustado conforme a resposta do mercado e as demandas
                     emergentes, facilitando adaptações ao longo do fornecimento.
@@ -402,29 +305,56 @@
             @else
             <ol type="a" style="text-align: justify; padding-left: 20px;">
                 <li style="margin-bottom: 6px;">
-                    Fase de inserção do valor da proposta: Nesta fase, no período de divulgação do certame até o último minuto previsto para o fim do envio das propostas, prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica exigido neste edital e os valores globais de sua proposta, os quais, em hipótese alguma, poderá ser superior ao valor global estimado pelo Edital, sob pena de desclassificação de sua proposta e consequente impossibilidade de disputar a fase de lances;
+                    Fase de inserção do valor da proposta: Nesta fase, no período de divulgação
+                    do certame até o último minuto previsto para o fim do envio das propostas,
+                    prazo este improrrogável, os licitantes irão inserir o arquivo de ficha técnica
+                    exigido neste edital e os valores globais de sua proposta, os quais, em
+                    hipótese alguma, poderá ser superior ao valor global estimado pelo Edital, sob
+                    pena de desclassificação de sua proposta e consequente impossibilidade de
+                    disputar a fase de lances;
                 </li>
 
                 <li style="margin-bottom: 6px;">
-                    Fase de Habilitação: Nesta fase, o licitante classificado em primeiro lugar, obedecendo o critério de menor preço por lote, terá sua proposta inicial, documentos de habilitação e demais exigências contidas neste edital e no Termo de Referência, analisadas para efeito de classificação e prosseguimento para a fase seguinte. Também será analisado nesta fase, a respectiva exequibilidade da proposta informada na fase de lances, a qual deverá obedecer aos critérios legais previstos na Lei 14.133/2021 e no próprio edital;
+                    Fase de lances: Nesta fase, os licitantes que cumprirem a exigências
+                    contidas na alínea “a”, irão estabelecer lances sucessivos, obedecendo o
+                    critério de menor preço global, dentro do tempo limite de 10 (dez) minutos
+                    estabelecidos pelo edital, assim como, suas respectivas prorrogações de 2
+                    (dois) minutos, os quais serão sistematicamente controlados pelo Sistema
+                    Eletrônico do Portal BNC;
                 </li>
 
                 <li style="margin-bottom: 6px;">
-                    Fase de lances: Nesta fase, os licitantes que cumprirem a exigências contidas na alínea “a”, irão estabelecer lances sucessivos, obedecendo o critério de menor preço global, dentro do tempo limite de 10 (dez) minutos estabelecidos pelo edital, assim como, suas respectivas prorrogações de 2 (dois) minutos, os quais serão sistematicamente controlados pelo Sistema Eletrônico do Portal BNC;
+                    Fase de Habilitação: Nesta fase, o licitante que tiver sua proposta
+                    classificada na fase anterior, terá seus documentos de habilitação
+                    devidamente analisados, conforme as devidas exigências previstas neste
+                    instrumento convocatório;
                 </li>
 
                 <li style="margin-bottom: 6px;">
-                    Fase de Recursos: As empresas licitantes que discordarem das decisões proferidas poderão registrar as razões de seu recurso em campo específico do sistema, vedada a manifestação via “chat”, dentro do prazo de 30 (trinta) minutos improrrogáveis, a contar da autorização do pregoeiro;
+                    Fase de Recurso: Nesta fase, as empresas licitantes que discordarem das
+                    decisões proferidas neste certame, deverão inserir em campo especifico,
+                    vedado a sua manifestação via “chat”, manifestarem as razões de seu recurso,
+                    dentro do tempo limite de 30 (trinta) minutos, improrrogáveis, a ser autorizado
+                    pelo pregoeiro(a);
                 </li>
 
                 <li style="margin-bottom: 6px;">
-                    Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na fase de documentos de habilitação, terá o objeto adjudicado a seu favor, sendo posteriormente declarado vencedor do certame.
+                    Fase de Adjudicação: Nesta fase, o licitante que for declarado habilitado na
+                    fase de documentos de habilitação, terá o objeto adjudicado a seu favor,
+                    sendo posteriormente declarado vencedor do certame.
                     <br><br>
-                    1.4. Nenhum licitante passará para a fase seguinte, sem o devido cumprimento das exigências contidas em cada fase, sob pena de desclassificação ou inabilitação.
+                    1.4. Nenhum licitante passará para a fase seguinte, sem o devido cumprimento das
+                    exigências contidas em cada fase, sob pena de desclassificação ou inabilitação.
                     <br><br>
-                    1.5. Na fase de lances, cada empresa licitante poderá inserir quantos lances forem necessários, ficando resguardado apenas os critérios de inexequibilidade de proposta, que serão devidamente verificados na fase de abertura de vistas.
+                    1.5. Na fase de lances, cada empresa licitante poderá inserir quantos lances forem
+                    necessários, ficando resguardado apenas os critérios de inexequibilidade de
+                    proposta, que serão devidamente verificados na fase de habilitação.
                     <br><br>
-                    1.6. Na fase recursal, após o inicial da contagem do tempo de 30 (trinta) minutos, será aberto campo específico para que as manifestações dos licitantes sejam devidamente registradas e reconhecidas pelo Sistema BNC https://bnc.org.br/, não sendo aceitas, em nenhuma hipótese, manifestações recursais inseridas dentro do campo de “chat”.
+                    Na fase recursal, após o inicial da contagem do tempo de 30 (trinta) minutos,
+                    será aberto campo específico para que as manifestações dos licitantes sejam
+                    devidamente registradas e reconhecidas pelo Sistema do BNC, não sendo aceitas,
+                    em nenhuma hipótese, manifestações recursais inseridas dentro do campo de
+                    “chat”.
                 </li>
             </ol>
             @endif
@@ -657,7 +587,7 @@
                 tributários, comerciais e quaisquer outros que incidam direta ou indiretamente na execução do objeto.
             </p>
             <p style="text-align: justify;">
-                4.5. A proposta inicial também deverá apresentar sua validade, que deverá ser de no mínimo 60 (sessenta) dias, a contar da
+                4.5. A proposta inicial também deverá apresentar sua validade, que deverá ser de no mínimo 90 (noventa) dias, a contar da
                 data da sessão de abertura desta licitação, a qual torna-se necessária para efeitos de assinatura contratual, atualização de
                 garantias iniciais firmadas em sessão, além de verificação das condições reais das empresas em face de benefícios gerados
                 pela Lei Complementar 123, nos casos especiais de dilação de prazos.
@@ -719,8 +649,9 @@
                 5.4. O lance deverá ser ofertado pelo valor Total.
             </p>
             <p style="text-align: justify;">
-                5.5. O intervalo mínimo de diferença de valores ou percentuais entre os lances, que incidirá tanto em relação aos lances
-                intermediários quanto em relação à proposta que cobrir a melhor oferta deverá ser de 1% do valor Global.
+                5.5. O intervalo mínimo de diferença de valores ou percentuais entre os lances, que
+                incidirá tanto em relação aos lances intermediários quanto em relação à proposta
+                que cobrir a melhor oferta deverá ser de R$ 10,00 (dez reais) do valor total do ITEM.
             </p>
             <p style="text-align: justify;">
                 5.6. O modo de disputa adotado para o envio de lances no pregão eletrônico será o “aberto”, os licitantes apresentarão
@@ -883,11 +814,11 @@
                 </li>
                 <li style="margin-bottom: 6px;">
                     Prova de regularidade para com a Fazenda Estadual, emitida pela Secretaria de Estado da Fazenda, com data de
-                    emissão não superior a 60 (sessenta) dias, quando não constar expressamente no corpo da mesma o seu prazo de validade;
+                    emissão não superior a 90 (noventa) dias, quando não constar expressamente no corpo da mesma o seu prazo de validade;
                 </li>
                 <li style="margin-bottom: 6px;">
                     Prova de regularidade para com a Fazenda Municipal, emitida pelo Município sede da empresa licitante, com data
-                    de emissão não superior a 60 (sessenta) dias, quando não constar expressamente no corpo da mesma o seu prazo de
+                    de emissão não superior a 90 (noventa) dias, quando não constar expressamente no corpo da mesma o seu prazo de
                     validade;
                 </li>
                 <li style="margin-bottom: 6px;">
@@ -1190,9 +1121,9 @@
         <div style="margin-top: 40px; text-align: center;">
             <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $primeiroAssinante['responsavel'] }} <br>
-                    <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                    <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                 </p>
             </div>
         </div>
@@ -1200,7 +1131,7 @@
         {{-- Bloco Padrão (Fallback) --}}
         <div class="signature-block" style="margin-top: 40px; text-align: center;">
             ___________________________________<br>
-            <p style="font-size: 10pt; line-height: 1.2;">
+            <p style="line-height: 1.2;">
                 {{ $processo->prefeitura->autoridade_competente }} <br>
                 <span style="color: red;">[Pregoeira/Agente de Contratação]</span>
             </p>

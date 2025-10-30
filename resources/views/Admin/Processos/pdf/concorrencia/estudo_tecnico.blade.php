@@ -272,7 +272,7 @@
                             <td class="content">
                                 <div style=" font-weight: bold; margin-bottom: 3px;">Problema Resumido
                                 </div>
-                                <div style="text-align: justify;">{{ $detalhe->problema_resolvido }}</div>
+                                <div style="text-align: justify;">{!! strip_tags($detalhe->problema_resolvido) !!}</div>
                             </td>
                         </tr>
                     </table>
@@ -614,9 +614,9 @@
             <div style="margin-top: 40px; text-align: center;">
                 <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
@@ -624,7 +624,7 @@
             {{-- Bloco Padrão (Fallback) --}}
             <div class="signature-block" style="margin-top: 40px; text-align: center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $processo->prefeitura->autoridade_competente }} <br>
                     <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>
@@ -1758,9 +1758,9 @@
                 <div style="margin-top: 40px; text-align: center;">
                     <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                         ___________________________________<br>
-                        <p style="font-size: 10pt; line-height: 1.2;">
+                        <p style="line-height: 1.2;">
                             {{ $primeiroAssinante['responsavel'] }} <br>
-                            <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                            <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -1768,7 +1768,7 @@
                 {{-- Bloco Padrão (Fallback) --}}
                 <div class="signature-block" style="margin-top: 40px; text-align: center;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $processo->prefeitura->autoridade_competente }} <br>
                         <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                     </p>
@@ -1892,9 +1892,9 @@
             <div style="margin-top: 40px; text-align: center;">
                 <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
@@ -1902,7 +1902,7 @@
             {{-- Bloco Padrão (Fallback) --}}
             <div class="signature-block" style="margin-top: 40px; text-align: center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $processo->prefeitura->autoridade_competente }} <br>
                     <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>

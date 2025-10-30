@@ -748,6 +748,7 @@
                 pregoeiro: existing?.pregoeiro ?? '',
                 numero_items: existing?.numero_items ?? '',
                 projeto_basico_pdf: existing?.projeto_basico_pdf ?? '',
+                agente_contratacao: existing?.agente_contratacao ?? '',
 
                 // Campos separados para datetime
                 ...initialData,
@@ -877,6 +878,7 @@
                     data_hora_fase_edital: !!existing?.data_hora_fase_edital,
                     numero_items: !!existing?.numero_items,
                     projeto_basico_pdf: !!existing?.projeto_basico_pdf,
+                    agente_contratacao: !!existing?.agente_contratacao,
                 },
 
                 onUnidadeChange() {

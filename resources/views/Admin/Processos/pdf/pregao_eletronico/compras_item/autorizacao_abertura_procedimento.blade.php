@@ -127,13 +127,18 @@
     {{-- ====================================================================== --}}
     {{-- BLOCO 2: AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO --}}
     {{-- ====================================================================== --}}
+    @php
+        if (isset($assinantes) && count($assinantes) > 0) {
+        $responsavel = $assinantes[0]['responsavel'];
+        }
+    @endphp
     <div id="autorizacao-abertura-procedimento">
         <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br>
             PROCESSO ADMINISTRATIVO N° {{ $processo->numero_processo }}</p>
 
         <p>
             Ao(À) Ilmo(a). Sr(a).<br>
-            <span>{{ $processo->prefeitura->autoridade_competente }}</span>
+            <span>{{ $responsavel }}</span>
             <br>
             Agente de Contratação / Pregoeiro
             <br>
@@ -262,9 +267,9 @@
             <div style="margin-top: 40px; text-align: center;">
                 <div class="signature-block" style="display: inline-block; margin: 0 40px;">
                     ___________________________________<br>
-                    <p style="font-size: 10pt; line-height: 1.2;">
+                    <p style="line-height: 1.2;">
                         {{ $primeiroAssinante['responsavel'] }} <br>
-                        <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                        <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
                     </p>
                 </div>
             </div>
@@ -272,7 +277,7 @@
             {{-- Bloco Padrão (Fallback) --}}
             <div class="signature-block" style="margin-top: 40px; text-align: center;">
                 ___________________________________<br>
-                <p style="font-size: 10pt; line-height: 1.2;">
+                <p style="line-height: 1.2;">
                     {{ $processo->prefeitura->autoridade_competente }} <br>
                     <span style="color: red;">[Cargo/Título Padrão - A ser ajustado]</span>
                 </p>

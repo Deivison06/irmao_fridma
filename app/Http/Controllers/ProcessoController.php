@@ -117,7 +117,7 @@ class ProcessoController extends Controller
             'titulo' => 'AUTORIZAÇÃO ABERTURA PROCEDIMENTO LICITATÓRIO',
             'cor' => 'bg-teal-500',
             'data_id' => 'data_autorizacao_abertura_procedimento',
-            'campos' => ['tratamento_diferenciado_MEs_eEPPs'],
+            'campos' => ['tratamento_diferenciado_MEs_eEPPs', 'agente_contratacao'],
         ],
         'abertura_fase_externa' => [
             'titulo' => 'ABERTURA FASE EXTERNA',
@@ -129,7 +129,7 @@ class ProcessoController extends Controller
             'titulo' => 'AVISOS DE LICITAÇÃO',
             'cor' => 'bg-indigo-500',
             'data_id' => 'data_avisos_licitacao',
-            'campos' => ['data_hora'],
+            'campos' => ['data_hora', 'portal'],
         ],
         'edital' => [
             'titulo' => 'EDITAL',
@@ -140,7 +140,6 @@ class ProcessoController extends Controller
                 'data_hora_fase_edital',
                 'pregoeiro',
                 'intervalo_lances',
-                'portal',
                 'exigencia_garantia_proposta',
                 'exigencia_garantia_contrato',
                 'participacao_exclusiva_mei_epp',

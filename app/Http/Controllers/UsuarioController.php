@@ -52,18 +52,18 @@ class UsuarioController extends Controller
         }
     }
 
-    public function edit(User $user)
+    public function edit(User $usuario)
     {
         $roles = Role::all(); // agora cada $role é um objeto Role
         $permissions = Permission::all(); // se estiver usando permissões também
 
-        return view('Admin.Usuarios.edit', compact('user', 'roles', 'permissions'));
+        return view('Admin.Usuarios.edit', compact('usuario', 'roles', 'permissions'));
     }
 
-    public function update(UsuarioRequest $request, User $user)
+    public function update(UsuarioRequest $request, User $usuario)
     {
         try {
-            $this->userService->updateUser($user, $request->validated());
+            $this->userService->updateUser($usuario, $request->validated());
             return redirect()->route('admin.users.index')
                 ->with('success', 'Usuário atualizado com sucesso!');
         } catch (Exception $e) {
@@ -73,10 +73,10 @@ class UsuarioController extends Controller
         }
     }
 
-    public function destroy(User $user)
+    public function destroy(User $usuario)
     {
         try {
-            $this->userService->deleteUser($user);
+            $this->userService->deleteUser($usuario);
             return redirect()->route('admin.users.index')
                 ->with('success', 'Usuário excluído com sucesso!');
         } catch (Exception $e) {

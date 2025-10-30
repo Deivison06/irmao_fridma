@@ -168,13 +168,15 @@
         </p>
         <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
             ABERTURA DAS PROPOSTAS: dia {{ $detalhe->data_hora->translatedFormat('d \d\e F \d\e Y') }}, às {{ $detalhe->data_hora->format('H:i') }}hs ({{ $detalhe->data_hora->locale('pt_BR')->translatedFormat('l') }}),
-            na {{ $processo->prefeitura->endereco }}.
+            na plataforma {{ $detalhe->portal }}.
         </p>
-        @if ($detalhe->tipo_srp == 'sim')
+        @if ($detalhe->tipo_srp == 'nao')
         <p style="text-align: justify; text-justify: inter-word; line-height: 1; margin-top: 10;">
             Esclarecendo que as despesas decorrentes da contratação correrão à conta dos recursos do Orçamento do FPM e/ou Recursos Próprios, ICMS, Dotação Orçamentária,
-            {!! $detalhe->dotacao_orcamentaria !!}.
         </p>
+        @else {
+            {!! $detalhe->dotacao_orcamentaria !!}.
+        }
         @endif
     </div>
 

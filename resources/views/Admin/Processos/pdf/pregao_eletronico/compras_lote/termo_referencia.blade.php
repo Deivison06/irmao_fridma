@@ -281,34 +281,7 @@
             1.3. Este procedimento licitatório adotará como critério de julgamento, a forma de adjudicação por {{ $processo->tipo_contratacao->getDisplayName() }}, com base nas
             justificativas:
         </p>
-        <p style="text-align: justify;">
-            O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da Lei nº 14.133/2021, que
-            incentiva o parcelamento sempre que viável, desde que não comprometa a execução do objeto. A medida visa
-            permitir a ampla participação de fornecedores, principalmente de pequeno porte, bem como alcançar melhor
-            resultado para a Administração. <br>
-            O objeto da presente licitação abrange diversos produtos/serviços com características distintas, que podem ser
-            adquiridos, entregues ou executados de forma independente, sem prejuízo à integridade da execução contratual.
-            A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário, estimula a competitividade,
-            ao permitir que microempresas, empresas locais e fornecedores especializados possam concorrer apenas nos
-            itens de sua capacidade técnica e logística. <br>
-            Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo maior eficiência,
-            economicidade e mitigação de riscos contratuais
-        </p>
-        <div>A adoção do parcelamento por itens está alinhada ao planejamento da Administração Pública, favorecendo:</div>
-        <ul style="text-align: justify;">
-            <li>Atendimento adequado às necessidades específicas de cada unidade administrativa;</li>
-            <li>Diversificação de fornecedores e redução do risco de desabastecimento;</li>
-            <li>Fortalecimento da economia local/regional;</li>
-            <li>Observância ao princípio da isonomia, conforme art. 5º da Lei nº 14.133/2021.</li>
-        </ul>
-        <p style="text-align: justify;">
-            Além disso, o parcelamento da contratação em lotes favorece uma competição saudável entre fornecedores, o
-            que pode resultar em custos mais baixos e condições mais vantajosas para a Administração Pública. Ao permitir
-            que empresas ofereçam suas propostas, a Prefeitura pode beneficiar-se da especialização dos fornecedores,
-            garantindo aquisições de melhor qualidade. Essa dinâmica também contribui para minimizar riscos, uma vez que
-            cada item pode ser ajustado conforme a resposta do mercado e as demandas emergentes, facilitando
-            adaptações ao longo do fornecimento.
-        </p>
+        {!! str_replace('<p>', '<p style="text-indent:30px; text-align: justify;">', $detalhe->justificativa) !!}
 
         <p style="text-align: justify;">
             1.4 Para a cotação de preços a ser realizada neste certame, esta administração coloca à disposição dos licitantes, as
@@ -657,6 +630,7 @@
         <p style="text-align: justify;">
             8.2. A contratação será atendida pela seguinte dotação:
         </p>
+        @if ($detalhe->tipo_srp == 'nao')
         <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
             <tr>
                 <!-- Coluna da esquerda -->
@@ -665,6 +639,21 @@
                 </td>
             </tr>
         </table>
+        @else
+        <p style="text-indent: 30px; text-align: justify;">
+            Declaro, para os devidos fins, que a presente licitação será realizada sob a forma de <span style="font-weight: bold;">Sistema de
+                Registro de Preços (SRP)</span>, nos termos do art. 82 e seguintes da Lei nº 14.133/2021.<br>
+            Por se tratar de procedimento que visa apenas ao registro formal de preços, <span style="font-weight: bold;">não há necessidade de
+                indicação de dotação orçamentária nesta fase</span>, ficando a alocação de recursos vinculada e
+            obrigatória somente no
+            momento da contratação efetiva, mediante emissão da Nota de Empenho correspondente, conforme as demandas
+            das
+            Secretarias/Órgãos requisitantes.<br>
+            Tal medida encontra respaldo legal e visa garantir o adequado planejamento das contratações, respeitando
+            os
+            princípios da eficiência, economicidade e responsabilidade fiscal.
+        </p>
+        @endif
         <p style="text-align: justify;">
             8.3. A dotação relativa aos exercícios financeiros subsequentes será indicada após aprovação da Lei Orçamentária
             respectiva e liberação dos créditos correspondentes, mediante apostilamento.
@@ -690,9 +679,9 @@
     <div style="margin-top: 40px; text-align: center;">
         <div class="signature-block" style="display: inline-block; margin: 0 40px;">
             ___________________________________<br>
-            <p style="font-size: 10pt; line-height: 1.2;">
+            <p style="line-height: 1.2;">
                 {{ $primeiroAssinante['responsavel'] }} <br>
-                <span style="color: #4b5563;">{{ $primeiroAssinante['unidade_nome'] }}</span>
+                <span>{{ $primeiroAssinante['unidade_nome'] }}</span>
             </p>
         </div>
     </div>
@@ -700,7 +689,7 @@
     {{-- Bloco Padrão (Fallback) --}}
     <div class="signature-block" style="margin-top: 40px; text-align: center;">
         ___________________________________<br>
-        <p style="font-size: 10pt; line-height: 1.2;">
+        <p style="line-height: 1.2;">
             {{ $processo->prefeitura->autoridade_competente }} <br>
             <span style="color: red;">[Pregoeira/Agente de Contratação]</span>
         </p>

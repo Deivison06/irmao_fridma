@@ -76,7 +76,10 @@
     <x-form-field name="nome_equipe_planejamento" label="EQUIPE DE PLANEJAMENTO" />
 
     @elseif($campo === 'responsavel_equipe_planejamento')
-    <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" />
+    <x-form-field name="responsavel_equipe_planejamento" label="RESPONSAVEL EQUIPE DE PLANEJAMENTO" type="select" :options="$processo->prefeitura->unidades->pluck('servidor_responsavel', 'servidor_responsavel')->toArray()" placeholder="Selecione um Responsavel" />
+
+    @elseif($campo === 'agente_contratacao')
+    <x-form-field name="agente_contratacao" label="Agente contratação" type="select" :options="$processo->prefeitura->unidades->pluck('servidor_responsavel', 'servidor_responsavel')->toArray()" placeholder="Selecione um Responsavel" />
 
     @elseif($campo === 'prazo_entrega')
     <x-form-field name="prazo_entrega" label="Prazo de Entrega / Execução" />
@@ -206,7 +209,7 @@
     <x-form-field name="encaminhamento_autorizacao_abertura" label="Encaminhamento para AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO PELA AUTORIDADE COMPETENTE" type="select" :options="$processo->prefeitura->unidades->pluck('nome', 'nome')->toArray()" placeholder="Selecione uma unidade" />
 
     @elseif($campo === 'pregoeiro')
-    <x-form-field name="pregoeiro" label="PREGOEIRO" type="select" :options="$processo->prefeitura->unidades->pluck('nome', 'nome')->toArray()" placeholder="Selecione uma unidade" />
+    <x-form-field name="pregoeiro" label="PREGOEIRO" type="select" :options="$processo->prefeitura->unidades->pluck('servidor_responsavel', 'servidor_responsavel')->toArray()" placeholder="Selecione uma unidade" />
 
     {{-- Campos Data e Hora Simplificados --}}
     @elseif($campo === 'data_hora')
