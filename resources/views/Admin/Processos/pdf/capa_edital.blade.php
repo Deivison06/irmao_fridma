@@ -78,7 +78,7 @@
         <img src="{{  public_path($prefeitura->capa_edital)}}"
             class="capa-background" alt="Capa da Prefeitura">
         <!-- Conteúdo centralizado -->
-        <div style="padding:150px 0">
+        <div style="padding-top:150px">
             <p style="font-weight: bold; text-align: center; font-size: 14pt;">
                 PROCESSO ADMINISTRATIVO <br>
                 {{ $processo->numero_processo }} <br>
