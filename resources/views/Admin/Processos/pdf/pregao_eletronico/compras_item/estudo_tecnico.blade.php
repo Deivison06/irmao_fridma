@@ -575,56 +575,54 @@
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             PARCELAMENTO OU NÃO DA CONTRATAÇÃO
         </div>
-        <p style=" text-indent: 30px; text-align: justify;">
-            O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
-            Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
-            a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
-            de pequeno porte, bem como alcançar melhor resultado para a Administração.
+        <p style="text-align: justify;">
+            1.2. A licitação será dividida em itens, conforme tabela constante do Termo de Referência,
+            facultando-se ao licitante a participação em quantos itens forem de seu interesse, conforme
+            justificativa abaixo:
         </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            O objeto da presente licitação abrange diversos produtos/serviços com características
-            distintas, que podem ser adquiridos, entregues ou executados de forma independente, sem prejuízo
-            à integridade da execução contratual.
-        </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário,
-            estimula a competitividade, ao permitir que microempresas, empresas locais e fornecedores
-            especializados possam concorrer apenas nos itens de sua capacidade técnica e logística.
-        </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo
-            maior eficiência, economicidade e mitigação de riscos contratuais.
-        </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            A adoção do parcelamento por itens está alinhada ao planejamento da Administração
-            Pública, favorecendo:
-        </p>
-
-        <ul>
-            <li style=" text-indent: 30px;">Atendimento adequado às necessidades
-                específicas de cada unidade administrativa; </li>
-
-            <li style=" text-indent: 30px;">Diversificação de fornecedores e redução do
-                risco
-                de desabastecimento; </li>
-
-            <li style=" text-indent: 30px;">Fortalecimento da economia local/regional;</li>
-
-            <li style=" text-indent: 30px;">Observância ao princípio da isonomia, conforme
-                art.
-                5º da Lei nº 14.133/2021.</li>
-        </ul>
-
-        <p style=" text-indent: 30px; text-align: justify; font-size: 11pt;">
-            Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
-            entre fornecedores, o que pode resultar em custos mais baixos e condições mais vantajosas para a
-            Administração Pública. Ao permitir que empresas ofereçam suas propostas para {!! strip_tags($processo->objeto) !!}, a
-            Prefeitura pode beneficiar-se da especialização dos fornecedores, garantindo aquisição de
-            produtos de melhor qualidade. Essa dinâmica também contribui para minimizar riscos, uma vez
-            que cada item pode ser ajustado conforme a resposta do mercado e as demandas emergentes,
-            facilitando adaptações ao longo do fornecimento.
-        </p>
-
+        <ol type="a">
+            <li style="margin-bottom: 6px; text-align: justify;">
+                O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
+                Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não
+                comprometa a execução do objeto. A medida visa permitir a ampla participação de
+                fornecedores, principalmente de pequeno porte, bem como alcançar melhor resultado
+                para a Administração.
+            </li>
+            <li style="margin-bottom: 6px; text-align: justify;">
+                O objeto da presente licitação abrange diversos produtos/serviços com características
+                distintas, que podem ser adquiridos, entregues ou executados de forma independente, sem
+                prejuízo à integridade da execução contratual.
+            </li>
+            <li style="margin-bottom: 6px; text-align: justify;">
+                A divisão por itens não compromete a obtenção de preços vantajosos, e ao contrário,
+                estimula a competitividade, ao permitir que microempresas, empresas locais e
+                fornecedores especializados possam concorrer apenas nos itens de sua capacidade
+                técnica e logística.
+            </li>
+            <li style="margin-bottom: 6px; text-align: justify;">
+                Com isso, evita-se a concentração do fornecimento em um único fornecedor, promovendo
+                maior eficiência, economicidade e mitigação de riscos contratuais.
+            </li>
+            <li style="margin-bottom: 6px; text-align: justify;">
+                A adoção do parcelamento por itens está alinhada ao planejamento da Administração Pública, favorecendo:
+                <ul style="margin-top: 5px; margin-bottom: 5px;">
+                    <li style="margin-bottom: 5px; text-align: justify;">Atendimento adequado às necessidades específicas de cada unidade administrativa;</li>
+                    <li style="margin-bottom: 5px; text-align: justify;">Diversificação de fornecedores e redução do risco de desabastecimento;</li>
+                    <li style="margin-bottom: 5px; text-align: justify;">Fortalecimento da economia local/regional; </li>
+                    <li style="margin-bottom: 5px; text-align: justify;">Observância ao princípio da isonomia, conforme art. 5º da Lei nº 14.133/2021.</li>
+                </ul>
+            </li>
+            <li style="text-align: justify;">
+                Além disso, o parcelamento da contratação em lotes favorece uma competição saudável
+                entre fornecedores, o que pode resultar em custos mais baixos e condições mais
+                vantajosas para a Administração Pública. Ao permitir que empresas ofereçam suas
+                propostas por ITEM, a Prefeitura pode beneficiar-se da especialização dos
+                fornecedores, garantindo aquisição de XXXXXXXXX de melhor qualidade. Essa dinâmica
+                também contribui para minimizar riscos, uma vez que cada item pode ser ajustado
+                conforme a resposta do mercado e as demandas emergentes facilitando adaptações ao
+                longo do fornecimento.
+            </li>
+        </ol>
     </div>
 
     {{-- ====================================================================== --}}

@@ -127,18 +127,13 @@
     {{-- ====================================================================== --}}
     {{-- BLOCO 2: AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO --}}
     {{-- ====================================================================== --}}
-    @php
-        if (isset($assinantes) && count($assinantes) > 0) {
-        $responsavel = $assinantes[0]['responsavel'];
-        }
-    @endphp
     <div id="autorizacao-abertura-procedimento">
         <p style="text-align: center; font-weight: bold">AUTORIZAÇÃO DE ABERTURA DE PROCEDIMENTO DE LICITAÇÃO <br>
             PROCESSO ADMINISTRATIVO N° {{ $processo->numero_processo }}</p>
 
         <p>
             Ao(À) Ilmo(a). Sr(a).<br>
-            <span>{{ $responsavel }}</span>
+            <span>{{ $detalhe->agente_contratacao }}</span>
             <br>
             Agente de Contratação / Pregoeiro
             <br>

@@ -560,68 +560,65 @@
             <img src="{{ public_path('icons/lista.png') }}" width="30px" alt="REQUISITOS DA CONTRATAÇÃO">
             PARCELAMENTO OU NÃO DA CONTRATAÇÃO
         </div>
-        <p style=" text-indent: 30px; text-align: justify;">
-            O fracionamento do objeto da licitação em itens encontra amparo legal no art. 40, § 1º da
-            Lei nº 14.133/2021, que incentiva o parcelamento sempre que viável, desde que não comprometa
-            a execução do objeto. A medida visa permitir a ampla participação de fornecedores, principalmente
-            de pequeno porte, bem como alcançar melhor resultado para a Administração.
+        <p style="text-align: justify;">
+            A licitação será dividida em grupos, formados por um ou mais itens, conforme tabela constante
+            do Termo de Referência, facultando-se ao licitante a participação em quantos grupos forem de seu
+            interesse, devendo oferecer proposta para todos os itens que os compõem o lote, conforme
+            justificativa abaixo:
         </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            A presente justificativa tem por objetivo demonstrar a vantajosidade da contratação do
-            objeto em LOTES, ao invés da aquisição ou contratação individualizada por itens, conforme os
-            princípios e diretrizes estabelecidos pela Lei nº 14.133/2021, especialmente no art. 5º (princípios
-            da eficiência e planejamento) e no art. 40, §1º, que dispõe:
+        <p style="text-align: justify;">
+            A presente justificativa tem por objetivo demonstrar a vantajosidade da contratação do objeto em
+            LOTES, ao invés da aquisição ou contratação individualizada por itens, conforme os princípios e
+            diretrizes estabelecidos pela Lei nº 14.133/2021, especialmente no art. 5º (princípios da eficiência
+            e planejamento) e no art. 40, §1º, que dispõe:
         </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            “A administração pública poderá dividir o objeto da contratação em lotes, sempre que
-            técnica e economicamente viável, visando à ampliação da competitividade e ao desenvolvimento
-            do mercado local, regional ou nacional, conforme o caso.”
+        <p style="text-align: justify;">
+            “A administração pública poderá dividir o objeto da contratação em lotes, sempre que técnica e
+            economicamente viável, visando à ampliação da competitividade e ao desenvolvimento do
+            mercado local, regional ou nacional, conforme o caso.”
         </p>
-        <p style=" text-indent: 30px;">
-            VANTAGENS OPERACIONAIS DA CONTRATAÇÃO POR LOTES
-        </p>
-        <span>A contratação por lotes permite:</span>
+        <p style="text-indent: 30px;">A contratação por lotes permite:</p>
         <ul>
-            <li>Melhor organização e gestão contratual, ao reduzir o número de fornecedores e simplificar
-                o acompanhamento das entregas ou da prestação dos serviços; </li>
-
-            <li>Centralização de responsabilidades, evitando múltiplos prazos, locais de entrega e
-                agentes executores; </li>
-
-            <li>Facilidade logística, pois os lotes são organizados por natureza ou destinação dos itens
-                (ex: lotes por tipo de material, setor usuário ou região de entrega); </li>
-
-            <li>Adoção de cronogramas otimizados, com menos risco de atrasos por fragmentação
-                excessiva de contratos.</li>
+            <li>
+                Melhor organização e gestão contratual, ao reduzir o número de fornecedores e simplificar
+                o acompanhamento das entregas ou da prestação dos serviços;
+            </li>
+            <li>
+                Centralização de responsabilidades, evitando múltiplos prazos, locais de entrega e agentes
+                executores;
+            </li>
+            <li>
+                Facilidade logística, pois os lotes são organizados por natureza ou destinação dos itens (ex:
+                lotes por tipo de material, setor usuário ou região de entrega);
+            </li>
+            <li>
+                Adoção de cronogramas otimizados, com menos risco de atrasos por fragmentação
+                excessiva de contratos.
+            </li>
         </ul>
-        <p style=" text-indent: 30px;">
-            VANTAGENS ECONÔMICAS
-        </p>
+        <p style="text-indent: 30px; font-weight: bold;">VANTAGENS ECONÔMICAS</p>
         <ul>
-            <li>Redução de custos operacionais, tanto para a Administração quanto para os fornecedores
-                (ex: transporte, emissão de notas, gestão de pedidos);</li>
-
-            <li>Aproveitamento de economia de escala, com agrupamento racional de itens semelhantes; </li>
-
-            <li>Estimulação da competitividade saudável, uma vez que empresas de médio porte podem
-                participar de lotes especializados, e empresas menores de lotes regionais ou setoriais.</li>
+            <li>
+                Redução de custos operacionais, tanto para a Administração quanto para os fornecedores
+                (ex: transporte, emissão de notas, gestão de pedidos);
+            </li>
+            <li>
+                Estimulação da competitividade saudável, uma vez que empresas de médio porte podem
+                participar de lotes especializados, e empresas menores de lotes regionais ou setoriais.
+            </li>
         </ul>
-        <p style=" text-indent: 30px;">
-            VANTAGENS NA FISCALIZAÇÃO E CONTROLE
-        </p>
+        <p style="text-indent: 30px; font-weight: bold;">ANTAGENS NA FISCALIZAÇÃO E CONTROLE </p>
         <ul>
             <li>
                 Facilidade de fiscalização: menos contratos a serem monitorados e maior coerência entre
                 os itens de cada lote;
             </li>
-
             <li>
                 Redução de inconsistências entre entregas: evitando divergências de padrões ou prazos
                 quando múltiplas empresas atuam em paralelo em itens correlatos.
             </li>
         </ul>
-
-        <p style=" text-indent: 30px; text-align: justify;">
+        <p style="text-indent: 30px; text-align: justify;">
             A análise técnica e econômica da contratação indica que a divisão do objeto em lotes
             representa a solução mais vantajosa para a Administração Pública, ao permitir:
         </p>
@@ -639,13 +636,13 @@
                 Observância dos princípios da economicidade, eficiência e interesse público.
             </li>
         </ul>
-        <p style=" text-indent: 30px; text-align: justify;">
-            Assim, justifica-se plenamente a adoção da contratação por lotes, em detrimento da
-            contratação por itens isolados.
+        <p style="text-align: justify;">
+            Assim, justifica-se plenamente a adoção da contratação por lotes, em detrimento da contratação
+            por itens isolados
         </p>
-        <p style=" text-indent: 30px; text-align: justify;">
-            Por fim, a adoção deste modelo impacta diretamente no atendimento ao interesse público
-            e na eficiência da contratação. A estrutura em lotes assegura que as necessidades imediatas da
+        <p style="text-align: justify;">
+            Por fim, a adoção deste modelo impacta diretamente no atendimento ao interesse público e na
+            eficiência da contratação. A estrutura em lotes assegura que as necessidades imediatas da
             população sejam atendidas de maneira mais célere, visto que diferentes tipos de itens poderão
             estar disponíveis simultaneamente. Isso reduz o tempo de espera para o fornecimento, resultando
             em melhorias tangíveis na qualidade do fornecimento pretendido. Assim, a estratégia de licitação

@@ -192,19 +192,15 @@
         </p>
 
         <table border="1" cellspacing="0" cellpadding="4"
-            style="border-collapse: collapse; width: 100%; text-align: center;">
+            style="border-collapse: collapse; width: 100%; text-align: center; font-size: 8pt;">
             <thead>
-                <th colspan="6"
-                    style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">
-                    RESUMO
-                </th>
                 <tr>
-                    <th style="width: 20%;">ITEM</th>
-                    <th style="width: 12%;">VALOR TCE 1</th>
-                    <th style="width: 12%;">VALOR TCE 2</th>
-                    <th style="width: 12%;">VALOR TCE 3</th>
-                    <th style="width: 12%;">FORNECEDOR LOCAL</th>
-                    <th style="width: 12%;">MÉDIA</th>
+                    <th style="width: 25%;">ITEM</th>
+                    <th style="width: 15%;">VALOR TCE</th>
+                    <th style="width: 15%;">VALOR TCE</th>
+                    <th style="width: 15%;">VALOR TCE</th>
+                    <th style="width: 15%;">FORNECEDOR </th>
+                    <th style="width: 15%;">MÉDIA</th>
                 </tr>
             </thead>
             <tbody>
